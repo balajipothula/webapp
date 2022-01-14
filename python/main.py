@@ -33,4 +33,4 @@ def health() -> str:
 def user(name: str) -> str:
   return {"name": name}
 
-handler = Mangum(app)
+handler = Mangum(app = app)
