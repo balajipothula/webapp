@@ -1,3 +1,9 @@
+output "aws_region" {
+  value       = data.aws_region.current.name
+  description = "The name of the selected region."
+  sensitive   = false
+}
+
 # Resource  type : module
 # Resource  name : aws_lambda_function_webapp
 # Attribute name : arn
@@ -100,8 +106,6 @@ output "version" {
   sensitive   = false
 }
 
-
-
 output "kms_key_arn" {
   value       = module.aws_lambda_function_webapp.kms_key_arn
   description = "The ARN for the KMS encryption key of Lambda Function."
@@ -111,11 +115,5 @@ output "kms_key_arn" {
 output "source_code_hash" {
   value       = module.aws_lambda_function_webapp.source_code_hash
   description = "Base64-encoded representation of raw SHA-256 sum of the zip file."
-  sensitive   = false
-}
-
-output "aws_region" {
-  value       = data.aws_region.current.name
-  description = "The name of the selected region."
   sensitive   = false
 }

@@ -80,7 +80,7 @@ variable "architectures" {
   description = "Instruction set architecture for your Lambda function."
   validation {
     condition     = var.architectures != null
-    error_message = "Error: architectures value must not null and Valid values are arm64 and x86_64."
+    error_message = "Error: architectures value must not null and Valid values are [\"arm64\"] and [\"x86_64\"]."
   }
   sensitive = false
 }

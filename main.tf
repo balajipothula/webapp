@@ -70,16 +70,16 @@ module "aws_lambda_function_webapp" {
     aws_cloudwatch_log_group.webapp_lambda_log_group
   ]
 
-  function_name  = var.function_name # Required argument.
+  function_name  = var.function_name                                           # Required argument.
   role                                = var.role                               # Required argument.
-//architectures                       = var.architectures                      # Optional argument.
+  architectures                       = var.architectures                      # Optional argument.
 //code_signing_config_arn             = var.code_signing_config_arn            # Optional argument.
 /*
   dead_letter_config {                                                         # Optional argument block.
     target_arn                        = var.target_arn                         # Required block argument.
   }
 */
-  description    = var.description   # Optional argument but keep it.
+  description    = var.description                                             # Optional argument but keep it.
 
 /*
   file_system_config {                                                         # Optional argument block.
