@@ -110,7 +110,7 @@ variable "target_arn" {
 
 variable "description" {
   type        = string
-  default     = "Web App Lambda Function."
+  default     = "Web App FastAPI Lambda Function."
   description = "Description of what Lambda Function does."
   validation {
     condition     = var.description != null && 0 <= length(var.description) && length(var.description) <= 256
