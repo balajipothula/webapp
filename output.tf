@@ -1,12 +1,3 @@
-# Resource  type : random_pet
-# Resource  name : name
-# Attribute name : id
-output "id" {
-  value       = random_pet.name.id
-  description = "The random pet name."
-  sensitive   = false
-}
-
 # Resource  type : module
 # Resource  name : aws_lambda_function_webapp
 # Attribute name : arn
