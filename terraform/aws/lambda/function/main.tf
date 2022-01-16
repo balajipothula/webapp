@@ -10,15 +10,6 @@ data "aws_subnet_ids" "available" {
   vpc_id = data.aws_vpc.default.id
 }
 
-# Declare the local values.
-locals {
-  local_tags = {
-    Name        = (var.Name        != "" ? var.Name        : "Current Lambda Function")
-    Environment = (var.Environment != "" ? var.Environment : "Development")
-  }
-  tags = merge(var.variable_tags, local.local_tags)
-}
-
 # Resource  type : aws_lambda_function
 # Resource  name : current
 # Attribute name : function_name
@@ -35,7 +26,7 @@ resource "aws_lambda_function" "current" {
     target_arn                   = var.target_arn                     # Required block argument.
   }
 */
-  description                    = var.aws_lambda_function__description                    # Optional argument but keep it.
+  description                    = var.description                    # Optional argument but keep it.
 
   environment {                                                       # Optional argument block but keep it.
     variables                    = var.variables                      # Optional block argument.
@@ -67,7 +58,7 @@ resource "aws_lambda_function" "current" {
   s3_key                         = var.s3_key                         # Optional argument but keep it, Conflicts with filename and image_uri.
 //s3_object_version              = var.s3_object_version              # Optional argument, Conflicts with filename and image_uri.
 //source_code_hash               = var.source_code_hash               # Optional argument.
-  tags                           = local.tags                         # Optional argument but keep it.
+  tags                           = var.tags                         # Optional argument but keep it.
   timeout                        = var.timeout                        # Optional argument but keep it.
 /*
   tracing_config {                                                    # Optional argument block.

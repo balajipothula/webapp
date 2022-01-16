@@ -1,3 +1,4 @@
+/*
 variable "region" {
   type        = string
   default     = "eu-central-1"
@@ -8,6 +9,7 @@ variable "region" {
   }
   sensitive   = true
 }
+*/
 
 variable "account_id" {
   type        = number
@@ -109,12 +111,12 @@ variable "target_arn" {
   sensitive = false
 }
 
-variable "aws_lambda_function__description" {
+variable "description" {
   type        = string
   default     = "WebApp Lambda Function."
   description = "Description of what Lambda Function does."
   validation {
-    condition     = var.aws_lambda_function__description != null && 0 <= length(var.aws_lambda_function__description) && length(var.aws_lambda_function__description) <= 256
+    condition     = var.description != null && 0 <= length(var.description) && length(var.description) <= 256
     error_message = "Error: description value must not null and description lenght not more than 256 charecters."
   }
   sensitive = false

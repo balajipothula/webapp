@@ -79,7 +79,7 @@ module "aws_lambda_function_webapp" {
     target_arn                        = var.target_arn                         # Required block argument.
   }
 */
-  aws_lambda_function__description    = var.aws_lambda_function__description   # Optional argument but keep it.
+  description    = var.description   # Optional argument but keep it.
 
 /*
   file_system_config {                                                         # Optional argument block.

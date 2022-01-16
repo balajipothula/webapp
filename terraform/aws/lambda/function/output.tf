@@ -1,3 +1,9 @@
+output "aws_region" {
+  value       = data.aws_region.current.name
+  description = "The name of the selected region."
+  sensitive   = false
+}
+
 # Resource  type : aws_lambda_function
 # Resource  name : current
 # Attribute name : arn
@@ -28,7 +34,7 @@ output "code_signing_config_arn" {
   sensitive   = false
 }
 
-output "aws_lambda_function__description" {
+output "description" {
   value       = aws_lambda_function.current.description
   description = "The description of the Lambda Function."
   sensitive   = false
@@ -133,11 +139,5 @@ output "security_group_ids" {
 output "tags" {
   value       = local.tags
   description = "The tags of Lambda Function."
-  sensitive   = false
-}
-
-output "aws_region" {
-  value       = data.aws_region.current.name
-  description = "The name of the selected region."
   sensitive   = false
 }

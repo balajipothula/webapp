@@ -28,8 +28,8 @@ output "code_signing_config_arn" {
   sensitive   = false
 }
 
-output "aws_lambda_function__description" {
-  value       = module.aws_lambda_function_webapp.aws_lambda_function__description
+output "description" {
+  value       = module.aws_lambda_function_webapp.description
   description = "The description of the Lambda Function."
   sensitive   = false
 }

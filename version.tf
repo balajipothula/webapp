@@ -12,7 +12,7 @@ terraform {
 
     # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
-      name   = "ZeroDevOps"
+      name   = "webapp"
     }
 
   }
@@ -22,10 +22,6 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 3.55.0"
-    }
-
-    random = {
-      source = "hashicorp/random"
     }
 
   }
