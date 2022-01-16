@@ -10,7 +10,7 @@ output "arn" {
 # Resource  type : aws_lambda_function
 # Resource  name : current
 # Attribute name : function_name
-output "aws_lambda_function__function_name" {
+output "function_name" {
   value       = aws_lambda_function.current.function_name
   description = "Unique name for your Lambda Function."
   sensitive   = false

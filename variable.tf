@@ -52,12 +52,12 @@ variable "expand_memory_size" {
   sensitive = false
 }
 
-variable "aws_lambda_function__function_name" {
+variable "function_name" {
   type        = string
-  default     = "FastAPI"
+  default     = "WebAppFastAPI"
   description = "Required argument - Unique name of the Lambda Function."
   validation {
-    condition     = var.aws_lambda_function__function_name  != null && 0 <= length(var.aws_lambda_function__function_name ) && length(var.aws_lambda_function__function_name ) <= 64
+    condition     = var.function_name  != null && 0 <= length(var.function_name ) && length(var.function_name ) <= 64
     error_message = "Error: function_name length must be in between 0 and 64 only."
   }
   sensitive = false

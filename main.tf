@@ -24,7 +24,7 @@ data "aws_region" "current" {
 }
 
 resource "aws_cloudwatch_log_group" "webapp_lambda_log_group" {
-  name = "/aws/lambda/${var.aws_lambda_function__function_name}"
+  name = "/aws/lambda/${var.function_name}"
 //name_prefix       = ""
 /*Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653
   If retention_in_days is 0, the events in the log group are always retained and never expire.
@@ -70,7 +70,7 @@ module "aws_lambda_function_webapp" {
     aws_cloudwatch_log_group.webapp_lambda_log_group
   ]
 
-  aws_lambda_function__function_name  = var.aws_lambda_function__function_name # Required argument.
+  function_name  = var.function_name # Required argument.
   role                                = var.role                               # Required argument.
 //architectures                       = var.architectures                      # Optional argument.
 //code_signing_config_arn             = var.code_signing_config_arn            # Optional argument.

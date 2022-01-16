@@ -19,8 +19,8 @@ output "arn" {
 # Resource  type : module
 # Resource  name : aws_lambda_function_webapp
 # Attribute name : function_name
-output "aws_lambda_function__function_name" {
-  value       = module.aws_lambda_function_webapp.aws_lambda_function__function_name
+output "function_name" {
+  value       = module.aws_lambda_function_webapp.function_name
   description = "Unique name for your Lambda Function."
   sensitive   = false
 }
