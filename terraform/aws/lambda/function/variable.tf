@@ -1,4 +1,3 @@
-/*
 variable "region" {
   type        = string
   default     = "eu-central-1"
@@ -9,7 +8,6 @@ variable "region" {
   }
   sensitive   = true
 }
-*/
 
 variable "account_id" {
   type        = number
