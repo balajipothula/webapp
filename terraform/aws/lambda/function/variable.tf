@@ -363,11 +363,10 @@ variable "source_code_hash" {
   sensitive = false
 }
 
-/*
 variable "tags" {
   type = map(string)
   default = {
-    "Name"           = "WebApp"
+    "Name"           = "WebAppFastAPI"
     "Division"       = "Product Development"
     "Developer"      = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
@@ -383,39 +382,6 @@ variable "tags" {
   }
   sensitive = false
 }
-*/
-
-variable "variable_tags" {
-  type = map(string)
-  default = {
-  }
-  description = "A map of tags to assign to the Lambda Function."
-  sensitive = false
-}
-
-# Using Name Tag in locals configuration block.
-variable "Name" {
-  type        = string
-  default     = "WebApp"
-  description = "Name of the Lambda Function."
-  validation {
-    condition     = var.Name != null && 0 <= length(var.Name) && length(var.Name) <= 64
-    error_message = "Error: function_name length must be in between 0 and 64 only."
-  }
-  sensitive = false
-}
-
-# Using Environment Tag in locals configuration block.
-variable "Environment" {
-  type        = string
-  default     = "Dev"
-  description = "Name of the Environment."
-  validation {
-    condition     = var.Environment != null && 0 <= length(var.Environment) && length(var.Environment) <= 64
-    error_message = "Error: function_name length must be in between 0 and 64 only."
-  }
-  sensitive = false
-}
 
 variable "timeout" {
   type        = number
@@ -427,7 +393,6 @@ variable "timeout" {
   }
   sensitive = false
 }
-
 
 // tracing_config configuration block argument.
 variable "mode" {

@@ -137,7 +137,7 @@ output "security_group_ids" {
 }
 
 output "tags" {
-  value       = local.tags
+  value       = var.tags
   description = "The tags of Lambda Function."
   sensitive   = false
 }

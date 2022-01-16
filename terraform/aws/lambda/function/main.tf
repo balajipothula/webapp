@@ -58,7 +58,7 @@ resource "aws_lambda_function" "current" {
   s3_key                         = var.s3_key                         # Optional argument but keep it, Conflicts with filename and image_uri.
 //s3_object_version              = var.s3_object_version              # Optional argument, Conflicts with filename and image_uri.
 //source_code_hash               = var.source_code_hash               # Optional argument.
-  tags                           = var.tags                         # Optional argument but keep it.
+  tags                           = var.tags                           # Optional argument but keep it.
   timeout                        = var.timeout                        # Optional argument but keep it.
 /*
   tracing_config {                                                    # Optional argument block.
