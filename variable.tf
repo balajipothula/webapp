@@ -1,14 +1,3 @@
-variable "region" {
-  type        = string
-  default     = "eu-central-1"
-  description = "AWS Region to launch your resources."
-  validation {
-    condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
-    error_message = "Error: region value must not null and region must consist of alphabets, hyphens and numbers only."
-  }
-  sensitive   = true
-}
-
 variable "account_id" {
   type        = number
   default     = null
@@ -27,6 +16,17 @@ variable "secret_key" {
   type        = string
   default     = null
   description = "AWS_SECRET_ACCESS_KEY which is stored in HashiCorp Terraform Cloud."
+  sensitive   = true
+}
+
+variable "region" {
+  type        = string
+  default     = "eu-central-1"
+  description = "AWS Region to launch your resources."
+  validation {
+    condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
+    error_message = "Error: region value must not null and region must consist of alphabets, hyphens and numbers only."
+  }
   sensitive   = true
 }
 
@@ -110,7 +110,7 @@ variable "target_arn" {
 
 variable "description" {
   type        = string
-  default     = "Web App FastAPI Lambda Function."
+  default     = "Web App using FastAPI."
   description = "Description of what Lambda Function does."
   validation {
     condition     = var.description != null && 0 <= length(var.description) && length(var.description) <= 256

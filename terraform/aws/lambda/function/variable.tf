@@ -1,14 +1,3 @@
-variable "region" {
-  type        = string
-  default     = "eu-central-1"
-  description = "AWS Region to launch your resources."
-  validation {
-    condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
-    error_message = "Error: region value must not null and region must consist of alphabets, hyphens and numbers only."
-  }
-  sensitive   = true
-}
-
 variable "account_id" {
   type        = number
   default     = null
@@ -30,6 +19,17 @@ variable "secret_key" {
   sensitive   = true
 }
 
+variable "region" {
+  type        = string
+  default     = "eu-central-1"
+  description = "AWS Region to launch your resources."
+  validation {
+    condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
+    error_message = "Error: region value must not null and region must consist of alphabets, hyphens and numbers only."
+  }
+  sensitive   = true
+}
+
 variable "vpc_id" {
   type        = string
   default     = "vpc-85fe9cef"
@@ -40,17 +40,6 @@ variable "vpc_id" {
     error_message = "Error: vpc_id value must not null, vpc_id lenght must be 12 and vpc_id must prefixed with vpc."
   }  
   sensitive   = true
-}
-
-variable "expand_memory_size" {
-  type        = bool
-  default     = false
-  description = "Expand Lambda Function memory_size ?"
-  validation {
-    condition     = var.expand_memory_size != null && contains(tolist([true, false]), var.expand_memory_size)
-    error_message = "Error: expand_memory_size value must not null and expand_memory_size value either true or false only."
-  }
-  sensitive = false
 }
 
 variable "function_name" {
@@ -111,7 +100,7 @@ variable "target_arn" {
 
 variable "description" {
   type        = string
-  default     = "WebApp Lambda Function."
+  default     = "Lambda Function Module."
   description = "Description of what Lambda Function does."
   validation {
     condition     = var.description != null && 0 <= length(var.description) && length(var.description) <= 256
