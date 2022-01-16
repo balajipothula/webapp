@@ -72,7 +72,7 @@ module "aws_lambda_function_webapp" {
 
   function_name  = var.function_name                                           # Required argument.
   role                                = var.role                               # Required argument.
-  architectures                       = var.architectures                      # Optional argument.
+//architectures                       = var.architectures                      # Optional argument.
 //code_signing_config_arn             = var.code_signing_config_arn            # Optional argument.
 /*
   dead_letter_config {                                                         # Optional argument block.
