@@ -59,14 +59,3 @@ jobs:
       - name: Generate Terraform Plan.
         run: terraform plan -no-color
         #continue-on-error: true
-
-      # On push to main, build or change infrastructure according to Terraform configuration files.
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud".
-      # Apply Terraform Plan.
-      - name: Apply Terraform Plan.
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -input=false -auto-approve
-
-      # Output of Terraform .
-      #- name: Output of Terraform.
-        #run: terraform output
