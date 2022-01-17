@@ -64,6 +64,7 @@ resource "aws_iam_role" "webapp_lambda_role" {
   name                  = "WebAppLambdaRole"
 }
 
+/*
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
 resource "aws_iam_policy" "webapp_lambda_policy" {
   name        = "WebAppLambdaPolicy"
@@ -71,7 +72,7 @@ resource "aws_iam_policy" "webapp_lambda_policy" {
   description = "IAM policy for WebApp Lambda Function."
   policy      = file("./WebAppLambdaPolicy.json")
 }
-
+*/
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
   depends_on = [
