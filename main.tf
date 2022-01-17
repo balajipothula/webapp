@@ -75,6 +75,7 @@ resource "aws_iam_policy" "webapp_lambda_policy" {
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
   depends_on = [
+    module.aws_iam_role_webapp,
     aws_iam_role.webapp_lambda_role,
     aws_iam_policy.webapp_lambda_policy
   ]
@@ -83,7 +84,7 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
   policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 }
 
-module "aws_iam_role_webapp3" {
+module "aws_iam_role_webapp" {
   source  = "./terraform/aws/iam/role"
 }
 
