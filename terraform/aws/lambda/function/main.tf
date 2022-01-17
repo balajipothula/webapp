@@ -14,9 +14,13 @@ data "aws_subnet_ids" "available" {
 # Data Source: aws_security_groups
 data "aws_security_groups" "default" {
   filter {
-    name   = "security-group-name"
-    values = ["*default*"]
-  }  
+    name   = "group-name"
+    values = ["default"]
+  }
+  filter {
+    name   = "description"
+    values = ["default VPC security group"]
+  }
 }
 
 # Resource  type : aws_lambda_function
