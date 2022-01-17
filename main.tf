@@ -57,17 +57,11 @@ resource "aws_cloudwatch_log_group" "webapp_lambda_log_group" {
   }
 }
 
-
 resource "aws_iam_role" "webapp_lambda_role" {
   assume_role_policy    = file("./WebAppLambdaRole.json")
   description           = "Role policy for WebApp Lambda Function."
   force_detach_policies = false 
   name                  = "WebAppLambdaRole"
-}
-
-
-module "aws_iam_role_webapp" {
-  source  = "./terraform/aws/iam/role"
 }
 
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
@@ -79,11 +73,12 @@ resource "aws_iam_policy" "webapp_lambda_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
-/*
+
   depends_on = [
+    aws_iam_role.webapp_lambda_role,
     aws_iam_policy.webapp_lambda_policy
   ]
-*/
+
   role       = "WebAppLambdaRole"
   policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 }
