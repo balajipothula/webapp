@@ -81,7 +81,8 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
     aws_iam_policy.webapp_lambda_policy
   ]
 
-  role       = "WebAppLambdaRole"
+//role       = "WebAppLambdaRole"
+  role       = module.aws_iam_role_webapp.name
   policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 }
 
