@@ -2,6 +2,7 @@
 data "aws_region" "current" {
 }
 
+# Data Source: aws_vpc
 data "aws_vpc" "default" {
 }
 
@@ -10,12 +11,16 @@ data "aws_subnet_ids" "available" {
   vpc_id = data.aws_vpc.default.id
 }
 
+# Data Source: aws_security_groups
+data "aws_security_groups" "default" {
+}
+
 # Resource  type : aws_lambda_function
 # Resource  name : current
 # Attribute name : function_name
 # Argument       : var.function_name
 # Variable  name : function_name
-resource "aws_lambda_function" "current" {
+resource "aws_lambda_function" "generic" {
 
   function_name                  = var.function_name                  # Required argument.
   role                           = var.role                           # Required argument.
@@ -66,9 +71,10 @@ resource "aws_lambda_function" "current" {
   }
 */
   vpc_config {                                                        # Optional argument block but keep it.
-  //subnet_ids                   = var.subnet_ids                     # Required block argument.
+    security_group_ids           = data.aws_security_groups.default.ids # Required block argument.
+  //security_group_ids           = var.security_group_ids             # Required block argument.
     subnet_ids                   = data.aws_subnet_ids.available.ids  # Required block argument.
-    security_group_ids           = var.security_group_ids             # Required block argument.
+  //subnet_ids                   = var.subnet_ids                     # Required block argument.
   }
 
 }
