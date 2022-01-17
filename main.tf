@@ -101,10 +101,6 @@ module "aws_lambda_function_webapp" {
   }
 */
   description                    = var.description                      # Optional argument but keep it.
-
-  environment {                                                         # Optional argument block but keep it.
-    variables                    = var.variables                        # Optional block argument.
-  }
 /*
   file_system_config {                                                  # Optional argument block.
     arn                          = var.efs_arn                          # Required block argument.
