@@ -15,7 +15,7 @@ data "aws_subnet_ids" "available" {
 data "aws_security_groups" "default" {
   filter {
     name   = "security-group-name"
-    values = "default"
+    values = ["*default*"]
   }  
 }
 
