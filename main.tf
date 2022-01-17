@@ -83,6 +83,10 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
   policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 }
 
+module "aws_iam_role_webapp3" {
+  source  = "./terraform/aws/iam/role"
+}
+
 module "aws_lambda_function_webapp" {
 
   source  = "./terraform/aws/lambda/function"
