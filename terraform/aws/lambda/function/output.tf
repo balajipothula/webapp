@@ -23,7 +23,7 @@ output "aws_security_groups" {
 }
 
 # Resource  type : aws_lambda_function
-# Resource  name : current
+# Resource  name : generic
 # Attribute name : arn
 output "arn" {
   value       = aws_lambda_function.generic.arn
@@ -32,7 +32,7 @@ output "arn" {
 }
 
 # Resource  type : aws_lambda_function
-# Resource  name : current
+# Resource  name : generic
 # Attribute name : function_name
 output "function_name" {
   value       = aws_lambda_function.generic.function_name
