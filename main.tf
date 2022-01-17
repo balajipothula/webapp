@@ -77,7 +77,6 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
   depends_on = [
     module.aws_iam_role_webapp,
-    aws_iam_role.webapp_lambda_role,
     aws_iam_policy.webapp_lambda_policy
   ]
 
