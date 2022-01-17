@@ -54,8 +54,8 @@ variable "name" {
 //default     = "AWS_IAM_Role_Generic"
   description = "Description of the role."
   validation {
-    condition     = var.name != null && 0 <= length(var.description) && length(var.description) <= 256
-    error_message = "Error: name value must not null and description lenght not more than 256 charecters."
+    condition     = var.name != null && 0 <= length(var.name) && length(var.name) <= 256
+    error_message = "Error: name value must not null and name lenght not more than 256 charecters."
   }
   sensitive = false
 }
