@@ -89,7 +89,7 @@ variable "code_signing_config_arn" {
 // dead_letter_config configuration block argument.
 variable "target_arn" {
   type        = string
-  default     = "arn:aws:iam::304501768659:role/LambdaFullAccess"
+  default     = ""
   description = "ARN of an SNS topic or SQS queue to notify when an invocation fails."
   validation {
     condition     = var.target_arn != null

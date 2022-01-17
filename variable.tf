@@ -34,30 +34,20 @@ variable "vpc_id" {
   type        = string
   default     = "vpc-85fe9cef"
   description = "The VPC ID that you want to filter from."
+  
   validation {
     condition     = var.vpc_id != null && length(var.vpc_id) == 12 && substr(var.vpc_id, 0, 3) == "vpc" && length(regexall("[^a-z-a-z0-9]", var.vpc_id)) == 0
     error_message = "Error: vpc_id value must not null, vpc_id lenght must be 12 and vpc_id must prefixed with vpc."
-  }
+  }  
   sensitive   = true
-}
-
-variable "expand_memory_size" {
-  type        = bool
-  default     = false
-  description = "Expand Lambda Function memory_size ?"
-  validation {
-    condition     = var.expand_memory_size != null && contains(tolist([true, false]), var.expand_memory_size)
-    error_message = "Error: expand_memory_size value must not null and expand_memory_size value either true or false only."
-  }
-  sensitive = false
 }
 
 variable "function_name" {
   type        = string
-  default     = "WebAppFastAPI"
+  default     = "webapplication"
   description = "Required argument - Unique name of the Lambda Function."
   validation {
-    condition     = var.function_name  != null && 0 <= length(var.function_name ) && length(var.function_name ) <= 64
+    condition     = var.function_name != null && 0 <= length(var.function_name) && length(var.function_name) <= 64
     error_message = "Error: function_name length must be in between 0 and 64 only."
   }
   sensitive = false
@@ -99,7 +89,7 @@ variable "code_signing_config_arn" {
 // dead_letter_config configuration block argument.
 variable "target_arn" {
   type        = string
-  default     = "arn:aws:iam::304501768659:role/LambdaFullAccess"
+  default     = ""
   description = "ARN of an SNS topic or SQS queue to notify when an invocation fails."
   validation {
     condition     = var.target_arn != null
@@ -110,7 +100,7 @@ variable "target_arn" {
 
 variable "description" {
   type        = string
-  default     = "Web App using FastAPI."
+  default     = "Lambda Function Module."
   description = "Description of what Lambda Function does."
   validation {
     condition     = var.description != null && 0 <= length(var.description) && length(var.description) <= 256
@@ -360,11 +350,10 @@ variable "source_code_hash" {
   sensitive = false
 }
 
-/*
 variable "tags" {
   type = map(string)
   default = {
-    "Name"           = "WebApp"
+    "Name"           = "WebAppFastAPI"
     "Division"       = "Product Development"
     "Developer"      = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
@@ -380,39 +369,6 @@ variable "tags" {
   }
   sensitive = false
 }
-*/
-
-variable "variable_tags" {
-  type = map(string)
-  default = {
-  }
-  description = "A map of tags to assign to the Lambda Function."
-  sensitive = false
-}
-
-# Using Name Tag in locals configuration block.
-variable "Name" {
-  type        = string
-  default     = "WebApp"
-  description = "Name of the Lambda Function."
-  validation {
-    condition     = var.Name != null && 0 <= length(var.Name) && length(var.Name) <= 64
-    error_message = "Error: function_name length must be in between 0 and 64 only."
-  }
-  sensitive = false
-}
-
-# Using Environment Tag in locals configuration block.
-variable "Environment" {
-  type        = string
-  default     = "Dev"
-  description = "Name of the Environment."
-  validation {
-    condition     = var.Environment != null && 0 <= length(var.Environment) && length(var.Environment) <= 64
-    error_message = "Error: function_name length must be in between 0 and 64 only."
-  }
-  sensitive = false
-}
 
 variable "timeout" {
   type        = number
@@ -424,7 +380,6 @@ variable "timeout" {
   }
   sensitive = false
 }
-
 
 // tracing_config configuration block argument.
 variable "mode" {

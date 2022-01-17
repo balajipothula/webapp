@@ -4,8 +4,26 @@ output "aws_region" {
   sensitive   = false
 }
 
+output "aws_vpc" {
+  value       = data.aws_vpc.default.id
+  description = "The id of the specific VPC to retrieve."
+  sensitive   = false
+}
+
+output "aws_subnet_ids" {
+  value       = data.aws_subnet_ids.available.ids
+  description = "A set of all the subnet ids found."
+  sensitive   = false
+}
+
+output "aws_security_groups" {
+  value       = data.aws_security_groups.default.ids
+  description = "IDs of the matches security groups."
+  sensitive   = false
+}
+
 # Resource  type : module
-# Resource  name : aws_lambda_function_webapp
+# Module    name : aws_lambda_function_webapp
 # Attribute name : arn
 output "arn" {
   value       = module.aws_lambda_function_webapp.arn
@@ -14,7 +32,7 @@ output "arn" {
 }
 
 # Resource  type : module
-# Resource  name : aws_lambda_function_webapp
+# Module    name : aws_lambda_function_webapp
 # Attribute name : function_name
 output "function_name" {
   value       = module.aws_lambda_function_webapp.function_name
@@ -106,6 +124,12 @@ output "version" {
   sensitive   = false
 }
 
+output "vpc_config_vpc_id" {
+  value       = module.aws_lambda_function_webapp.vpc_config.*.vpc_id
+  description = "ID of the VPC."
+  sensitive   = false
+}
+
 output "kms_key_arn" {
   value       = module.aws_lambda_function_webapp.kms_key_arn
   description = "The ARN for the KMS encryption key of Lambda Function."
@@ -115,5 +139,23 @@ output "kms_key_arn" {
 output "source_code_hash" {
   value       = module.aws_lambda_function_webapp.source_code_hash
   description = "Base64-encoded representation of raw SHA-256 sum of the zip file."
+  sensitive   = false
+}
+
+output "subnet_ids" {
+  value       = module.aws_lambda_function_webapp.vpc_config.*.subnet_ids
+  description = "The subnet ids of Lambda Function."
+  sensitive   = false
+}
+
+output "security_group_ids" {
+  value       = module.aws_lambda_function_webapp.vpc_config.*.security_group_ids
+  description = "The security group ids of Lambda Function."
+  sensitive   = false
+}
+
+output "tags" {
+  value       = var.tags
+  description = "The tags of Lambda Function."
   sensitive   = false
 }
