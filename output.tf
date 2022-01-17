@@ -124,12 +124,6 @@ output "version" {
   sensitive   = false
 }
 
-output "vpc_config_vpc_id" {
-  value       = module.aws_lambda_function_webapp.vpc_config.*.vpc_id
-  description = "ID of the VPC."
-  sensitive   = false
-}
-
 output "kms_key_arn" {
   value       = module.aws_lambda_function_webapp.kms_key_arn
   description = "The ARN for the KMS encryption key of Lambda Function."
@@ -139,18 +133,6 @@ output "kms_key_arn" {
 output "source_code_hash" {
   value       = module.aws_lambda_function_webapp.source_code_hash
   description = "Base64-encoded representation of raw SHA-256 sum of the zip file."
-  sensitive   = false
-}
-
-output "subnet_ids" {
-  value       = module.aws_lambda_function_webapp.vpc_config.*.subnet_ids
-  description = "The subnet ids of Lambda Function."
-  sensitive   = false
-}
-
-output "security_group_ids" {
-  value       = module.aws_lambda_function_webapp.vpc_config.*.security_group_ids
-  description = "The security group ids of Lambda Function."
   sensitive   = false
 }
 
