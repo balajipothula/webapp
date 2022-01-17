@@ -67,14 +67,7 @@ resource "aws_iam_role" "webapp_lambda_role" {
 */
 
 module "aws_iam_role_webapp" {
-
   source  = "./terraform/aws/iam/role"
-
-  assume_role_policy    = file("./WebAppLambdaRole.json")
-  description           = "Role policy for WebApp Lambda Function."
-  force_detach_policies = false 
-  name                  = "WebAppLambdaRole2"
-
 }
 
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
