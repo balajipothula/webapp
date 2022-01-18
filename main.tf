@@ -28,6 +28,7 @@ module "webapp_aws_iam_policy" {
 
 }
 /*
+#####
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
 resource "aws_iam_policy" "webapp_lambda_policy" {
   name        = "WebAppLambdaPolicy"
