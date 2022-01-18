@@ -48,9 +48,9 @@ module "webapp_aws_lambda_function" {
     aws_iam_role_policy_attachment.webapp_lambda_policy_attachment,
   ]
 
-  function_name                  = "WebAppFastAPI"                                   # Required argument.
-  role                           = "arn:aws:iam::304501768659:role/WebAppRole"       # Required argument.
-  description                    = "Web App FastAPI Lambda Function."                # Optional argument but keep it.
+  function_name                  = "WebApp"                                          # Required argument.
+  role                           = module.webapp_aws_iam_role.arn                    # Required argument.
+  description                    = "WebApp Lambda Function."                         # Optional argument but keep it.
   handler                        = "lambda_function.lambda_handler"                  # Optional argument but keep it.
   memory_size                    = 128                                               # Optional argument but keep it.
   package_type                   = "Zip"                                             # Optional argument but keep it.
