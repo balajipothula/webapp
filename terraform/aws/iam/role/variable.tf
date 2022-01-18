@@ -1,24 +1,3 @@
-variable "account_id" {
-  type        = number
-  default     = null
-  description = "AWS Account ID which is stored in HashiCorp Terraform Cloud."
-  sensitive   = true
-}
-
-variable "access_key" {
-  type        = string
-  default     = null
-  description = "AWS_ACCESS_KEY_ID which is stored in HashiCorp Terraform Cloud."
-  sensitive   = true
-}
-
-variable "secret_key" {
-  type        = string
-  default     = null
-  description = "AWS_SECRET_ACCESS_KEY which is stored in HashiCorp Terraform Cloud."
-  sensitive   = true
-}
-
 variable "assume_role_policy" {
   type        = string
   default     = null
@@ -50,8 +29,7 @@ variable "force_detach_policies" {
 
 variable "name" {
   type        = string
-  default     = "WebAppLambdaRole2"
-//default     = "AWS_IAM_Role_Generic"
+  default     = "GenericIAMRole"
   description = "Description of the role."
   validation {
     condition     = var.name != null && 0 <= length(var.name) && length(var.name) <= 256
