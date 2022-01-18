@@ -12,7 +12,7 @@ module "webapp_aws_iam_role" {
 
   description           = "AWS IAM Role for WebApp." # Optional argument but keep it.
   force_detach_policies = true                       # Optional argument but keep it.
-  name                  = "ServiceRoleForWebApp"     # Optional argument but keep it.
+  name                  = "WebAppIAMRole"            # Optional argument but keep it.
 
 }
 
