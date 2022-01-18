@@ -17,6 +17,17 @@ module "webapp_aws_iam_role" {
 
 }
 
+module "webapp_aws_iam_policy" {
+
+  source      = "./terraform/aws/iam/policy"
+
+  description = "AWS IAM Policy for WebApp Lambda."       # Optional argument but keep it.
+  name        = "WebAppLambdaPolicy"                      # Optional argument but keep it.
+  path        = "/"                                       # Optional argument but keep it.
+  policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
+
+}
+
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
 resource "aws_iam_policy" "webapp_lambda_policy" {
   name        = "WebAppLambdaPolicy"
@@ -46,7 +57,7 @@ module "webapp_aws_lambda_function" {
   ]
 
   function_name                  = "WebAppFastAPI"                                   # Required argument.
-  role                           = "arn:aws:iam::304501768659:role/WebAppRole" # Required argument.
+  role                           = "arn:aws:iam::304501768659:role/WebAppRole"       # Required argument.
   description                    = "Web App FastAPI Lambda Function."                # Optional argument but keep it.
   handler                        = "lambda_function.lambda_handler"                  # Optional argument but keep it.
   memory_size                    = 128                                               # Optional argument but keep it.
