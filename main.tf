@@ -45,7 +45,7 @@ data "aws_security_groups" "default" {
 }
 
 resource "aws_cloudwatch_log_group" "webapp_lambda_log_group" {
-  name = "/aws/lambda/WebAppFastAPI"
+  name = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}"
 //name_prefix       = ""
 /*Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653
   If retention_in_days is 0, the events in the log group are always retained and never expire.
@@ -68,16 +68,16 @@ resource "aws_iam_policy" "webapp_lambda_policy" {
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
   depends_on = [
-    module.aws_iam_role_webapp,
+    module.webapp_aws_iam_role,
     aws_iam_policy.webapp_lambda_policy
   ]
 
-  role       = module.aws_iam_role_webapp.name
+  role       = module.webapp_aws_iam_role.name
   policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 
 }
 
-module "aws_iam_role_webapp" {
+module "webapp_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
 
