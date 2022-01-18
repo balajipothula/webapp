@@ -89,11 +89,10 @@ module "aws_iam_role_webapp" {
 
 module "aws_lambda_function_webapp" {
 
-  source  = "./terraform/aws/lambda/function"
+  source                         = "./terraform/aws/lambda/function"
 
-  depends_on = [
+  depends_on                     = [
     aws_iam_role_policy_attachment.webapp_lambda_policy_attachment,
-    aws_cloudwatch_log_group.webapp_lambda_log_group
   ]
 
   function_name                  = "WebAppFastAPI"                                   # Required argument.
@@ -107,12 +106,12 @@ module "aws_lambda_function_webapp" {
   runtime                        = "python3.8"                                       # Optional argument but keep it.
   s3_bucket                      = "job-log-s3-bucket"                               # Optional argument but keep it.
   s3_key                         = "v1.0.3/job-log.zip"                              # Optional argument but keep it, Conflicts with filename and image_uri.
-  tags                           = {
-                                      "AppName"        = "WebAppFastAPI"
-                                      "Division"       = "Platform"
-                                      "DeveloperName"  = "Balaji Pothula"
-                                      "DeveloperEmail" = "balan.pothula@gmail.com"
-                                    }                                                # Optional argument but keep it.                           
+  tags                           = {                                                 # Optional argument but keep it.
+    "AppName"        = "WebAppFastAPI"
+    "Division"       = "Platform"
+    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperEmail" = "balan.pothula@gmail.com"
+  }
   timeout                        = 30                                                # Optional argument but keep it.
 
 }
