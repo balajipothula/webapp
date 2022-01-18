@@ -1,7 +1,7 @@
 # Resource  type : module
 # Module    name : webapp_aws_iam_role
 # Attribute name : arn
-output "arn" {
+output "webapp_aws_iam_role_arn" {
   value       = module.webapp_aws_iam_role.arn
   description = "Amazon Resource Name (ARN) specifying the role."
   sensitive   = false
@@ -25,7 +25,7 @@ output "name" {
   sensitive   = false
 }
 
-output "tags_all" {
+output "webapp_aws_iam_role_tags_all" {
   value       = module.webapp_aws_iam_role.tags_all
   description = "A map of tags assigned to the resource."
   sensitive   = false
