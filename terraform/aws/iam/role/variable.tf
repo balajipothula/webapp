@@ -50,7 +50,7 @@ variable "force_detach_policies" {
 
 variable "name" {
   type        = string
-  default     = "WebAppLambdaRole"
+  default     = "WebAppLambdaRole2"
 //default     = "AWS_IAM_Role_Generic"
   description = "Description of the role."
   validation {
