@@ -137,7 +137,7 @@ output "source_code_hash" {
 }
 
 output "tags" {
-  value       = var.tags
+  value       = module.aws_lambda_function_webapp.tags
   description = "The tags of Lambda Function."
   sensitive   = false
 }
