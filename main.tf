@@ -45,7 +45,7 @@ data "aws_security_groups" "default" {
 }
 
 resource "aws_cloudwatch_log_group" "webapp_lambda_log_group" {
-  name = "/aws/lambda/${module.aws_lambda_function_webapp.function_name}"
+  name = "/aws/lambda/WebAppFastAPI"
 //name_prefix       = ""
 /*Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653
   If retention_in_days is 0, the events in the log group are always retained and never expire.
