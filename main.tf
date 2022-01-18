@@ -1,21 +1,8 @@
 provider "aws" {
 
   region     = var.region
-
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
-
-//shared_credentials_file = "/home/balaji/.aws/config"
-//profile                 = "terraform"
-
-/*
-  assume_role {
-    role_arn = "arn:aws:iam::123456789012:role/terraform"
-  }
-*/
-
-//allowed_account_ids   = ["123456789012"]
-//forbidden_account_ids = ["123456789013"]
 
 }
 
@@ -25,7 +12,7 @@ module "webapp_aws_iam_role" {
 
   description           = "AWS IAM Role for WebApp." # Optional argument but keep it.
   force_detach_policies = true                       # Optional argument but keep it.
-  name                  = "WebAppLambdaRole"         # Optional argument but keep it.
+  name                  = "WebAppRole"         # Optional argument but keep it.
 
 }
 
@@ -36,8 +23,6 @@ resource "aws_iam_policy" "webapp_lambda_policy" {
   description = "IAM policy for WebApp Lambda Function."
   policy      = file("./WebAppLambdaPolicy.json")
 }
-
-
 
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
@@ -56,12 +41,11 @@ module "webapp_aws_lambda_function" {
   source                         = "./terraform/aws/lambda/function"
 
   depends_on                     = [
-    module.webapp_aws_iam_role,
     aws_iam_role_policy_attachment.webapp_lambda_policy_attachment,
   ]
 
   function_name                  = "WebAppFastAPI"                                   # Required argument.
-  role                           = "arn:aws:iam::304501768659:role/WebAppLambdaRole" # Required argument.
+  role                           = "arn:aws:iam::304501768659:role/WebAppRole" # Required argument.
   description                    = "Web App FastAPI Lambda Function."                # Optional argument but keep it.
   handler                        = "lambda_function.lambda_handler"                  # Optional argument but keep it.
   memory_size                    = 128                                               # Optional argument but keep it.
