@@ -107,6 +107,12 @@ module "aws_lambda_function_webapp" {
   runtime                        = "python3.8"                                       # Optional argument but keep it.
   s3_bucket                      = "job-log-s3-bucket"                               # Optional argument but keep it.
   s3_key                         = "v1.0.3/job-log.zip"                              # Optional argument but keep it, Conflicts with filename and image_uri.
+  tags                           = {
+                                      "AppName"        = "WebAppFastAPI"
+                                      "Division"       = "Platform"
+                                      "DeveloperName"  = "Balaji Pothula"
+                                      "DeveloperEmail" = "balan.pothula@gmail.com"
+                                    }                                                # Optional argument but keep it.                           
   timeout                        = 30                                                # Optional argument but keep it.
 
 }
