@@ -27,27 +27,16 @@ module "webapp_aws_iam_policy" {
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
-/*
-#####
-# See also the following AWS managed policy: AWSLambdaBasicExecutionRole
-resource "aws_iam_policy" "webapp_lambda_policy" {
-  name        = "WebAppLambdaPolicy"
-  path        = "/"
-  description = "IAM policy for WebApp Lambda Function."
-  policy      = file("./WebAppLambdaPolicy.json")
-}
-*/
+
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
   depends_on = [
     module.webapp_aws_iam_role,
     module.webapp_aws_iam_policy,
-  //aws_iam_policy.webapp_lambda_policy,
   ]
 
   role       = module.webapp_aws_iam_role.name
   policy_arn = module.webapp_aws_iam_role.arn
-//policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 
 }
 
