@@ -36,7 +36,7 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
   ]
 
   role       = module.webapp_aws_iam_role.name
-  policy_arn = module.webapp_aws_iam_role.arn
+  policy_arn = module.webapp_aws_iam_policy.arn
 
 }
 
