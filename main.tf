@@ -22,12 +22,12 @@ module "webapp_aws_iam_policy" {
   source      = "./terraform/aws/iam/policy"
 
   description = "AWS IAM Policy for WebApp Lambda."       # Optional argument but keep it.
-  name        = "WebAppLambdaPolicy"                      # Optional argument but keep it.
+  name        = "WebAppLambdaIAMPolicy"                   # Optional argument but keep it.
   path        = "/"                                       # Optional argument but keep it.
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
-
+/*
 # See also the following AWS managed policy: AWSLambdaBasicExecutionRole
 resource "aws_iam_policy" "webapp_lambda_policy" {
   name        = "WebAppLambdaPolicy"
@@ -35,16 +35,18 @@ resource "aws_iam_policy" "webapp_lambda_policy" {
   description = "IAM policy for WebApp Lambda Function."
   policy      = file("./WebAppLambdaPolicy.json")
 }
-
+*/
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
   depends_on = [
     module.webapp_aws_iam_role,
-    aws_iam_policy.webapp_lambda_policy
+    module.webapp_aws_iam_policy,
+  //aws_iam_policy.webapp_lambda_policy,
   ]
 
   role       = module.webapp_aws_iam_role.name
-  policy_arn = aws_iam_policy.webapp_lambda_policy.arn
+  policy_arn = module.webapp_aws_iam_role.arn
+//policy_arn = aws_iam_policy.webapp_lambda_policy.arn
 
 }
 
