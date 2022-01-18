@@ -80,11 +80,11 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 module "aws_iam_role_webapp" {
 
   source  = "./terraform/aws/iam/role"
-/*
-  description           = var.description
-  force_detach_policies = var.force_detach_policies
-  name                  = var.name
-*/
+
+  description           = "AWS IAM Role for WebApp."
+  force_detach_policies = true
+  name                  = "WebAppLambdaRole"
+
 }
 
 module "aws_lambda_function_webapp" {
