@@ -3,10 +3,12 @@
   "Statement":[
     {
       "Sid":"AmazonS3FullAccess",
-      "Principal":"*",
+      "Action":[
+        "s3:GetObject"
+      ],
       "Effect":"Allow",
-      "Action":"*",
-      "Resource":["*"]
+      "Resource":"arn:aws:s3:::webapp-aws-s3-bucket/*",
+      "Principal":"*"
     }
   ]
 }
