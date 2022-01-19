@@ -25,7 +25,7 @@ output "webapp_aws_iam_name" {
   sensitive   = false
 }
 
-output "webapp_aws_iam_webapp_aws_iam_role_tags_all" {
+output "webapp_aws_iam_role_tags_all" {
   value       = module.webapp_aws_iam_role.tags_all
   description = "A map of tags assigned to the resource."
   sensitive   = false
