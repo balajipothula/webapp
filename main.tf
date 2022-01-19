@@ -27,8 +27,20 @@ module "webapp_aws_iam_policy" {
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
-
+/*
 resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
+
+  depends_on = [
+    module.webapp_aws_iam_role,
+    module.webapp_aws_iam_policy,
+  ]
+
+  role       = module.webapp_aws_iam_role.name
+  policy_arn = module.webapp_aws_iam_policy.arn
+
+}
+*/
+module "webapp_aws_iam_role_policy_attachment" {
 
   depends_on = [
     module.webapp_aws_iam_role,
