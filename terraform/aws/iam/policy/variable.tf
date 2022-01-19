@@ -11,7 +11,7 @@ variable "description" {
 
 variable "name" {
   type        = string
-  default     = "GenericIAMPolicy"
+  default     = "AdministratorAccess"
   description = "The name of the policy."
   validation {
     condition     = var.name != null && 0 <= length(var.name) && length(var.name) <= 256

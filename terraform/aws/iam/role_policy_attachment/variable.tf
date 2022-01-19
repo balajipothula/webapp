@@ -7,7 +7,7 @@ variable "role" {
 
 variable "policy_arn" {
   type        = string
-  default     = "arn:aws:iam::304501768659:policy/WebAppLambdaIAMPolicy"
+  default     = "arn:aws:iam::aws:policy/AdministratorAccess"
   description = "The ARN of the policy you want to apply."
   validation {
     condition     = var.policy_arn != null
