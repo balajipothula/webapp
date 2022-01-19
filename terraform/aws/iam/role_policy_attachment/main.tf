@@ -1,8 +1,6 @@
-resource "aws_iam_policy" "generic" {
+resource "aws_iam_role_policy_attachment" "generic" {
 
-  description = var.description                                  # Optional argument but keep it.
-  name        = var.name                                         # Optional argument but keep it.
-  path        = var.path                                         # Optional argument but keep it.
-  policy      = file("${path.module}/json/LambdaIAMPolicy.json") # Required argument.
+  role       = var.role       # Required argument.
+  policy_arn = var.policy_arn # Required argument.
 
 }
