@@ -6,6 +6,7 @@ provider "aws" {
 
 }
 
+#  WebApp AWS IAM Role Creation.
 module "webapp_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
@@ -17,6 +18,7 @@ module "webapp_aws_iam_role" {
 
 }
 
+#  WebApp AWS IAM Policy Creation.
 module "webapp_aws_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
@@ -28,6 +30,7 @@ module "webapp_aws_iam_policy" {
 
 }
 
+#  WebApp AWS IAM Role Policy Attachment.
 module "webapp_aws_iam_role_policy_attachment" {
 
   source      = "./terraform/aws/iam/role_policy_attachment"
@@ -42,6 +45,7 @@ module "webapp_aws_iam_role_policy_attachment" {
 
 }
 
+#  WebApp AWS Lambda Function Creation.
 module "webapp_aws_lambda_function" {
 
   source                         = "./terraform/aws/lambda/function"
@@ -70,8 +74,8 @@ module "webapp_aws_lambda_function" {
   timeout                        = 30                                                # Optional argument but keep it.
 
 }
-#
 
+#  WebApp AWS CloudWatch Log Group Creation.
 module "webapp_aws_cloudwatch_log_group" {
 
   source             = "./terraform/aws/cloudwatch/log_group"

@@ -1,2 +1,2 @@
 # terraform > aws > iam > policy directory.
-# Root directory for AWS Cloud IAM Policy Terraform Resource Module.
+# Root directory for AWS Cloud IAM Policy Service Terraform Resource Module.
