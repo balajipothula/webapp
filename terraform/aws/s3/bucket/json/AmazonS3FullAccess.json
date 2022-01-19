@@ -5,10 +5,7 @@
       "Sid":"AmazonS3FullAccess",
       "Principal":"*",
       "Effect":"Allow",
-      "Action":[
-        "s3:*",
-        "s3-object-lambda:*"
-      ],
+      "Action":"*",
       "Resource":"*"
     }
   ]
