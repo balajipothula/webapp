@@ -6,7 +6,7 @@
       "Principal":"*",
       "Effect":"Allow",
       "Action":"*",
-      "Resource":"*"
+      "Resource":["*"]
     }
   ]
 }
