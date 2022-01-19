@@ -1,12 +1,15 @@
 {
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "AmazonS3FullAccess",
-			"Principal": {},
-			"Effect": "Allow",
-			"Action": ["s3:*", "s3-object-lambda:*"],
-			"Resource": "*"
-		}
-	]
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"AmazonS3FullAccess",
+      "Principal":"*",
+      "Effect":"Allow",
+      "Action":[
+        "s3:*",
+        "s3-object-lambda:*"
+      ],
+      "Resource":"*"
+    }
+  ]
 }
