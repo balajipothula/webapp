@@ -1,2 +1,2 @@
 # terraform > aws > iam > role directory.
-# Root directory for AWS Cloud IAM Role Service.
+# Root directory for AWS Cloud IAM Role Terraform Resource Module.
