@@ -50,7 +50,7 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_iam_role_policy_attachment,
   ]
 
-  function_name                  = "WebApp"                                          # Required argument.
+  function_name                  = "webapp"                                          # Required argument.
   role                           = module.webapp_aws_iam_role.arn                    # Required argument.
   description                    = "WebApp Lambda Function."                         # Optional argument but keep it.
   handler                        = "lambda_function.lambda_handler"                  # Optional argument but keep it.
