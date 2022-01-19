@@ -50,7 +50,7 @@ resource "aws_lambda_function" "generic" {
     local_mount_path             = var.local_mount_path                 # Required block argument.
   }
 */
-//filename                       = var.filename                         # Optional argument, Conflicts with image_uri, s3_bucket, s3_key, and s3_object_version.
+//filename                       = var.filename                         # Optional argument, conflicts with image_uri, s3_bucket, s3_key, and s3_object_version.
   handler                        = var.handler                          # Optional argument but keep it.
 /*
   image_config {                                                        # Optional argument block.
@@ -68,8 +68,8 @@ resource "aws_lambda_function" "generic" {
   reserved_concurrent_executions = var.reserved_concurrent_executions   # Optional argument but keep it.
   runtime                        = var.runtime                          # Optional argument but keep it.
   s3_bucket                      = var.s3_bucket                        # Optional argument but keep it.
-  s3_key                         = var.s3_key                           # Optional argument but keep it, Conflicts with filename and image_uri.
-//s3_object_version              = var.s3_object_version                # Optional argument, Conflicts with filename and image_uri.
+  s3_key                         = var.s3_key                           # Optional argument but keep it, conflicts with filename and image_uri.
+//s3_object_version              = var.s3_object_version                # Optional argument, conflicts with filename and image_uri.
 //source_code_hash               = var.source_code_hash                 # Optional argument.
   tags                           = var.tags                             # Optional argument but keep it.
   timeout                        = var.timeout                          # Optional argument but keep it.
