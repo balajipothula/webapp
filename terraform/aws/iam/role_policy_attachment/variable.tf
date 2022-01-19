@@ -14,7 +14,7 @@ variable "policy_arn" {
   default     = "arn:aws:iam::304501768659:policy/WebAppLambdaIAMPolicy"
   description = "The ARN of the policy you want to apply."
   validation {
-    condition     = var.name != null
+    condition     = var.policy_arn != null
     error_message = "Error: policy_arn value must not null."
   }
   sensitive = false
