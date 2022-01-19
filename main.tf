@@ -6,6 +6,24 @@ provider "aws" {
 
 }
 
+#  WebApp AWS S3 Bucket Creation.
+module "webapp_aws_s3_bucket" {
+
+  source = "./terraform/aws/s3/bucket"
+
+  bucket = "webapp-aws-s3-bucket"                # Optional argument but keep it.
+  acl    = "private"                             # Optional argument but keep it.
+  policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
+
+  tags   = {                                     # Optional argument but keep it.
+    "AppName"        = "WebAppFastAPI"
+    "Division"       = "Platform"
+    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperEmail" = "balan.pothula@gmail.com"
+  }
+
+}
+
 #  WebApp AWS IAM Role Creation.
 module "webapp_aws_iam_role" {
 

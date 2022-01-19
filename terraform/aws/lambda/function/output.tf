@@ -155,7 +155,7 @@ output "security_group_ids" {
 }
 
 output "tags" {
-  value       = var.tags
+  value       = aws_lambda_function.generic.tags
   description = "The tags of Lambda Function."
   sensitive   = false
 }

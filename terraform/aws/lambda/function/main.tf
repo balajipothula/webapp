@@ -24,7 +24,7 @@ data "aws_security_groups" "default" {
 }
 
 # Resource  type : aws_lambda_function
-# Resource  name : current
+# Resource  name : generic
 # Attribute name : function_name
 # Argument       : var.function_name
 # Variable  name : function_name
