@@ -1,11 +1,13 @@
 variable "role" {
   type        = string
-  default     = "WebAppLambdaIAMRole"
+  default     = null
   description = "The name of the IAM role to which the policy should be applied"
+/*
   validation {
     condition     = var.role != null && 0 <= length(var.role) && length(var.role) <= 64
     error_message = "Error: role value must not null and length not more than 64 charecters."
   }
+*/
   sensitive = false
 }
 
