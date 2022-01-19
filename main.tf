@@ -6,7 +6,7 @@ provider "aws" {
 
 }
 
-#  WebApp AWS S3 Bucket Creation.
+#  WebApp AWS S3 Bucket Creation Module.
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
@@ -24,7 +24,7 @@ module "webapp_aws_s3_bucket" {
 
 }
 
-#  WebApp AWS IAM Role Creation.
+#  WebApp AWS IAM Role Creation Module.
 module "webapp_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
@@ -36,7 +36,7 @@ module "webapp_aws_iam_role" {
 
 }
 
-#  WebApp AWS IAM Policy Creation.
+#  WebApp AWS IAM Policy Creation Module.
 module "webapp_aws_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
@@ -48,7 +48,7 @@ module "webapp_aws_iam_policy" {
 
 }
 
-#  WebApp AWS IAM Role Policy Attachment.
+#  WebApp AWS IAM Role Policy Attachment Module.
 module "webapp_aws_iam_role_policy_attachment" {
 
   source      = "./terraform/aws/iam/role_policy_attachment"
@@ -63,7 +63,7 @@ module "webapp_aws_iam_role_policy_attachment" {
 
 }
 
-#  WebApp AWS Lambda Function Creation.
+#  WebApp AWS Lambda Function Creation Module.
 module "webapp_aws_lambda_function" {
 
   source                         = "./terraform/aws/lambda/function"
@@ -93,7 +93,7 @@ module "webapp_aws_lambda_function" {
 
 }
 
-#  WebApp AWS CloudWatch Log Group Creation.
+#  WebApp AWS CloudWatch Log Group Creation Module.
 module "webapp_aws_cloudwatch_log_group" {
 
   source             = "./terraform/aws/cloudwatch/log_group"
