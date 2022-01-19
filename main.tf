@@ -27,19 +27,7 @@ module "webapp_aws_iam_policy" {
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
-/*
-resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 
-  depends_on = [
-    module.webapp_aws_iam_role,
-    module.webapp_aws_iam_policy,
-  ]
-
-  role       = module.webapp_aws_iam_role.name
-  policy_arn = module.webapp_aws_iam_policy.arn
-
-}
-*/
 module "webapp_aws_iam_role_policy_attachment" {
 
   source      = "./terraform/aws/iam/role_policy_attachment"
@@ -49,8 +37,8 @@ module "webapp_aws_iam_role_policy_attachment" {
     module.webapp_aws_iam_policy,
   ]
 
-  role       = module.webapp_aws_iam_role.name
-  policy_arn = module.webapp_aws_iam_policy.arn
+  role       = module.webapp_aws_iam_role.name  # Required argument.
+  policy_arn = module.webapp_aws_iam_policy.arn # Required argument.
 
 }
 
@@ -59,7 +47,7 @@ module "webapp_aws_lambda_function" {
   source                         = "./terraform/aws/lambda/function"
 
   depends_on                     = [
-    aws_iam_role_policy_attachment.webapp_lambda_policy_attachment,
+    module.webapp_aws_iam_role_policy_attachment,
   ]
 
   function_name                  = "WebApp"                                          # Required argument.
