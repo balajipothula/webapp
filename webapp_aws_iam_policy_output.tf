@@ -7,7 +7,7 @@ output "id" {
   sensitive   = false
 }
 
-output "arn" {
+output "webapp_aws_iam_policy_arn" {
   value       = module.webapp_aws_iam_policy.arn
   description = "The ARN assigned by AWS to this policy."
   sensitive   = false
@@ -43,7 +43,7 @@ output "policy_id" {
   sensitive   = false
 }
 
-output "tags_all" {
+output "webapp_aws_iam_policy_tags_all" {
   value       = module.webapp_aws_iam_policy.tags_all
   description = "A map of tags assigned to the resource."
   sensitive   = false
