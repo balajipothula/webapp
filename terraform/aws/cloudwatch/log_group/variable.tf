@@ -1,11 +1,7 @@
 variable "name" {
   type        = string
-  default     = "webapp"
+  default     = null
   description = "The name of the log group."
-  validation {
-    condition     = var.name != null && 0 <= length(var.name) && length(var.name) <= 64
-    error_message = "Error: name must not null and length must be in between 1 and 64 only."
-  }
   sensitive = false
 }
 

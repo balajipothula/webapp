@@ -73,7 +73,7 @@ module "webapp_aws_lambda_function" {
 
 module "webapp_aws_cloudwatch_log_group" {
 
-  source                         = "./terraform/aws/cloudwatch/log_group"
+  source             = "./terraform/aws/cloudwatch/log_group"
 
   name               = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument but keep it.
   retention_in_days  = 14                                                               # Optional argument but keep it.
@@ -85,15 +85,3 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-/*
-resource "aws_cloudwatch_log_group" "webapp_lambda_log_group" {
-  name = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}"
-//name_prefix       = ""
-
-  retention_in_days = 14
-  tags = {
-    Environment = "Dev"
-    Application = "WebApp"
-  }
-}
-*/
