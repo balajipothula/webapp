@@ -13,7 +13,7 @@ module "webapp_aws_s3_bucket" {
 
   bucket = "webapp-aws-s3-bucket"                # Optional argument but keep it.
   acl    = "private"                             # Optional argument but keep it.
-  policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
+//policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
 
   tags   = {                                     # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
