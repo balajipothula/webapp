@@ -42,6 +42,8 @@ resource "aws_iam_role_policy_attachment" "webapp_lambda_policy_attachment" {
 */
 module "webapp_aws_iam_role_policy_attachment" {
 
+  source      = "./terraform/aws/iam/role_policy_attachment"
+
   depends_on = [
     module.webapp_aws_iam_role,
     module.webapp_aws_iam_policy,
