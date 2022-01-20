@@ -49,6 +49,28 @@ module "webapp_aws_s3_bucket" {
 
 }
 
+#  WebApp AWS S3 Bucket Object Creation Module.
+module "webapp_aws_s3_bucket_object" {
+
+  source = "./terraform/aws/s3/bucket_object"
+
+  depends_on = [
+    module.webapp_aws_s3_bucket,
+  ]
+
+  bucket = module.webapp_aws_s3_bucket.id        # Required argument.
+  key    = "v2022.01.20"                         # Required argument.
+  acl    = "private"                             # Optional argument but keep it.
+  source        = "./python/lambda_function.py"  # Optional argument but keep it.
+  tags   = {                                     # Optional argument but keep it.
+    "AppName"        = "WebAppFastAPI"
+    "Division"       = "Platform"
+    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperEmail" = "balan.pothula@gmail.com"
+  }
+
+}
+
 #  WebApp AWS IAM Role Creation Module.
 module "webapp_aws_iam_role" {
 
