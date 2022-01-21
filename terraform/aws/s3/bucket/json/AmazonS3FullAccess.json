@@ -4,7 +4,7 @@
     {
       "Sid":"AmazonS3FullAccess",
       "Action":[
-        "s3:GetObject"
+        "s3:PutObject"
       ],
       "Effect":"Allow",
       "Resource":"arn:aws:s3:::webapp-aws-s3-bucket/*",
