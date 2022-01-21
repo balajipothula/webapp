@@ -58,11 +58,11 @@ module "webapp_aws_s3_bucket_object" {
     module.webapp_aws_s3_bucket,
   ]
 
-  bucket = module.webapp_aws_s3_bucket.id # Required argument.
-  key    = "/v2022.01.20/"                # Required argument.
-  acl    = "private"                      # Optional argument but keep it.
-  content = "./python/lambda_function.py" # Optional argument but keep it.
-  tags   = {                              # Optional argument but keep it.
+  bucket = module.webapp_aws_s3_bucket.id               # Required argument.
+  key    = "/v${formatdate("YYYY.MM.DD", timestamp())}" # Required argument.
+  acl    = "private"                                    # Optional argument but keep it.
+  content = "./python/lambda_function.py"               # Optional argument but keep it.
+  tags   = {                                            # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
