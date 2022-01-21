@@ -436,7 +436,7 @@ variable "storage_encrypted" {
 variable "tags" {
   type        = map(string)
   default     = {
-    "Name"              = "Generic"
+    "AppName"           = "Generic"
     "Division"          = "Data Quality"
     "Developer"         = "Balaji Pothula"
     "DeveloperEmail"    = "Balaji.Pothula@techie.com"
