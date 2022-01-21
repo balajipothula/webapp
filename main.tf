@@ -129,8 +129,8 @@ module "webapp_aws_lambda_function" {
   publish                        = false                                             # Optional argument but keep it.
   reserved_concurrent_executions = -1                                                # Optional argument but keep it.
   runtime                        = "python3.8"                                       # Optional argument but keep it.
-  s3_bucket                      = "job-log-s3-bucket"                               # Optional argument but keep it.
-  s3_key                         = "v1.0.3/job-log.zip"                              # Optional argument but keep it, Conflicts with filename and image_uri.
+  s3_bucket                      = module.webapp_aws_s3_bucket.id                    # Optional argument but keep it.
+  s3_key                         = "v2022.01.21/webapp.zip"                          # Optional argument but keep it, Conflicts with filename and image_uri.
   tags                           = {                                                 # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
