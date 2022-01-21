@@ -455,7 +455,8 @@ variable "tags" {
   validation {
     condition     = var.tags != null && 1 <= length(var.tags) && length(var.tags) <= 50
     error_message = "Error: tags at least one or more expected upto 50."
-  }  sensitive   = false
+  }
+  sensitive   = false
 }
 
 variable "vpc_security_group_ids" {
