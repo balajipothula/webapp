@@ -437,7 +437,7 @@ variable "tags" {
   type        = map(string)
   default     = {
     "AppName"           = "Generic"
-    "Division"          = "DQ"
+    "Division"          = "Data Quality"
     "Developer"         = "Balaji Pothula"
     "DeveloperEmail"    = "Balaji.Pothula@techie.com"
     "Manager"           = "Ram"
