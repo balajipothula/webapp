@@ -179,8 +179,23 @@ module "webapp_aws_cloudwatch_log_group" {
 }
 
 #  WebApp AWS RDS Cluster Creation Module.
-
 module "webapp_aws_rds_cluster" {
+
+  lifecycle {
+    ignore_changes = [
+      availability_zones,
+      database_name,
+      deletion_protection,
+      engine_version,
+      master_password,
+      master_username,
+      port,
+      preferred_backup_window,
+      preferred_maintenance_window,
+      scaling_configuration,
+      tags,
+    ]
+  }
 
   source             = "./terraform/aws/rds/cluster"
 
