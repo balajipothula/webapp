@@ -437,7 +437,7 @@ variable "tags" {
   type        = map(string)
   default     = {
     "AppName"           = "Generic"
-    "Division"          = "Data Quality"
+    "Division"          = "DQ"
     "Developer"         = "Balaji Pothula"
     "DeveloperEmail"    = "Balaji.Pothula@techie.com"
     "Manager"           = "Ram"
@@ -463,7 +463,6 @@ variable "vpc_security_group_ids" {
   type        = set(string)
   default     = [
     "sg-00824ee300a9f653e",
-    "sg-009234797cbe8b7dd",
   ] 
   description = "List of VPC security groups to associate with the Cluster."
   validation {
