@@ -4,7 +4,7 @@ data "aws_region" "current" {
 
 # Data Source: aws_availability_zones
 data "aws_availability_zones" "available" {
-  all_availability_zones = true
+  all_availability_zones = false
   state                  = "available"
 }
 
@@ -38,7 +38,8 @@ resource "aws_rds_cluster" "generic" {
 
   allow_major_version_upgrade         = var.allow_major_version_upgrade             # Optional argument but keep it.
   apply_immediately                   = var.apply_immediately                       # Optional argument but keep it.
-  availability_zones                  = data.aws_availability_zones.available.names # Optional argument but keep it.
+  availability_zones                  = var.availability_zones                      # Optional argument but keep it.
+//availability_zones                  = slice(data.aws_availability_zones.available.names, 0, 3) # Optional argument but keep it.
 //backtrack_window                    = var.backtrack_window                        # Optional argument.
   backup_retention_period             = var.backup_retention_period                 # Optional argument but keep it.
 //cluster_identifier_prefix           = var.cluster_identifier_prefix               # Optional argument.
@@ -67,30 +68,30 @@ resource "aws_rds_cluster" "generic" {
 
 /*
   restore_to_point_in_time {                                                        # Optional argument block.
-    source_cluster_identifier  = var.source_cluster_identifier                      # Required block argument.
-    restore_type               = var.restore_type                                   # Optional block argument.
-    use_latest_restorable_time = var.use_latest_restorable_time                     # Optional block argument, Conflicts with restore_to_time argument.
-  //restore_to_time            = var.restore_to_time                                # Optional block argument, Conflicts with use_latest_restorable_time argument.
+    source_cluster_identifier         = var.source_cluster_identifier               # Required block argument.
+    restore_type                      = var.restore_type                            # Optional block argument.
+    use_latest_restorable_time        = var.use_latest_restorable_time              # Optional block argument, Conflicts with restore_to_time argument.
+  //restore_to_time                   = var.restore_to_time                         # Optional block argument, Conflicts with use_latest_restorable_time argument.
   }
 */
 
 //Configuration is only valid when engine_mode is set to serverless.
   scaling_configuration {                                                           # Optional argument block but keep it.
-    auto_pause               = var.auto_pause                                       # Optional block argument.
-    max_capacity             = var.max_capacity                                     # Optional block argument.
-    min_capacity             = var.min_capacity                                     # Optional block argument.
-    seconds_until_auto_pause = var.seconds_until_auto_pause                         # Optional block argument.
-    timeout_action           = var.timeout_action                                   # Optional block argument.
+    auto_pause                        = var.auto_pause                              # Optional block argument.
+    max_capacity                      = var.max_capacity                            # Optional block argument.
+    min_capacity                      = var.min_capacity                            # Optional block argument.
+    seconds_until_auto_pause          = var.seconds_until_auto_pause                # Optional block argument.
+    timeout_action                    = var.timeout_action                          # Optional block argument.
   }
 
 //RDS Aurora Serverless does not support loading data from S3.
 /*
   s3_import {                                                                       # Optional argument block.
-    bucket_name           = var.bucket_name                                         # Required block argument.
-    bucket_prefix         = var.bucket_prefix                                       # Optional block argument.
-    ingestion_role        = var.ingestion_role                                      # Required block argument.
-    source_engine         = var.source_engine                                       # Required block argument.
-    source_engine_version = var.source_engine_version                               # Required block argument.
+    bucket_name                       = var.bucket_name                             # Required block argument.
+    bucket_prefix                     = var.bucket_prefix                           # Optional block argument.
+    ingestion_role                    = var.ingestion_role                          # Required block argument.
+    source_engine                     = var.source_engine                           # Required block argument.
+    source_engine_version             = var.source_engine_version                   # Required block argument.
   }  
 */
 
