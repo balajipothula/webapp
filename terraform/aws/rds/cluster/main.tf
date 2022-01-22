@@ -11,12 +11,12 @@ data "aws_availability_zones" "available" {
     name   = "zone-name"
     values = ["availability-zone"]
   }
-
+/*
   filter {
     name   = "zone-type"
     values = ["availability-zone"]
   }
-
+*/
 }
 
 # Data Source: aws_vpc
