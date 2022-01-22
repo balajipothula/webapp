@@ -6,6 +6,12 @@ data "aws_region" "current" {
 data "aws_availability_zones" "available" {
   all_availability_zones = false
   state                  = "available"
+
+  filter {
+    name   = "zone-type"
+    values = ["availability-zone"]
+  }
+
 }
 
 # Data Source: aws_vpc
