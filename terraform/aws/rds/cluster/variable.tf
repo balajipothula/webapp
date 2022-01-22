@@ -444,8 +444,8 @@ variable "tags" {
     "ManagerEmail"      = "Ram@techie.com"
     "ServiceOwner"      = "Ali"
     "ServiceOwnerEmail" = "Ali@techie.com"
-    "ProductOwner"      = "Ben"
-    "ProductOwnerEmail" = "Ben@techie.com"
+    "ProductOwner"      = "Eva"
+    "ProductOwnerEmail" = "Eva@techie.com"
   }
   description = "A map of tags to assign to the database cluster."
   validation {
