@@ -62,7 +62,7 @@ module "webapp_aws_s3_bucket" {
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
 
   tags   = {                                     # Optional argument but keep it.
-    "AppName"        = "WebAppFastAPI"
+    "AppName"        = "WebApp"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
@@ -85,7 +85,7 @@ module "webapp_aws_s3_bucket_object" {
   content = "./python/lambda_function.py"  # Optional argument but keep it.
   etag    = filemd5("./python/lambda_function.py") # Optional argument but keep it.
   tags   = {                               # Optional argument but keep it.
-    "AppName"        = "WebAppFastAPI"
+    "AppName"        = "WebApp"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
