@@ -54,8 +54,6 @@ resource "aws_rds_cluster" "generic" {
   lifecycle {
     ignore_changes = [
       availability_zones,
-      database_name,
-      deletion_protection,
       engine_version,
       master_password,
       master_username,
@@ -63,7 +61,6 @@ resource "aws_rds_cluster" "generic" {
       preferred_backup_window,
       preferred_maintenance_window,
       scaling_configuration,
-      tags,
     ]
   }
 
