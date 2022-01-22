@@ -18,6 +18,17 @@ data "aws_vpc" "default" {
 data "aws_availability_zones" "available" {
   all_availability_zones = true
   state                  = "available"
+
+  filter {
+    name   = "zone-name"
+    values = ["availability-zone"]
+  }
+
+  filter {
+    name   = "zone-type"
+    values = ["availability-zone"]
+  }
+
 }
 
 # Data Source: aws_subnet_ids
