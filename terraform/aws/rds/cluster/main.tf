@@ -51,6 +51,20 @@ locals {
 # Variable  name : allow_major_version_upgrade
 resource "aws_rds_cluster" "generic" {
 
+  lifecycle {
+    ignore_changes = [
+      availability_zones,
+      database_name,
+      engine_version,
+      master_password,
+      master_username,
+      port,
+      preferred_backup_window,
+      preferred_maintenance_window,
+      scaling_configuration,
+    ]
+  }
+
   allow_major_version_upgrade         = var.allow_major_version_upgrade                          # Optional argument but keep it.
   apply_immediately                   = var.apply_immediately                                    # Optional argument but keep it.
 //availability_zones                  = var.availability_zones                                   # Optional argument but keep it.
