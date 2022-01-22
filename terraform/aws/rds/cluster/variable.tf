@@ -399,7 +399,7 @@ variable "timeout_action" {
 
 variable "skip_final_snapshot" {
   type        = bool
-  default     = false
+  default     = true
   description = "Determines whether a final database snapshot is created before the database cluster is deleted, if true then no snapshot is created, if false then snapshot is created."
   validation {
     condition     = contains(toset([true, false]), var.skip_final_snapshot)
