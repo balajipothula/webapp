@@ -84,7 +84,7 @@ variable "copy_tags_to_snapshot" {
 
 variable "database_name" {
   type        = string
-  default     = "webappdb"
+  default     = "webapp_db"
   description = "Name for an automatically created database on cluster creation."
   validation {
     condition     = var.database_name != null && 1 <= length(var.database_name) && length(var.database_name) <= 63
