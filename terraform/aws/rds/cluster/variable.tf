@@ -185,7 +185,7 @@ variable "engine_version" {
 
 variable "final_snapshot_identifier" {
   type        = string
-  default     = "webapp-final-snapshot"
+  default     = "webapp-snapshot-at"
   description = "The name of your final DB snapshot when this DB cluster is deleted. If omitted, no final snapshot will be made."
   validation {
     condition     = var.final_snapshot_identifier != null

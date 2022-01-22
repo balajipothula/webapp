@@ -41,7 +41,7 @@ data "aws_security_groups" "default" {
 }
 
 locals {
-  datetime = formatdate("YYYY.MM.DD.hh.mm.ss", timestamp())
+  datetime = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
 }
 
 # Resource  type : aws_rds_cluster
@@ -69,7 +69,7 @@ resource "aws_rds_cluster" "generic" {
   engine                              = var.engine                                               # Optional argument but keep it.
   engine_mode                         = var.engine_mode                                          # Optional argument but keep it.
   engine_version                      = var.engine_version                                       # Optional argument but keep it.
-  final_snapshot_identifier           = "${var.final_snapshot_identifier}${local.datetime}"      # Optional argument but keep it.
+  final_snapshot_identifier           = "${var.final_snapshot_identifier}-${local.datetime}"     # Optional argument but keep it.
 //global_cluster_identifier           = var.global_cluster_identifier                            # Optional argument.
 //iam_database_authentication_enabled = var.iam_database_authentication_enabled                  # Optional argument.
 //iam_roles                           = var.iam_roles                                            # Optional argument.
