@@ -424,11 +424,11 @@ variable "source_region" {
 
 variable "storage_encrypted" {
   type        = bool
-  default     = false
+  default     = true
   description = "Specifies whether the database cluster is encrypted."
   validation {
-    condition     = contains(toset([true, false]), var.storage_encrypted)
-    error_message = "Error: storage_encrypted value must be either true or false only."
+    condition     = var.storage_encrypted == true
+    error_message = "Error: storage_encrypted value must be true only."
   }
   sensitive   = false
 }
