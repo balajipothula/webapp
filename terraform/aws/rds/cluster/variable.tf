@@ -27,7 +27,7 @@ variable "availability_zones" {
     "eu-central-1b",
     "eu-central-1c",
   ]
-  description = "Type: Optional, A list of Availability Zones for the DB cluster storage where DB cluster instances can be created."
+  description = "A list of Availability Zones for the DB cluster storage where DB cluster instances can be created."
   sensitive   = false
 }
 
@@ -62,7 +62,7 @@ variable "cluster_identifier_prefix" {
 
 variable "cluster_identifier" {
   type        = string
-  default     = "job-log"
+  default     = "webapp"
   description = "The cluster identifier. If omitted, Terraform will assign a random, unique identifier."
   validation {
     condition     = var.cluster_identifier != null
@@ -84,7 +84,7 @@ variable "copy_tags_to_snapshot" {
 
 variable "database_name" {
   type        = string
-  default     = "job_log_db"
+  default     = "webappdb"
   description = "Name for an automatically created database on cluster creation."
   validation {
     condition     = var.database_name != null && 1 <= length(var.database_name) && length(var.database_name) <= 63
@@ -185,7 +185,7 @@ variable "engine_version" {
 
 variable "final_snapshot_identifier" {
   type        = string
-  default     = "job-log-final-snapshot"
+  default     = "webapp-final-snapshot"
   description = "The name of your final DB snapshot when this DB cluster is deleted. If omitted, no final snapshot will be made."
   validation {
     condition     = var.final_snapshot_identifier != null
@@ -196,7 +196,7 @@ variable "final_snapshot_identifier" {
 
 variable "global_cluster_identifier" {
   type        = string
-  default     = "job-log"
+  default     = "webapp"
   description = "The global cluster identifier specified on aws_rds_global_cluster"
   sensitive   = false
 }
@@ -233,7 +233,7 @@ variable "kms_key_id" {
 
 variable "master_password" {
   type        = string
-  default     = "Bayer#123"
+  default     = "WebApp#2022"
   description = "The master password for the master username."
   validation {
     condition     = var.master_password != null && 8 <= length(var.master_password) && length(var.master_password) <= 63 && length(regexall("[/,\",@]+", var.master_password)) == 0
@@ -244,7 +244,7 @@ variable "master_password" {
 
 variable "master_username" {
   type        = string
-  default     = "bayer"
+  default     = "webapp"
   description = "Username for the master database user."
   validation {
     condition     = var.master_username != null && 1 <= length(var.master_username) && length(var.master_username) <= 63
@@ -328,7 +328,7 @@ variable "use_latest_restorable_time" {
 // restore_to_point_in_time nested argument.
 variable "restore_to_time" {
   type        = string
-  default     = "2020-01-01T00:00:00Z"
+  default     = "2022-01-01T00:00:00Z"
   description = "Restore the database cluster to from which time, Time in UTC, Conflicts with use_latest_restorable_time"
   validation {
     condition     = var.restore_to_time != null

@@ -14,6 +14,12 @@ data "aws_region" "current" {
 data "aws_vpc" "default" {
 }
 
+# Data Source: aws_availability_zones
+data "aws_availability_zones" "available" {
+  all_availability_zones = true
+  state                  = "available"
+}
+
 # Data Source: aws_subnet_ids
 data "aws_subnet_ids" "available" {
   vpc_id = data.aws_vpc.default.id

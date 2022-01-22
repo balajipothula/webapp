@@ -10,6 +10,12 @@ output "aws_vpc" {
   sensitive   = false
 }
 
+output "aws_availability_zones" {
+  value       = data.aws_availability_zones.available.names
+  description = "A list of the Availability Zone names available to the account."
+  sensitive   = false
+}
+
 output "aws_subnet_ids" {
   value       = data.aws_subnet_ids.available.ids
   description = "A set of all the subnet ids found."
