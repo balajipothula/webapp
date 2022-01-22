@@ -8,6 +8,11 @@ data "aws_availability_zones" "available" {
   state                  = "available"
 
   filter {
+    name   = "zone-name"
+    values = ["availability-zone"]
+  }
+
+  filter {
     name   = "zone-type"
     values = ["availability-zone"]
   }
