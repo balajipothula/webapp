@@ -53,7 +53,7 @@ resource "aws_rds_cluster" "generic" {
 
   lifecycle {
     ignore_changes = [
-    //availability_zones,
+      availability_zones,
       engine_version,
       master_password,
       master_username,
@@ -66,8 +66,8 @@ resource "aws_rds_cluster" "generic" {
 
   allow_major_version_upgrade         = var.allow_major_version_upgrade                          # Optional argument but keep it.
   apply_immediately                   = var.apply_immediately                                    # Optional argument but keep it.
-//availability_zones                  = var.availability_zones                                   # Optional argument but keep it.
-  availability_zones                  = data.aws_availability_zones.available.names              # Optional argument but keep it.
+//availability_zones                  = var.availability_zones                                   # Optional argument, Risk => Recreates cluster.
+//availability_zones                  = data.aws_availability_zones.available.names              # Optional argument, Risk => Recreates cluster.
 //backtrack_window                    = var.backtrack_window                                     # Optional argument.
   backup_retention_period             = var.backup_retention_period                              # Optional argument but keep it.
 //cluster_identifier_prefix           = var.cluster_identifier_prefix                            # Optional argument.

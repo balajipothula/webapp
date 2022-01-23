@@ -266,7 +266,7 @@ variable "port" {
 
 variable "preferred_backup_window" {
   type        = string
-  default     = "00:00-01:00"
+  default     = "01:00-02:00"
   description = "When to perform database backups, Time in UTC."
   validation {
     condition     = var.preferred_backup_window != null && var.preferred_backup_window == "00:00-01:00"
@@ -296,7 +296,7 @@ variable "replication_source_identifier" {
 // restore_to_point_in_time nested argument.
 variable "source_cluster_identifier" {
   type        = string
-  default     = "example"
+  default     = "webapp"
   description = "The identifier of the source database cluster from which to restore."
   sensitive   = false
 }
