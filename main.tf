@@ -48,10 +48,14 @@ data "aws_security_groups" "default" {
 }
 
 locals {
-  date     = formatdate("YYYY.MM.DD", timestamp())
-  datetime = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
-  root     = path.root
-  absroot  = abspath(path.root)
+  timestamp = timestamp()
+  yyyy      = formatdate("YYYY",                local.timestamp)
+  mm        = formatdate("MM",                  local.timestamp)
+  dd        = formatdate("DD",                  local.timestamp)    
+  date      = formatdate("YYYY.MM.DD",          local.timestamp)
+  datetime  = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
+  root      = path.root
+  absroot   = abspath(path.root)
 }
 
 #  WebApp AWS S3 Bucket Creation Module.
@@ -81,13 +85,13 @@ module "webapp_aws_s3_bucket_object" {
     module.webapp_aws_s3_bucket,
   ]
 
-  bucket     = module.webapp_aws_s3_bucket.id         # Required argument.
-  key        = "/v${local.date}"                      # Required argument.
-  acl        = "private"                              # Optional argument but keep it.
-  content    = file("./terraform/lambda_function.py") # Optional argument but keep it.
-//source     = "./python/lambda_function.py"          # Optional argument but keep it.
+  bucket     = module.webapp_aws_s3_bucket.id            # Required argument.
+  key        = "/${local.yyyy}/${local.mm}/${local.dd}/" # Required argument.
+  acl        = "private"                                 # Optional argument but keep it.
+  content    = file("./terraform/lambda_function.py")    # Optional argument but keep it.
+//source     = "./python/lambda_function.py"             # Optional argument but keep it.
   etag       = filemd5("./terraform/lambda_function.py") # Optional argument but keep it.
-  tags       = {                                      # Optional argument but keep it.
+  tags       = {                                         # Optional argument but keep it.
     "AppName"        = "WebApp"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
