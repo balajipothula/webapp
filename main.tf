@@ -53,7 +53,8 @@ data "aws_security_groups" "default" {
 }
 
 locals {
-  date = formatdate("YYYY.MM.DD", timestamp())
+  date     = formatdate("YYYY.MM.DD", timestamp())
+  datetime = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
 }
 
 #  WebApp AWS S3 Bucket Creation Module.
@@ -145,24 +146,24 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_iam_role_policy_attachment,
   ]
 
-  function_name                  = "webapp"                                          # Required argument.
-  role                           = module.webapp_aws_iam_role.arn                    # Required argument.
-  description                    = "WebApp Lambda Function."                         # Optional argument but keep it.
-  handler                        = "lambda_function.lambda_handler"                  # Optional argument but keep it.
-  memory_size                    = 128                                               # Optional argument but keep it.
-  package_type                   = "Zip"                                             # Optional argument but keep it.
-  publish                        = false                                             # Optional argument but keep it.
-  reserved_concurrent_executions = -1                                                # Optional argument but keep it.
-  runtime                        = "python3.8"                                       # Optional argument but keep it.
-  s3_bucket                      = module.webapp_aws_s3_bucket.id                    # Optional argument but keep it.
-  s3_key                         = "v2022.01.21/webapp.zip"                          # Optional argument but keep it, Conflicts with filename and image_uri.
-  tags                           = {                                                 # Optional argument but keep it.
+  function_name                  = "webapp"                         # Required argument.
+  role                           = module.webapp_aws_iam_role.arn   # Required argument.
+  description                    = "WebApp Lambda Function."        # Optional argument but keep it.
+  handler                        = "lambda_function.lambda_handler" # Optional argument but keep it.
+  memory_size                    = 128                              # Optional argument but keep it.
+  package_type                   = "Zip"                            # Optional argument but keep it.
+  publish                        = false                            # Optional argument but keep it.
+  reserved_concurrent_executions = -1                               # Optional argument but keep it.
+  runtime                        = "python3.8"                      # Optional argument but keep it.
+  s3_bucket                      = module.webapp_aws_s3_bucket.id   # Optional argument but keep it.
+  s3_key                         = "v2022.01.21/webapp.zip"         # Optional argument but keep it, Conflicts with filename and image_uri.
+  tags                           = {                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
   }
-  timeout                        = 30                                                # Optional argument but keep it.
+  timeout                        = 30                               # Optional argument but keep it.
 
 }
 

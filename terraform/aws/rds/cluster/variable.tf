@@ -269,8 +269,8 @@ variable "preferred_backup_window" {
   default     = "01:00-02:00"
   description = "When to perform database backups, Time in UTC."
   validation {
-    condition     = var.preferred_backup_window != null && var.preferred_backup_window == "00:00-01:00"
-    error_message = "Error: preferred_backup_window value must not null and time must be 00:00-01:00."
+    condition     = var.preferred_backup_window != null && var.preferred_backup_window == "01:00-02:00"
+    error_message = "Error: preferred_backup_window value must not null and time must be 01:00-02:00."
   }
   sensitive   = false
 }
