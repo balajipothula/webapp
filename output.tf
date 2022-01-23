@@ -28,8 +28,14 @@ output "aws_security_groups" {
   sensitive   = false
 }
 
-output "pathroot" {
-  value       = local.pathroot
+output "root" {
+  value       = local.root
   description = "Root path."
+  sensitive   = false
+}
+
+output "absroot" {
+  value       = local.absroot
+  description = "Absolute Root path."
   sensitive   = false
 }

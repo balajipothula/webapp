@@ -50,7 +50,8 @@ data "aws_security_groups" "default" {
 locals {
   date     = formatdate("YYYY.MM.DD", timestamp())
   datetime = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
-  pathroot = path.root
+  root     = path.root
+  absroot  = abspath(path.root)
 }
 
 #  WebApp AWS S3 Bucket Creation Module.
