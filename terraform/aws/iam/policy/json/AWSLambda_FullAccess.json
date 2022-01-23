@@ -11,6 +11,7 @@
               "ec2:DescribeSecurityGroups",
               "ec2:DescribeSubnets",
               "ec2:DescribeVpcs",
+              "ec2:CreateNetworkInterface",
               "kms:ListAliases",
               "iam:GetPolicy",
               "iam:GetPolicyVersion",
