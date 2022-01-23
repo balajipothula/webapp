@@ -204,16 +204,6 @@ module "webapp_aws_rds_cluster" {
   port                                = "5432"                                 # Optional argument but keep it.
   preferred_backup_window             = "01:00-02:00"                          # Optional argument but keep it.
   preferred_maintenance_window        = "sun:01:00-sun:02:00"                  # Optional argument but keep it.
-
-//Configuration is only valid when engine_mode is set to serverless.
-  scaling_configuration {                                                      # Optional argument block but keep it.
-    auto_pause                        = true                                   # Optional block argument.
-    max_capacity                      = 4                                      # Optional block argument.
-    min_capacity                      = 2                                      # Optional block argument.
-    seconds_until_auto_pause          = 300                                    # Optional block argument.
-    timeout_action                    = "ForceApplyCapacityChange"             # Optional block argument.
-  }
-
   skip_final_snapshot                 = true                                   # Optional argument but keep it.
   storage_encrypted                   = true                                   # Optional argument but keep it.
   tags                                = {                                      # Optional argument but keep it.
