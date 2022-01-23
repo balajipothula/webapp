@@ -162,7 +162,6 @@ module "webapp_aws_lambda_function" {
   tags                           = {                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
-    "DeveloperName"  = "Balaji Pothula"
   }
   timeout                        = 30                               # Optional argument but keep it.
 
