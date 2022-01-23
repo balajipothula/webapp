@@ -86,7 +86,7 @@ module "webapp_aws_s3_bucket_object" {
   acl        = "private"                              # Optional argument but keep it.
 //content    = "./python/lambda_function.py"          # Optional argument but keep it.
 //source     = "./python/lambda_function.py"          # Optional argument but keep it.
-  etag       = filemd5("./python/lambda_function.py") # Optional argument but keep it.
+  etag       = filemd5("./terraform/lambda_function.py") # Optional argument but keep it.
   tags       = {                                      # Optional argument but keep it.
     "AppName"        = "WebApp"
     "Division"       = "Platform"

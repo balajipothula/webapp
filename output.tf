@@ -36,6 +36,6 @@ output "root" {
 
 output "absroot" {
   value       = local.absroot
-  description = "Absolute Root path."
+  description = "Absolute root path."
   sensitive   = false
 }
