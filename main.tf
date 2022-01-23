@@ -216,8 +216,8 @@ module "webapp_aws_rds_cluster" {
     "ManagerEmail"      = "Ram@techie.com"
     "ServiceOwner"      = "Ali"
     "ServiceOwnerEmail" = "Ali@techie.com"
-    "ProductOwner"      = "Eva"
-    "ProductOwnerEmail" = "Eva@techie.com"
+    "ProductOwner"      = "Raj"
+    "ProductOwnerEmail" = "Raj@techie.com"
   }
 
 }
