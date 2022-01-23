@@ -163,7 +163,6 @@ module "webapp_aws_lambda_function" {
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
   }
   timeout                        = 30                               # Optional argument but keep it.
 
