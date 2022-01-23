@@ -50,6 +50,7 @@ data "aws_security_groups" "default" {
 locals {
   date     = formatdate("YYYY.MM.DD", timestamp())
   datetime = formatdate("YYYY-MM-DD-hh-mm-ss", timestamp())
+  pathroot = path.root
 }
 
 #  WebApp AWS S3 Bucket Creation Module.
@@ -83,7 +84,7 @@ module "webapp_aws_s3_bucket_object" {
   key        = "/v${local.date}/"                     # Required argument.
   acl        = "private"                              # Optional argument but keep it.
 //content    = "./python/lambda_function.py"          # Optional argument but keep it.
-  source     = "./python/lambda_function.py"          # Optional argument but keep it.
+//source     = "./python/lambda_function.py"          # Optional argument but keep it.
   etag       = filemd5("./python/lambda_function.py") # Optional argument but keep it.
   tags       = {                                      # Optional argument but keep it.
     "AppName"        = "WebApp"

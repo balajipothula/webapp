@@ -27,3 +27,9 @@ output "aws_security_groups" {
   description = "IDs of the matches security groups."
   sensitive   = false
 }
+
+output "pathroot" {
+  value       = local.pathroot
+  description = "Root path."
+  sensitive   = false
+}
