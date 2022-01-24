@@ -158,8 +158,8 @@ module "webapp_aws_lambda_function" {
   reserved_concurrent_executions = -1                               # Optional argument but keep it.
   runtime                        = "python3.8"                      # Optional argument but keep it.
   s3_bucket                      = module.webapp_aws_s3_bucket.id   # Optional argument but keep it.
-  s3_key                         = "${module.webapp_aws_s3_bucket_object.id}/webapp.zip" # Optional argument but keep it, Conflicts with filename and image_uri.
-//s3_key                         = "2022/01/23/webapp.zip"          # Optional argument but keep it, Conflicts with filename and image_uri.
+//s3_key                         = "${module.webapp_aws_s3_bucket_object.id}/webapp.zip" # Optional argument but keep it, Conflicts with filename and image_uri.
+  s3_key                         = "2022/01/23/webapp.zip"          # Optional argument but keep it, Conflicts with filename and image_uri.
   tags                           = {                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
@@ -169,7 +169,7 @@ module "webapp_aws_lambda_function" {
   timeout                        = 30                               # Optional argument but keep it.
 
 }
-# 
+
 #  WebApp AWS CloudWatch Log Group Creation Module.
 module "webapp_aws_cloudwatch_log_group" {
 
