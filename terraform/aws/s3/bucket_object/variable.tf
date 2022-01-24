@@ -45,6 +45,13 @@ variable "etag" {
   sensitive = false
 }
 
+variable "source_code" {
+  type        = string
+  default     = null
+  description = "Triggers updates when the value changes."
+  sensitive = false
+}
+
 variable "tags" {
   type = map(string)
   default = {
