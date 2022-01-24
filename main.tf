@@ -50,7 +50,6 @@ data "aws_security_groups" "default" {
 # Zip the Lamda function on the fly
 data "archive_file" "webapp" {
   type        = "zip"
-//source_dir  = "./python"
   source_file = "./python/lambda_function.py"
   output_path = "./lambda_function.zip"
 }
@@ -77,9 +76,6 @@ module "webapp_aws_s3_bucket" {
 
   tags   = {                                     # Optional argument but keep it.
     "AppName"        = "WebApp"
-    "Division"       = "Platform"
-    "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
   }
 
 }
@@ -94,14 +90,11 @@ module "webapp_aws_s3_bucket_object" {
   ]
 
   bucket     = module.webapp_aws_s3_bucket.id            # Required argument.
-  key        = "/${local.yyyy}/${local.mm}/${local.dd}/" # Required argument.
+  key        = "/${local.yyyy}/${local.mm}/${local.dd}/lambda_function.zip" # Required argument.
   acl        = "private"                                 # Optional argument but keep it.
   content    = filebase64(data.archive_file.webapp.output_path) # Optional argument but keep it.
   tags       = {                                         # Optional argument but keep it.
     "AppName"        = "WebApp"
-    "Division"       = "Platform"
-    "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
   }
 
 }
@@ -167,12 +160,8 @@ module "webapp_aws_lambda_function" {
   runtime                        = "python3.8"                      # Optional argument but keep it.
   s3_bucket                      = module.webapp_aws_s3_bucket.id   # Optional argument but keep it.
   s3_key                         = "${local.yyyy}/${local.mm}/${local.dd}/webapp.zip" # Optional argument but keep it, Conflicts with filename and image_uri.
-//s3_key                         = "2022/01/23/webapp.zip"          # Optional argument but keep it, Conflicts with filename and image_uri.
   tags                           = {                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
-    "Division"       = "Platform"
-    "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
   }
   timeout                        = 30                               # Optional argument but keep it.
 
@@ -187,9 +176,6 @@ module "webapp_aws_cloudwatch_log_group" {
   retention_in_days  = 14                                                               # Optional argument but keep it.
   tags               = {                                                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
-    "Division"       = "Platform"
-    "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
   }
 
 }
