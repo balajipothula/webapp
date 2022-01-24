@@ -89,13 +89,13 @@ module "webapp_aws_s3_bucket_object" {
     module.webapp_aws_s3_bucket,
   ]
 
-  bucket     = module.webapp_aws_s3_bucket.id            # Required argument.
+  bucket     = module.webapp_aws_s3_bucket.id                               # Required argument.
   key        = "/${local.yyyy}/${local.mm}/${local.dd}/lambda_function.zip" # Required argument.
-  acl        = "private"                                 # Optional argument but keep it.
-//content    = filebase64(data.archive_file.webapp.output_path) # Optional argument but keep it.
-//etag = filemd5(data.archive_file.webapp.output_path)
-  etag = filemd5("./lambda_function.zip")
-  tags       = {                                         # Optional argument but keep it.
+  acl        = "private"                                                    # Optional argument but keep it.
+//content    = filebase64(data.archive_file.webapp.output_path)             # Optional argument but keep it.
+//etag = filemd5(data.archive_file.webapp.output_path)                      # Optional argument but keep it.
+  etag = filemd5("./lambda_function.zip")                                   # Optional argument but keep it.
+  tags       = {                                                            # Optional argument but keep it.
     "AppName"        = "WebApp"
   }
 
