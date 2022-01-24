@@ -9,7 +9,8 @@ resource "aws_s3_bucket_object" "generic" {
   key     = var.key     # Required argument.
   acl     = var.acl     # Optional argument but keep it.
 //content = var.content # Optional argument but keep it.
-  etag    = var.etag    # 
+  etag    = filemd5("./lambda_function.zip") # Optional argument but keep it.
+  source  = "./lambda_function.zip"          # Optional argument but keep it.
   tags    = var.tags    # Optional argument but keep it.
 
 }

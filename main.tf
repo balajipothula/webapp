@@ -94,7 +94,6 @@ module "webapp_aws_s3_bucket_object" {
   acl        = "private"                                                    # Optional argument but keep it.
 //content    = filebase64(data.archive_file.webapp.output_path)             # Optional argument but keep it.
 //etag = filemd5(data.archive_file.webapp.output_path)                      # Optional argument but keep it.
-  etag = filemd5("./lambda_function.zip")                                   # Optional argument but keep it.
   tags       = {                                                            # Optional argument but keep it.
     "AppName"        = "WebApp"
   }

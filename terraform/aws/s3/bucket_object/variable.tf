@@ -45,6 +45,13 @@ variable "etag" {
   sensitive = false
 }
 
+variable "source" {
+  type        = string
+  default     = null
+  description = "Path to a file that will be read and uploaded as raw bytes for the object content."
+  sensitive = false
+}
+
 variable "tags" {
   type = map(string)
   default = {
