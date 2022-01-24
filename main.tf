@@ -184,7 +184,7 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-
+/*
 #  WebApp AWS RDS Cluster Creation Module.
 module "webapp_aws_rds_cluster" {
 
@@ -223,3 +223,4 @@ module "webapp_aws_rds_cluster" {
   }
 
 }
+*/

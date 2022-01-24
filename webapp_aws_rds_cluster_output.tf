@@ -1,3 +1,4 @@
+/*
 # Resource  type : module
 # Module    name : webapp_aws_rds_cluster
 # Attribute name : arn
@@ -120,3 +121,4 @@ output "webapp_aws_rds_cluster_tags_all" {
   description = "A map of tags assigned to the resource, including those inherited from the provider."
   sensitive   = false
 }
+*/
