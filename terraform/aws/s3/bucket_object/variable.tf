@@ -15,11 +15,10 @@ variable "key" {
   description = "Name of the object once it is in the bucket."
   validation {
     condition     = var.key != null && 0 <= length(var.key) && length(var.key) <= 63
-    error_message = "Error: key length must be in between 1 and 17 only."
+    error_message = "Error: key length must be in between 1 and 63 only."
   }
   sensitive = false
 }
-
 
 variable "acl" {
   type        = string
