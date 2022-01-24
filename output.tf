@@ -39,3 +39,9 @@ output "absroot" {
   description = "Absolute root path."
   sensitive   = false
 }
+
+output "output_path" {
+  value       = data.archive_file.webapp.output_path
+  description = "lambda_function.zip file path."
+  sensitive   = false
+}

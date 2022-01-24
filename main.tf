@@ -50,7 +50,8 @@ data "aws_security_groups" "default" {
 # Zip the Lamda function on the fly
 data "archive_file" "webapp" {
   type        = "zip"
-  source_dir  = "./python"
+//source_dir  = "./python"
+  source_file = "./python/lambda_function.py"
   output_path = "./lambda_function.zip"
 }
 
@@ -96,7 +97,6 @@ module "webapp_aws_s3_bucket_object" {
   key        = "/${local.yyyy}/${local.mm}/${local.dd}/" # Required argument.
   acl        = "private"                                 # Optional argument but keep it.
   content    = filebase64(data.archive_file.webapp.output_path) # Optional argument but keep it.
-//content    = file("./terraform/lambda_function.py")    # Optional argument but keep it.
   tags       = {                                         # Optional argument but keep it.
     "AppName"        = "WebApp"
     "Division"       = "Platform"
