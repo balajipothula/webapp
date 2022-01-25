@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     logger.info(f"dialect: {dialect}")
     return {
       "statusCode": 200,
-      "body": json.dumps("WebAppFastAPI")
+      "body": json.dumps("WebApp")
     }
   except Exception as exception:
     exception_type, exception_value, exception_traceback = sys.exc_info()
