@@ -60,10 +60,7 @@ locals {
   mm        = formatdate("MM",                  local.timestamp)
   dd        = formatdate("DD",                  local.timestamp)
   yyyymmdd  = formatdate("YYYY/MM/DD",          local.timestamp)   
-  date      = formatdate("YYYY.MM.DD",          local.timestamp)
   datetime  = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
-  root      = path.root
-  absroot   = abspath(path.root)
 }
 
 #  WebApp AWS IAM Role Creation Module.
@@ -129,13 +126,12 @@ module "webapp_aws_s3_bucket_object" {
     module.webapp_aws_s3_bucket,
   ]
 
-  bucket      = module.webapp_aws_s3_bucket.id                      # Required argument.
-//key         = "/${local.yyyy}/${local.mm}/${local.dd}/webapp.zip" # Required argument.
-  key         = "/${local.yyyymmdd}/webapp.zip" # Required argument.
-  acl         = "private"                                           # Optional argument but keep it.
-  etag        = filemd5(data.archive_file.webapp.output_path)       # Optional argument but keep it.
-  source_code = data.archive_file.webapp.output_path                # Optional argument but keep it.
-  tags        = {                                                   # Optional argument but keep it.
+  bucket      = module.webapp_aws_s3_bucket.id                # Required argument.
+  key         = "/${local.yyyymmdd}/webapp.zip"               # Required argument.
+  acl         = "private"                                     # Optional argument but keep it.
+  etag        = filemd5(data.archive_file.webapp.output_path) # Optional argument but keep it.
+  source_code = data.archive_file.webapp.output_path          # Optional argument but keep it.
+  tags        = {                                             # Optional argument but keep it.
     "AppName"        = "WebApp"
   }
 
