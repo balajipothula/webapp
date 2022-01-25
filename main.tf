@@ -56,9 +56,6 @@ data "archive_file" "webapp" {
 
 locals {
   timestamp = timestamp()
-  yyyy      = formatdate("YYYY",                local.timestamp)
-  mm        = formatdate("MM",                  local.timestamp)
-  dd        = formatdate("DD",                  local.timestamp)
   yyyymmdd  = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime  = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
 }
