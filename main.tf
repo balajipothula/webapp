@@ -58,7 +58,7 @@ locals {
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
-  webapp_zip = "webapp.zip"
+  webapp_zip = "webapp-${local.datetime}.zip"
 }
 
 #  WebApp AWS IAM Role Creation Module.
