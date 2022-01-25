@@ -58,46 +58,12 @@ locals {
   timestamp = timestamp()
   yyyy      = formatdate("YYYY",                local.timestamp)
   mm        = formatdate("MM",                  local.timestamp)
-  dd        = formatdate("DD",                  local.timestamp)    
+  dd        = formatdate("DD",                  local.timestamp)
+  yyyymmdd  = formatdate("YYYY/MM/DD",          local.timestamp)   
   date      = formatdate("YYYY.MM.DD",          local.timestamp)
   datetime  = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   root      = path.root
   absroot   = abspath(path.root)
-}
-
-#  WebApp AWS S3 Bucket Creation Module.
-module "webapp_aws_s3_bucket" {
-
-  source = "./terraform/aws/s3/bucket"
-
-  bucket = "webapp-aws-s3-bucket"                # Optional argument but keep it.
-  acl    = "private"                             # Optional argument but keep it.
-  policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
-
-  tags   = {                                     # Optional argument but keep it.
-    "AppName"        = "WebApp"
-  }
-
-}
-
-#  WebApp AWS S3 Bucket Object Creation Module.
-module "webapp_aws_s3_bucket_object" {
-
-  source     = "./terraform/aws/s3/bucket_object"
-
-  depends_on = [
-    module.webapp_aws_s3_bucket,
-  ]
-
-  bucket      = module.webapp_aws_s3_bucket.id                      # Required argument.
-  key         = "/${local.yyyy}/${local.mm}/${local.dd}/webapp.zip" # Required argument.
-  acl         = "private"                                           # Optional argument but keep it.
-  etag        = filemd5(data.archive_file.webapp.output_path)       # Optional argument but keep it.
-  source_code = data.archive_file.webapp.output_path                # Optional argument but keep it.
-  tags        = {                                                   # Optional argument but keep it.
-    "AppName"        = "WebApp"
-  }
-
 }
 
 #  WebApp AWS IAM Role Creation Module.
@@ -139,6 +105,42 @@ module "webapp_aws_iam_role_policy_attachment" {
 
 }
 
+#  WebApp AWS S3 Bucket Creation Module.
+module "webapp_aws_s3_bucket" {
+
+  source = "./terraform/aws/s3/bucket"
+
+  bucket = "webapp-aws-s3-bucket"                # Optional argument but keep it.
+  acl    = "private"                             # Optional argument but keep it.
+  policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
+
+  tags   = {                                     # Optional argument but keep it.
+    "AppName"        = "WebApp"
+  }
+
+}
+
+#  WebApp AWS S3 Bucket Object Creation Module.
+module "webapp_aws_s3_bucket_object" {
+
+  source     = "./terraform/aws/s3/bucket_object"
+
+  depends_on = [
+    module.webapp_aws_s3_bucket,
+  ]
+
+  bucket      = module.webapp_aws_s3_bucket.id                      # Required argument.
+//key         = "/${local.yyyy}/${local.mm}/${local.dd}/webapp.zip" # Required argument.
+  key         = "/${local.yyyymmdd}/webapp.zip" # Required argument.
+  acl         = "private"                                           # Optional argument but keep it.
+  etag        = filemd5(data.archive_file.webapp.output_path)       # Optional argument but keep it.
+  source_code = data.archive_file.webapp.output_path                # Optional argument but keep it.
+  tags        = {                                                   # Optional argument but keep it.
+    "AppName"        = "WebApp"
+  }
+
+}
+
 #  WebApp AWS Lambda Function Creation Module.
 module "webapp_aws_lambda_function" {
 
@@ -160,7 +162,7 @@ module "webapp_aws_lambda_function" {
   reserved_concurrent_executions = -1                               # Optional argument but keep it.
   runtime                        = "python3.8"                      # Optional argument but keep it.
   s3_bucket                      = module.webapp_aws_s3_bucket.id   # Optional argument but keep it.
-  s3_key                         = "${local.yyyy}/${local.mm}/${local.dd}/webapp.zip" # Optional argument but keep it, Conflicts with filename and image_uri.
+  s3_key                         = "${local.yyyymmdd}/webapp.zip" # Optional argument but keep it, Conflicts with filename and image_uri.
   tags                           = {                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
   }
