@@ -28,20 +28,8 @@ output "aws_security_groups" {
   sensitive   = false
 }
 
-output "root" {
-  value       = local.root
-  description = "Root path."
-  sensitive   = false
-}
-
-output "absroot" {
-  value       = local.absroot
-  description = "Absolute root path."
-  sensitive   = false
-}
-
 output "output_path" {
   value       = data.archive_file.webapp.output_path
-  description = "lambda_function.zip file path."
+  description = "Web Application source file output path."
   sensitive   = false
 }
