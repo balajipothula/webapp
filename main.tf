@@ -232,7 +232,7 @@ resource "aws_apigatewayv2_stage" "webapp" {
 
   api_id = aws_apigatewayv2_api.webapp.id
 
-  name        = "webapp"
+  name        = "$default"
   auto_deploy = true
 
   access_log_settings {
@@ -271,7 +271,7 @@ resource "aws_apigatewayv2_route" "webapp" {
 
   api_id = aws_apigatewayv2_api.webapp.id
 
-  route_key = "GET /webapp"
+  route_key = "GET /"
   target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
 
 }
