@@ -1,36 +1,26 @@
 import os
+import sys
+import logging
+import traceback
+import json
 
-from fastapi import FastAPI
-from mangum import Mangum
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
-stage = os.environ.get("STAGE", None)
-
-openapi_prefix = f"/{stage}" if stage else "/"
-
-app = FastAPI(title="WebApp", openapi_prefix=openapi_prefix)
-
-@app.get("/")
-def index() -> str:
-  """
-  Get Index Page message from the Web Application.
-  """
-  return {"message": "hi"}
-
-@app.get("/health")
-def health() -> str:
-  """
-  Get Health Status of the Web Application.
-  Funcation Name: health
-  Parameters:
-    None : None
-  Returns:
-    health : str
-    Health Status of the Web Application.
-  """ 
-  return {"health": "ok"}
-
-@app.get("/user/{name}")
-def user(name: str) -> str:
-  return {"name": name}
-
-lambda_handler = Mangum(app = app)
+def lambda_handler(event, context):
+  try:
+    dialect = os.environ["dialect"]
+    logger.info(f"dialect: {dialect}")
+    return {
+      "statusCode": 200,
+      "body": json.dumps("WebApp")
+    }
+  except Exception as exception:
+    exception_type, exception_value, exception_traceback = sys.exc_info()
+    traceback_string = traceback.format_exception(exception_type, exception_value, exception_traceback)
+    errorMessage = json.dumps({
+      "errorType": exception_type.__name__,
+      "errorMessage": str(exception_value),
+      "stackTrace": traceback_string
+    })
+    logger.error(errorMessage)
