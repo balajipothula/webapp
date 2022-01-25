@@ -271,7 +271,7 @@ resource "aws_apigatewayv2_route" "webapp" {
 
   api_id = aws_apigatewayv2_api.webapp.id
 
-  route_key = "GET /"
+  route_key = "GET /webapp"
   target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
 
 }
