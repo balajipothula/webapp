@@ -47,17 +47,18 @@ data "aws_security_groups" "default" {
 
 }
 
-# Zip the Lamda function on the fly
+# Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
   source_file = "./python/lambda_function.py"
-  output_path = "./webapp.zip"
+  output_path = "./${local.webapp_zip}"
 }
 
 locals {
-  timestamp = timestamp()
-  yyyymmdd  = formatdate("YYYY/MM/DD",          local.timestamp)   
-  datetime  = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
+  timestamp  = timestamp()
+  yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
+  datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
+  webapp_zip = "webapp.zip"
 }
 
 #  WebApp AWS IAM Role Creation Module.
@@ -124,7 +125,7 @@ module "webapp_aws_s3_bucket_object" {
   ]
 
   bucket      = module.webapp_aws_s3_bucket.id                # Required argument.
-  key         = "/${local.yyyymmdd}/webapp.zip"               # Required argument.
+  key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # Required argument.
   acl         = "private"                                     # Optional argument but keep it.
   etag        = filemd5(data.archive_file.webapp.output_path) # Optional argument but keep it.
   source_code = data.archive_file.webapp.output_path          # Optional argument but keep it.
@@ -155,7 +156,7 @@ module "webapp_aws_lambda_function" {
   reserved_concurrent_executions = -1                               # Optional argument but keep it.
   runtime                        = "python3.8"                      # Optional argument but keep it.
   s3_bucket                      = module.webapp_aws_s3_bucket.id   # Optional argument but keep it.
-  s3_key                         = "${local.yyyymmdd}/webapp.zip" # Optional argument but keep it, Conflicts with filename and image_uri.
+  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}" # Optional argument but keep it, Conflicts with filename and image_uri.
   tags                           = {                                # Optional argument but keep it.
     "AppName"        = "WebAppFastAPI"
   }
