@@ -110,7 +110,7 @@ module "webapp_aws_s3_bucket" {
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
 
   tags   = {                                     # Optional argument but keep it.
-    "AppName"        = "WebApp"
+    "AppName" = "WebApp"
   }
 
 }
@@ -130,7 +130,7 @@ module "webapp_aws_s3_bucket_object" {
   etag        = filemd5(data.archive_file.webapp.output_path) # Optional argument but keep it.
   source_code = data.archive_file.webapp.output_path          # Optional argument but keep it.
   tags        = {                                             # Optional argument but keep it.
-    "AppName"        = "WebApp"
+    "AppName" = "WebApp"
   }
 
 }
@@ -158,7 +158,7 @@ module "webapp_aws_lambda_function" {
   s3_bucket                      = module.webapp_aws_s3_bucket.id          # Optional argument but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}" # Optional argument but keep it, Conflicts with filename and image_uri.
   tags                           = {                                       # Optional argument but keep it.
-    "AppName"        = "WebAppFastAPI"
+    "AppName" = "WebAppFastAPI"
   }
   timeout                        = 30                                      # Optional argument but keep it.
 
@@ -177,7 +177,7 @@ module "webapp_aws_cloudwatch_log_group" {
 
 }
 /*
-#  WebApp AWS RDS Cluster Creation Module.
+# WebApp AWS RDS Cluster Creation Module.
 module "webapp_aws_rds_cluster" {
 
   source                              = "./terraform/aws/rds/cluster"
