@@ -51,7 +51,7 @@ data "aws_security_groups" "default" {
 data "archive_file" "webapp" {
   type        = "zip"
   source_file = "./python/lambda_function.py"
-  output_path = "./lambda_function2.zip"
+  output_path = "./webapp.zip"
 }
 
 locals {
