@@ -272,5 +272,18 @@ resource "aws_apigatewayv2_route" "index" {
   api_id = aws_apigatewayv2_api.webapp.id
 
   route_key = "GET /"
-  target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
+  target    = "integrations/"
+//target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
+
+}
+
+resource "aws_lambda_permission" "webapp" {
+
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = module.webapp_aws_lambda_function.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
+
 }
