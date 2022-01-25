@@ -266,3 +266,11 @@ resource "aws_apigatewayv2_integration" "webapp" {
   integration_method = "POST"
 
 }
+
+resource "aws_apigatewayv2_route" "index" {
+
+  api_id = aws_apigatewayv2_api.webapp.id
+
+  route_key = "GET /"
+  target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
+}
