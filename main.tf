@@ -237,7 +237,7 @@ resource "aws_apigatewayv2_stage" "webapp" {
 
   access_log_settings {
 
-    destination_arn = aws_cloudwatch_log_group.api_gw.arn
+    destination_arn = module.webapp_aws_cloudwatch_log_group.arn
 
     format = jsonencode({
       requestId               = "$context.requestId"
