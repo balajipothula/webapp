@@ -1,6 +1,6 @@
 variable "function_name" {
   type        = string
-  default     = "lambda_funcation"
+  default     = "generic"
   description = "Unique name of the Lambda Function."
   validation {
     condition     = var.function_name != null && 0 <= length(var.function_name) && length(var.function_name) <= 64

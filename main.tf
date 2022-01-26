@@ -276,13 +276,13 @@ resource "aws_apigatewayv2_route" "webapp" {
 
 }
 
-resource "aws_lambda_permission" "webapp" {
+# WebApp AWS RDS Cluster Creation Module.
+module "webapp_aws_lambda_permission" {
 
   action        = "lambda:InvokeFunction"
   function_name = module.webapp_aws_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
   statement_id  = "AllowExecutionFromAPIGateway"
-  source_arn    = aws_apigatewayv2_api.webapp.execution_arn
-//source_arn    = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
+  source_arn    = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
 
 }
