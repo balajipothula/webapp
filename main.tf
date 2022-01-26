@@ -259,10 +259,26 @@ resource "aws_apigatewayv2_stage" "webapp" {
 
 resource "aws_apigatewayv2_integration" "webapp" {
 
-  api_id = module.webapp_aws_apigatewayv2_api.id
-
+  api_id             = module.webapp_aws_apigatewayv2_api.id
   integration_uri    = module.webapp_aws_lambda_function.arn
   integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+
+}
+
+# WebApp AWS API Gateway V2 Route Module.
+module "webapp_aws_apigatewayv2_integration" {
+
+  source             = "./terraform/aws/apigatewayv2/integration"
+
+  depends_on    = [
+    module.webapp_aws_lambda_function,
+    module.webapp_aws_apigatewayv2_api,
+  ]
+
+  api_id             = module.webapp_aws_apigatewayv2_api.id
+  integration_type   = "AWS_PROXY"
+  integration_uri    = module.webapp_aws_lambda_function.arn
   integration_method = "POST"
 
 }

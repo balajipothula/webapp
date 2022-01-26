@@ -19,6 +19,6 @@ variable "route_key" {
 variable "target" {
   type        = string
   default     = null
-  description = "The API identifier."
+  description = "The target for the route."
   sensitive = false
 }
