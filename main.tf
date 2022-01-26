@@ -177,6 +177,44 @@ module "webapp_aws_cloudwatch_log_group" {
 
 }
 
+/*
+# WebApp AWS RDS Cluster Creation Module.
+module "webapp_aws_rds_cluster" {
+  source                              = "./terraform/aws/rds/cluster"
+  allow_major_version_upgrade         = true                                   # Optional argument but keep it.
+  apply_immediately                   = true                                   # Optional argument but keep it.
+  backup_retention_period             = 1                                      # Optional argument but keep it.
+  cluster_identifier                  = "webapp"                               # Optional argument but keep it.
+  copy_tags_to_snapshot               = true                                   # Optional argument but keep it.
+  database_name                       = "webapp_db"                            # Optional argument but keep it.
+  deletion_protection                 = false                                  # Optional argument but keep.
+  enable_http_endpoint                = true                                   # Optional argument but keep it.
+  engine                              = "aurora-postgresql"                    # Optional argument but keep it.
+  engine_mode                         = "serverless"                           # Optional argument but keep it.
+  engine_version                      = "10.14"                                # Optional argument but keep it.
+  final_snapshot_identifier           = "webapp-snapshot-at-${local.datetime}" # Optional argument but keep it.
+  master_password                     = "WebApp#2022"                          # Required argument.
+  master_username                     = "webapp"                               # Required argument.
+  port                                = "5432"                                 # Optional argument but keep it.
+  preferred_backup_window             = "01:00-02:00"                          # Optional argument but keep it.
+  preferred_maintenance_window        = "sun:01:00-sun:02:00"                  # Optional argument but keep it.
+  skip_final_snapshot                 = true                                   # Optional argument but keep it.
+  storage_encrypted                   = true                                   # Optional argument but keep it.
+  tags                                = {                                      # Optional argument but keep it.
+    "AppName"           = "Generic"
+    "Division"          = "Data Quality"
+    "Developer"         = "Balaji Pothula"
+    "DeveloperEmail"    = "Balaji.Pothula@techie.com"
+    "Manager"           = "Ram"
+    "ManagerEmail"      = "Ram@techie.com"
+    "ServiceOwner"      = "Ali"
+    "ServiceOwnerEmail" = "Ali@techie.com"
+    "ProductOwner"      = "Raj"
+    "ProductOwnerEmail" = "Raj@techie.com"
+  }
+}
+*/
+
 # WebApp AWS API Gateway V2 API Module.
 module "webapp_aws_apigatewayv2_api" {
 
@@ -186,6 +224,7 @@ module "webapp_aws_apigatewayv2_api" {
   protocol_type = "HTTP"   # Required argument.
 
 }
+
 /*
 resource "aws_apigatewayv2_stage" "webapp" {
 
@@ -220,6 +259,7 @@ resource "aws_apigatewayv2_stage" "webapp" {
 
 }
 */
+
 # WebApp AWS API Gateway V2 Stage Module.
 module "webapp_aws_apigatewayv2_stage" {
 
@@ -301,40 +341,4 @@ module "webapp_aws_lambda_permission" {
 
 }
 
-/*
-# WebApp AWS RDS Cluster Creation Module.
-module "webapp_aws_rds_cluster" {
-  source                              = "./terraform/aws/rds/cluster"
-  allow_major_version_upgrade         = true                                   # Optional argument but keep it.
-  apply_immediately                   = true                                   # Optional argument but keep it.
-  backup_retention_period             = 1                                      # Optional argument but keep it.
-  cluster_identifier                  = "webapp"                               # Optional argument but keep it.
-  copy_tags_to_snapshot               = true                                   # Optional argument but keep it.
-  database_name                       = "webapp_db"                            # Optional argument but keep it.
-  deletion_protection                 = false                                  # Optional argument but keep.
-  enable_http_endpoint                = true                                   # Optional argument but keep it.
-  engine                              = "aurora-postgresql"                    # Optional argument but keep it.
-  engine_mode                         = "serverless"                           # Optional argument but keep it.
-  engine_version                      = "10.14"                                # Optional argument but keep it.
-  final_snapshot_identifier           = "webapp-snapshot-at-${local.datetime}" # Optional argument but keep it.
-  master_password                     = "WebApp#2022"                          # Required argument.
-  master_username                     = "webapp"                               # Required argument.
-  port                                = "5432"                                 # Optional argument but keep it.
-  preferred_backup_window             = "01:00-02:00"                          # Optional argument but keep it.
-  preferred_maintenance_window        = "sun:01:00-sun:02:00"                  # Optional argument but keep it.
-  skip_final_snapshot                 = true                                   # Optional argument but keep it.
-  storage_encrypted                   = true                                   # Optional argument but keep it.
-  tags                                = {                                      # Optional argument but keep it.
-    "AppName"           = "Generic"
-    "Division"          = "Data Quality"
-    "Developer"         = "Balaji Pothula"
-    "DeveloperEmail"    = "Balaji.Pothula@techie.com"
-    "Manager"           = "Ram"
-    "ManagerEmail"      = "Ram@techie.com"
-    "ServiceOwner"      = "Ali"
-    "ServiceOwnerEmail" = "Ali@techie.com"
-    "ProductOwner"      = "Raj"
-    "ProductOwnerEmail" = "Raj@techie.com"
-  }
-}
-*/
+
