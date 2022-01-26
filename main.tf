@@ -273,24 +273,6 @@ module "webapp_aws_apigatewayv2_stage" {
   name              = "$default"                                 # Required argument.
   auto_deploy       = true                                       # Optional argument, but keep it.
 
-  access_log_settings {                                          # Optional block, but keep it.
-
-    destination_arn = module.webapp_aws_cloudwatch_log_group.arn # Required block argument.
-    format = jsonencode({                                        # Required block argument.
-      requestId               = "$context.requestId"
-      sourceIp                = "$context.identity.sourceIp"
-      requestTime             = "$context.requestTime"
-      protocol                = "$context.protocol"
-      httpMethod              = "GET"
-      resourcePath            = "/"
-      routeKey                = "$context.routeKey"
-      status                  = "$context.status"
-      responseLength          = "$context.responseLength"
-      integrationErrorMessage = "$context.integrationErrorMessage"
-      }
-    )  
-  }
-
 }
 
 # WebApp AWS API Gateway V2 Integration Module.
