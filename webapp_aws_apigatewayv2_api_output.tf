@@ -27,6 +27,6 @@ output "webapp_aws_apigatewayv2_api_execution_arn" {
 
 output "webapp_aws_apigatewayv2_api_tags_all" {
   value       = module.webapp_aws_apigatewayv2_api.tags_all
-  description = " A map of tags assigned to the resource"
+  description = "A map of tags assigned to the resource"
   sensitive   = false
 }
