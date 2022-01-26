@@ -213,14 +213,14 @@ module "webapp_aws_rds_cluster" {
   }
 }
 */
-
+/*
 resource "aws_apigatewayv2_api" "webapp" {
 
   name          = "webapp"
   protocol_type = "HTTP"
 
 }
-
+*/
 # WebApp AWS API Gateway V2 API Module.
 module "webapp_aws_apigatewayv2_api" {
 
