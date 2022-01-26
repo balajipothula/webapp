@@ -169,6 +169,10 @@ module "webapp_aws_cloudwatch_log_group" {
 
   source             = "./terraform/aws/cloudwatch/log_group"
 
+  depends_on = [
+    module.webapp_aws_lambda_function,
+  ]
+
   name               = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument but keep it.
   retention_in_days  = 14                                                               # Optional argument but keep it.
   tags               = {                                                                # Optional argument but keep it.
@@ -279,16 +283,7 @@ module "webapp_aws_rds_cluster" {
   skip_final_snapshot          = true                                   # Optional argument but keep it.
   storage_encrypted            = true                                   # Optional argument but keep it.
   tags                         = {                                      # Optional argument but keep it.
-    "AppName"           = "Generic"
-    "Division"          = "Data Quality"
-    "Developer"         = "Balaji Pothula"
-    "DeveloperEmail"    = "Balaji.Pothula@techie.com"
-    "Manager"           = "Ram"
-    "ManagerEmail"      = "Ram@techie.com"
-    "ServiceOwner"      = "Ali"
-    "ServiceOwnerEmail" = "Ali@techie.com"
-    "ProductOwner"      = "Raj"
-    "ProductOwnerEmail" = "Raj@techie.com"
+    "AppName"           = "WebAppFastAPI"
   }
 
 }
