@@ -179,9 +179,7 @@ module "webapp_aws_cloudwatch_log_group" {
 /*
 # WebApp AWS RDS Cluster Creation Module.
 module "webapp_aws_rds_cluster" {
-
   source                              = "./terraform/aws/rds/cluster"
-
   allow_major_version_upgrade         = true                                   # Optional argument but keep it.
   apply_immediately                   = true                                   # Optional argument but keep it.
   backup_retention_period             = 1                                      # Optional argument but keep it.
@@ -213,10 +211,8 @@ module "webapp_aws_rds_cluster" {
     "ProductOwner"      = "Raj"
     "ProductOwnerEmail" = "Raj@techie.com"
   }
-
 }
 */
-
 #
 resource "aws_apigatewayv2_api" "webapp" {
 
@@ -279,10 +275,11 @@ resource "aws_apigatewayv2_route" "webapp" {
 
 resource "aws_lambda_permission" "webapp" {
 
+  statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = module.webapp_aws_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
-  statement_id  = "AllowExecutionFromAPIGateway"
-  source_arn    = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
+
+  source_arn = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
 
 }
