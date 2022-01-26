@@ -28,7 +28,7 @@ variable "integration_method" {
   default     = "GET"
   description = "The integration's HTTP method."
   validation {
-    condition     = var.integration_type != null
+    condition     = var.integration_method != null
     error_message = "Error: integration_method must not null."
   }
   sensitive = false
