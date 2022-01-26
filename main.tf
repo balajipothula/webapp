@@ -266,7 +266,7 @@ resource "aws_apigatewayv2_integration" "webapp" {
 
 }
 */
-# WebApp AWS API Gateway V2 Route Module.
+# WebApp AWS API Gateway V2 Integration Module.
 module "webapp_aws_apigatewayv2_integration" {
 
   source             = "./terraform/aws/apigatewayv2/integration"
