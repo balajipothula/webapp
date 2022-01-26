@@ -217,24 +217,21 @@ module "webapp_aws_rds_cluster" {
 }
 */
 
-# WebApp AWS API Gateway V2 API Module.
-module "webapp_aws_apigatewayv2_api" {
+#
+resource "aws_apigatewayv2_api" "webapp" {
 
-  source        = "./terraform/aws/apigatewayv2/api"
-
-  name          = "webapp" # Required argument.
-  protocol_type = "HTTP"   # Required argument.
+  name          = "webapp"
+  protocol_type = "HTTP"
 
 }
 
 resource "aws_apigatewayv2_stage" "webapp" {
 
   depends_on = [
-    module.webapp_aws_apigatewayv2_api,
-    module.webapp_aws_cloudwatch_log_group
+    aws_apigatewayv2_api.webapp,
   ]
 
-  api_id = module.webapp_aws_apigatewayv2_api.id
+  api_id = aws_apigatewayv2_api.webapp.id
 
   name        = "$default"
   auto_deploy = true
@@ -263,12 +260,7 @@ resource "aws_apigatewayv2_stage" "webapp" {
 
 resource "aws_apigatewayv2_integration" "webapp" {
 
-  depends_on = [
-    module.webapp_aws_apigatewayv2_api,
-    module.webapp_aws_lambda_function
-  ]
-
-  api_id = module.webapp_aws_apigatewayv2_api.id
+  api_id = aws_apigatewayv2_api.webapp.id
 
   integration_uri    = module.webapp_aws_lambda_function.arn
   integration_type   = "AWS_PROXY"
@@ -278,31 +270,19 @@ resource "aws_apigatewayv2_integration" "webapp" {
 
 resource "aws_apigatewayv2_route" "webapp" {
 
-  depends_on = [
-    module.webapp_aws_apigatewayv2_api
-  ]
-
-  api_id = module.webapp_aws_apigatewayv2_api.id
+  api_id = aws_apigatewayv2_api.webapp.id
 
   route_key = "GET /"
   target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
 
 }
 
-# WebApp AWS Lambda Permission Module.
-module "webapp_aws_lambda_permission" {
-
-  source        = "./terraform/aws/lambda/permission"
-
-  depends_on                     = [
-    module.webapp_aws_lambda_function,
-    module.webapp_aws_apigatewayv2_api
-  ]
+resource "aws_lambda_permission" "webapp" {
 
   action        = "lambda:InvokeFunction"
   function_name = module.webapp_aws_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
   statement_id  = "AllowExecutionFromAPIGateway"
-  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*"
+  source_arn    = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
 
 }
