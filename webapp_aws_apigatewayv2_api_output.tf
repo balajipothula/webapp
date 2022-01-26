@@ -1,3 +1,4 @@
+/*
 # Resource  type : module
 # Module    name : webapp_aws_apigatewayv2_api
 # Attribute name : id
@@ -30,3 +31,4 @@ output "webapp_aws_apigatewayv2_api_tags_all" {
   description = " A map of tags assigned to the resource"
   sensitive   = false
 }
+*/
