@@ -1,2 +1,2 @@
 # terraform > aws > lambda > function directory.
-# Root directory for AWS Cloud Lambda Function Terraform Resource Module.
+# Root directory for AWS Lambda Function Terraform Resource Module.

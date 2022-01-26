@@ -216,11 +216,14 @@ module "webapp_aws_rds_cluster" {
 
 }
 */
-#
-resource "aws_apigatewayv2_api" "webapp" {
 
-  name          = "webapp"
-  protocol_type = "HTTP"
+# WebApp AWS API Gateway V2 API Module.
+module "webapp_aws_apigatewayv2_api" {
+
+  source        = "./terraform/aws/apigatewayv2/api"
+
+  name          = "webapp" # Required argument.
+  protocol_type = "HTTP"   # Required argument.
 
 }
 
@@ -276,7 +279,7 @@ resource "aws_apigatewayv2_route" "webapp" {
 
 }
 
-# WebApp AWS RDS Cluster Creation Module.
+# WebApp AWS Lambda Permission Module.
 module "webapp_aws_lambda_permission" {
 
   source        = "./terraform/aws/lambda/permission"
