@@ -234,10 +234,10 @@ module "webapp_aws_apigatewayv2_api" {
 resource "aws_apigatewayv2_stage" "webapp" {
 
   depends_on = [
-    aws_apigatewayv2_api.webapp,
+    module.webapp_aws_apigatewayv2_api,
   ]
 
-  api_id = aws_apigatewayv2_api.webapp.id
+  api_id = module.webapp_aws_apigatewayv2_api.id
 
   name        = "$default"
   auto_deploy = true
@@ -266,7 +266,7 @@ resource "aws_apigatewayv2_stage" "webapp" {
 
 resource "aws_apigatewayv2_integration" "webapp" {
 
-  api_id = aws_apigatewayv2_api.webapp.id
+  api_id = module.webapp_aws_apigatewayv2_api.id
 
   integration_uri    = module.webapp_aws_lambda_function.arn
   integration_type   = "AWS_PROXY"
@@ -276,7 +276,7 @@ resource "aws_apigatewayv2_integration" "webapp" {
 
 resource "aws_apigatewayv2_route" "webapp" {
 
-  api_id = aws_apigatewayv2_api.webapp.id
+  api_id = module.webapp_aws_apigatewayv2_api.id
 
   route_key = "GET /"
   target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
@@ -290,13 +290,13 @@ module "webapp_aws_lambda_permission" {
 
   depends_on    = [
     module.webapp_aws_lambda_function,
-    aws_apigatewayv2_api.webapp
+    module.webapp_aws_apigatewayv2_api,
   ]
 
   action        = "lambda:InvokeFunction"                                   # Required argument.
   function_name = module.webapp_aws_lambda_function.function_name           # Required argument.
   principal     = "apigateway.amazonaws.com"                                # Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                            # Optional argument.
-  source_arn = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"           # Optional argument.
+  source_arn = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*"           # Optional argument.
 
 }
