@@ -256,16 +256,7 @@ resource "aws_apigatewayv2_stage" "webapp" {
   }
 
 }
-/*
-resource "aws_apigatewayv2_integration" "webapp" {
 
-  api_id             = module.webapp_aws_apigatewayv2_api.id
-  integration_uri    = module.webapp_aws_lambda_function.arn
-  integration_type   = "AWS_PROXY"
-  integration_method = "POST"
-
-}
-*/
 # WebApp AWS API Gateway V2 Integration Module.
 module "webapp_aws_apigatewayv2_integration" {
 
