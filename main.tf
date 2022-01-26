@@ -278,11 +278,11 @@ resource "aws_apigatewayv2_route" "webapp" {
 
 resource "aws_lambda_permission" "webapp" {
 
-  statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = module.webapp_aws_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
+  statement_id  = "AllowExecutionFromAPIGateway"
+  source_arn    = aws_apigatewayv2_api.webapp.execution_arn
+//source_arn    = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
 
 }
