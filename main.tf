@@ -266,16 +266,7 @@ resource "aws_apigatewayv2_integration" "webapp" {
   integration_method = "POST"
 
 }
-/*
-resource "aws_apigatewayv2_route" "webapp" {
 
-  api_id = module.webapp_aws_apigatewayv2_api.id
-  route_key = "GET /"
-  target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
-
-}
-*/
-#
 # WebApp AWS API Gateway V2 Route Module.
 module "webapp_aws_apigatewayv2_route" {
 
