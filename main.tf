@@ -221,6 +221,16 @@ resource "aws_apigatewayv2_api" "webapp" {
 
 }
 
+# WebApp AWS API Gateway V2 API Module.
+module "webapp_aws_apigatewayv2_api" {
+
+  source        = "./terraform/aws/apigatewayv2/api"
+
+  name          = "webapp" # Required argument.
+  protocol_type = "HTTP"   # Required argument.
+
+}
+
 resource "aws_apigatewayv2_stage" "webapp" {
 
   depends_on = [

@@ -1,6 +1,6 @@
 variable "name" {
   type        = string
-  default     = "generic"
+  default     = "webapp"
   description = "The name of the API."
   validation {
     condition     = var.name != null && 0 <= length(var.name) && length(var.name) <= 128
