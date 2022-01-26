@@ -273,13 +273,20 @@ resource "aws_apigatewayv2_route" "webapp" {
 
 }
 
-resource "aws_lambda_permission" "webapp" {
+# WebApp AWS Lambda Permission Module.
+module "webapp_aws_lambda_permission" {
 
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = module.webapp_aws_lambda_function.function_name
-  principal     = "apigateway.amazonaws.com"
+  source        = "./terraform/aws/lambda/permission"
 
-  source_arn = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"
+  depends_on    = [
+    module.webapp_aws_lambda_function,
+    aws_apigatewayv2_api.webapp
+  ]
+
+  action        = "lambda:InvokeFunction"                                   # Required argument.
+  function_name = module.webapp_aws_lambda_function.function_name           # Required argument.
+  principal     = "apigateway.amazonaws.com"                                # Required argument.
+  statement_id  = "AllowExecutionFromAPIGateway"                            # Optional argument.
+  source_arn = "${aws_apigatewayv2_api.webapp.execution_arn}/*/*"           # Optional argument.
 
 }
