@@ -34,7 +34,7 @@ variable "auto_deploy" {
 // access_log_settings block argument.
 variable "destination_arn" {
   type        = string
-  default     = "arn:aws:logs:eu-central-1:304501768659:log-group:/aws/lambda/*:*"
+  default     = "arn:aws:logs:eu-central-1:304501768659:log-group:/aws/lambda:*"
   description = "The ARN of the CloudWatch Logs log group to receive access logs."
   sensitive = false
 }
