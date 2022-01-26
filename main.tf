@@ -279,6 +279,13 @@ resource "aws_apigatewayv2_route" "webapp" {
 # WebApp AWS RDS Cluster Creation Module.
 module "webapp_aws_lambda_permission" {
 
+  source        = "./terraform/aws/lambda/permission"
+
+  depends_on                     = [
+    module.webapp_aws_lambda_function,
+    aws_apigatewayv2_api.webapp
+  ]
+
   action        = "lambda:InvokeFunction"
   function_name = module.webapp_aws_lambda_function.function_name
   principal     = "apigateway.amazonaws.com"
