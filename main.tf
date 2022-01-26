@@ -266,13 +266,27 @@ resource "aws_apigatewayv2_integration" "webapp" {
   integration_method = "POST"
 
 }
-
+/*
 resource "aws_apigatewayv2_route" "webapp" {
 
   api_id = module.webapp_aws_apigatewayv2_api.id
-
   route_key = "GET /"
   target    = "integrations/${aws_apigatewayv2_integration.webapp.id}"
+
+}
+*/
+# WebApp AWS API Gateway V2 Route Module.
+module "webapp_aws_apigatewayv2_route" {
+
+  source        = "./terraform/aws/apigatewayv2/route"
+
+  depends_on    = [
+    module.webapp_aws_apigatewayv2_api,
+  ]
+
+  api_id        = module.webapp_aws_apigatewayv2_api.id                    # Required argument.
+  route_key     = "GET /"                                                  # Required argument.
+  target        = "integrations/${aws_apigatewayv2_integration.webapp.id}" # Optional argument, but keep it.
 
 }
 
