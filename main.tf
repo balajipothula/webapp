@@ -145,7 +145,7 @@ module "webapp_aws_lambda_layer_version" {
   compatible_runtimes      = ["python3.8"]                         # Optional argument, but keep it.
   description              = "Python Library."                     # Optional argument, but keep it.
   filename                 = "./python/lib/psycopg2.zip"           # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
-  license_info             = "Apache License 2.0"                  # Optional argument, but keep it.
+  license_info             = "https://opensource.org/licenses/MIT" # Optional argument, but keep it.
 //s3_bucket                = var.s3_bucket                         # Optional argument, conflicts with filename.
 //s3_key                   = var.s3_key                            # Optional argument, conflicts with filename.
 //s3_object_version        = var.s3_object_version                 # Optional argument, conflicts with filename.
