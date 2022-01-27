@@ -50,7 +50,7 @@ data "aws_security_groups" "default" {
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
-  source_file = "./python/src/lambda_function.py"
+  source_file = "${local.python_src}"
   output_path = "./${local.webapp_zip}"
 }
 
@@ -58,8 +58,9 @@ locals {
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
-  webapp_zip = "webapp-${local.datetime}.zip"
   layer_zip  = "./python/lib/layer.zip"
+  python_src = "./python/src/lambda_function.py"
+  webapp_zip = "webapp-${local.datetime}.zip"
 }
 
 #  WebApp AWS IAM Role creation.
@@ -109,7 +110,6 @@ module "webapp_aws_s3_bucket" {
   bucket = "webapp-aws-s3-bucket"                # Optional argument but keep it.
   acl    = "private"                             # Optional argument but keep it.
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument but keep it.
-
   tags   = {                                     # Optional argument but keep it.
     "AppName" = "WebApp"
   }
@@ -166,22 +166,22 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_lambda_layer_version,
   ]
 
-  function_name                  = "webapp"                                   # Required argument.
-  role                           = module.webapp_aws_iam_role.arn             # Required argument.
-  description                    = "WebApp Lambda Function."                  # Optional argument but keep it.
-  handler                        = "lambda_function.lambda_handler"           # Optional argument but keep it.
+  function_name                  = "webapp"                                     # Required argument.
+  role                           = module.webapp_aws_iam_role.arn               # Required argument.
+  description                    = "WebApp Lambda Function."                    # Optional argument but keep it.
+  handler                        = "lambda_function.lambda_handler"             # Optional argument but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument but keep it.
-  memory_size                    = 128                                        # Optional argument but keep it.
-  package_type                   = "Zip"                                      # Optional argument but keep it.
-  publish                        = false                                      # Optional argument but keep it.
-  reserved_concurrent_executions = -1                                         # Optional argument but keep it.
-  runtime                        = "python3.8"                                # Optional argument but keep it.
-  s3_bucket                      = module.webapp_aws_s3_bucket.id             # Optional argument but keep it.
-  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"    # Optional argument but keep it, Conflicts with filename and image_uri.
-  tags                           = {                                          # Optional argument but keep it.
+  memory_size                    = 128                                          # Optional argument but keep it.
+  package_type                   = "Zip"                                        # Optional argument but keep it.
+  publish                        = false                                        # Optional argument but keep it.
+  reserved_concurrent_executions = -1                                           # Optional argument but keep it.
+  runtime                        = "python3.8"                                  # Optional argument but keep it.
+  s3_bucket                      = module.webapp_aws_s3_bucket.id               # Optional argument but keep it.
+  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument but keep it, Conflicts with filename and image_uri.
+  tags                           = {                                            # Optional argument but keep it.
     "AppName" = "WebAppFastAPI"
   }
-  timeout                        = 30                                         # Optional argument but keep it.
+  timeout                        = 30                                           # Optional argument but keep it.
 
 }
 
