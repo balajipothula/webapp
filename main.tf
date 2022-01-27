@@ -59,6 +59,7 @@ locals {
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   webapp_zip = "webapp-${local.datetime}.zip"
+  layer_zip  = "./python/lib/layer.zip"
 }
 
 #  WebApp AWS IAM Role creation.
@@ -140,16 +141,16 @@ module "webapp_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
-  layer_name               = "webapp"                              # Required argument.
-  compatible_architectures = ["arm64", "x86_64"]                   # Optional argument, but keep it.
-  compatible_runtimes      = ["python3.8"]                         # Optional argument, but keep it.
-  description              = "Python Library."                     # Optional argument, but keep it.
-  filename                 = "./python/lib/python.zip"             # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
-  license_info             = "Apache-2.0" # Optional argument, but keep it.
-//s3_bucket                = var.s3_bucket                         # Optional argument, conflicts with filename.
-//s3_key                   = var.s3_key                            # Optional argument, conflicts with filename.
-//s3_object_version        = var.s3_object_version                 # Optional argument, conflicts with filename.
-  source_code_hash         = filebase64sha256("./python/lib/python.zip") # Optional argument, but keep it.
+  layer_name               = "webapp"                          # Required argument.
+  compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.8"]                     # Optional argument, but keep it.
+  description              = "Python Library."                 # Optional argument, but keep it.
+  filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
+  license_info             = "Apache License 2.0"              # Optional argument, but keep it.
+//s3_bucket                = var.s3_bucket                     # Optional argument, conflicts with filename.
+//s3_key                   = var.s3_key                        # Optional argument, conflicts with filename.
+//s3_object_version        = var.s3_object_version             # Optional argument, conflicts with filename.
+  source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
 
 }
 
