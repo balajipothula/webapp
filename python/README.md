@@ -1,2 +1,2 @@
 # python directory.
-# Root directory for Python.
+# Root directory for Python Programming.

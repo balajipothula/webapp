@@ -1,2 +1,2 @@
-# python directory.
-# Root directory for Python.
+# python > src directory.
+# Root directory for Python Source Code.
