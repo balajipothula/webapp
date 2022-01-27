@@ -94,7 +94,7 @@ output "webapp_aws_rds_cluster_port" {
 output "webapp_aws_rds_cluster_master_username" {
   value       = module.webapp_aws_rds_cluster.master_username 
   description = "The master username for the database."
-  sensitive   = false
+  sensitive   = true
 }
 
 output "webapp_aws_rds_cluster_storage_encrypted" {
