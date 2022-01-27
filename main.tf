@@ -140,15 +140,15 @@ module "webapp_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
-  layer_name               = "webapp"                    # Required argument.
-  compatible_architectures = ["arm64", "x86_64"]         # Optional argument, but keep it.
-  compatible_runtimes      = ["python3.8"]               # Optional argument, but keep it.
-  description              = "Python Library."           # Optional argument, but keep it.
-  filename                 = "./python/lib/psycopg2.zip" # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
-  license_info             = var.license_info            # Optional argument, but keep it.
-//s3_bucket                = var.s3_bucket               # Optional argument, conflicts with filename.
-//s3_key                   = var.s3_key                  # Optional argument, conflicts with filename.
-//s3_object_version        = var.s3_object_version       # Optional argument, conflicts with filename.
+  layer_name               = "webapp"                              # Required argument.
+  compatible_architectures = ["arm64", "x86_64"]                   # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.8"]                         # Optional argument, but keep it.
+  description              = "Python Library."                     # Optional argument, but keep it.
+  filename                 = "./python/lib/psycopg2.zip"           # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
+  license_info             = "https://opensource.org/licenses/MIT" # Optional argument, but keep it.
+//s3_bucket                = var.s3_bucket                         # Optional argument, conflicts with filename.
+//s3_key                   = var.s3_key                            # Optional argument, conflicts with filename.
+//s3_object_version        = var.s3_object_version                 # Optional argument, conflicts with filename.
   source_code_hash         = filebase64sha256("./python/lib/psycopg2.zip") # Optional argument, but keep it.
 
 }
