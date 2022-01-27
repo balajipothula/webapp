@@ -61,7 +61,7 @@ locals {
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
-#  WebApp AWS IAM Role Creation Module.
+#  WebApp AWS IAM Role creation.
 module "webapp_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
@@ -73,7 +73,7 @@ module "webapp_aws_iam_role" {
 
 }
 
-#  WebApp AWS IAM Policy Creation Module.
+#  WebApp AWS IAM Policy creation.
 module "webapp_aws_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
@@ -100,7 +100,7 @@ module "webapp_aws_iam_role_policy_attachment" {
 
 }
 
-#  WebApp AWS S3 Bucket Creation Module.
+#  WebApp AWS S3 Bucket creation.
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
@@ -115,7 +115,7 @@ module "webapp_aws_s3_bucket" {
 
 }
 
-#  WebApp AWS S3 Bucket Object Creation Module.
+#  WebApp AWS S3 Bucket Object creation.
 module "webapp_aws_s3_bucket_object" {
 
   source     = "./terraform/aws/s3/bucket_object"
@@ -135,8 +135,8 @@ module "webapp_aws_s3_bucket_object" {
 
 }
 
-#  WebApp AWS Lambda Function Creation Module.
-module "webapp_aws_lambda_function" {
+#  WebApp AWS Lambda Layer Version creation.
+module "webapp_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
@@ -153,7 +153,7 @@ module "webapp_aws_lambda_function" {
 
 }
 
-#  WebApp AWS Lambda Function Creation Module.
+#  WebApp AWS Lambda Function creation.
 module "webapp_aws_lambda_function" {
 
   source                         = "./terraform/aws/lambda/function"
@@ -182,7 +182,7 @@ module "webapp_aws_lambda_function" {
 
 }
 
-#  WebApp AWS CloudWatch Log Group Creation Module.
+#  WebApp AWS CloudWatch Log Group creation.
 module "webapp_aws_cloudwatch_log_group" {
 
   source             = "./terraform/aws/cloudwatch/log_group"
@@ -276,7 +276,7 @@ module "webapp_aws_lambda_permission" {
 }
 
 /*
-# WebApp AWS RDS Cluster Creation Module.
+# WebApp AWS RDS Cluster creation.
 module "webapp_aws_rds_cluster" {
 
   source                       = "./terraform/aws/rds/cluster"
