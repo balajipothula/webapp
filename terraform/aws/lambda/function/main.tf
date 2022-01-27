@@ -61,7 +61,7 @@ resource "aws_lambda_function" "generic" {
 */
 //image_uri                      = var.image_uri                        # Conflicts with filename, s3_bucket, s3_key, and s3_object_version.
 //kms_key_arn                    = var.kms_key_arn                      # Optional argument.
-//layers                         = var.layers                           # Optional argument.
+  layers                         = var.layers                           # Optional argument.
   memory_size                    = var.memory_size                      # Optional argument but keep it.
   package_type                   = var.package_type                     # Optional argument but keep it.
   publish                        = var.publish                          # Optional argument but keep it.

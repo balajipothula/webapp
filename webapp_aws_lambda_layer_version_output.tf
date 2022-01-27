@@ -1,13 +1,6 @@
-/*
 # Resource  type : module
 # Module    name : webapp_aws_lambda_layer_version
 # Attribute name : arn
-output "webapp_aws_lambda_layer_version_webapp_aws_lambda_function_arn" {
-  value       = module.webapp_aws_lambda_function.arn
-  description = "The ARN of the Lambda Function."
-  sensitive   = false
-}
-
 output "webapp_aws_lambda_layer_version_arn" {
   value       = module.webapp_aws_lambda_layer_version.arn
   description = "ARN of the Lambda Layer with version."
@@ -49,4 +42,3 @@ output "webapp_aws_lambda_layer_version_version" {
   description = "Lambda Layer version."
   sensitive   = false
 }
-*/

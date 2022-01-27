@@ -162,23 +162,25 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_s3_bucket,
     module.webapp_aws_s3_bucket_object,
     module.webapp_aws_iam_role_policy_attachment,
+    module.webapp_aws_lambda_layer_version,
   ]
 
-  function_name                  = "webapp"                                # Required argument.
-  role                           = module.webapp_aws_iam_role.arn          # Required argument.
-  description                    = "WebApp Lambda Function."               # Optional argument but keep it.
-  handler                        = "lambda_function.lambda_handler"        # Optional argument but keep it.
-  memory_size                    = 128                                     # Optional argument but keep it.
-  package_type                   = "Zip"                                   # Optional argument but keep it.
-  publish                        = false                                   # Optional argument but keep it.
-  reserved_concurrent_executions = -1                                      # Optional argument but keep it.
-  runtime                        = "python3.8"                             # Optional argument but keep it.
-  s3_bucket                      = module.webapp_aws_s3_bucket.id          # Optional argument but keep it.
-  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}" # Optional argument but keep it, Conflicts with filename and image_uri.
-  tags                           = {                                       # Optional argument but keep it.
+  function_name                  = "webapp"                                   # Required argument.
+  role                           = module.webapp_aws_iam_role.arn             # Required argument.
+  description                    = "WebApp Lambda Function."                  # Optional argument but keep it.
+  handler                        = "lambda_function.lambda_handler"           # Optional argument but keep it.
+  layers                         = module.webapp_aws_lambda_layer_version.arn # Optional argument but keep it.
+  memory_size                    = 128                                        # Optional argument but keep it.
+  package_type                   = "Zip"                                      # Optional argument but keep it.
+  publish                        = false                                      # Optional argument but keep it.
+  reserved_concurrent_executions = -1                                         # Optional argument but keep it.
+  runtime                        = "python3.8"                                # Optional argument but keep it.
+  s3_bucket                      = module.webapp_aws_s3_bucket.id             # Optional argument but keep it.
+  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"    # Optional argument but keep it, Conflicts with filename and image_uri.
+  tags                           = {                                          # Optional argument but keep it.
     "AppName" = "WebAppFastAPI"
   }
-  timeout                        = 30                                      # Optional argument but keep it.
+  timeout                        = 30                                         # Optional argument but keep it.
 
 }
 

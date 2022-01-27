@@ -201,7 +201,7 @@ variable "layers" {
   ]
   description = "List of Lambda Layer Version ARNs to attach Lambda Function."
   validation {
-    condition     = var.layers != null && 0 <= length(var.layers) && length(var.layers) <= 5
+    condition     = var.layers != null && 0 < length(var.layers) && length(var.layers) < 6
     error_message = "Error: layers value must not null."
   }
   sensitive = false
