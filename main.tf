@@ -304,6 +304,7 @@ module "webapp_aws_rds_cluster" {
   storage_encrypted            = true                                   # Optional argument but keep it.
   tags                         = {                                      # Optional argument but keep it.
     "AppName"           = "WebAppFastAPI"
+    "Developer"         = "Balaji Pothula"
   }
 
 }
