@@ -10,6 +10,7 @@ logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
   try:
+    print(psycopg2.__version__)
     dialect = os.environ["dialect"]
     logger.info(f"dialect: {dialect}")
     return {
