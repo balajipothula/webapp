@@ -1,7 +1,7 @@
 # Resource  type : module
 # Module    name : webapp_aws_apigatewayv2_stage_id
 # Attribute name : id
-/*
+
 output "webapp_aws_apigatewayv2_stage_id" {
   value       = module.webapp_aws_apigatewayv2_stage.id
   description = "The stage identifier."
@@ -31,4 +31,3 @@ output "webapp_aws_apigatewayv2_stage_tags_all" {
   description = "A map of tags assigned to the resource"
   sensitive   = false
 }
-*/

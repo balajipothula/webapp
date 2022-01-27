@@ -1,3 +1,6 @@
+# Resource  type : module
+# Module    name : webapp_aws_s3_bucket_object
+# Attribute name : etag
 output "webapp_aws_s3_bucket_object_etag" {
   value       = module.webapp_aws_s3_bucket_object.etag
   description = "ETag generated for the object."
