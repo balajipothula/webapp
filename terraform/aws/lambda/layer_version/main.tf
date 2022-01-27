@@ -6,7 +6,6 @@
 resource "aws_lambda_layer_version" "generic" {
 
   layer_name               = var.layer_name               # Required argument.
-  compatible_architectures = var.compatible_architectures # Optional argument, but keep it.
   compatible_runtimes      = var.compatible_runtimes      # Optional argument, but keep it.
   description              = var.description              # Optional argument, but keep it.
   filename                 = var.filename                 # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
