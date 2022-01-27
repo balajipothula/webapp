@@ -50,7 +50,7 @@ data "aws_security_groups" "default" {
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
-  source_file = "./python/lambda_function.py"
+  source_file = "./python/src/lambda_function.py"
   output_path = "./${local.webapp_zip}"
 }
 
