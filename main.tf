@@ -169,7 +169,7 @@ module "webapp_aws_lambda_function" {
   role                           = module.webapp_aws_iam_role.arn             # Required argument.
   description                    = "WebApp Lambda Function."                  # Optional argument but keep it.
   handler                        = "lambda_function.lambda_handler"           # Optional argument but keep it.
-  layers                         = module.webapp_aws_lambda_layer_version.arn # Optional argument but keep it.
+  layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument but keep it.
   memory_size                    = 128                                        # Optional argument but keep it.
   package_type                   = "Zip"                                      # Optional argument but keep it.
   publish                        = false                                      # Optional argument but keep it.
