@@ -3,7 +3,7 @@ variable "layer_name" {
   default     = "generic"
   description = "Unique name for your Lambda Layer"
   validation {
-    condition     = var.layer_name != null && 0 < length(var.function_name) && length(var.function_name) < 65
+    condition     = var.layer_name != null && 0 < length(var.layer_name) && length(var.layer_name) < 65
     error_message = "Error: layer_name length must be in between 1 and 64 only."
   }
   sensitive   = false
