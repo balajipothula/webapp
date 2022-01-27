@@ -1,8 +1,9 @@
-import os
-import sys
-import logging
-import traceback
 import json
+import logging
+import os
+import psycopg2
+import sys
+import traceback
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
