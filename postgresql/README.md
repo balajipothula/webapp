@@ -1,2 +1,2 @@
 # postgresql directory.
-# Root directory for PostgreSQL.
+# Root directory for PostgreSQL Database Server.
