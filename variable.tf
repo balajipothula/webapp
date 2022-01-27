@@ -19,6 +19,20 @@ variable "secret_key" {
   sensitive   = true
 }
 
+variable "master_username" {
+  type        = string
+  default     = null
+  description = "Username for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
+  sensitive   = true
+}
+
+variable "master_password" {
+  type        = string
+  default     = null
+  description = "Password for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
+  sensitive   = true
+}
+
 variable "region" {
   type        = string
   default     = "eu-central-1"
