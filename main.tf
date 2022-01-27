@@ -295,8 +295,6 @@ module "webapp_aws_rds_cluster" {
   engine_mode                  = "serverless"                           # Optional argument but keep it.
   engine_version               = "10.14"                                # Optional argument but keep it.
   final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}" # Optional argument but keep it.
-//master_password              = "WebApp#2022"                          # Required argument.
-//master_username              = "webapp"                               # Required argument.
   master_password              = var.master_password                    # Required argument.
   master_username              = var.master_username                    # Required argument.
   port                         = "5432"                                 # Optional argument but keep it.
