@@ -138,6 +138,24 @@ module "webapp_aws_s3_bucket_object" {
 #  WebApp AWS Lambda Function Creation Module.
 module "webapp_aws_lambda_function" {
 
+  source                   = "./terraform/aws/lambda/layer_version"
+
+  layer_name               = "webapp"                    # Required argument.
+  compatible_architectures = ["arm64", "x86_64"]         # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.8"]               # Optional argument, but keep it.
+  description              = "Python Library."           # Optional argument, but keep it.
+  filename                 = "./python/lib/psycopg2.zip" # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
+  license_info             = var.license_info            # Optional argument, but keep it.
+//s3_bucket                = var.s3_bucket               # Optional argument, conflicts with filename.
+//s3_key                   = var.s3_key                  # Optional argument, conflicts with filename.
+//s3_object_version        = var.s3_object_version       # Optional argument, conflicts with filename.
+  source_code_hash         = filebase64sha256("./python/lib/psycopg2.zip") # Optional argument, but keep it.
+
+}
+
+#  WebApp AWS Lambda Function Creation Module.
+module "webapp_aws_lambda_function" {
+
   source                         = "./terraform/aws/lambda/function"
 
   depends_on                     = [
