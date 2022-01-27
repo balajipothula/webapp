@@ -278,7 +278,6 @@ module "webapp_aws_lambda_permission" {
 
 }
 
-
 # WebApp AWS RDS Cluster creation.
 module "webapp_aws_rds_cluster" {
 
