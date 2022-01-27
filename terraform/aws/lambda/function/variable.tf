@@ -3,8 +3,8 @@ variable "function_name" {
   default     = "generic"
   description = "Unique name of the Lambda Function."
   validation {
-    condition     = var.function_name != null && 0 <= length(var.function_name) && length(var.function_name) <= 64
-    error_message = "Error: function_name length must be in between 0 and 64 only."
+    condition     = var.function_name != null && 1 <= length(var.function_name) && length(var.function_name) <= 64
+    error_message = "Error: function_name length must be in between 1 and 64 only."
   }
   sensitive = false
 }
