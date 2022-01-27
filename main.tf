@@ -300,7 +300,7 @@ module "webapp_aws_rds_cluster" {
   master_username              = "${var.master_username}"               # Required argument.
 //master_username              = "webapp"                               # Required argument.
   port                         = "5432"                                 # Optional argument but keep it.
-  preferred_backup_window      = "01:00-02:00"                          # Optional argument but keep it.
+  preferred_backup_window      = "00:00-00:59"                          # Optional argument but keep it.
   preferred_maintenance_window = "sun:01:00-sun:02:00"                  # Optional argument but keep it.
   skip_final_snapshot          = true                                   # Optional argument but keep it.
   storage_encrypted            = true                                   # Optional argument but keep it.
