@@ -18,7 +18,8 @@ logger.setLevel(logging.INFO)
 
 def getCredentialDict(region: str, secret: str) -> dict:
   """
-  Get PostgreSQL Server credentials from Secrets Manager service by providing region and secret name.
+  Get PostgreSQL Server credentials from Secrets Manager 
+  by providing region and secret name.
   Parameters:
     region : str
     AWS Region name.
@@ -61,11 +62,20 @@ def getCredentialDict(region: str, secret: str) -> dict:
 def lambda_handler(event, context):
 
   try:
-    credentialDict = getCredentialDict(region = "eu-central-1", secret = "webapp")
-    print(credentialDict)
+    #credentialDict = getCredentialDict(region = "eu-central-1", secret = "webapp")
+    #print(credentialDict)
+    connect = psycopg2.connect(
+      host     = "webapp.cluster-cxxn79rkxpwp.eu-central-1.rds.amazonaws.com",
+      port     = 5432,
+      database = "webapp_db",
+      user     = "webapp",
+      password = "WebApp#2022")
+    cursor = connect.cursor()
+    cursor.execute("SELECT version()")
+    version = cursor.fetchone()
     return {
       "statusCode": 200,
-      "body": json.dumps("WebApp")
+      "body": json.dumps(version)
     }
   except Exception as exception:
     exception_type, exception_value, exception_traceback = sys.exc_info()
