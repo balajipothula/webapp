@@ -12,6 +12,7 @@ data "aws_region" "current" {
 
 # Data Source: aws_vpc
 data "aws_vpc" "default" {
+  default = true
 }
 
 # Data Source: aws_availability_zones
@@ -61,6 +62,17 @@ locals {
   layer_zip  = "./python/lib/layer.zip"
   python_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
+}
+
+# Add PostgreSQL Inbound Rule.
+resource "aws_default_security_group" "default" {
+  vpc_id = data.aws_vpc.default.id
+  ingress {
+    cidr_blocks = data.aws_vpc.default.cidr_block
+    description = "PostgreSQL Inbound Rule"
+    protocol    = "tcp"
+    to_port     = 5432
+  }
 }
 
 #  WebApp AWS IAM Role creation.
