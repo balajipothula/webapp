@@ -78,10 +78,10 @@ resource "aws_lambda_function" "generic" {
     mode                         = var.mode                             # Required block argument.
   }
 */
-/*
+
   vpc_config {                                                          # Optional argument block but keep it.
     security_group_ids           = data.aws_security_groups.default.ids # Required block argument.
     subnet_ids                   = data.aws_subnet_ids.available.ids    # Required block argument.
   }
-*/
+
 }

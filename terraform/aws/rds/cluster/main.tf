@@ -123,7 +123,6 @@ resource "aws_rds_cluster" "generic" {
 //source_region                       = var.source_region                                        # Optional argument.
   storage_encrypted                   = var.storage_encrypted                                    # Optional argument but keep it.
   tags                                = var.tags                                                 # Optional argument but keep it.
-//vpc_security_group_ids              = var.vpc_security_group_ids                               # Optional argument.
 //vpc_security_group_ids              = data.aws_security_groups.default.ids                     # Optional argument.
 
 }
