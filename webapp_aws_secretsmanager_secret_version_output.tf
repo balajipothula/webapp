@@ -1,3 +1,4 @@
+/*
 # Resource  type : module
 # Module    name : webapp_aws_secretsmanager_secret_version
 # Attribute name : arn
@@ -18,3 +19,4 @@ output "webapp_aws_secretsmanager_secret_version_version_id" {
   description = "The unique identifier of the version of the secret."
   sensitive   = false
 }
+*/

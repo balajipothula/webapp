@@ -309,13 +309,12 @@ module "webapp_aws_rds_cluster" {
 
 }
 
-# WebApp AWS RDS Cluster creation.
+# WebApp AWS Secrets Manager Secret creation.
 module "webapp_aws_secretsmanager_secret" {
 
   source                         = "./terraform/aws/secretsmanager/secret"
 
   depends_on                     = [
-    module.webapp_aws_lambda_function,
     module.webapp_aws_rds_cluster,
   ]
 
@@ -329,3 +328,21 @@ module "webapp_aws_secretsmanager_secret" {
   }
 
 }
+/*
+# WebApp AWS Secrets Manager Secret Version creation.
+module "webapp_aws_secretsmanager_secret_version" {
+
+  source                         = "./terraform/aws/secretsmanager/secret_version"
+
+  depends_on                     = [
+    module.webapp_aws_secretsmanager_secret,
+    module.webapp_aws_rds_cluster,
+  ]
+
+  secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
+  secret_string = jsonencode({
+    dbInstanceIdentifier = 
+  }) # Optional argument, but required if secret_binary is not set.
+
+}
+*/
