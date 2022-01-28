@@ -72,6 +72,7 @@ resource "aws_default_security_group" "default" {
     description = "PostgreSQL Inbound Rule"
     protocol    = "tcp"
     to_port     = 5432
+    from_port   = 0
   }
 }
 
