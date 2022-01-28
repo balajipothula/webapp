@@ -68,7 +68,7 @@ locals {
 resource "aws_default_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
   ingress {
-    cidr_blocks = data.aws_vpc.default.cidr_block
+    cidr_blocks = [data.aws_vpc.default.cidr_block]
     description = "PostgreSQL Inbound Rule"
     protocol    = "tcp"
     to_port     = 5432
