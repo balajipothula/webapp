@@ -10,6 +10,12 @@ output "aws_vpc" {
   sensitive   = false
 }
 
+output "cidr_block" {
+  value       = data.aws_vpc.default.cidr_block
+  description = "The CIDR block for the association."
+  sensitive   = false
+}
+
 output "aws_availability_zones" {
   value       = data.aws_availability_zones.available.names
   description = "A list of the Availability Zone names available to the account."
