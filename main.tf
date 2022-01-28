@@ -321,9 +321,7 @@ module "webapp_aws_secretsmanager_secret" {
 
   description                    = "WebApp Secrets Manager" # Optional argument, but keep it.
   force_overwrite_replica_secret = false                    # Optional argument, but keep it.
-  kms_key_id                     = "aws/secretsmanager"     # Optional argument, but keep it.
   name                           = "webapp2022"             # Optional argument, conflicts with name_prefix.
-//name_prefix                    = "webapp-"                # Optional argument, conflicts with name.
   recovery_window_in_days        = 7                        # Optional argument, but keep it.
   tags                           = {                        # Optional argument, but keep it.
     "AppName"           = "WebAppFastAPI"
