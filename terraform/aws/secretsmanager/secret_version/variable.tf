@@ -10,8 +10,10 @@ variable "secret_id" {
 }
 
 variable "secret_string" {
-  type = map(string)
-  default = {
+
+  type = jsonencode(map(string))
+/*
+  default = jsonencode({
     "dbInstanceIdentifier" = "webapp"
     "engine"               = "aurora-postgresql"
     "host"                 = "webapp.cluster-cxxn79rkxpwp.eu-central-1.rds.amazonaws.com"
@@ -19,7 +21,7 @@ variable "secret_string" {
     "resourceId"           = "cluster-BSINHSF55FNPNAG72B7GPHH4B4"
     "username"             = "webapp"
     "password"             = "WebApp#2022"
-  }
+  })
   description = "Specifies text data that you want to encrypt and store in this version of the secret." 
   validation {
     condition     = var.secret_string["dbInstanceIdentifier"] != null && 3 <= length(var.secret_string["dbInstanceIdentifier"]) && length(var.secret_string["dbInstanceIdentifier"]) <= 64  && length(regexall("[^A-Za-z0-9-]", var.secret_string["dbInstanceIdentifier"])) == 0
@@ -29,5 +31,6 @@ variable "secret_string" {
     condition     = var.secret_string != null && 0 < length(var.secret_string) && length(var.secret_string) < 33
     error_message = "Error: secret_string at least one or more expected upto 50."
   }
+*/
   sensitive = true
 }
