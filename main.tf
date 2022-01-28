@@ -63,19 +63,26 @@ locals {
   python_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-/* Testing
+
 # Add PostgreSQL Inbound Rule.
 resource "aws_default_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "PostgreSQL Inbound Rule"
+    protocol    = "tcp"
+    to_port     = 80
+    from_port   = 80
+  }
   ingress {
     cidr_blocks = [data.aws_vpc.default.cidr_block]
     description = "PostgreSQL Inbound Rule"
     protocol    = "tcp"
     to_port     = 5432
-    from_port   = 0
-  }
+    from_port   = 5432
+  }  
 }
-*/
+
 #  WebApp AWS IAM Role creation.
 module "webapp_aws_iam_role" {
 
