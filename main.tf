@@ -341,13 +341,13 @@ module "webapp_aws_secretsmanager_secret_version" {
 
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                               
-    dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
-    engine               = module.webapp_aws_rds_cluster.engine
-    host                 = module.webapp_aws_rds_cluster.endpoint
-    port                 = module.webapp_aws_rds_cluster.port
-    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
-    username             = var.master_username
-    password             = var.master_password
+    dbInstanceIdentifier = "${module.webapp_aws_rds_cluster.id}"
+    engine               = "${module.webapp_aws_rds_cluster.engine}"
+    host                 = "${module.webapp_aws_rds_cluster.endpoint}"
+    port                 = "${module.webapp_aws_rds_cluster.port}"
+    resourceId           = "${module.webapp_aws_rds_cluster.cluster_resource_id}"
+    username             = "${var.master_username}"
+    password             = "${var.master_password}"
   }) # Optional argument, but required if secret_binary is not set.
 
 }
