@@ -1,18 +1,68 @@
+import boto3
 import json
 import logging
 import os
 import psycopg2
 import sys
 import traceback
+import base64
+import gzip
+import os
+
+from botocore.exceptions import ClientError
+from json.decoder import JSONDecodeError
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-def lambda_handler(event, context):
+
+def getCredentialDict(region: str, secret: str) -> dict:
+  """
+  Get PostgreSQL Server credentials from Secrets Manager service by providing region and secret name.
+  Parameters:
+    region : str
+    AWS Region name.
+    secret : str
+    AWS Secrets Manager secret name.
+  Returns:
+    credentialDict : dict
+    PostgreSQL Server credentials.
+  """
   try:
-    print(psycopg2.__version__)
-    dialect = os.environ["dialect"]
-    logger.info(f"dialect: {dialect}")
+    # Creating Secrets Manager Client.
+    session = boto3.session.Session()
+    client = session.client(
+      service_name="secretsmanager",
+      region_name=region
+    )
+    secretValue = client.get_secret_value(SecretId=secret)
+  except ClientError as clientError:
+    logger.setLevel(logging.ERROR)
+    exception = clientError.response["Error"]["Code"]
+    if exception == "DecryptionFailureException":
+      logger.error("Secrets Manager can not decrypt the provided KMS key")
+    elif exception == "InternalServiceErrorException":
+      logger.error("An error occurred on the server side.")
+    elif exception == "InvalidParameterException":
+      logger.error("The request had invalid parameters: ", str(clientError))
+    elif exception == "InvalidRequestException":
+      logger.error("The request was invalid due to :", str(clientError))
+    elif exception == "ResourceNotFoundException":
+      logger.error("The requested secret " + secret + " was not found")
+  else:
+    if "SecretString" in secretValue:
+      return json.loads(secretValue["SecretString"])
+    else:
+      return json.loads(base64.b64decode(secretValue["SecretBinary"]))
+  finally:
+    pass
+
+
+def lambda_handler(event, context):
+
+  try:
+    credentialDict = getCredentialDict(region = "eu-central-1", secret = "webapp")
+    print(credentialDict)
     return {
       "statusCode": 200,
       "body": json.dumps("WebApp")
