@@ -9,7 +9,9 @@ variable "secret_id" {
   sensitive = false
 }
 
+# Note: secret_string is a JSON string with map structure.
 variable "secret_string" {
+  type        = string
   default     = null
   description = "Specifies text data that you want to encrypt and store in this version of the secret." 
   sensitive   = true
