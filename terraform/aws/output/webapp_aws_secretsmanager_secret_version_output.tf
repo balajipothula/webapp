@@ -18,9 +18,3 @@ output "webapp_aws_secretsmanager_secret_version_version_id" {
   description = "The unique identifier of the version of the secret."
   sensitive   = false
 }
-
-output "webapp_aws_secretsmanager_secret_version_dbInstanceIdentifier" {
-  value       = jsondecode(module.webapp_aws_secretsmanager_secret_version.secret_string)["dbInstanceIdentifier"]
-  description = "The unique identifier of the AWS RDS Cluster ID."
-  sensitive   = false  
-}
