@@ -8,6 +8,8 @@
               "cloudformation:ListStackResources",
               "cloudwatch:ListMetrics",
               "cloudwatch:GetMetricData",
+              "cloudwatch:PutMetricData",
+              "cloudwatch:PutMetricStream",
               "ec2:DeleteNetworkInterface",
               "ec2:DescribeNetworkInterfaces",
               "ec2:DescribeSecurityGroups",
