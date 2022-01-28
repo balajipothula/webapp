@@ -63,7 +63,7 @@ locals {
   python_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-
+/*
 # Add PostgreSQL Inbound Rule.
 resource "aws_default_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
@@ -75,7 +75,7 @@ resource "aws_default_security_group" "default" {
     from_port   = 0
   }
 }
-
+*/
 #  WebApp AWS IAM Role creation.
 module "webapp_aws_iam_role" {
 
