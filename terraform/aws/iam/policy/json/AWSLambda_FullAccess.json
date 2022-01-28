@@ -26,6 +26,7 @@
               "iam:ListRoles",
               "lambda:*",
               "logs:DescribeLogGroups",
+              "secretsmanager:GetSecretValue",
               "states:DescribeStateMachine",
               "states:ListStateMachines",
               "tag:GetResources",
