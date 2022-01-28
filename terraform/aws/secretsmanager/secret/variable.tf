@@ -1,23 +1,67 @@
-variable "name" {
+variable "description" {
   type        = string
-  default     = "webapp"
-  description = "The name of the API."
+  default     = "Generic Secrets Manager"
+  description = "Description of the secret."
   validation {
-    condition     = var.name != null && 0 <= length(var.name) && length(var.name) <= 128
-    error_message = "Error: name length must be in between 1 and 128 only."
+    condition     = var.description != null && 0 < length(var.description) && length(var.description) < 65
+    error_message = "Error: description length must be in between 1 and 64 only."
   }
   sensitive = false
 }
 
-variable "protocol_type" {
-  type        = string
-  default     = "HTTP"
-  description = "The API protocol."
+variable "force_overwrite_replica_secret" {
+  type        = bool
+  default     = false
+  description = "Specify whether to overwrite a secret with the same name in the destination Region."
   validation {
-    condition     = var.protocol_type != null && contains(tolist(["HTTP", "WEBSOCKET"]), var.protocol_type)
-    error_message = "Error: protocol_type must not null and value either HTTP or WEBSOCKET."
+    condition     = var.force_overwrite_replica_secret != null && contains(tolist([true, false]), var.force_overwrite_replica_secret)
+    error_message = "Error: force_overwrite_replica_secret must not null and value either true or false only."
   }
   sensitive = false
+}
+
+variable "kms_key_id" {
+  type        = string
+  default     = "aws/secretsmanager"
+  description = "ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret."
+  validation {
+    condition     = var.kms_key_id != null
+    error_message = "Error: kms_key_id must not null."
+  }
+  sensitive = false
+}
+
+variable "name" {
+  type        = string
+  default     = "generic"
+  description = "Friendly name of the new secret."
+  validation {
+    condition     = var.name != null && 0 < length(var.name) && length(var.name) < 33
+    error_message = "Error: name must not null and length must be in between 1 and 32 only."
+  }
+  sensitive = false
+}
+
+variable "name_prefix" {
+  type        = string
+  default     = "generic-"
+  description = "Creates a unique name beginning with the specified prefix."
+  validation {
+    condition     = var.name_prefix != null && 0 < length(var.name_prefix) && length(var.name_prefix) < 17
+    error_message = "Error: name_prefix must not null and length must be in between 1 and 16 only."
+  }
+  sensitive = false
+}
+
+variable "recovery_window_in_days" {
+  type        = number
+  default     = 7
+  description = "The target backtrack window, in seconds. Only available for aurora engine currently. To disable backtracking, set this value to 0. Must be between 0 and 259200"
+  validation {
+    condition     = var.recovery_window_in_days != null && 6 < var.recovery_window_in_days && var.recovery_window_in_days < 31
+    error_message = "Error: recovery_window_in_days value must not null, in between 7 and 30 days."
+  }
+  sensitive   = false
 }
 
 variable "tags" {
@@ -28,7 +72,7 @@ variable "tags" {
     "DeveloperName"  = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
   }
-  description = "A map of tags to assign to the Lambda Function." 
+  description = "Key-value map of user-defined tags that are attached to the secret." 
   validation {
     condition     = var.tags["AppName"] != null && 3 <= length(var.tags["AppName"]) && length(var.tags["AppName"]) <= 64  && length(regexall("[^A-Za-z0-9-]", var.tags["AppName"])) == 0
     error_message = "Error: tags of AppName must not null, length must be in between 3 to 64 and only contain alphabets, numbers, and hyphens."
