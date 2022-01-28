@@ -62,17 +62,19 @@ def getCredentialDict(region: str, secret: str) -> dict:
 def lambda_handler(event, context):
 
   try:
-    #credentialDict = getCredentialDict(region = "eu-central-1", secret = "webapp")
-    #print(credentialDict)
-    connect = psycopg2.connect(
-      host     = "webapp.cluster-cxxn79rkxpwp.eu-central-1.rds.amazonaws.com",
-      port     = 5432,
+    
+    postgresql = getCredentialDict(region = "eu-central-1", secret = "webapp")
+
+    connect    = psycopg2.connect(
+      host     = postgresql["host"],
+      port     = postgresql["port"],
       database = "webapp_db",
-      user     = "webapp",
-      password = "WebApp#2022")
-    cursor = connect.cursor()
+      user     = postgresql["username"],
+      password = postgresql["password"]
+    )
+    cursor     = connect.cursor()
     cursor.execute("SELECT version()")
-    version = cursor.fetchone()
+    version    = cursor.fetchone()
     return {
       "statusCode": 200,
       "body": json.dumps(version)

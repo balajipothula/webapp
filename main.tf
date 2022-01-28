@@ -75,6 +75,13 @@ resource "aws_default_security_group" "default" {
     from_port   = 80
   }
   ingress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "API Gateway inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 443
+    from_port   = 443
+  }  
+  ingress {
     cidr_blocks = [data.aws_vpc.default.cidr_block]
     description = "PostgreSQL inbound traffic rule."
     protocol    = "tcp"
