@@ -33,6 +33,13 @@ variable "master_password" {
   sensitive   = true
 }
 
+variable "database_name" {
+  type        = string
+  default     = null
+  description = "Database name for the PostgreSQL database, which is stored in HashiCorp Terraform Cloud."
+  sensitive   = true
+}
+
 variable "region" {
   type        = string
   default     = "eu-central-1"
