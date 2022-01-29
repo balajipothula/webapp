@@ -37,7 +37,7 @@ variable "database_name" {
   type        = string
   default     = "webapp_db"
   validation {
-    condition     = var.database_name != null && 5 < length(var.database_name) && length(var.database_name) < 33 && regex("_db$", var.database_name)
+    condition     = var.database_name != null && 5 < length(var.database_name) && length(var.database_name) < 33
     error_message = "Error: database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
   }
   description = "Database name for the PostgreSQL database, which is stored in HashiCorp Terraform Cloud."

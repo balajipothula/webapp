@@ -87,7 +87,7 @@ variable "database_name" {
   default     = "webapp_db"
   description = "Name for an automatically created database on cluster creation."
   validation {
-    condition     = var.database_name != null && 5 < length(var.database_name) && length(var.database_name) < 33 && regex("_db$", var.database_name)
+    condition     = var.database_name != null && 5 < length(var.database_name) && length(var.database_name) < 33
     error_message = "Error: database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
   }
   sensitive   = true
