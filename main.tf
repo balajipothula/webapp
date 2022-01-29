@@ -76,14 +76,6 @@ resource "aws_default_security_group" "default" {
   vpc_id = data.aws_vpc.default.id
 
   ingress {
-    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
-    description = "Internet Control Message rule."
-    protocol    = "icmp"
-    to_port     = 1
-    from_port   = 1
-  }
-
-  ingress {
     cidr_blocks = ["0.0.0.0/0"]
     description = "API Gateway inbound traffic rule."
     protocol    = "tcp"
@@ -92,15 +84,15 @@ resource "aws_default_security_group" "default" {
   }
 
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
     description = "API Gateway inbound traffic rule."
     protocol    = "tcp"
     to_port     = 443
     from_port   = 443
-  }  
+  }
 
   ingress {
-    cidr_blocks = [data.aws_vpc.default.cidr_block]
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
     description = "PostgreSQL inbound traffic rule."
     protocol    = "tcp"
     to_port     = 5432
@@ -113,7 +105,8 @@ resource "aws_default_security_group" "default" {
     protocol    = "all"
     to_port     = 0
     from_port   = 0
-  }   
+  }
+
 }
 
 #  WebApp AWS IAM Role creation.
