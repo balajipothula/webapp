@@ -61,14 +61,14 @@ variable "security_group_ids" {
 variable "tags" {
   type = map(string)
   default = {
-    "Name"           = "WebAppFastAPI"
+    "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
     "DeveloperName"  = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
   }
   description = "A map of tags to assign to the Lambda Function." 
   validation {
-    condition     = var.tags["Name"] != null && 3 <= length(var.tags["Name"]) && length(var.tags["Name"]) <= 64  && length(regexall("[^A-Za-z0-9-]", var.tags["Name"])) == 0
+    condition     = var.tags["AppName"] != null && 3 <= length(var.tags["AppName"]) && length(var.tags["AppName"]) <= 64  && length(regexall("[^A-Za-z0-9-]", var.tags["AppName"])) == 0
     error_message = "Error: tags of Name must not null, length must be in between 3 to 64 and only contain alphabets, numbers, and hyphens."
   }
   validation {
