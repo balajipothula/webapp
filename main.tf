@@ -165,9 +165,9 @@ module "webapp_aws_s3_bucket" {
 #  WebApp AWS S3 Bucket Object creation.
 module "webapp_aws_s3_bucket_object" {
 
-  source     = "./terraform/aws/s3/bucket_object"
+  source      = "./terraform/aws/s3/bucket_object"
 
-  depends_on = [
+  depends_on  = [
     module.webapp_aws_s3_bucket,
   ]
 
@@ -234,16 +234,16 @@ module "webapp_aws_lambda_function" {
 #  WebApp AWS CloudWatch Log Group creation.
 module "webapp_aws_cloudwatch_log_group" {
 
-  source             = "./terraform/aws/cloudwatch/log_group"
+  source            = "./terraform/aws/cloudwatch/log_group"
 
-  depends_on = [
+  depends_on        = [
     module.webapp_aws_lambda_function,
   ]
 
-  name               = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument, but keep it.
-  retention_in_days  = 14                                                               # Optional argument, but keep it.
-  tags               = {                                                                # Optional argument, but keep it.
-    "AppName"        = "WebAppFastAPI"
+  name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument, but keep it.
+  retention_in_days = 14                                                               # Optional argument, but keep it.
+  tags              = {                                                                # Optional argument, but keep it.
+    "AppName"       = "WebAppFastAPI"
   }
 
 }
@@ -261,15 +261,15 @@ module "webapp_aws_apigatewayv2_api" {
 # WebApp AWS API Gateway V2 Stage Module.
 module "webapp_aws_apigatewayv2_stage" {
 
-  source        = "./terraform/aws/apigatewayv2/stage"
+  source      = "./terraform/aws/apigatewayv2/stage"
 
-  depends_on = [
+  depends_on  = [
     module.webapp_aws_apigatewayv2_api,
   ]
 
-  api_id = module.webapp_aws_apigatewayv2_api.id # Required argument.
-  name              = "$default"                 # Required argument.
-  auto_deploy       = true                       # Optional argument, but keep it.
+  api_id      = module.webapp_aws_apigatewayv2_api.id # Required argument.
+  name        = "$default"                            # Required argument.
+  auto_deploy = true                                  # Optional argument, but keep it.
 
 }
 
@@ -378,9 +378,9 @@ module "webapp_aws_secretsmanager_secret" {
 # WebApp AWS Secrets Manager Secret Version creation.
 module "webapp_aws_secretsmanager_secret_version" {
 
-  source                         = "./terraform/aws/secretsmanager/secret_version"
+  source        = "./terraform/aws/secretsmanager/secret_version"
 
-  depends_on                     = [
+  depends_on    = [
     module.webapp_aws_secretsmanager_secret,
     module.webapp_aws_rds_cluster,
   ]
