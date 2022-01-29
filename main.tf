@@ -33,6 +33,12 @@ data "aws_subnet_ids" "available" {
   vpc_id = data.aws_vpc.default.id
 }
 
+# Data Source: aws_subnet
+data "aws_subnet" "default" {
+  for_each = data.aws_subnet_ids.available.ids
+  id       = each.value
+}
+
 # Data Source: aws_security_groups
 data "aws_security_groups" "default" {
 
@@ -66,7 +72,17 @@ locals {
 
 # Add PostgreSQL Inbound Rule.
 resource "aws_default_security_group" "default" {
+
   vpc_id = data.aws_vpc.default.id
+
+  ingress {
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
+    description = "Internet Control Message rule."
+    protocol    = "icmp"
+    to_port     = 1
+    from_port   = 1
+  }
+
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
     description = "API Gateway inbound traffic rule."
@@ -74,6 +90,7 @@ resource "aws_default_security_group" "default" {
     to_port     = 80
     from_port   = 80
   }
+
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
     description = "API Gateway inbound traffic rule."
@@ -81,6 +98,7 @@ resource "aws_default_security_group" "default" {
     to_port     = 443
     from_port   = 443
   }  
+
   ingress {
     cidr_blocks = [data.aws_vpc.default.cidr_block]
     description = "PostgreSQL inbound traffic rule."
@@ -88,6 +106,7 @@ resource "aws_default_security_group" "default" {
     to_port     = 5432
     from_port   = 5432
   }
+
   egress {
     cidr_blocks = ["0.0.0.0/0"]
     description = "All outbound traffic rule."
