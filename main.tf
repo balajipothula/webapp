@@ -70,7 +70,7 @@ locals {
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
-# Add PostgreSQL Inbound Rule.
+# Modify AWS Default Security Group Rules.
 resource "aws_default_security_group" "default" {
 
   vpc_id = data.aws_vpc.default.id
@@ -85,7 +85,7 @@ resource "aws_default_security_group" "default" {
 
   ingress {
     cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
-    description = "API Gateway inbound traffic rule."
+    description = "Secrets Manager inbound traffic rule."
     protocol    = "tcp"
     to_port     = 443
     from_port   = 443
