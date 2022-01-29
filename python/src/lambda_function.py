@@ -68,7 +68,7 @@ def lambda_handler(event, context):
     connect    = psycopg2.connect(
       host     = postgresql["host"],
       port     = postgresql["port"],
-      database = "webapp_db",
+      database = postgresql["database"],
       user     = postgresql["username"],
       password = postgresql["password"]
     )
