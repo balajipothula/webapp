@@ -70,6 +70,47 @@ locals {
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
+#  WebApp AWS IAM Role creation.
+module "webapp_aws_default_security_group" {
+
+  source = "./terraform/aws/vpc/default/security_group"
+
+  vpc_id = data.aws_vpc.default.id
+
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "API Gateway inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 80
+    from_port   = 80
+  }
+
+  ingress {
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
+    description = "Secrets Manager inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 443
+    from_port   = 443
+  }
+
+  ingress {
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
+    description = "PostgreSQL inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 5432
+    from_port   = 5432
+  }
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "All outbound traffic rule."
+    protocol    = "all"
+    to_port     = 0
+    from_port   = 0
+  }
+
+}
+/*
 # Modify AWS Default Security Group Rules.
 resource "aws_default_security_group" "default" {
 
@@ -108,7 +149,7 @@ resource "aws_default_security_group" "default" {
   }
 
 }
-
+*/
 #  WebApp AWS IAM Role creation.
 module "webapp_aws_iam_role" {
 
