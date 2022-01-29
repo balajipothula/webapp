@@ -87,10 +87,10 @@ variable "database_name" {
   default     = "webapp_db"
   description = "Name for an automatically created database on cluster creation."
   validation {
-    condition     = var.database_name != null && 1 <= length(var.database_name) && length(var.database_name) <= 63
-    error_message = "Error: database_name value must not null and database_name lenght must be between 1 and 63."
+    condition     = var.database_name != null && 5 < length(var.database_name) && length(var.database_name) < 33 && regex("_db$", var.database_name)
+    error_message = "Error: database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
   }
-  sensitive   = false
+  sensitive   = true
 }
 
 variable "db_cluster_parameter_group_name" {
