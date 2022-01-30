@@ -341,7 +341,7 @@ module "webapp_aws_apigatewayv2_route_login" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "POST /login/"                                                  # Required argument.
+  route_key     = "POST /login"                                                   # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
