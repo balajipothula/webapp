@@ -79,7 +79,7 @@ def lambda_handler(event, context):
     postgresql = getCredentialDict(region = "eu-central-1", secret = "webapp")
 
     url = URL(
-      drivername = "postgresql" + "+" + "psycopg2",
+      drivername = postgresql["dialect"] + "+" + postgresql["driver"],
       username   = postgresql["username"],
       password   = postgresql["password"],
       host       = postgresql["host"],
@@ -89,8 +89,8 @@ def lambda_handler(event, context):
     
     engine = create_engine(
       url,
-      echo = False,
-      connect_args = { "connect_timeout": 30 }
+      echo = eval(postgresql["echo"]),
+      connect_args = { "connect_timeout": int(postgresql["connect_timeout"]) }
     )
 
     connect = engine.connect()
@@ -100,10 +100,11 @@ def lambda_handler(event, context):
     rows = connect.execute(statement)
 
     version = rows.fetchone()
+    print(version)
 
     return {
       "statusCode": 200,
-      "body": json.dumps(version)
+      "body": json.dumps("OKay")
     }
 
   except Exception as exception:
