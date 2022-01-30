@@ -294,7 +294,7 @@ module "webapp_aws_apigatewayv2_integration" {
   api_id             = module.webapp_aws_apigatewayv2_api.id # Required argument.
   integration_type   = "AWS_PROXY"                           # Required argument.
   integration_uri    = module.webapp_aws_lambda_function.arn # Optional argument, but keep it.
-  integration_method = "POST"                                # Optional argument, but keep it.
+  integration_method = "ANY"                                 # Optional argument, but keep it.
 
 }
 
@@ -309,7 +309,7 @@ module "webapp_aws_apigatewayv2_route" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /"                                                         # Required argument.
+  route_key     = "GET /wish"                                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
