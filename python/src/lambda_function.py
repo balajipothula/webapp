@@ -12,6 +12,16 @@ import os
 from botocore.exceptions import ClientError
 from json.decoder import JSONDecodeError
 
+from sqlalchemy import create_engine
+from sqlalchemy import engine
+from sqlalchemy import text
+from sqlalchemy.engine.interfaces import Dialect
+from sqlalchemy.engine.url import URL
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import session
+from sqlalchemy.orm import sessionmaker
+
+
 logging.getLogger("boto3").setLevel(logging.WARNING)
 logging.getLogger("botocore").setLevel(logging.WARNING)
 
@@ -68,29 +78,34 @@ def lambda_handler(event, context):
   
     postgresql = getCredentialDict(region = "eu-central-1", secret = "webapp")
 
-    connect    = psycopg2.connect(
-      host     = postgresql["host"],
-      port     = postgresql["port"],
-      database = postgresql["database"],
-      user     = postgresql["username"],
-      password = postgresql["password"]
+    url = URL(
+      drivername = "postgresql" + "+" + "psycopg2",
+      username   = postgresql["username"],
+      password   = postgresql["password"],
+      host       = postgresql["host"],
+      database   = postgresql["database"],
+      query      = None
     )
     
-    # create cursor to perform database operations.
-    cursor     = connect.cursor()
-    
-    # execute sql query.
-    cursor.execute("SELECT version()")
+    engine = create_engine(
+      url,
+      echo = False,
+      connect_args = { "connect_timeout": 30 }
+    )
 
-    # fetch top one record.
-    version    = cursor.fetchone()
+    connect = engine.connect()
     
-    print("You are connected to - ", version, "\n")
+    statement = text("""SELECT version()""")
     
+    rows = connect.execute(statement)
+
+    version = rows.fetchone()
+
     return {
       "statusCode": 200,
       "body": json.dumps(version)
     }
+
   except Exception as exception:
     exception_type, exception_value, exception_traceback = sys.exc_info()
     traceback_string = traceback.format_exception(exception_type, exception_value, exception_traceback)
