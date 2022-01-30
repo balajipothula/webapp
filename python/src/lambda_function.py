@@ -17,11 +17,15 @@ app = FastAPI(
 )
 
 @app.get("/", name="Index", tags=["Index"])
-def index():
+def index() -> str:
   return {"ping": "pong"}
 
 @app.get("/health", name="Health", tags=["Health"])
-def health():
-  return { "message": "OK" }
+def health() -> str:
+  return {"message": "OK"}
+
+@app.post("/login/")
+def login(username: str, password: str) -> str:
+  return {"Username": username}
 
 lambda_handler = Mangum(app)
