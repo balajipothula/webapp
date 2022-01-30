@@ -12,6 +12,9 @@ import os
 from botocore.exceptions import ClientError
 from json.decoder import JSONDecodeError
 
+logging.getLogger("boto3").setLevel(logging.WARNING)
+logging.getLogger("botocore").setLevel(logging.WARNING)
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -62,7 +65,7 @@ def getCredentialDict(region: str, secret: str) -> dict:
 def lambda_handler(event, context):
 
   try:
-    
+  
     postgresql = getCredentialDict(region = "eu-central-1", secret = "webapp")
 
     connect    = psycopg2.connect(
@@ -72,9 +75,18 @@ def lambda_handler(event, context):
       user     = postgresql["username"],
       password = postgresql["password"]
     )
+    
+    # create cursor to perform database operations.
     cursor     = connect.cursor()
+    
+    # execute sql query.
     cursor.execute("SELECT version()")
+
+    # fetch top one record.
     version    = cursor.fetchone()
+    
+    print("You are connected to - ", version, "\n")
+    
     return {
       "statusCode": 200,
       "body": json.dumps(version)

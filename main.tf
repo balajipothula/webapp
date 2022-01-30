@@ -193,7 +193,7 @@ module "webapp_aws_lambda_layer_version" {
 
   layer_name               = "webapp"                          # Required argument.
   compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
-  compatible_runtimes      = ["python3.8"]                     # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.7", "python3.8"]        # Optional argument, but keep it.
   description              = "Python Library."                 # Optional argument, but keep it.
   filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
   license_info             = "Apache License 2.0"              # Optional argument, but keep it.
