@@ -1,3 +1,4 @@
+-- select username and password from Login table.
 SELECT
   "username",
   "password"

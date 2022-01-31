@@ -142,7 +142,8 @@ def login(request: Request, login: Login):
   version = rows.fetchone()
   print(version)
   #return login.username
-  return str(version)
+  #return str(version)
+  return "Hello"
 
 
 lambda_handler = Mangum(app)
