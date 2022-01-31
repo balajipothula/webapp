@@ -141,7 +141,7 @@ module "webapp_aws_iam_policy" {
 
 }
 
-#  WebApp AWS IAM Role Policy Attachment Module.
+#  WebApp AWS IAM Role Policy attachment.
 module "webapp_aws_iam_role_policy_attachment" {
 
   source     = "./terraform/aws/iam/role_policy_attachment"
