@@ -89,6 +89,7 @@ def getConnect(postgresql: dict):
     postgresql : dict
     PostgreSQL credentials.
   Returns:
+    connect : 
     PostgreSQL Database Server connection.
   """
   try:
