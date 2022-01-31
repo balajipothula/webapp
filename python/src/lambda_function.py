@@ -147,7 +147,7 @@ def login(request: Request, login: Login):
   """
   statement = text(sql)
   rows = connect.execute(statement)
-  password = rows.fetchone()
+  password = rows.first()[0]
   return str(password)
 
 
