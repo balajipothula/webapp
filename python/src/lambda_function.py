@@ -1,5 +1,3 @@
-import os
-
 from fastapi  import APIRouter
 from fastapi  import FastAPI
 
@@ -7,7 +5,7 @@ from mangum   import Mangum
 from pydantic import BaseModel
 
 class Login(BaseModel):
-  id: str
+  username: str
   password: str
 
 app = FastAPI(
@@ -20,12 +18,8 @@ app = FastAPI(
 def index() -> str:
   return {"ping": "pong"}
 
-@app.get("/health", name="Health", tags=["Health"])
-def health() -> str:
-  return {"message": "OK"}
-
-@app.post("/login/")
-def login(username: str, password: str) -> str:
-  return {"Username": username}
+@app.post("/login")
+def login(request: Request) :
+  return  request.json()
 
 lambda_handler = Mangum(app)
