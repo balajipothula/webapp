@@ -40,7 +40,7 @@ logger.setLevel(logging.INFO)
 
 def getCredentials(region: str, secret: str) -> dict:
   """
-  Get PostgreSQL Server credentials from Secrets Manager 
+  Get PostgreSQL Server credentials from Secrets Manager,
   by providing region and secret name.
   Parameters:
     region : str
@@ -82,6 +82,15 @@ def getCredentials(region: str, secret: str) -> dict:
 
 
 def getConnect(postgresql: dict):
+  """
+  Get PostgreSQL Database Server connection,
+  by providing credentials.
+  Parameters:
+    postgresql : dict
+    PostgreSQL credentials.
+  Returns:
+    PostgreSQL Database Server connection.
+  """
   try:
     url = URL(
       drivername = postgresql["dialect"] + "+" + postgresql["driver"],
