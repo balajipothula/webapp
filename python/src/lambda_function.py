@@ -137,13 +137,18 @@ def index(request: Request):
 
 @app.post("/login", name="login", tags=["Login"])
 def login(request: Request, login: Login):
-  statement = text("""SELECT version()""")
+  sql = """
+    SELECT
+      "password"
+    FROM
+      webapp_db.public."Login"
+    WHERE
+      username = 'balaji';
+  """
+  statement = text(sql)
   rows = connect.execute(statement)
-  version = rows.fetchone()
-  print(version)
-  #return login.username
-  #return str(version)
-  return "Hello"
+  password = rows.fetchone()
+  return str(password)
 
 
 lambda_handler = Mangum(app)
