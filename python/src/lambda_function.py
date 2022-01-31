@@ -44,7 +44,7 @@ def getCredentials(region: str, secret: str) -> dict:
   by providing region and secret name.
   Parameters:
     region : str
-    AWS Region name.
+    AWS Region Name.
     secret : str
     AWS Secrets Manager secret name.
   Returns:
