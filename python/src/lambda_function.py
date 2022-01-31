@@ -149,8 +149,8 @@ def login(request: Request, login: Login):
   rows = connect.execute(statement)
   password = rows.first()[0]
   if login.password.__eq__(password):
-    return {"message": "Login successful..!"}
-  return {"message": "Login failed..!"}
+    return {"message": "Login successful :)"}
+  return {"message": "Login failed :("}
 
 
 lambda_handler = Mangum(app)
