@@ -1,4 +1,4 @@
--- select username and password into Login table.
+-- insert username and password into the Login table.
 INSERT INTO webapp_db.public."Login"(
   "username",
   "password"
