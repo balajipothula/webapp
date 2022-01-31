@@ -19,6 +19,17 @@ jobs:
       - name: Git Checkout.
         uses: actions/checkout@v2
 
+      # Official Github Action to run Liquibase in your pipeline.
+      - name: Liquibase Pipeline.
+        uses: liquibase/liquibase-github-action@v3
+        with:
+          operation: 'update'
+          classpath: './postgresql/webapp_db/public'
+          changeLogFile: '2022.01.31.ChangeLog.sql'
+          username: ${{ secrets.DB_USERNAME }}
+          password: ${{ secrets.DB_PASSWORD }}
+          url: ${{ secrets.DB_URL }}
+
       # Preparing and pushing documetation into README.md
       #- name: Prepare Terraform Doc and Push to README.md
         #uses: terraform-docs/gh-actions@main
