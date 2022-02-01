@@ -166,7 +166,7 @@ module "webapp_aws_s3_bucket" {
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
   tags   = {                                     # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -189,7 +189,7 @@ module "webapp_aws_s3_bucket_object" {
   source_code = data.archive_file.webapp.output_path          # Optional argument, but keep it.
   tags        = {                                             # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -240,7 +240,7 @@ module "webapp_aws_lambda_function" {
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                            # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -261,7 +261,7 @@ module "webapp_aws_cloudwatch_log_group" {
   retention_in_days = 14                                                               # Optional argument, but keep it.
   tags              = {                                                                # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -402,7 +402,7 @@ module "webapp_aws_rds_cluster" {
   storage_encrypted            = true                                   # Optional argument, but keep it.
   tags                         = {                                      # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -424,7 +424,7 @@ module "webapp_aws_secretsmanager_secret" {
   recovery_window_in_days        = 7                        # Optional argument, but keep it.
   tags                           = {                        # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -472,7 +472,7 @@ module "webapp_aws_vpc_endpoint" {
   security_group_ids  = data.aws_security_groups.default.ids        # Optional argument, but required for endpoints of type Interface.
   tags                = {                                           # Optional argument, but keep it.
     "Name"            = "webapp"
-    "AppName"         = "Python FastAPI Web Application"
+    "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
