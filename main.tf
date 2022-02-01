@@ -165,7 +165,8 @@ module "webapp_aws_s3_bucket" {
   acl    = "private"                             # Optional argument, but keep it.
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
   tags   = {                                     # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -187,7 +188,8 @@ module "webapp_aws_s3_bucket_object" {
   etag        = filemd5(data.archive_file.webapp.output_path) # Optional argument, but keep it.
   source_code = data.archive_file.webapp.output_path          # Optional argument, but keep it.
   tags        = {                                             # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -237,7 +239,8 @@ module "webapp_aws_lambda_function" {
   s3_bucket                      = module.webapp_aws_s3_bucket.id               # Optional argument, but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                            # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -257,14 +260,15 @@ module "webapp_aws_cloudwatch_log_group" {
   name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument, but keep it.
   retention_in_days = 14                                                               # Optional argument, but keep it.
   tags              = {                                                                # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
 
 }
 
-# WebApp AWS API Gateway V2 API Module.
+# WebApp AWS API Gateway V2 API creation.
 module "webapp_aws_apigatewayv2_api" {
 
   source        = "./terraform/aws/apigatewayv2/api"
@@ -274,7 +278,7 @@ module "webapp_aws_apigatewayv2_api" {
 
 }
 
-# WebApp AWS API Gateway V2 Stage Module.
+# WebApp AWS API Gateway V2 Stage creation.
 module "webapp_aws_apigatewayv2_stage" {
 
   source      = "./terraform/aws/apigatewayv2/stage"
@@ -289,7 +293,7 @@ module "webapp_aws_apigatewayv2_stage" {
 
 }
 
-# WebApp AWS API Gateway V2 Integration Module.
+# WebApp AWS API Gateway V2 Integration creation.
 module "webapp_aws_apigatewayv2_integration" {
 
   source             = "./terraform/aws/apigatewayv2/integration"
@@ -306,7 +310,7 @@ module "webapp_aws_apigatewayv2_integration" {
 
 }
 
-# WebApp AWS API Gateway V2 Route Module.
+# WebApp AWS API Gateway V2 Route - index service creation.
 module "webapp_aws_apigatewayv2_route_index" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -322,7 +326,23 @@ module "webapp_aws_apigatewayv2_route_index" {
 
 }
 
-# WebApp AWS API Gateway V2 Route Module.
+# WebApp AWS API Gateway V2 Route - register service creation.
+module "webapp_aws_apigatewayv2_route_register" {
+
+  source        = "./terraform/aws/apigatewayv2/route"
+
+  depends_on    = [
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
+  ]
+
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
+  route_key     = "PUT /register"                                                 # Required argument.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
+}
+
+# WebApp AWS API Gateway V2 Route - login service creation.
 module "webapp_aws_apigatewayv2_route_login" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -381,7 +401,8 @@ module "webapp_aws_rds_cluster" {
   skip_final_snapshot          = true                                   # Optional argument, but keep it.
   storage_encrypted            = true                                   # Optional argument, but keep it.
   tags                         = {                                      # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -402,7 +423,8 @@ module "webapp_aws_secretsmanager_secret" {
   name                           = "webapp"                 # Optional argument, conflicts with name_prefix.
   recovery_window_in_days        = 7                        # Optional argument, but keep it.
   tags                           = {                        # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
@@ -449,7 +471,8 @@ module "webapp_aws_vpc_endpoint" {
   subnet_ids          = data.aws_subnet_ids.available.ids           # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids        # Optional argument, but required for endpoints of type Interface.
   tags                = {                                           # Optional argument, but keep it.
-    "AppName"         = "webapp"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
