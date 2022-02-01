@@ -62,11 +62,7 @@ variable "tags" {
   }
   description = "A map of tags to assign to the Lambda Function." 
   validation {
-    condition     = var.tags["AppName"] != null && 3 <= length(var.tags["AppName"]) && length(var.tags["AppName"]) <= 64  && length(regexall("[^A-Za-z0-9-]", var.tags["AppName"])) == 0
-    error_message = "Error: tags of AppName must not null, length must be in between 3 to 64 and only contain alphabets, numbers, and hyphens."
-  }
-  validation {
-    condition     = var.tags != null && 1 <= length(var.tags) && length(var.tags) <= 50
+    condition     = var.tags != null && 0 < length(var.tags) && length(var.tags) < 51
     error_message = "Error: tags at least one or more expected upto 50."
   }
   sensitive = false
