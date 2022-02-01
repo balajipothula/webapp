@@ -23,6 +23,8 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import session
 from sqlalchemy.orm import sessionmaker
 
+from sqlalchemy import insert
+
 from fastapi import FastAPI
 from fastapi import Request
 
@@ -131,23 +133,37 @@ app = FastAPI(
   version     = "1.0.0"
 )
 
-@app.get("/", name="index", tags=["Index"])
+@app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   clientHost = request.client.host
   return {"clientHost": clientHost}
 
-@app.post("/login", name="login", tags=["Login"])
-def login(request: Request, login: Login):
+@app.put("/register", name="Register", tags=["Register"])
+def register(login: Login):
+  sql = """
+    INSERT INTO webapp_db.public."Login"(
+      "username",
+      "password"
+    )
+    VALUES(
+      %s,
+      %s
+    )
+  """
+  flag = connect.execute(sql, login.username, login.password)
+  return {"message": "User registered successfully :)" }
+
+@app.post("/login", name="Login", tags=["Login"])
+def login(login: Login):
   sql = """
     SELECT
       "password"
     FROM
       webapp_db.public."Login"
     WHERE
-      username = 'balaji';
+      username = %s
   """
-  statement = text(sql)
-  rows = connect.execute(statement)
+  rows = connect.execute(sql, login.username)
   password = rows.first()[0]
   if login.password.__eq__(password):
     return {"message": "Login successful :)"}
