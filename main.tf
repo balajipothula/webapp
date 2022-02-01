@@ -471,7 +471,7 @@ module "webapp_aws_vpc_endpoint" {
   subnet_ids          = data.aws_subnet_ids.available.ids           # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids        # Optional argument, but required for endpoints of type Interface.
   tags                = {                                           # Optional argument, but keep it.
-    "Name"            = "webapp"
+    "Name"            = "webapp_secretsmanager"
     "AppName"         = "FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji.pothula@techie.com"
