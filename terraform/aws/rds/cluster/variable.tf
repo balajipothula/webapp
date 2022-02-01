@@ -449,11 +449,7 @@ variable "tags" {
   }
   description = "A map of tags to assign to the database cluster."
   validation {
-    condition     = var.tags["AppName"] != null && 3 <= length(var.tags["AppName"]) && length(var.tags["AppName"]) <= 64  && length(regexall("[^A-Za-z0-9-]", var.tags["AppName"])) == 0
-    error_message = "Error: tags of AppName must not null, length must be in between 3 to 64 and only contain alphabets, numbers, and hyphens."
-  }
-  validation {
-    condition     = var.tags != null && 1 <= length(var.tags) && length(var.tags) <= 50
+    condition     = var.tags != null && 0 < length(var.tags) && length(var.tags) < 51
     error_message = "Error: tags at least one or more expected upto 50."
   }
   sensitive   = false
@@ -466,7 +462,7 @@ variable "vpc_security_group_ids" {
   ] 
   description = "List of VPC security groups to associate with the Cluster."
   validation {
-    condition     = 1 <= length(var.vpc_security_group_ids) && length(var.vpc_security_group_ids) <= 5
+    condition     = 0 < length(var.vpc_security_group_ids) && length(var.vpc_security_group_ids) < 6
     error_message = "Error: vpc_security_group_ids at least one or more expected upto 5."
   }
   sensitive   = false
