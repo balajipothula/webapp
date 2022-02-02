@@ -9,11 +9,11 @@ variable "secret_id" {
   sensitive = false
 }
 
-variable "rotation_lambda_arn" {
+variable "rotation_lambda_arn_value" {
   type        = string
   default     = null
   description = "Specifies text data that you want to encrypt and store in this version of the secret." 
-  sensitive   = true
+  sensitive   = false
 }
 
 variable "automatically_after_days" {
