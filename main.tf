@@ -59,9 +59,10 @@ locals {
   yyyymmdd    = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime    = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   layer_zip   = "./python/lib/layer.zip"
-  python_src  = "./python/src/webapp_lambda_function.py"
+  webapp_src  = "./python/src/webapp_lambda_function.py"
   rotator_src = "./python/src/rotator_lambda_function.py"
   webapp_zip  = "webapp-${local.datetime}.zip"
+  rotator_zip = "rotator_zip-${local.datetime}.zip"
 }
 
 # Update AWS Default Security Group Rules.
@@ -189,7 +190,7 @@ module "webapp_aws_lambda_layer_version" {
 # Archive WebApp Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
-  source_file = local.python_src
+  source_file = local.webapp_src
   output_path = "./${local.webapp_zip}"
 }
 
