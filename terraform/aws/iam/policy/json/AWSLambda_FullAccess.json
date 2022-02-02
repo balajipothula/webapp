@@ -3,6 +3,9 @@
   "Statement": [
       {
           "Effect": "Allow",
+          "Principal": {
+            "Service": "secretsmanager.amazonaws.com"
+          },
           "Action": [
               "cloudformation:DescribeStacks",
               "cloudformation:ListStackResources",
