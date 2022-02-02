@@ -444,13 +444,15 @@ module "webapp_aws_secretsmanager_secret_version" {
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
     dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
+    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
+
     engine               = module.webapp_aws_rds_cluster.engine
     host                 = module.webapp_aws_rds_cluster.endpoint
     port                 = module.webapp_aws_rds_cluster.port
-    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
-    database             = var.database_name
     username             = var.master_username
     password             = var.master_password
+    dbname               = var.database_name
+
     dialect              = "postgresql"
     driver               = "psycopg2"
     schema               = "webapp_schema"

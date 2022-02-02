@@ -100,7 +100,7 @@ def getConnect(postgresql: dict):
       username   = postgresql["username"],
       password   = postgresql["password"],
       host       = postgresql["host"],
-      database   = postgresql["database"],
+      database   = postgresql["dbname"],
       query      = None
     )
     engine = create_engine(
