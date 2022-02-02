@@ -487,6 +487,7 @@ module "webapp_aws_secretsmanager_secret" {
   force_overwrite_replica_secret = false                    # Optional argument, but keep it.
   name                           = "webapp"                 # Optional argument, conflicts with name_prefix.
   recovery_window_in_days        = 7                        # Optional argument, but keep it.
+  rotation_lambda_arn            = module.rotator_aws_lambda_function.arn # 
   tags                           = {                        # Optional argument, but keep it.
     "Name"            = "webapp"
     "AppName"         = "FastAPI Web App"
@@ -524,6 +525,19 @@ module "webapp_aws_secretsmanager_secret_version" {
     echo                 = "False"
     connect_timeout      = 30
   }) 
+
+}
+
+# WebApp AWS Secrets Manager Secret Rotation.
+module "webapp_aws_secretsmanager_secret_rotation" {
+
+  source                     = "./terraform/aws/secretsmanager/secret_rotation"
+
+  secret_id                  = module.webapp_aws_secretsmanager_secret.id # Required argument.
+  rotation_lambda_arn        = module.rotator_aws_lambda_function.arn     # Required argument.
+  rotation_rules {                                                        # Required argument block.
+    automatically_after_days = 1                                          # Required block argument.
+  }
 
 }
 
