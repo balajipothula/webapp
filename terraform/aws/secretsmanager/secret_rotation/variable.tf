@@ -18,7 +18,7 @@ variable "rotation_lambda_arn" {
 
 variable "automatically_after_days" {
   type        = number
-  default     = 15
+  default     = 1
   description = "Specifies the number of days between automatic scheduled rotations of the secret."
   validation {
     condition     = var.automatically_after_days != null && 0 < var.automatically_after_days && var.automatically_after_days < 31

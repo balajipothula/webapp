@@ -534,9 +534,6 @@ module "webapp_aws_secretsmanager_secret_rotation" {
 
   secret_id                  = module.webapp_aws_secretsmanager_secret.id # Required argument.
   rotation_lambda_arn        = module.rotator_aws_lambda_function.arn     # Required argument.
-  rotation_rules {                                                        # Required argument block.
-    automatically_after_days = 1                                          # Required block argument.
-  }
 
 }
 
