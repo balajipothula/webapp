@@ -61,11 +61,11 @@ data "archive_file" "webapp" {
   output_path = "./${local.webapp_zip}"
 }
 
-# Archive WebApp Lambda Function source code.
-data "archive_file" "webapp" {
+# Archive Rotator Lambda Function source code.
+data "archive_file" "rotator" {
   type        = "zip"
-  source_file = local.webapp_src
-  output_path = "./${local.webapp_zip}"
+  source_file = local.rotator_src
+  output_path = "./${local.rotator_zip}"
 }
 
 locals {
