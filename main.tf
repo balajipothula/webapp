@@ -314,7 +314,7 @@ module "rotator_aws_lambda_function" {
 
 }
 
-#  WebApp AWS CloudWatch Log Group creation.
+# Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_aws_cloudwatch_log_group" {
 
   source            = "./terraform/aws/cloudwatch/log_group"
@@ -334,7 +334,7 @@ module "webapp_aws_cloudwatch_log_group" {
 
 }
 
-# WebApp AWS API Gateway V2 API creation.
+# Creation of AWS API Gateway V2 API for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_api" {
 
   source        = "./terraform/aws/apigatewayv2/api"
@@ -344,7 +344,7 @@ module "webapp_aws_apigatewayv2_api" {
 
 }
 
-# WebApp AWS API Gateway V2 Stage creation.
+# Creation of AWS API Gateway V2 Stage for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_stage" {
 
   source      = "./terraform/aws/apigatewayv2/stage"
@@ -359,7 +359,7 @@ module "webapp_aws_apigatewayv2_stage" {
 
 }
 
-# WebApp AWS API Gateway V2 Integration creation.
+# Creation of AWS API Gateway V2 Integration for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_integration" {
 
   source             = "./terraform/aws/apigatewayv2/integration"
@@ -376,7 +376,7 @@ module "webapp_aws_apigatewayv2_integration" {
 
 }
 
-# WebApp AWS API Gateway V2 Route - index service creation.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index Service.
 module "webapp_aws_apigatewayv2_route_index" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -392,7 +392,7 @@ module "webapp_aws_apigatewayv2_route_index" {
 
 }
 
-# WebApp AWS API Gateway V2 Route - register service creation.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Register Service.
 module "webapp_aws_apigatewayv2_route_register" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -408,7 +408,7 @@ module "webapp_aws_apigatewayv2_route_register" {
 
 }
 
-# WebApp AWS API Gateway V2 Route - login service creation.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Login Service.
 module "webapp_aws_apigatewayv2_route_login" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -424,7 +424,7 @@ module "webapp_aws_apigatewayv2_route_login" {
 
 }
 
-# WebApp AWS Lambda Permission Module.
+# Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
 module "webapp_aws_lambda_permission" {
 
   source        = "./terraform/aws/lambda/permission"
@@ -442,7 +442,8 @@ module "webapp_aws_lambda_permission" {
 
 }
 
-# WebApp AWS RDS Cluster creation.
+# Creation of Amazon Aurora Serverless PostgreSQL
+# Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
 
   source                       = "./terraform/aws/rds/cluster"
@@ -475,7 +476,8 @@ module "webapp_aws_rds_cluster" {
 
 }
 
-# WebApp AWS Secrets Manager Secret creation.
+# Creation of AWS Secrets Manager Secret for
+# Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
 
   source                         = "./terraform/aws/secretsmanager/secret"
@@ -497,7 +499,8 @@ module "webapp_aws_secretsmanager_secret" {
 
 }
 
-# WebApp AWS Secrets Manager Secret Version creation.
+# Creation of AWS Secrets Manager Version for
+# Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret_version" {
 
   source        = "./terraform/aws/secretsmanager/secret_version"
@@ -528,7 +531,8 @@ module "webapp_aws_secretsmanager_secret_version" {
 
 }
 /*
-# WebApp AWS Secrets Manager Secret Rotation.
+# Creation of AWS Secrets Manager Secret Rotation for
+# Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret_rotation" {
 
   source                     = "./terraform/aws/secretsmanager/secret_rotation"
@@ -538,7 +542,8 @@ module "webapp_aws_secretsmanager_secret_rotation" {
 
 }
 */
-# WebApp AWS VPC Endpoint creation.
+# Creation of AWS VPC Endpoint for WebApp Lambda Function
+# to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
 
   source              = "./terraform/aws/vpc/endpoint"
