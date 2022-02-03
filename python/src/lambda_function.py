@@ -100,7 +100,7 @@ def getConnect(postgresql: dict):
       username   = postgresql["username"],
       password   = postgresql["password"],
       host       = postgresql["host"],
-      database   = postgresql["database"],
+      database   = postgresql["dbname"],
       query      = None
     )
     engine = create_engine(
@@ -152,7 +152,7 @@ def register(login: Login):
   """
   flag = connect.execute(sql, login.username, login.password)
   return {"message": "User registered successfully :)" }
-
+# test.
 @app.post("/login", name="Login", tags=["Login"])
 def login(login: Login):
   sql = """
@@ -166,8 +166,8 @@ def login(login: Login):
   rows = connect.execute(sql, login.username)
   password = rows.first()[0]
   if login.password.__eq__(password):
-    return {"message": "Login successful :)"}
-  return {"message": "Login failed :("}
+    return {"message": "Login successful... :)"}
+  return {"message": "Login failed... :("}
 
 
 lambda_handler = Mangum(app)
