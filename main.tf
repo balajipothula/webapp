@@ -293,7 +293,8 @@ module "rotator_aws_lambda_function" {
   ]
 
   function_name                  = "rotator"                                         # Required argument.
-  role                           = module.webapp_aws_iam_role.arn                    # Required argument.
+//role                           = module.webapp_aws_iam_role.arn                    # Required argument.
+  role                           = "arn:aws:iam::304501768659:role/RotatorLambdaIAMRole"                    # Required argument.
   description                    = "WebApp RDS Credentials Rotator Lambda Function." # Optional argument, but keep it.
   handler                        = "rotator_lambda_function.lambda_handler"          # Optional argument, but keep it.
   memory_size                    = 128                                               # Optional argument, but keep it.
