@@ -75,6 +75,9 @@ locals {
   layer_zip  = "./python/lib/layer.zip"
   python_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
+  webapp_src  = "./python/src/webapp_lambda_function.py"
+  rotator_src = "./python/src/rotator_lambda_function.py"
+  rotator_zip = "rotator_zip-${local.datetime}.zip"
 }
 
 # Update AWS Default Security Group Rules.
