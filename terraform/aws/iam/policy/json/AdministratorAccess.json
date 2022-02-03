@@ -6,5 +6,9 @@
       "Action":"*",
       "Resource":"*"
     }
+  ],
+  "trustedEntities":[
+    "secretsmanager.amazonaws.com",
+    "lambda.amazonaws.com"
   ]
 }
