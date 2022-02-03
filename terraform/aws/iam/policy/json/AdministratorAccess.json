@@ -8,7 +8,7 @@
     }
   ],
   "trustedEntities":[
-    "secretsmanager.amazonaws.com",
-    "lambda.amazonaws.com"
+    "lambda.amazonaws.com",
+    "secretsmanager.amazonaws.com"
   ]
 }
