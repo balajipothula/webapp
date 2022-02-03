@@ -57,7 +57,7 @@ data "aws_security_groups" "default" {
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
-  source_file = local.python_src
+  source_file = local.webapp_src
   output_path = "./${local.webapp_zip}"
 }
 
@@ -66,7 +66,7 @@ locals {
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   layer_zip  = "./python/lib/layer.zip"
-  python_src = "./python/src/lambda_function.py"
+  webapp_src = "./python/src/webapp_lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
@@ -229,7 +229,7 @@ module "webapp_aws_lambda_function" {
   function_name                  = "webapp"                                     # Required argument.
   role                           = module.webapp_aws_iam_role.arn               # Required argument.
   description                    = "WebApp Lambda Function."                    # Optional argument, but keep it.
-  handler                        = "lambda_function.lambda_handler"             # Optional argument, but keep it.
+  handler                        = "webapp_lambda_function.lambda_handler"      # Optional argument, but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                          # Optional argument, but keep it.
   package_type                   = "Zip"                                        # Optional argument, but keep it.
