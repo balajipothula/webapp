@@ -54,10 +54,21 @@ data "aws_security_groups" "default" {
 
 }
 
+locals {
+  timestamp  = timestamp()
+  yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
+  datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
+  layer_zip  = "./python/lib/layer.zip"
+  webapp_src  = "./python/src/webapp_lambda_function.py"
+  webapp_zip = "webapp-${local.datetime}.zip"
+  rotator_src = "./python/src/rotator_lambda_function.py"
+  rotator_zip = "rotator_zip-${local.datetime}.zip"
+}
+
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
-  source_file = local.python_src
+  source_file = local.webapp_src
   output_path = "./${local.webapp_zip}"
 }
 
@@ -66,18 +77,6 @@ data "archive_file" "rotator" {
   type        = "zip"
   source_file = local.rotator_src
   output_path = "./${local.rotator_zip}"
-}
-
-locals {
-  timestamp  = timestamp()
-  yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
-  datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
-  layer_zip  = "./python/lib/layer.zip"
-  python_src = "./python/src/lambda_function.py"
-  webapp_zip = "webapp-${local.datetime}.zip"
-  webapp_src  = "./python/src/webapp_lambda_function.py"
-  rotator_src = "./python/src/rotator_lambda_function.py"
-  rotator_zip = "rotator_zip-${local.datetime}.zip"
 }
 
 # Update AWS Default Security Group Rules.
@@ -281,9 +280,6 @@ module "webapp_aws_lambda_function" {
   timeout                        = 60                                           # Optional argument, but keep it.
 
 }
-
-
-
 
 # Creation of AWS Lambda Function for WebApp RDS Credentials Rotator Lambda Function.
 module "rotator_aws_lambda_function" {
