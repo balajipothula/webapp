@@ -281,7 +281,6 @@ module "rotator_aws_s3_bucket_object" {
 
 }
 
-# testing.
 # Creation of AWS Lambda Function for WebApp RDS Credentials Rotator Lambda Function.
 module "rotator_aws_lambda_function" {
 
@@ -294,8 +293,8 @@ module "rotator_aws_lambda_function" {
   ]
 
   function_name                  = "rotator"                                         # Required argument.
-//role                           = module.webapp_aws_iam_role.arn                    # Required argument.
-  role                           = "arn:aws:iam::304501768659:role/RotatorLambdaIAMRole"                    # Required argument.
+  role                           = module.webapp_aws_iam_role.arn                    # Required argument.
+//role                           = "arn:aws:iam::304501768659:role/RotatorLambdaIAMRole"                    # Required argument.
   description                    = "WebApp RDS Credentials Rotator Lambda Function." # Optional argument, but keep it.
   handler                        = "rotator_lambda_function.lambda_handler"          # Optional argument, but keep it.
   memory_size                    = 128                                               # Optional argument, but keep it.
@@ -529,7 +528,7 @@ module "webapp_aws_secretsmanager_secret_version" {
 
 }
 
-
+/*
 # WebApp AWS Secrets Manager Secret Rotation.
 module "webapp_aws_secretsmanager_secret_rotation" {
 
@@ -539,7 +538,7 @@ module "webapp_aws_secretsmanager_secret_rotation" {
   rotation_lambda_arn        = module.rotator_aws_lambda_function.arn     # Required argument.
 
 }
-
+*/
 
 # WebApp AWS VPC Endpoint creation.
 module "webapp_aws_vpc_endpoint" {
