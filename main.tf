@@ -54,15 +54,20 @@ data "aws_security_groups" "default" {
 
 }
 
+# Archive Lambda Function source code.
+data "archive_file" "webapp" {
+  type        = "zip"
+  source_file = local.python_src
+  output_path = "./${local.webapp_zip}"
+}
+
 locals {
-  timestamp   = timestamp()
-  yyyymmdd    = formatdate("YYYY/MM/DD",          local.timestamp)   
-  datetime    = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
-  layer_zip   = "./python/lib/layer.zip"
-  webapp_src  = "./python/src/webapp_lambda_function.py"
-  rotator_src = "./python/src/rotator_lambda_function.py"
-  webapp_zip  = "webapp-${local.datetime}.zip"
-  rotator_zip = "rotator_zip-${local.datetime}.zip"
+  timestamp  = timestamp()
+  yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
+  datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
+  layer_zip  = "./python/lib/layer.zip"
+  python_src = "./python/src/lambda_function.py"
+  webapp_zip = "webapp-${local.datetime}.zip"
 }
 
 # Update AWS Default Security Group Rules.
@@ -169,31 +174,6 @@ module "webapp_aws_s3_bucket" {
 
 }
 
-# Creation of AWS Lambda Layer Version for WebApp Lambda Function.
-module "webapp_aws_lambda_layer_version" {
-
-  source                   = "./terraform/aws/lambda/layer_version"
-
-  layer_name               = "webapp"                          # Required argument.
-  compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
-  compatible_runtimes      = ["python3.7", "python3.8"]        # Optional argument, but keep it.
-  description              = "Python Library."                 # Optional argument, but keep it.
-  filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
-  license_info             = "Apache License 2.0"              # Optional argument, but keep it.
-//s3_bucket                = var.s3_bucket                     # Optional argument, conflicts with filename.
-//s3_key                   = var.s3_key                        # Optional argument, conflicts with filename.
-//s3_object_version        = var.s3_object_version             # Optional argument, conflicts with filename.
-  source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
-
-}
-
-# Archive WebApp Lambda Function source code.
-data "archive_file" "webapp" {
-  type        = "zip"
-  source_file = local.webapp_src
-  output_path = "./${local.webapp_zip}"
-}
-
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
 
@@ -217,6 +197,24 @@ module "webapp_aws_s3_bucket_object" {
 
 }
 
+# Creation of AWS Lambda Layer Version for WebApp Lambda Function.
+module "webapp_aws_lambda_layer_version" {
+
+  source                   = "./terraform/aws/lambda/layer_version"
+
+  layer_name               = "webapp"                          # Required argument.
+  compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.7", "python3.8"]        # Optional argument, but keep it.
+  description              = "Python Library."                 # Optional argument, but keep it.
+  filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
+  license_info             = "Apache License 2.0"              # Optional argument, but keep it.
+//s3_bucket                = var.s3_bucket                     # Optional argument, conflicts with filename.
+//s3_key                   = var.s3_key                        # Optional argument, conflicts with filename.
+//s3_object_version        = var.s3_object_version             # Optional argument, conflicts with filename.
+  source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
+
+}
+
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
@@ -232,7 +230,7 @@ module "webapp_aws_lambda_function" {
   function_name                  = "webapp"                                     # Required argument.
   role                           = module.webapp_aws_iam_role.arn               # Required argument.
   description                    = "WebApp Lambda Function."                    # Optional argument, but keep it.
-  handler                        = "webapp_lambda_function.lambda_handler"      # Optional argument, but keep it.
+  handler                        = "lambda_function.lambda_handler"             # Optional argument, but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                          # Optional argument, but keep it.
   package_type                   = "Zip"                                        # Optional argument, but keep it.
@@ -248,36 +246,6 @@ module "webapp_aws_lambda_function" {
     "DeveloperEmail"  = "balaji.pothula@techie.com"
   }
   timeout                        = 60                                           # Optional argument, but keep it.
-
-}
-
-# Archive Rotator Lambda Function source code.
-data "archive_file" "rotator" {
-  type        = "zip"
-  source_file = local.rotator_src
-  output_path = "./${local.rotator_zip}"
-}
-
-# Creation of AWS S3 Bucket Object for WebApp RDS Credentials Rotator Lambda Function.
-module "rotator_aws_s3_bucket_object" {
-
-  source      = "./terraform/aws/s3/bucket_object"
-
-  depends_on  = [
-    module.webapp_aws_s3_bucket,
-  ]
-
-  bucket      = module.webapp_aws_s3_bucket.id                 # Required argument.
-  key         = "/rotator/${local.rotator_zip}"                # Required argument.
-  acl         = "private"                                      # Optional argument, but keep it.
-  etag        = filemd5(data.archive_file.rotator.output_path) # Optional argument, but keep it.
-  source_code = data.archive_file.rotator.output_path          # Optional argument, but keep it.
-  tags        = {                                              # Optional argument, but keep it.
-    "Name"            = "webapp"
-    "AppName"         = "FastAPI Web App"
-    "DeveloperName"   = "Balaji Pothula"
-    "DeveloperEmail"  = "balaji.pothula@techie.com"
-  }
 
 }
 
@@ -513,15 +481,13 @@ module "webapp_aws_secretsmanager_secret_version" {
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
     dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
-    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
-
     engine               = module.webapp_aws_rds_cluster.engine
     host                 = module.webapp_aws_rds_cluster.endpoint
     port                 = module.webapp_aws_rds_cluster.port
+    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
+    database             = var.database_name
     username             = var.master_username
     password             = var.master_password
-    dbname               = var.database_name
-
     dialect              = "postgresql"
     driver               = "psycopg2"
     schema               = "webapp_schema"
@@ -530,6 +496,7 @@ module "webapp_aws_secretsmanager_secret_version" {
   }) 
 
 }
+
 /*
 # Creation of AWS Secrets Manager Secret Rotation for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
@@ -542,6 +509,7 @@ module "webapp_aws_secretsmanager_secret_rotation" {
 
 }
 */
+
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
