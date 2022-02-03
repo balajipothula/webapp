@@ -197,6 +197,29 @@ module "webapp_aws_s3_bucket_object" {
 
 }
 
+# Creation of AWS S3 Bucket Object for WebApp RDS Credentials Rotator Lambda Function.
+module "rotator_aws_s3_bucket_object" {
+
+  source      = "./terraform/aws/s3/bucket_object"
+
+  depends_on  = [
+    module.webapp_aws_s3_bucket,
+  ]
+
+  bucket      = module.webapp_aws_s3_bucket.id                 # Required argument.
+  key         = "/rotator/${local.rotator_zip}"                # Required argument.
+  acl         = "private"                                      # Optional argument, but keep it.
+  etag        = filemd5(data.archive_file.rotator.output_path) # Optional argument, but keep it.
+  source_code = data.archive_file.rotator.output_path          # Optional argument, but keep it.
+  tags        = {                                              # Optional argument, but keep it.
+    "Name"            = "webapp"
+    "AppName"         = "FastAPI Web App"
+    "DeveloperName"   = "Balaji Pothula"
+    "DeveloperEmail"  = "balaji.pothula@techie.com"
+  }
+
+}
+
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
