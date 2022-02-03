@@ -58,9 +58,5 @@
           ],
           "Resource": "arn:aws:logs:*:*:log-group:/aws/lambda/*"
       }
-  ],
-  "trustedEntities": [
-    "secretsmanager.amazonaws.com",
-    "lambda.amazonaws.com"
   ]
 }
