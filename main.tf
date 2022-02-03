@@ -528,7 +528,7 @@ module "webapp_aws_secretsmanager_secret_version" {
 
 }
 
-/*
+
 # WebApp AWS Secrets Manager Secret Rotation.
 module "webapp_aws_secretsmanager_secret_rotation" {
 
@@ -538,7 +538,6 @@ module "webapp_aws_secretsmanager_secret_rotation" {
   rotation_lambda_arn        = module.rotator_aws_lambda_function.arn     # Required argument.
 
 }
-*/
 
 # WebApp AWS VPC Endpoint creation.
 module "webapp_aws_vpc_endpoint" {
