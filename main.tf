@@ -259,8 +259,8 @@ module "yousician_aws_cloudwatch_log_group" {
   ]
 
   name              = "/aws/lambda/${module.yousician_aws_lambda_function.function_name}" # Optional argument, but keep it.
-  retention_in_days = 14                                                               # Optional argument, but keep it.
-  tags              = {                                                                # Optional argument, but keep it.
+  retention_in_days = 14                                                                  # Optional argument, but keep it.
+  tags              = {                                                                   # Optional argument, but keep it.
     "Name"            = "yousician"
     "AppName"         = "Yousician Web App"
     "DeveloperName"   = "Balaji Pothula"

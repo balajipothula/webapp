@@ -1,9 +1,17 @@
--- insert username and password into the Login table.
-INSERT INTO webapp_db.public."Login"(
-  "username",
-  "password"
-) 
+-- insert record into the Songs table.
+INSERT INTO yousician_db.public."Songs"(
+  "artist",
+  "title",
+  "difficulty",
+  "level",
+  "released",
+  "rating"
+)
 VALUES(
-  'balaji',
-  'Balaji#1985'
+  'The Yousicians',
+  'A New Kennel',
+  9.9,
+  9,
+  '2022-02-07',
+  '{4}'
 );

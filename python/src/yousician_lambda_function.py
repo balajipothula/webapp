@@ -120,7 +120,7 @@ def getConnect(postgresql: dict):
     })
     logger.error(errorMessage)    
 
-postgresql = getCredentials(region = "eu-central-1", secret = "webapp")
+postgresql = getCredentials(region = "eu-central-1", secret = "yousician")
 connect    = getConnect(postgresql)
 
 class Login(BaseModel):
@@ -128,8 +128,8 @@ class Login(BaseModel):
   password: str
 
 app = FastAPI(
-  title       = "WebApp",
-  description = "Web Application using FastAPI.",
+  title       = "Yousician",
+  description = "Yousician Web Application using FastAPI.",
   version     = "1.0.0"
 )
 
