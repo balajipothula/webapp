@@ -48,7 +48,7 @@ resource "aws_lambda_function" "generic" {
       foo = "bar"
     }
   }
-}
+
 
 /*
   environment {                                                         # Optional argument block but keep it.
