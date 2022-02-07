@@ -126,8 +126,12 @@ postgresql = getCredentials(region = region, secret = secret)
 connect    = getConnect(postgresql)
 
 class Song(BaseModel):
-  username: str
-  password: str
+  artist: str
+  title: str
+  difficulty: float
+  level: int
+  released: str
+  rating: list
 
 app = FastAPI(
   title       = "Yousician",
