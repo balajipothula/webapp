@@ -122,7 +122,7 @@ module "yousician_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
 
-  assume_role_policy    = file("./json/WebAppLambdaIAMRole.json") # Required argument.
+  assume_role_policy    = file("./json/YousicianLambdaIAMRole.json") # Required argument.
   description           = "AWS IAM Role for Yousician Lambda."       # Optional argument, but keep it.
   force_detach_policies = true                                    # Optional argument, but keep it.
   name                  = "YousicianLambdaIAMRole"                # Optional argument, but keep it.
@@ -137,7 +137,7 @@ module "yousician_aws_iam_policy" {
   description = "AWS IAM Policy for Yousician Lambda."       # Optional argument, but keep it.
   name        = "YousicianLambdaIAMPolicy"                # Optional argument, but keep it.
   path        = "/"                                       # Optional argument, but keep it.
-  policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
+  policy      = file("./json/YousicianLambdaIAMPolicy.json") # Required argument.
 
 }
 
@@ -164,7 +164,7 @@ module "yousician_aws_s3_bucket" {
 
   bucket = "yousician-aws-s3-bucket"             # Optional argument, but keep it.
   acl    = "private"                             # Optional argument, but keep it.
-  policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
+  policy = file("./json/YousicianS3IAMPolicy.json") # Optional argument, but keep it.
   tags   = {                                     # Optional argument, but keep it.
     "Name"            = "yousician"
     "AppName"         = "Yousician Web App"
