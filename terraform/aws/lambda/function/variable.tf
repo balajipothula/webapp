@@ -66,7 +66,9 @@ variable "description" {
 }
 
 variable "environment_variables" {
-  type = map(string)
+  description = "A map that defines environment variables for the Lambda Function."
+  type        = map(string)
+  default     = {}
 }
 
 // environment configuration block argument.

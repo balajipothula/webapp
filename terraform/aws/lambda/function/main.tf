@@ -41,10 +41,11 @@ resource "aws_lambda_function" "generic" {
 */
   description                    = var.description                      # Optional argument but keep it.
 
-  environment {                                                         # Optional argument block but keep it.
-    variables = { 
-      foo = "hello"
-    }                                                     # Optional block argument.
+  dynamic "environment" {
+    for_each = length(keys(var.environment_variables)) == 0 ? [] : [true]
+    content {
+      variables = var.environment_variables
+    }
   }
 
 /*
