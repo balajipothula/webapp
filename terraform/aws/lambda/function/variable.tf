@@ -66,20 +66,16 @@ variable "description" {
 }
 
 variable "environment_variables" {
-  description = "A map that defines environment variables for the Lambda Function."
   type        = map(string)
-  default     = {}
+  description = "Map of environment variables that are accessible from the function code during execution."
+  default = {
+    environment = "dev"
+  }
 }
 
 // environment configuration block argument.
 variable "variables" {
   type = map(string)
-  default = {
-    environment = "dev"
-    dialect     = "postgresql"
-    driver      = "psycopg2"
-    host        = "127.0.0.1"
-  }
   description = "Map of environment variables that are accessible from the function code during execution."
   validation {
     condition     = var.variables != null && 0 <= length(var.variables) && length(var.variables) <= 50
