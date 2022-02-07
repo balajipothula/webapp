@@ -51,7 +51,9 @@ resource "aws_lambda_function" "generic" {
 
 
   environment {                                                         # Optional argument block but keep it.
-    variables = { }                                                     # Optional block argument.
+    variables = { 
+      foo = "hello"
+    }                                                     # Optional block argument.
   }
 
 
