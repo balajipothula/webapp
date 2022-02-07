@@ -34,8 +34,8 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 
-output "archive_file_webapp_output_path" {
-  value       = data.archive_file.webapp.output_path
-  description = "Web Application source file output path."
+output "archive_file_yousician_output_path" {
+  value       = data.archive_file.yousician.output_path
+  description = "Yousician Web Application source file output path."
   sensitive   = false
 }
