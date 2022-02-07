@@ -227,14 +227,14 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_lambda_layer_version,
   ]
 
-  environment_variables = {
-    region = data.aws_region.current.name,
-    secret = "hello yousician"
-  }
 
   function_name                  = "yousician"                                     # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
   description                    = "Yousician Lambda Function."                    # Optional argument, but keep it.
+  environment_variables          = {                                               # Optional argument, but keep it.
+    region = data.aws_region.current.name,
+    secret = "yousician",
+  }
   handler                        = "yousician_lambda_function.lambda_handler"      # Optional argument, but keep it.
   layers                         = [module.yousician_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                             # Optional argument, but keep it.
