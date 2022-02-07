@@ -125,7 +125,7 @@ secret = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
 connect    = getConnect(postgresql)
 
-class Login(BaseModel):
+class Song(BaseModel):
   username: str
   password: str
 
@@ -140,22 +140,30 @@ def index(request: Request):
   print(connect)
   return {"message": "Unleash your inner musician with Yousician"}
 
-@app.put("/register", name="Register", tags=["Register"])
-def register(login: Login):
+@app.put("/insertSong", name="InsertSong", tags=["InsertSong"])
+def register(song: Song):
   sql = """
-    INSERT INTO webapp_db.public."Login"(
-      "username",
-      "password"
+    INSERT INTO yousician_db.public."Song"(
+      "artist",
+      "title",
+      "difficulty",
+      "level",
+      "released",
+      "rating"
     )
     VALUES(
+      %s,
+      %s,
+      %f,
+      %d,
       %s,
       %s
     )
   """
-  flag = connect.execute(sql, login.username, login.password)
+  flag = connect.execute(sql, song.artist, song.title, song.difficulty, song.level, song.released, song.rating)
   return {"message": "User registered successfully :)" }
 
-@app.post("/login", name="Login", tags=["Login"])
+@app.post("/login", name="Song", tags=["Login"])
 def login(login: Login):
   sql = """
     SELECT

@@ -331,8 +331,8 @@ module "yousician_aws_apigatewayv2_route_index" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Register Service.
-module "yousician_aws_apigatewayv2_route_register" {
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Insert Service.
+module "yousician_aws_apigatewayv2_route_insertSong" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
@@ -342,7 +342,7 @@ module "yousician_aws_apigatewayv2_route_register" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "PUT /register"                                                 # Required argument.
+  route_key     = "PUT /insertSong "                                                 # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
