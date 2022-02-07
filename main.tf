@@ -202,7 +202,7 @@ module "yousician_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
-  layer_name               = "yousician"                          # Required argument.
+  layer_name               = "yousician"                       # Required argument.
   compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
   compatible_runtimes      = ["python3.7", "python3.8"]        # Optional argument, but keep it.
   description              = "Python Library."                 # Optional argument, but keep it.
@@ -226,6 +226,10 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_iam_role_policy_attachment,
     module.yousician_aws_lambda_layer_version,
   ]
+
+  environment_variables = {
+    "region" : data.aws_region.current.name
+  }  
 
   function_name                  = "yousician"                                     # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
