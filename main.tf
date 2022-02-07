@@ -456,7 +456,7 @@ module "yousician_aws_secretsmanager_secret_version" {
     host                 = module.yousician_aws_rds_cluster.endpoint
     port                 = module.yousician_aws_rds_cluster.port
     resourceId           = module.yousician_aws_rds_cluster.cluster_resource_id
-    database             = "yousician_db"
+    database             = var.database_name
     username             = var.master_username
     password             = var.master_password
     dialect              = "postgresql"
