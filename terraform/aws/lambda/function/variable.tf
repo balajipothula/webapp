@@ -73,17 +73,6 @@ variable "environment_variables" {
   }
 }
 
-// environment configuration block argument.
-variable "variables" {
-  type = map(string)
-  description = "Map of environment variables that are accessible from the function code during execution."
-  validation {
-    condition     = var.variables != null && 0 <= length(var.variables) && length(var.variables) <= 50
-    error_message = "Error: role value must not null."
-  }
-  sensitive = false
-}
-
 // file_system_config configuration block argument.
 variable "efs_arn" {
   type        = string
