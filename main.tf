@@ -228,7 +228,7 @@ module "yousician_aws_lambda_function" {
   ]
 
   environment_variables = {
-    "region" = data.aws_region.current.name,
+    "region": data.aws_region.current.name,
   }
 
   function_name                  = "yousician"                                     # Required argument.
