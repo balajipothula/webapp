@@ -57,8 +57,8 @@ def getCredentials(region: str, secret: str) -> dict:
     # Creating Secrets Manager Client.
     session = boto3.session.Session()
     client = session.client(
-      service_name="secretsmanager",
-      region_name=region
+      service_name = "secretsmanager",
+      region_name  = region
     )
     secretValue = client.get_secret_value(SecretId=secret)
   except ClientError as clientError:
@@ -122,10 +122,7 @@ def getConnect(postgresql: dict):
 
 region = os.environ["region"]
 secret = os.environ["secret"]
-
-print(region)
-print(secret)
-postgresql = getCredentials(region = "eu-central-1", secret = "yousician")
+postgresql = getCredentials(region = region, secret = secret)
 connect    = getConnect(postgresql)
 
 class Login(BaseModel):
