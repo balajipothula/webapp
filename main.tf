@@ -227,10 +227,10 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_lambda_layer_version,
   ]
 
-  function_name                  = "Yousician"                                     # Required argument.
+  function_name                  = "yousician"                                     # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
   description                    = "Yousician Lambda Function."                    # Optional argument, but keep it.
-  handler                        = "Yousician_lambda_function.lambda_handler"      # Optional argument, but keep it.
+  handler                        = "yousician_lambda_function.lambda_handler"      # Optional argument, but keep it.
   layers                         = [module.yousician_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                             # Optional argument, but keep it.
   package_type                   = "Zip"                                           # Optional argument, but keep it.
