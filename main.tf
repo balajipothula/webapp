@@ -342,7 +342,7 @@ module "yousician_aws_apigatewayv2_route_insertSong" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "PUT /insertSong "                                                 # Required argument.
+  route_key     = "PUT /insertSong"                                                  # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }

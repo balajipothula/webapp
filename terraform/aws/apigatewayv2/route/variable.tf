@@ -7,7 +7,7 @@ variable "api_id" {
 
 variable "route_key" {
   type        = string
-  default     = "GET /"
+  default     = "ANY /"
   description = " The route key for the route."
   validation {
     condition     = var.route_key != null
