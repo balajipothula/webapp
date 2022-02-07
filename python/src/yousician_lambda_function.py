@@ -120,8 +120,8 @@ def getConnect(postgresql: dict):
     })
     logger.error(errorMessage)    
 
-region = os.environ["region"]
-secret = os.environ["secret"]
+region     = os.environ["region"]
+secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
 connect    = getConnect(postgresql)
 
@@ -141,47 +141,6 @@ app = FastAPI(
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  print(connect)
   return {"message": "Unleash your inner musician with Yousician"}
-
-@app.put("/insertSong", name="InsertSong", tags=["InsertSong"])
-def register(song: Song):
-  sql = """
-    INSERT INTO yousician_db.public."Song"(
-      "artist",
-      "title",
-      "difficulty",
-      "level",
-      "released",
-      "rating"
-    )
-    VALUES(
-      %s,
-      %s,
-      %f,
-      %d,
-      %s,
-      %s
-    )
-  """
-  flag = connect.execute(sql, song.artist, song.title, song.difficulty, song.level, song.released, song.rating)
-  return {"message": "User registered successfully :)" }
-
-@app.post("/login", name="Song", tags=["Login"])
-def login(login: Login):
-  sql = """
-    SELECT
-      "password"
-    FROM
-      webapp_db.public."Login"
-    WHERE
-      username = %s
-  """
-  rows = connect.execute(sql, login.username)
-  password = rows.first()[0]
-  if login.password.__eq__(password):
-    return {"message": "Login successful :)"}
-  return {"message": "Login failed :("}
-
 
 lambda_handler = Mangum(app)
