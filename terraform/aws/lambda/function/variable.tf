@@ -65,6 +65,10 @@ variable "description" {
   sensitive = false
 }
 
+variable "environment_variables" {
+  type = map(string)
+}
+
 // environment configuration block argument.
 variable "variables" {
   type = map(string)

@@ -41,9 +41,14 @@ resource "aws_lambda_function" "generic" {
 */
   description                    = var.description                      # Optional argument but keep it.
 
+  environment                    = var.environment_variables
+
+/*
   environment {                                                         # Optional argument block but keep it.
     variables                    = var.variables                        # Optional block argument.
   }
+*/
+
 /*
   file_system_config {                                                  # Optional argument block.
     arn                          = var.efs_arn                          # Required block argument.
