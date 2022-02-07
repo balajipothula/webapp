@@ -1,14 +1,25 @@
--- select username and password from the Login table.
+-- select records from the Song table.
 SELECT
-  "username",
-  "password"
+  "songId"
+  "artist",
+  "title",
+  "difficulty",
+  "level",
+  "released",
+  "rating"
 FROM
-  webapp_db.public."Login";
+  yousician_db.public."Song";
 
--- select password of a particular user from the Login table.
+-- select particular song record from the Song table.
 SELECT
-  "password"
+  "songId"
+  "artist",
+  "title",
+  "difficulty",
+  "level",
+  "released",
+  "rating"
 FROM
-  webapp_db.public."Login"
+  yousician_db.public."Song";
 WHERE
-  username = 'balaji';
+  "songId" = 1;
