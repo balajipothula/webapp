@@ -120,6 +120,11 @@ def getConnect(postgresql: dict):
     })
     logger.error(errorMessage)    
 
+region = os.environ["region"]
+secret = os.environ["secret"]
+
+print(region)
+print(secret)
 postgresql = getCredentials(region = "eu-central-1", secret = "yousician")
 connect    = getConnect(postgresql)
 
