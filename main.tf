@@ -226,9 +226,15 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_iam_role_policy_attachment,
     module.yousician_aws_lambda_layer_version,
   ]
-
+/*
   environment_variables = {
     region = data.aws_region.current.name,
+  }
+*/
+    environment {                                                         # Optional argument block but keep it.
+    variables = { 
+      foo = "foo"
+    }                                                     # Optional block argument.
   }
 
   function_name                  = "yousician"                                     # Required argument.
