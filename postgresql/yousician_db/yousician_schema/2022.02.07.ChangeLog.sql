@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS yousician_db.yousician_schema."Song"(
   "difficulty" REAL                        NOT NULL,
   "level"      SMALLINT                    NOT NULL CHECK(0 < "level"  AND "level" < 26),
   "released"   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-  "rating"     SMALLINT  ARRAY             NOT NULL CHECK(0 < "rating" AND "rating" < 6)
+  "rating"     SMALLINT  ARRAY             NOT NULL
 );
