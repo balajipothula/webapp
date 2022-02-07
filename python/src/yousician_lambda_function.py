@@ -138,7 +138,7 @@ app = FastAPI(
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   clientHost = request.client.host
-  return {"clientHost": clientHost}
+  return {"message": "Unleash your inner musician with Yousician"}
 
 @app.put("/register", name="Register", tags=["Register"])
 def register(login: Login):

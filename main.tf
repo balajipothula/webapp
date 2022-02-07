@@ -227,7 +227,6 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_lambda_layer_version,
   ]
 
-
   function_name                  = "yousician"                                     # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
   description                    = "Yousician Lambda Function."                    # Optional argument, but keep it.
@@ -250,7 +249,7 @@ module "yousician_aws_lambda_function" {
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji@yousician.com"
   }
-  timeout                        = 60                                           # Optional argument, but keep it.
+  timeout                        = 60                                              # Optional argument, but keep it.
 
 }
 
