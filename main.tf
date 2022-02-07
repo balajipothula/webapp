@@ -232,11 +232,9 @@ module "yousician_aws_lambda_function" {
   }  
 */
 
-  environment {
-    variables = {
-      foo = "bar"
+    environment_variables = {
+        "region" : data.aws_region.current.name,
     }
-  }
 
   function_name                  = "yousician"                                     # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
