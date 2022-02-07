@@ -41,7 +41,7 @@ resource "aws_lambda_function" "generic" {
 */
   description                    = var.description                      # Optional argument but keep it.
 
-  environment                    = null
+//  environment                    = null
 
 /*
   environment {                                                         # Optional argument block but keep it.
