@@ -130,14 +130,13 @@ class Login(BaseModel):
   password: str
 
 app = FastAPI(
-  title       = "WebApp",
-  description = "Web Application using FastAPI.",
-  version     = "1.0.0"
+  title       = "Yousician",
+  description = "Yousician Web Application using FastAPI.",
+  version     = "2022-02-07"
 )
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  clientHost = request.client.host
   return {"message": "Unleash your inner musician with Yousician"}
 
 @app.put("/register", name="Register", tags=["Register"])
