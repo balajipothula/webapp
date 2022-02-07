@@ -120,28 +120,26 @@ def getConnect(postgresql: dict):
     })
     logger.error(errorMessage)    
 
-region     = os.environ["region"]
-secret     = os.environ["secret"]
-postgresql = getCredentials(region = region, secret = secret)
+postgresql = getCredentials(region = "eu-central-1", secret = "yousician")
 connect    = getConnect(postgresql)
 
-class Song(BaseModel):
+class Login(BaseModel):
   username: str
   password: str
 
 app = FastAPI(
-  title       = "Yousician",
-  description = "Yousician Web Application using FastAPI.",
+  title       = "WebApp",
+  description = "Web Application using FastAPI.",
   version     = "1.0.0"
 )
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   clientHost = request.client.host
-  return {"message": "Unleash your inner musician with Yousician"}
+  return {"clientHost": clientHost}
 
 @app.put("/register", name="Register", tags=["Register"])
-def register(song: Song):
+def register(login: Login):
   sql = """
     INSERT INTO webapp_db.public."Login"(
       "username",
