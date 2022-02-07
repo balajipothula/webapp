@@ -226,10 +226,17 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_iam_role_policy_attachment,
     module.yousician_aws_lambda_layer_version,
   ]
-
+/*
   environment_variables = {
     "region" : data.aws_region.current.name
   }  
+*/
+
+  environment {
+    variables = {
+      foo = "bar"
+    }
+  }
 
   function_name                  = "yousician"                                     # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
