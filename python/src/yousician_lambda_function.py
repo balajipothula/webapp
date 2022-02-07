@@ -120,10 +120,12 @@ def getConnect(postgresql: dict):
     })
     logger.error(errorMessage)    
 
-postgresql = getCredentials(region = "eu-central-1", secret = "yousician")
+region     = os.environ["region"]
+secret     = os.environ["secret"]
+postgresql = getCredentials(region = region, secret = secret)
 connect    = getConnect(postgresql)
 
-class Login(BaseModel):
+class Song(BaseModel):
   username: str
   password: str
 
@@ -139,7 +141,7 @@ def index(request: Request):
   return {"message": "Unleash your inner musician with Yousician"}
 
 @app.put("/register", name="Register", tags=["Register"])
-def register(login: Login):
+def register(song: Song):
   sql = """
     INSERT INTO webapp_db.public."Login"(
       "username",

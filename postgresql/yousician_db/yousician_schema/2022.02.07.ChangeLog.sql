@@ -2,7 +2,7 @@
 
 -- comment: Please do not change the value of author:changsetid
 -- changeset BalajiPothula:2022-02-07T14:00:00Z
-CREATE TABLE IF NOT EXISTS yousician_db.yousician_schema."Songs"(
+CREATE TABLE IF NOT EXISTS yousician_db.yousician_schema."Song"(
   "songId"     BIGSERIAL                   PRIMARY KEY,
   "artist"     VARCHAR                     NOT NULL,
   "title"      VARCHAR                     NOT NULL,

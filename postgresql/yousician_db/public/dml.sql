@@ -1,5 +1,5 @@
 -- insert record into the Songs table.
-INSERT INTO yousician_db.public."Songs"(
+INSERT INTO yousician_db.public."Song"(
   "artist",
   "title",
   "difficulty",

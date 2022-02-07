@@ -1,5 +1,5 @@
 -- select username and password from the Login table.
-CREATE TABLE IF NOT EXISTS yousician_db.public."Songs"(
+CREATE TABLE IF NOT EXISTS yousician_db.public."Song"(
   "songId"     BIGSERIAL                   PRIMARY KEY,
   "artist"     VARCHAR                     NOT NULL,
   "title"      VARCHAR                     NOT NULL,
