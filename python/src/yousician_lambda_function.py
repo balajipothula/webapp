@@ -143,9 +143,9 @@ app = FastAPI(
 def index(request: Request):
   return {"message": "Unleash your inner musician with Yousician"}
 
-@app.put("/insertSong", name="InsertSong", tags=["InsertSong"])
-def insert(song: Song):
-  return {"artist": song.artist, }
+@app.get("/songs", name="Songs", tags=["Songs"])
+def songs(request: Request):
+  return {"message": "Songs"}
 
 
 lambda_handler = Mangum(app)
