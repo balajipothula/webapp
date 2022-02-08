@@ -32,9 +32,13 @@ from mangum  import Mangum
 
 from pydantic import BaseModel
 
+from typing import List
 
-logging.getLogger("boto3").setLevel(logging.WARNING)
-logging.getLogger("botocore").setLevel(logging.WARNING)
+import databases
+import sqlalchemy
+
+#logging.getLogger("boto3").setLevel(logging.WARNING)
+#logging.getLogger("botocore").setLevel(logging.WARNING)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -142,6 +146,7 @@ app = FastAPI(
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
+  database = databases.Database(url)
   return {"message": "Unleash your inner musician with Yousician"}
 
 @app.get("/songs", name="Songs", tags=["Songs"])
