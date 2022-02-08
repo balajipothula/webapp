@@ -124,6 +124,7 @@ region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
 connect    = getConnect(postgresql)
+url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + "/" + postgresql["database"]
 
 class Song(BaseModel):
   artist: str
