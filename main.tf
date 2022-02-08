@@ -204,10 +204,11 @@ module "yousician_aws_lambda_layer_version" {
 
   layer_name               = "yousician"                       # Required argument.
   compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
-  compatible_runtimes      = ["python3.7", "python3.8"]        # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.7"]                     # Optional argument, but keep it.
   description              = "Python Library."                 # Optional argument, but keep it.
   filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
   license_info             = "Apache License 2.0"              # Optional argument, but keep it.
+  runtime                  = "python3.7"                       # Optional argument, but keep it.
 //s3_bucket                = var.s3_bucket                     # Optional argument, conflicts with filename.
 //s3_key                   = var.s3_key                        # Optional argument, conflicts with filename.
 //s3_object_version        = var.s3_object_version             # Optional argument, conflicts with filename.

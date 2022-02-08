@@ -244,7 +244,7 @@ variable "reserved_concurrent_executions" {
 
 variable "runtime" {
   type        = string
-  default     = "python3.8"
+  default     = "python3.7"
   description = "Lambda Function execution runtime environment."
   validation {
     condition     = var.runtime != null && contains(tolist(["python3.7", "python3.8", "python3.9"]), var.runtime)
