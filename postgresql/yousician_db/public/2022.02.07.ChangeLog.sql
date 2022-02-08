@@ -8,6 +8,5 @@ CREATE TABLE IF NOT EXISTS yousician_db.public."Song"(
   "title"      VARCHAR                     NOT NULL,
   "difficulty" REAL                        NOT NULL,
   "level"      SMALLINT                    NOT NULL CHECK(0 < "level"  AND "level" < 26),
-  "released"   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-  "rating"     SMALLINT  ARRAY             NOT NULL
+  "released"   TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );

@@ -5,8 +5,7 @@ SELECT
   "title",
   "difficulty",
   "level",
-  "released",
-  "rating"
+  "released"
 FROM
   yousician_db.public."Song";
 
@@ -17,8 +16,7 @@ SELECT
   "title",
   "difficulty",
   "level",
-  "released",
-  "rating"
+  "released"
 FROM
   yousician_db.public."Song";
 WHERE

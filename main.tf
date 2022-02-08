@@ -348,7 +348,7 @@ module "yousician_aws_apigatewayv2_route_insertSong" {
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Login Service.
-module "yousician_aws_apigatewayv2_route_login" {
+module "yousician_aws_apigatewayv2_route_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
@@ -358,7 +358,7 @@ module "yousician_aws_apigatewayv2_route_login" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "POST /login"                                                   # Required argument.
+  route_key     = "GET /songs"                                                       # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }

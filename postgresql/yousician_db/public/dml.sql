@@ -4,14 +4,12 @@ INSERT INTO yousician_db.public."Song"(
   "title",
   "difficulty",
   "level",
-  "released",
-  "rating"
+  "released"
 )
 VALUES(
   'The Yousicians',
   'A New Kennel',
   9.9,
   9,
-  '2022-02-07',
-  '{4}'
+  '2022-02-07'
 );

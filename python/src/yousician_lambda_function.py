@@ -127,11 +127,11 @@ connect    = getConnect(postgresql)
 
 class Song(BaseModel):
   artist: str
-  title: str
-  difficulty: float
-  level: int
-  released: str
-  rating: list
+  title:  str
+  #difficulty: float
+  #level: int
+  #released: str
+  #rating: list
 
 app = FastAPI(
   title       = "Yousician",
@@ -142,5 +142,10 @@ app = FastAPI(
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   return {"message": "Unleash your inner musician with Yousician"}
+
+@app.put("/insertSong", name="InsertSong", tags=["InsertSong"])
+def insert(song: Song):
+  return {"artist": song.artist, }
+
 
 lambda_handler = Mangum(app)
