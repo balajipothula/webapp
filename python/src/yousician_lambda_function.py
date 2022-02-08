@@ -37,11 +37,12 @@ from typing import List
 import databases
 import sqlalchemy
 
-#logging.getLogger("boto3").setLevel(logging.WARNING)
-#logging.getLogger("botocore").setLevel(logging.WARNING)
+logging.getLogger("boto3").setLevel(logging.ERROR)
+logging.getLogger("botocore").setLevel(logging.ERROR)
 
 logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.ERROR)
+#logger.setLevel(logging.INFO)
 
 
 def getCredentials(region: str, secret: str) -> dict:
@@ -87,7 +88,7 @@ def getCredentials(region: str, secret: str) -> dict:
     pass
 
 
-def getConnect(postgresql: dict):
+def getEngine(postgresql: dict):
   """
   Get PostgreSQL Database Server connection,
   by providing credentials.
@@ -112,8 +113,9 @@ def getConnect(postgresql: dict):
       echo         = eval(postgresql["echo"]),
       connect_args = { "connect_timeout": int(postgresql["connect_timeout"]) }
     )
-    connect = engine.connect()
-    return connect
+    #connect = engine.connect()
+    #return connect
+    return engine
   except Exception as exception:
     exception_type, exception_value, exception_traceback = sys.exc_info()
     traceback_string = traceback.format_exception(exception_type, exception_value, exception_traceback)
@@ -127,16 +129,32 @@ def getConnect(postgresql: dict):
 region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
-connect    = getConnect(postgresql)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + "/" + postgresql["database"]
+database   = databases.Database(url)
+engine     = getEngine(postgresql)
+metadata   = sqlalchemy.MetaData()
+
+metadata.create_all(engine)
+
+song       = sqlalchemy.Table(
+  "Song",
+  metadata,
+  sqlalchemy.Column("songId",     sqlalchemy.BigInteger, primary_key=True),
+  sqlalchemy.Column("artist",     sqlalchemy.String),
+  sqlalchemy.Column("title",      sqlalchemy.String),
+  sqlalchemy.Column("difficulty", sqlalchemy.Float),
+  sqlalchemy.Column("level",      sqlalchemy.SmallInteger),
+  sqlalchemy.Column("released",   sqlalchemy.Date)
+)
 
 class Song(BaseModel):
+  songId: int
   artist: str
   title:  str
-  #difficulty: float
-  #level: int
-  #released: str
-  #rating: list
+  difficulty: float
+  level: int
+  released: str
+
 
 app = FastAPI(
   title       = "Yousician",
@@ -144,14 +162,15 @@ app = FastAPI(
   version     = "2022-02-07"
 )
 
+
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  database = databases.Database(url)
   return {"message": "Unleash your inner musician with Yousician"}
 
-@app.get("/songs", name="Songs", tags=["Songs"])
-def songs(request: Request):
-  return {"message": "Songs"}
+@app.get("/songs", response_model=List[Song])
+async def songs(request: Request):
+  query = song.select()
+  return await database.fetch_all(query)
 
 
 lambda_handler = Mangum(app)
