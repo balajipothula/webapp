@@ -21,14 +21,14 @@ variable "secret_key" {
 
 variable "master_username" {
   type        = string
-  default     = "webapp"
+  default     = "yousician"
   description = "Username for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
 
 variable "master_password" {
   type        = string
-  default     = "WebApp#2022"
+  default     = "Yousician"
   description = "Password for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
