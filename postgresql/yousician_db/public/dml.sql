@@ -1,4 +1,4 @@
--- insert record into the Songs table.
+-- insert record into the Song table.
 INSERT INTO yousician_db.public."Song"(
   "artist",
   "title",
@@ -11,5 +11,5 @@ VALUES(
   'A New Kennel',
   9.9,
   9,
-  '2022-02-07'
+  '2022-02-09'
 );

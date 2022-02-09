@@ -8,6 +8,7 @@ import traceback
 import base64
 import gzip
 import os
+import datetime
 
 from botocore.exceptions import ClientError
 
@@ -105,6 +106,7 @@ def getEngine(postgresql: dict):
       username   = postgresql["username"],
       password   = postgresql["password"],
       host       = postgresql["host"],
+      port       = postgresql["port"],
       database   = postgresql["database"],
       query      = None
     )
@@ -139,22 +141,21 @@ metadata.create_all(engine)
 song       = sqlalchemy.Table(
   "Song",
   metadata,
-  sqlalchemy.Column("songId",     sqlalchemy.BigInteger, primary_key=True),
+  sqlalchemy.Column("songId",     sqlalchemy.BigInteger, primary_key = True),
   sqlalchemy.Column("artist",     sqlalchemy.String),
   sqlalchemy.Column("title",      sqlalchemy.String),
-  sqlalchemy.Column("difficulty", sqlalchemy.Float),
+  sqlalchemy.Column("difficulty", sqlalchemy.Float(precision = 2, asdecimal = True, decimal_return_scale = 2)),
   sqlalchemy.Column("level",      sqlalchemy.SmallInteger),
-  sqlalchemy.Column("released",   sqlalchemy.Date)
+  sqlalchemy.Column("released",   sqlalchemy.String)
 )
 
 class Song(BaseModel):
-  songId: int
-  artist: str
-  title:  str
-  difficulty: float
-  level: int
-  released: str
-
+  songId     : int
+  artist     : str
+  title      : str
+  difficulty : float
+  level      : int
+  released   : str
 
 app = FastAPI(
   title       = "Yousician",
