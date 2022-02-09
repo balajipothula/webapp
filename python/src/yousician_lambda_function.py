@@ -149,6 +149,13 @@ song       = sqlalchemy.Table(
   sqlalchemy.Column("released",   sqlalchemy.String)
 )
 
+rating       = sqlalchemy.Table(
+  "Rating",
+  metadata,
+  sqlalchemy.Column("id",   sqlalchemy.BigInteger),
+  sqlalchemy.Column("rate", sqlalchemy.SmallInteger)
+)
+
 class Song(BaseModel):
   songId     : int
   artist     : str
@@ -158,8 +165,8 @@ class Song(BaseModel):
   released   : str
 
 class Rating(BaseModel):
-  songId : int
-  rating : int
+  id   : int
+  rate : int
 
 app = FastAPI(
   title       = "Yousician",
@@ -188,14 +195,20 @@ async def insertSong(song: Song):
 
 @app.put("/songs/rating")
 async def insertRating(rating: Rating):
-  query  = """INSERT INTO yousician_db.public."Rating"(songId, rating) VALUES (:songId, :rating)"""
-  values = { "songId": song.songId, "rating": song.rating }
+  if 5 < rating.rate or rating.rate < 1:
+    return {"message": "Song rating must be in between 1 and 5 :("}
+  query  = """INSERT INTO yousician_db.public."Rating"(id, rate) VALUES (:id, :rate)"""
+  values = { "id": rating.id, "rate": rating.rate }
   await database.execute(query = query, values = values)
-  return {"message": "Your rating taken into consideration :)"}
+  return {"message": "Your rating is taken into consideration :)"}
 
 @app.get("/songs", response_model=List[Song])
 async def songs(request: Request):
   return await database.fetch_all(query = song.select())
 
+
+@app.get("/songs/rating/{id}", )
+async def getSongRating(rating: int = 0):
+  return {"message": "Your rating is taken into consideration :)"}
 
 lambda_handler = Mangum(app)
