@@ -175,10 +175,16 @@ async def shutdown():
 def index(request: Request):
   return {"message": "Unleash your inner musician with Yousician"}
 
+@app.put("/insertSong")
+async def insertSong(song: Song):
+  query  = """INSERT INTO yousician_db.public."Song"(artist, title, difficulty, level, released) VALUES (:artist, :title, :difficulty, :level, :released)"""
+  values = { "artist": song.artist, "title": song.title, "difficulty": song.difficulty, "level": song.level, "released": song.released }
+  await database.execute(query = query, values = values)
+  return {"message": "Hurray new song inserted :)"}
+
 @app.get("/songs", response_model=List[Song])
 async def songs(request: Request):
-  query = song.select()
-  return await database.fetch_all(query)
+  return await database.fetch_all(query = song.select())
 
 
 lambda_handler = Mangum(app)
