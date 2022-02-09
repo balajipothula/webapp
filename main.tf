@@ -328,7 +328,7 @@ module "yousician_aws_apigatewayv2_route_items" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /items"                                                       # Required argument.
+  route_key     = "GET /items/"                                                      # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
