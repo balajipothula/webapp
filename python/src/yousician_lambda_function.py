@@ -157,6 +157,10 @@ class Song(BaseModel):
   level      : int
   released   : str
 
+class Rating(BaseModel):
+  songId : int
+  rating : int
+
 app = FastAPI(
   title       = "Yousician",
   description = "Yousician Web Application using FastAPI.",
@@ -181,6 +185,13 @@ async def insertSong(song: Song):
   values = { "artist": song.artist, "title": song.title, "difficulty": song.difficulty, "level": song.level, "released": song.released }
   await database.execute(query = query, values = values)
   return {"message": "Hurray new song inserted :)"}
+
+@app.put("/songs/rating")
+async def insertRating(rating: Rating):
+  query  = """INSERT INTO yousician_db.public."Rating"(songId, rating) VALUES (:songId, :rating)"""
+  values = { "songId": song.songId, "rating": song.rating }
+  await database.execute(query = query, values = values)
+  return {"message": "Your rating taken into consideration :)"}
 
 @app.get("/songs", response_model=List[Song])
 async def songs(request: Request):
