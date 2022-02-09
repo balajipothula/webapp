@@ -206,9 +206,9 @@ async def insertRating(rating: Rating):
 async def songs(request: Request):
   return await database.fetch_all(query = song.select())
 
+@app.get("/items/{item_id}")
+async def read_item(item_id: int):
+  return {"item_id": item_id}
 
-@app.get("/songs/rating/{id}", )
-async def getSongRating(rating: int = 0):
-  return {"message": "Your rating is taken into consideration :)"}
 
 lambda_handler = Mangum(app)
