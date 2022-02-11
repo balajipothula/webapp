@@ -316,22 +316,6 @@ module "yousician_aws_apigatewayv2_integration" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
-module "yousician_aws_apigatewayv2_route_song_rating" {
-
-  source        = "./terraform/aws/apigatewayv2/route"
-
-  depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
-  ]
-
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /song/rating/{songId}"                                        # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
-
-}
-
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Index Service.
 module "yousician_aws_apigatewayv2_route_index" {
 
@@ -349,7 +333,7 @@ module "yousician_aws_apigatewayv2_route_index" {
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Insert Service.
-module "yousician_aws_apigatewayv2_route_insertSong" {
+module "yousician_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
@@ -359,13 +343,13 @@ module "yousician_aws_apigatewayv2_route_insertSong" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "PUT /insertSong"                                                  # Required argument.
+  route_key     = "PUT /song"                                                        # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
-module "yousician_aws_apigatewayv2_route_songs_rating" {
+module "yousician_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
@@ -375,13 +359,29 @@ module "yousician_aws_apigatewayv2_route_songs_rating" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "ANY /songs/rating"                                                # Required argument.
+  route_key     = "PUT /song/rating"                                                 # Required argument.
+  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
+}
+
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
+module "yousician_aws_apigatewayv2_route_get_song_rating" {
+
+  source        = "./terraform/aws/apigatewayv2/route"
+
+  depends_on    = [
+    module.yousician_aws_apigatewayv2_api,
+    module.yousician_aws_apigatewayv2_integration,
+  ]
+
+  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  route_key     = "GET /song/rating/{songId}"                                        # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Login Service.
-module "yousician_aws_apigatewayv2_route_songs" {
+module "yousician_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
