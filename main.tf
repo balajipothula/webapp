@@ -316,9 +316,8 @@ module "yousician_aws_apigatewayv2_integration" {
 
 }
 
-# this testing purpose only.
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Index Service.
-module "yousician_aws_apigatewayv2_route_items" {
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
+module "yousician_aws_apigatewayv2_route_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
@@ -328,7 +327,7 @@ module "yousician_aws_apigatewayv2_route_items" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /items/{item_id}"                                             # Required argument.
+  route_key     = "GET /song/rating/{songId}"                                        # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
