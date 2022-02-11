@@ -186,14 +186,18 @@ async def shutdown():
 def index(request: Request):
   return {"message": "Unleash your inner musician with Yousician"}
 
-@app.put("/insertSong")
+@app.put("/song")
 async def insertSong(song: Song):
   query  = """INSERT INTO yousician_db.public."Song"(artist, title, difficulty, level, released) VALUES (:artist, :title, :difficulty, :level, :released)"""
   values = { "artist": song.artist, "title": song.title, "difficulty": song.difficulty, "level": song.level, "released": song.released }
   await database.execute(query = query, values = values)
   return {"message": "Hurray new song inserted :)"}
 
-@app.put("/songs/rating")
+@app.get("/songs", response_model=List[Song])
+async def songs(request: Request):
+  return await database.fetch_all(query = song.select())
+
+@app.put("/song/rating")
 async def insertRating(rating: Rating):
   if 5 < rating.rate or rating.rate < 1:
     return {"message": "Song rating must be in between 1 and 5 :("}
@@ -202,8 +206,9 @@ async def insertRating(rating: Rating):
   await database.execute(query = query, values = values)
   return {"message": "Your rating is taken into consideration :)"}
 
-@app.get("/songs", response_model=List[Song])
-async def songs(request: Request):
-  return await database.fetch_all(query = song.select())
+@app.get("/song/rating/{songId}")
+def read_root(songId: int):
+  return {"songId": songId}
+
 
 lambda_handler = Mangum(app)
