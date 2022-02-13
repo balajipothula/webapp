@@ -22,6 +22,15 @@ FROM
 WHERE
   "songId" = 1;
 
+-- select songs in a pagination way from the Song table.
+SELECT
+  *
+FROM yousician_db.public."Song"
+ORDER BY
+  "songId" ASC
+LIMIT  2
+OFFSET 0;
+
 -- select songs based on artist or title - case insensitive search.
 SELECT
   *
