@@ -102,14 +102,6 @@ resource "aws_default_security_group" "update" {
     from_port   = 5432
   }
 
-  ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "X Danger PostgreSQL inbound traffic rule."
-    protocol    = "tcp"
-    to_port     = 5432
-    from_port   = 5432
-  }
-
   egress {
     cidr_blocks = ["0.0.0.0/0"]
     description = "All outbound traffic rule."
