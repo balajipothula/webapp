@@ -56,3 +56,17 @@ FROM
   yousician_db.public."Rating"
 WHERE
   "id" = 34;
+
+-- select average difficulty of all songs from Song table.
+SELECT
+  AVG("difficulty")::numeric(10,2) AS "avgDifficulty"
+FROM
+  yousician_db.public."Song";
+
+-- select average difficulty of all songs belongs to particular level from Song table.
+SELECT
+  AVG("difficulty")::numeric(10,2) AS "avgDifficulty"
+FROM
+  yousician_db.public."Song"
+WHERE
+  "level" = 9;
