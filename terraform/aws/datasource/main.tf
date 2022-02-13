@@ -1,5 +1,5 @@
 data "aws_arn" "current" {
-  arn = "arn:aws:iam:eu-central-1:304501768659:role/WebAppLambdaRole"
+  arn = "arn:aws:iam:*:*:role/WebAppLambdaRole"
 }
 
 data "aws_availability_zones" "current" {

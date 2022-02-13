@@ -11,7 +11,7 @@ variable "function_name" {
 
 variable "role" {
   type        = string
-  default     = "arn:aws:iam::304501768659:role/LambdaIAMRole"
+  default     = "arn:aws:iam:*:*:role/LambdaIAMRole"
   description = "ARN of the Lambda function's execution role."
   validation {
     condition     = var.role != null
