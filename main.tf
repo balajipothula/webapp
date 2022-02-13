@@ -10,6 +10,9 @@ provider "aws" {
 data "aws_region" "current" {
 }
 
+data "aws_caller_identity" "current" {
+}
+
 # Data Source: aws_vpc
 data "aws_vpc" "default" {
   default = true

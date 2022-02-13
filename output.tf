@@ -4,6 +4,12 @@ output "aws_region_current_name" {
   sensitive   = false
 }
 
+output "aws_caller_identity_current_account_id" {
+  value       = data.aws_caller_identity.current.account_id
+  description = "AWS Account ID number of the account that owns or contains the calling entity."
+  sensitive   = false
+}
+
 output "aws_vpc_default_id" {
   value       = data.aws_vpc.default.id
   description = "The id of the specific VPC to retrieve."
