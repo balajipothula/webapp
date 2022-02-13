@@ -196,8 +196,10 @@ async def insertSong(song: Song):
 @app.get("/songs")
 async def songs(page: int = -1):
   if page < 0: return await database.fetch_all(query = song.select())
-  query  = """SELECT * FROM yousician_db.public."Song" ORDER BY "songId" LIMIT :recordsPerPage OFFSET :page"""
-  values = { "recordsPerPage": 2, "page": page }
+  query  = """SELECT * FROM yousician_db.public."Song" ORDER BY "songId" LIMIT :limit OFFSET :offset"""
+  limit  = 4
+  offset = limit * page
+  values = { "limit": limit, "offset": offset }
   return await database.fetch_all(query = query, values = values)
 
 @app.put("/song/rating")
