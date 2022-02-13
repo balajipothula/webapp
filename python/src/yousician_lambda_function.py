@@ -212,7 +212,7 @@ async def insertRating(rating: Rating):
 
 @app.get("/song/rating/{songId}")
 async def getSongAvgMinMaxRating(songId: int):
-  query  = """SELECT AVG("rate")::numeric(10,2) AS "avgRating", MIN("rate") AS "minRating", MAX("rate") AS "maxRating" FROM yousician_db.public."Rating" WHERE "id" = :id"""
+  query  = """SELECT AVG("rate")::NUMERIC(10,2) AS "avgRating", MIN("rate") AS "minRating", MAX("rate") AS "maxRating" FROM yousician_db.public."Rating" WHERE "id" = :id"""
   values = { "id": songId }
   return await database.fetch_one(query = query, values = values)
 
@@ -224,10 +224,10 @@ async def getSongsSearch(parameter: str):
 
 @app.get("/songs/avg/difficulty")
 async def getSongsAvgDifficulty(level: int = 0):
-  query  = """ SELECT AVG("difficulty")::numeric(10,2) AS "avgDifficulty" FROM yousician_db.public."Song" """
+  query  = """ SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM yousician_db.public."Song" """
   values = None
   if 0 < level:
-    query  = """SELECT AVG("difficulty")::numeric(10,2) AS "avgDifficulty" FROM yousician_db.public."Song" WHERE "level" = :level"""
+    query  = """SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM yousician_db.public."Song" WHERE "level" = :level"""
     values = { "level": level }
   return await database.fetch_all(query = query, values = values)
 
