@@ -207,8 +207,10 @@ async def insertRating(rating: Rating):
   return {"message": "Your rating is taken into consideration :)"}
 
 @app.get("/song/rating/{songId}")
-def read_root(songId: int):
-  return {"songId": songId}
+async def getSongAvgMinMaxRating(songId: int):
+  query  = """SELECT AVG("rate")::numeric(10,2) AS "avgRating", MIN("rate") AS "minRating", MAX("rate") AS "maxRating" FROM yousician_db.public."Rating" WHERE "id" = :id"""
+  values = { "id": songId }
+  return await database.fetch_one(query = query, values = values)
 
 
 lambda_handler = Mangum(app)

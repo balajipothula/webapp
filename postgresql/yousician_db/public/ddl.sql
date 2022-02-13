@@ -7,3 +7,9 @@ CREATE TABLE IF NOT EXISTS yousician_db.public."Song"(
   "level"      SMALLINT  NOT NULL CHECK(0 < "level"  AND "level" < 100),
   "released"   VARCHAR   NOT NULL
 );
+
+-- create Rating table.
+CREATE TABLE IF NOT EXISTS yousician_db.public."Rating"(
+  "songId" BIGINT   NOT NULL,
+  "rating" SMALLINT NOT NULL CHECK(0 < "rating" AND "rating" < 6)
+);

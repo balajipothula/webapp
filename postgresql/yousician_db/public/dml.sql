@@ -13,3 +13,13 @@ VALUES(
   9,
   '2022-02-09'
 );
+
+-- insert record into the Song table.
+INSERT INTO yousician_db.public."Rating"(
+  "id",
+  "rate"
+)
+VALUES(
+  34,
+  2
+);
