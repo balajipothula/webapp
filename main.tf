@@ -1,7 +1,6 @@
 provider "aws" {
 
-//region     = var.region
-  region     = data.aws_region.current.name
+  region     = var.region
   access_key = var.access_key
   secret_key = var.secret_key
 
@@ -510,17 +509,17 @@ module "yousician_aws_vpc_endpoint" {
 
   source              = "./terraform/aws/vpc/endpoint"
 
-  service_name        = "com.amazonaws.eu-central-1.secretsmanager" # Required argument.
-  vpc_id              = data.aws_vpc.default.id                     # Required argument.
-  private_dns_enabled = true                                        # Optional argument, but applicable for endpoints of type Interface.
-  subnet_ids          = data.aws_subnet_ids.available.ids           # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
-  security_group_ids  = data.aws_security_groups.default.ids        # Optional argument, but required for endpoints of type Interface.
-  tags                = {                                           # Optional argument, but keep it.
+  service_name        = "com.amazonaws.${data.aws_region.current.name}.secretsmanager" # Required argument.
+  vpc_id              = data.aws_vpc.default.id                                        # Required argument.
+  private_dns_enabled = true                                                           # Optional argument, but applicable for endpoints of type Interface.
+  subnet_ids          = data.aws_subnet_ids.available.ids                              # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
+  security_group_ids  = data.aws_security_groups.default.ids                           # Optional argument, but required for endpoints of type Interface.
+  tags                = {                                                              # Optional argument, but keep it.
     "Name"            = "yousician_secretsmanager"
     "AppName"         = "Yousician Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balaji@yousician.com"
   }
-  vpc_endpoint_type   = "Interface"                                 # Optional argument, but keep it.
+  vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
