@@ -43,7 +43,7 @@ variable "database_name" {
   description = "Database name for the PostgreSQL database, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
-
+/*
 variable "region" {
   type        = string
   default     = "eu-central-1"
@@ -54,3 +54,4 @@ variable "region" {
   }
   sensitive   = true
 }
+*/
