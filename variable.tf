@@ -1,7 +1,11 @@
-variable "account_id" {
-  type        = number
-  default     = null
-  description = "AWS Account ID which is stored in HashiCorp Terraform Cloud."
+variable "region" {
+  type        = string
+  default     = "eu-central-1"
+  description = "AWS Region to launch your resources."
+  validation {
+    condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
+    error_message = "Error: region value must not null and region must consist of alphabets, hyphens and numbers only."
+  }
   sensitive   = true
 }
 
@@ -41,16 +45,5 @@ variable "database_name" {
     error_message = "Error: database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
   }
   description = "Database name for the PostgreSQL database, which is stored in HashiCorp Terraform Cloud."
-  sensitive   = true
-}
-
-variable "region" {
-  type        = string
-  default     = "eu-central-1"
-  description = "AWS Region to launch your resources."
-  validation {
-    condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
-    error_message = "Error: region value must not null and region must consist of alphabets, hyphens and numbers only."
-  }
   sensitive   = true
 }

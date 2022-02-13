@@ -119,8 +119,8 @@ module "yousician_aws_iam_role" {
 
   assume_role_policy    = file("./json/YousicianLambdaIAMRole.json") # Required argument.
   description           = "AWS IAM Role for Yousician Lambda."       # Optional argument, but keep it.
-  force_detach_policies = true                                    # Optional argument, but keep it.
-  name                  = "YousicianLambdaIAMRole"                # Optional argument, but keep it.
+  force_detach_policies = true                                       # Optional argument, but keep it.
+  name                  = "YousicianLambdaIAMRole"                   # Optional argument, but keep it.
 
 }
 
@@ -130,8 +130,8 @@ module "yousician_aws_iam_policy" {
   source      = "./terraform/aws/iam/policy"
 
   description = "AWS IAM Policy for Yousician Lambda."       # Optional argument, but keep it.
-  name        = "YousicianLambdaIAMPolicy"                # Optional argument, but keep it.
-  path        = "/"                                       # Optional argument, but keep it.
+  name        = "YousicianLambdaIAMPolicy"                   # Optional argument, but keep it.
+  path        = "/"                                          # Optional argument, but keep it.
   policy      = file("./json/YousicianLambdaIAMPolicy.json") # Required argument.
 
 }
@@ -157,10 +157,10 @@ module "yousician_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "yousician-aws-s3-bucket"             # Optional argument, but keep it.
-  acl    = "private"                             # Optional argument, but keep it.
+  bucket = "yousician-aws-s3-bucket"                # Optional argument, but keep it.
+  acl    = "private"                                # Optional argument, but keep it.
   policy = file("./json/YousicianS3IAMPolicy.json") # Optional argument, but keep it.
-  tags   = {                                     # Optional argument, but keep it.
+  tags   = {                                        # Optional argument, but keep it.
     "Name"            = "yousician"
     "AppName"         = "Yousician Web App"
     "DeveloperName"   = "Balaji Pothula"
@@ -289,8 +289,8 @@ module "yousician_aws_apigatewayv2_stage" {
   ]
 
   api_id      = module.yousician_aws_apigatewayv2_api.id # Required argument.
-  name        = "$default"                            # Required argument.
-  auto_deploy = true                                  # Optional argument, but keep it.
+  name        = "$default"                               # Required argument.
+  auto_deploy = true                                     # Optional argument, but keep it.
 
 }
 
@@ -322,7 +322,7 @@ module "yousician_aws_apigatewayv2_route_index" {
   ]
 
   api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /"                                                         # Required argument.
+  route_key     = "GET /"                                                            # Required argument.
   target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
@@ -510,7 +510,7 @@ module "yousician_aws_secretsmanager_secret_version" {
   ]
 
   secret_id     = module.yousician_aws_secretsmanager_secret.id # Required argument.
-  secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
+  secret_string = jsonencode({                                  # Optional argument, but required if secret_binary is not set.                             
     dbInstanceIdentifier = module.yousician_aws_rds_cluster.id
     engine               = module.yousician_aws_rds_cluster.engine
     host                 = module.yousician_aws_rds_cluster.endpoint
@@ -521,7 +521,7 @@ module "yousician_aws_secretsmanager_secret_version" {
     password             = var.master_password
     dialect              = "postgresql"
     driver               = "psycopg2"
-    schema               = "yousician_schema"
+    schema               = "public"
     echo                 = "False"
     connect_timeout      = 30
   }) 
