@@ -212,5 +212,9 @@ async def getSongAvgMinMaxRating(songId: int):
   values = { "id": songId }
   return await database.fetch_one(query = query, values = values)
 
+@app.get("/songs/search")
+async def getSongsSearch(query: String):
+  return {"msg": "queryString"}
+
 
 lambda_handler = Mangum(app)

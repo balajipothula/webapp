@@ -399,7 +399,21 @@ module "yousician_aws_apigatewayv2_route_get_song_rating" {
 
 }
 
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
+module "yousician_aws_apigatewayv2_route_get_songs_search" {
 
+  source        = "./terraform/aws/apigatewayv2/route"
+
+  depends_on    = [
+    module.yousician_aws_apigatewayv2_api,
+    module.yousician_aws_apigatewayv2_integration,
+  ]
+
+  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  route_key     = "GET /songs/search"                                                # Required argument.
+  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
+}
 
 # Creation of AWS Lambda Permission to invoke Yousician Lambda Function by AWS API Gateway V2.
 module "yousician_aws_lambda_permission" {

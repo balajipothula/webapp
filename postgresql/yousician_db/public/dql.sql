@@ -38,12 +38,11 @@ FROM
 WHERE
   "id" = 34;
 
--- select particular song average rating,
--- minimum rating and maximum rating from the Rating table.
+-- select particular song average, minimum and maximum rating from the Rating table.
 SELECT
-  AVG("rate")::numeric(10,2) AS "avgRate",
-  MIN("rate")                AS "minRate",
-  MAX("rate")                AS "maxRate"
+  AVG("rate")::numeric(10,2) AS "avgRating",
+  MIN("rate")                AS "minRating",
+  MAX("rate")                AS "maxRating"
 FROM
   yousician_db.public."Rating"
 WHERE
