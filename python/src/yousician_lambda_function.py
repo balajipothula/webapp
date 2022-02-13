@@ -202,8 +202,7 @@ async def songs(page: int = -1):
 
 @app.put("/song/rating")
 async def insertRating(rating: Rating):
-  if 5 < rating.rate or rating.rate < 1:
-    return {"message": "Song rating must be in between 1 and 5 :("}
+  if 5 < rating.rate or rating.rate < 1: return {"message": "Song rating must be in between 1 and 5 :("}
   query  = """INSERT INTO yousician_db.public."Rating"(id, rate) VALUES (:id, :rate)"""
   values = { "id": rating.id, "rate": rating.rate }
   await database.execute(query = query, values = values)
