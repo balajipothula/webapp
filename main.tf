@@ -313,13 +313,13 @@ module "yousician_aws_apigatewayv2_integration" {
   ]
 
   api_id             = module.yousician_aws_apigatewayv2_api.id # Required argument.
-  integration_type   = "AWS_PROXY"                           # Required argument.
+  integration_type   = "AWS_PROXY"                              # Required argument.
   integration_uri    = module.yousician_aws_lambda_function.arn # Optional argument, but keep it.
-  integration_method = "ANY"                                 # Optional argument, but keep it.
+  integration_method = "ANY"                                    # Optional argument, but keep it.
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Index Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Index - Route.
 module "yousician_aws_apigatewayv2_route_index" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -335,7 +335,7 @@ module "yousician_aws_apigatewayv2_route_index" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Insert Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Insert - Route.
 module "yousician_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -351,7 +351,7 @@ module "yousician_aws_apigatewayv2_route_put_song" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Login Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs - Route.
 module "yousician_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -367,7 +367,7 @@ module "yousician_aws_apigatewayv2_route_get_songs" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating - Route.
 module "yousician_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -383,7 +383,7 @@ module "yousician_aws_apigatewayv2_route_put_song_rating" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating - Route.
 module "yousician_aws_apigatewayv2_route_get_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -399,7 +399,7 @@ module "yousician_aws_apigatewayv2_route_get_song_rating" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs Search Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs Search - Route.
 module "yousician_aws_apigatewayv2_route_get_songs_search" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -415,7 +415,7 @@ module "yousician_aws_apigatewayv2_route_get_songs_search" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs Average Difficulty Service.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs Average Difficulty - Route.
 module "yousician_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -441,10 +441,10 @@ module "yousician_aws_lambda_permission" {
     module.yousician_aws_apigatewayv2_api,
   ]
 
-  action        = "lambda:InvokeFunction"                                   # Required argument.
+  action        = "lambda:InvokeFunction"                                      # Required argument.
   function_name = module.yousician_aws_lambda_function.function_name           # Required argument.
-  principal     = "apigateway.amazonaws.com"                                # Required argument.
-  statement_id  = "AllowExecutionFromAPIGateway"                            # Optional argument.
+  principal     = "apigateway.amazonaws.com"                                   # Required argument.
+  statement_id  = "AllowExecutionFromAPIGateway"                               # Optional argument.
   source_arn    = "${module.yousician_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
 
 }
