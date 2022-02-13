@@ -213,8 +213,10 @@ async def getSongAvgMinMaxRating(songId: int):
   return await database.fetch_one(query = query, values = values)
 
 @app.get("/songs/search")
-async def getSongsSearch(query: String):
-  return {"msg": "queryString"}
+async def getSongsSearch(parameter: str):
+  query  = """SELECT * FROM yousician_db.public."Song" WHERE artist ~* :artist OR title ~* :title"""
+  values = { "artist": parameter, "title": parameter }
+  return await database.fetch_all(query = query, values = values)
 
 
 lambda_handler = Mangum(app)

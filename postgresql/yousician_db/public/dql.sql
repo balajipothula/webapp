@@ -22,6 +22,15 @@ FROM
 WHERE
   "songId" = 1;
 
+-- select songs based artist or title case insensitive search.
+SELECT
+  *
+FROM
+  yousician_db.public."Song"
+WHERE
+     artist ~* 'theY'
+  OR title  ~* 'picM';
+
 -- select records from the Rating table.
 SELECT
   "id"
