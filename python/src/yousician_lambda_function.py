@@ -193,9 +193,12 @@ async def insertSong(song: Song):
   await database.execute(query = query, values = values)
   return {"message": "Hurray new song inserted :)"}
 
-@app.get("/songs", response_model=List[Song])
-async def songs(request: Request):
-  return await database.fetch_all(query = song.select())
+@app.get("/songs")
+async def songs(page: int = -1):
+  if page < 0: return await database.fetch_all(query = song.select())
+  query  = """SELECT * FROM yousician_db.public."Song" ORDER BY "songId" LIMIT :recordsPerPage OFFSET :page"""
+  values = { "recordsPerPage": 2, "page": page }
+  return await database.fetch_all(query = query, values = values)
 
 @app.put("/song/rating")
 async def insertRating(rating: Rating):

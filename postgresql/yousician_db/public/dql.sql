@@ -22,7 +22,7 @@ FROM
 WHERE
   "songId" = 1;
 
--- select songs based artist or title case insensitive search.
+-- select songs based on artist or title - case insensitive search.
 SELECT
   *
 FROM
@@ -38,7 +38,6 @@ SELECT
 FROM
   yousician_db.public."Rating";
 
-
 -- select particular song rating records from the Rating table.
 SELECT
   "rate"
@@ -49,13 +48,13 @@ WHERE
 
 -- select particular song average, minimum and maximum rating from the Rating table.
 SELECT
-  AVG("rate")::numeric(10,2) AS "avgRating",
+  AVG("rate")::NUMERIC(10,2) AS "avgRating",
   MIN("rate")                AS "minRating",
   MAX("rate")                AS "maxRating"
 FROM
   yousician_db.public."Rating"
 WHERE
-  "id" = 34;
+  "id" = 9;
 
 -- select average difficulty of all songs from Song table.
 SELECT

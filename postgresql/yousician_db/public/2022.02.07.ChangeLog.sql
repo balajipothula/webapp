@@ -19,4 +19,3 @@ CREATE TABLE IF NOT EXISTS yousician_db.public."Rating"(
   "songId" BIGINT   NOT NULL,
   "rating" SMALLINT NOT NULL CHECK(0 < "rating" AND "rating" < 6)
 );
-
