@@ -157,7 +157,6 @@ rating       = sqlalchemy.Table(
 )
 
 class Song(BaseModel):
-  songId     : int
   artist     : str
   title      : str
   difficulty : float
