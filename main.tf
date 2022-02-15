@@ -327,7 +327,7 @@ module "yousician_aws_apigatewayv2_route_index" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Insert - Route.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Put Song - Route.
 module "yousician_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -343,7 +343,7 @@ module "yousician_aws_apigatewayv2_route_put_song" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs - Route.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs - Route.
 module "yousician_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -359,7 +359,7 @@ module "yousician_aws_apigatewayv2_route_get_songs" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating - Route.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Put Song Rating - Route.
 module "yousician_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -375,7 +375,7 @@ module "yousician_aws_apigatewayv2_route_put_song_rating" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Song Rating - Route.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Song Rating - Route.
 module "yousician_aws_apigatewayv2_route_get_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -391,7 +391,7 @@ module "yousician_aws_apigatewayv2_route_get_song_rating" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs Search - Route.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs Search - Route.
 module "yousician_aws_apigatewayv2_route_get_songs_search" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -407,7 +407,7 @@ module "yousician_aws_apigatewayv2_route_get_songs_search" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Songs Average Difficulty - Route.
+# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs Average Difficulty - Route.
 module "yousician_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
   source        = "./terraform/aws/apigatewayv2/route"
