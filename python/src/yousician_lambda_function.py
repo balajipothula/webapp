@@ -231,4 +231,7 @@ async def getSongsAvgDifficulty(level: int = 0):
   return await database.fetch_all(query = query, values = values)
 
 
+
+
+# testing.
 lambda_handler = Mangum(app)
