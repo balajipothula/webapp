@@ -47,6 +47,26 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      # Destroy Terraform state.
-      - name: Destroy Terraform State.
-        run: terraform destroy
+      # Initialize a new or existing Terraform working directory by creating initial files,
+      # loading any remote state, downloading modules, etc.
+      - name: Initialize Terraform.
+        run: terraform init -input=false
+        #env:
+          #TF_WORKSPACE: default
+
+      # Format Terraform configuration files adhere in to a canonical format.
+      - name: Format Terraform Files.
+        run: terraform fmt
+
+      # Check that all Terraform configuration files adhere to a canonical format.
+      - name: Check Terraform Files Format.
+        run: terraform fmt -check
+
+      # Validate all Terraform configuration files.
+      - name: Validate Terraform Files.
+        run: terraform validate -no-color
+
+      # Generates an execution plan for Terraform.
+      - name: Generate Terraform Plan.
+        run: terraform plan -no-color
+        #continue-on-error: true
