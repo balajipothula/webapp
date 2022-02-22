@@ -69,7 +69,7 @@ locals {
   yyyymmdd      = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime      = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   layer_zip     = "./python/lib/layer.zip"
-  yousician_src = "./python/src/yousician_lambda_function.py"
+  yousician_src = "./python/src/lambda_function.py"
   yousician_zip = "yousician-${local.datetime}.zip"
 }
 
