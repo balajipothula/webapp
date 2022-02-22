@@ -224,14 +224,14 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_secretsmanager_secret,
   ]
 
-  function_name                  = "yousician"                                     # Required argument.
+  function_name                  = "webapp"                                        # Required argument.
   role                           = module.yousician_aws_iam_role.arn               # Required argument.
-  description                    = "Yousician Lambda Function."                    # Optional argument, but keep it.
+  description                    = "WebApp Lambda Function"                        # Optional argument, but keep it.
   environment_variables          = {                                               # Optional argument, but keep it.
     region = data.aws_region.current.name,
     secret = module.yousician_aws_secretsmanager_secret.id
   }
-  handler                        = "yousician_lambda_function.lambda_handler"      # Optional argument, but keep it.
+  handler                        = "lambda_function.lambda_handler"                # Optional argument, but keep it.
   layers                         = [module.yousician_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                             # Optional argument, but keep it.
   package_type                   = "Zip"                                           # Optional argument, but keep it.
@@ -241,7 +241,7 @@ module "yousician_aws_lambda_function" {
   s3_bucket                      = module.yousician_aws_s3_bucket.id               # Optional argument, but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.yousician_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                               # Optional argument, but keep it.
-    "Name"            = "yousician"
+    "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
