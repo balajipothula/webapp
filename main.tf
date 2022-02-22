@@ -529,6 +529,7 @@ module "yousician_aws_secretsmanager_secret_version" {
 
 }
 
+
 # Creation of AWS VPC Endpoint for Yousician Lambda Function
 # to access AWS Secrets Manager service.
 module "yousician_aws_vpc_endpoint" {
