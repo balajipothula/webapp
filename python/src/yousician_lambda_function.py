@@ -75,9 +75,9 @@ def getCredentials(region: str, secret: str) -> dict:
     elif exception == "InternalServiceErrorException":
       logger.error("An error occurred on the server side.")
     elif exception == "InvalidParameterException":
-      logger.error("The request had invalid parameters: ", str(clientError))
+      logger.error("The request had invalid parameters: ", clientError)
     elif exception == "InvalidRequestException":
-      logger.error("The request was invalid due to :", str(clientError))
+      logger.error("The request was invalid due to :", clientError)
     elif exception == "ResourceNotFoundException":
       logger.error("The requested secret " + secret + " was not found")
   else:
