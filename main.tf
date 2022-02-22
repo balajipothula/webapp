@@ -221,6 +221,7 @@ module "yousician_aws_lambda_function" {
     module.yousician_aws_s3_bucket_object,
     module.yousician_aws_iam_role_policy_attachment,
     module.yousician_aws_lambda_layer_version,
+    module.yousician_aws_secretsmanager_secret,
   ]
 
   function_name                  = "yousician"                                     # Required argument.
@@ -228,7 +229,7 @@ module "yousician_aws_lambda_function" {
   description                    = "Yousician Lambda Function."                    # Optional argument, but keep it.
   environment_variables          = {                                               # Optional argument, but keep it.
     region = data.aws_region.current.name,
-    secret = "yousician"
+    secret = module.yousician_aws_secretsmanager_secret.id
   }
   handler                        = "yousician_lambda_function.lambda_handler"      # Optional argument, but keep it.
   layers                         = [module.yousician_aws_lambda_layer_version.arn] # Optional argument, but keep it.
