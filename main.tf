@@ -441,6 +441,7 @@ module "yousician_aws_lambda_permission" {
 
 }
 
+/*
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for Yousician Lambda Function.
 module "yousician_aws_rds_cluster" {
@@ -548,3 +549,4 @@ module "yousician_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
+*/
