@@ -131,7 +131,7 @@ module "webapp_aws_iam_policy" {
 
   description = "AWS IAM Policy for WebApp Lambda."       # Optional argument, but keep it.
   name        = "WebAppLambdaIAMPolicy"                   # Optional argument, but keep it.
-  path        = "/"                                          # Optional argument, but keep it.
+  path        = "/"                                       # Optional argument, but keep it.
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
@@ -180,10 +180,10 @@ module "webapp_aws_s3_bucket_object" {
 
   bucket      = module.webapp_aws_s3_bucket.id                # Required argument.
   key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # Required argument.
-  acl         = "private"                                        # Optional argument, but keep it.
-  etag        = filemd5(data.archive_file.webapp.output_path)    # Optional argument, but keep it.
-  source_code = data.archive_file.webapp.output_path             # Optional argument, but keep it.
-  tags        = {                                                # Optional argument, but keep it.
+  acl         = "private"                                     # Optional argument, but keep it.
+  etag        = filemd5(data.archive_file.webapp.output_path) # Optional argument, but keep it.
+  source_code = data.archive_file.webapp.output_path          # Optional argument, but keep it.
+  tags        = {                                             # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
@@ -203,7 +203,6 @@ module "webapp_aws_lambda_layer_version" {
   description              = "Python Library."                 # Optional argument, but keep it.
   filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
   license_info             = "Apache License 2.0"              # Optional argument, but keep it.
-//runtime                  = "python3.7"                       # Optional argument, but keep it.
 //s3_bucket                = var.s3_bucket                     # Optional argument, conflicts with filename.
 //s3_key                   = var.s3_key                        # Optional argument, conflicts with filename.
 //s3_object_version        = var.s3_object_version             # Optional argument, conflicts with filename.
@@ -224,29 +223,29 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_secretsmanager_secret,
   ]
 
-  function_name                  = "webapp"                                        # Required argument.
-  role                           = module.webapp_aws_iam_role.arn                  # Required argument.
-  description                    = "WebApp Lambda Function"                        # Optional argument, but keep it.
-  environment_variables          = {                                               # Optional argument, but keep it.
+  function_name                  = "webapp"                                     # Required argument.
+  role                           = module.webapp_aws_iam_role.arn               # Required argument.
+  description                    = "WebApp Lambda Function"                     # Optional argument, but keep it.
+  environment_variables          = {                                            # Optional argument, but keep it.
     region = data.aws_region.current.name,
     secret = module.webapp_aws_secretsmanager_secret.id
   }
-  handler                        = "lambda_function.lambda_handler"                # Optional argument, but keep it.
+  handler                        = "lambda_function.lambda_handler"             # Optional argument, but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
-  memory_size                    = 128                                             # Optional argument, but keep it.
-  package_type                   = "Zip"                                           # Optional argument, but keep it.
-  publish                        = false                                           # Optional argument, but keep it.
-  reserved_concurrent_executions = -1                                              # Optional argument, but keep it.
-  runtime                        = "python3.7"                                     # Optional argument, but keep it.
+  memory_size                    = 128                                          # Optional argument, but keep it.
+  package_type                   = "Zip"                                        # Optional argument, but keep it.
+  publish                        = false                                        # Optional argument, but keep it.
+  reserved_concurrent_executions = -1                                           # Optional argument, but keep it.
+  runtime                        = "python3.7"                                  # Optional argument, but keep it.
   s3_bucket                      = module.webapp_aws_s3_bucket.id               # Optional argument, but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
-  tags                           = {                                               # Optional argument, but keep it.
+  tags                           = {                                            # Optional argument, but keep it.
     "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
-  timeout                        = 60                                              # Optional argument, but keep it.
+  timeout                        = 60                                           # Optional argument, but keep it.
 
 }
 
@@ -260,8 +259,8 @@ module "webapp_aws_cloudwatch_log_group" {
   ]
 
   name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument, but keep it.
-  retention_in_days = 14                                                                  # Optional argument, but keep it.
-  tags              = {                                                                   # Optional argument, but keep it.
+  retention_in_days = 14                                                               # Optional argument, but keep it.
+  tags              = {                                                                # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
@@ -290,8 +289,8 @@ module "webapp_aws_apigatewayv2_stage" {
   ]
 
   api_id      = module.webapp_aws_apigatewayv2_api.id # Required argument.
-  name        = "$default"                               # Required argument.
-  auto_deploy = true                                     # Optional argument, but keep it.
+  name        = "$default"                            # Required argument.
+  auto_deploy = true                                  # Optional argument, but keep it.
 
 }
 
@@ -306,9 +305,27 @@ module "webapp_aws_apigatewayv2_integration" {
   ]
 
   api_id             = module.webapp_aws_apigatewayv2_api.id # Required argument.
-  integration_type   = "AWS_PROXY"                              # Required argument.
+  integration_type   = "AWS_PROXY"                           # Required argument.
   integration_uri    = module.webapp_aws_lambda_function.arn # Optional argument, but keep it.
-  integration_method = "ANY"                                    # Optional argument, but keep it.
+  integration_method = "ANY"                                 # Optional argument, but keep it.
+
+}
+
+# Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
+module "webapp_aws_lambda_permission" {
+
+  source        = "./terraform/aws/lambda/permission"
+
+  depends_on    = [
+    module.webapp_aws_lambda_function,
+    module.webapp_aws_apigatewayv2_api,
+  ]
+
+  action        = "lambda:InvokeFunction"                                   # Required argument.
+  function_name = module.webapp_aws_lambda_function.function_name           # Required argument.
+  principal     = "apigateway.amazonaws.com"                                # Required argument.
+  statement_id  = "AllowExecutionFromAPIGateway"                            # Optional argument.
+  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
 
 }
 
@@ -323,11 +340,12 @@ module "webapp_aws_apigatewayv2_route_index" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /"                                                            # Required argument.
+  route_key     = "GET /"                                                         # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
+/*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
 module "webapp_aws_apigatewayv2_route_put_song" {
 
@@ -339,7 +357,7 @@ module "webapp_aws_apigatewayv2_route_put_song" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "PUT /song"                                                        # Required argument.
+  route_key     = "PUT /song"                                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
@@ -355,7 +373,7 @@ module "webapp_aws_apigatewayv2_route_get_songs" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /songs"                                                       # Required argument.
+  route_key     = "GET /songs"                                                    # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
@@ -371,7 +389,7 @@ module "webapp_aws_apigatewayv2_route_put_song_rating" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "PUT /song/rating"                                                 # Required argument.
+  route_key     = "PUT /song/rating"                                              # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
@@ -387,7 +405,7 @@ module "webapp_aws_apigatewayv2_route_get_song_rating" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /song/rating/{songId}"                                        # Required argument.
+  route_key     = "GET /song/rating/{songId}"                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
@@ -403,7 +421,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_search" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /songs/search"                                                # Required argument.
+  route_key     = "GET /songs/search"                                             # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
@@ -419,30 +437,15 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   ]
 
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
-  route_key     = "GET /songs/avg/difficulty"                                        # Required argument.
+  route_key     = "GET /songs/avg/difficulty"                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-
-# Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
-module "webapp_aws_lambda_permission" {
-
-  source        = "./terraform/aws/lambda/permission"
-
-  depends_on    = [
-    module.webapp_aws_lambda_function,
-    module.webapp_aws_apigatewayv2_api,
-  ]
-
-  action        = "lambda:InvokeFunction"                                      # Required argument.
-  function_name = module.webapp_aws_lambda_function.function_name           # Required argument.
-  principal     = "apigateway.amazonaws.com"                                   # Required argument.
-  statement_id  = "AllowExecutionFromAPIGateway"                               # Optional argument.
-  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
-
-}
+*/
 
 
+
+/*
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
@@ -460,7 +463,7 @@ module "webapp_aws_rds_cluster" {
   engine                       = "aurora-postgresql"                       # Optional argument, but keep it.
   engine_mode                  = "serverless"                              # Optional argument, but keep it.
   engine_version               = "10.14"                                   # Optional argument, but keep it.
-  final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}" # Optional argument, but keep it.
+  final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}"    # Optional argument, but keep it.
   master_password              = var.master_password                       # Required argument.
   master_username              = var.master_username                       # Required argument.
   port                         = "5432"                                    # Optional argument, but keep it.
@@ -512,7 +515,7 @@ module "webapp_aws_secretsmanager_secret_version" {
   ]
 
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
-  secret_string = jsonencode({                                  # Optional argument, but required if secret_binary is not set.                             
+  secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
     dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
     engine               = module.webapp_aws_rds_cluster.engine
     host                 = module.webapp_aws_rds_cluster.endpoint
@@ -551,3 +554,4 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
+*/

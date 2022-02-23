@@ -25,21 +25,21 @@ variable "secret_key" {
 
 variable "master_username" {
   type        = string
-  default     = "yousician"
+  default     = "webapp"
   description = "Username for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
 
 variable "master_password" {
   type        = string
-  default     = "Yousician"
+  default     = "WebApplication"
   description = "Password for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
 
 variable "database_name" {
   type        = string
-  default     = "yousician_db"
+  default     = "webapp_db"
   validation {
     condition     = var.database_name != null && 5 < length(var.database_name) && length(var.database_name) < 33
     error_message = "Error: database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."

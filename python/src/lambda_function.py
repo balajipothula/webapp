@@ -183,7 +183,7 @@ async def shutdown():
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  return {"message": "Welcome to Python FastAPI Web Application."}
+  return {"message": "Welcome to Python FastAPI Web Application"}
 
 @app.put("/song")
 async def insertSong(song: Song):
