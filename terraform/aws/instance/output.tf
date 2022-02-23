@@ -60,24 +60,25 @@ output "tags_all" {
   description = "A map of tags assigned to the resource."
   sensitive   = false
 }
-
+/*
 # ebs_block_device > volume_id
 output "ebs_block_device_volume_id" {
   value       = aws_instance.generic.ebs_block_device.1.volume_id
   description = "ID of the volume."
   sensitive   = false
 }
-
+*/
 # root_block_device > volume_id
 output "root_block_device_volume_id" {
   value       = aws_instance.generic.root_block_device.0.volume_id
   description = "ID of the volume."
   sensitive   = false
 }
-
+/*
 # root_block_device > device_name
 output "device_name" {
   value       = aws_instance.generic.device_name
   description = "Device name."
   sensitive   = false
 }
+*/
