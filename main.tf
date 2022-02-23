@@ -65,15 +65,15 @@ data "archive_file" "webapp" {
 }
 
 locals {
-  timestamp     = timestamp()
-  yyyymmdd      = formatdate("YYYY/MM/DD",          local.timestamp)   
-  datetime      = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
-  layer_zip     = "./python/lib/layer.zip"
-  webapp_src    = "./python/src/lambda_function.py"
+  timestamp  = timestamp()
+  yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
+  datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
+  layer_zip  = "./python/lib/layer.zip"
+  webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
-# Update AWS Default Security Group Rules.
+# AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
   vpc_id = data.aws_vpc.default.id
@@ -113,12 +113,12 @@ resource "aws_default_security_group" "update" {
 }
 
 # Creation of AWS IAM Role for Yousician Lambda Function.
-module "yousician_aws_iam_role" {
+module "webapp_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
 
   assume_role_policy    = file("./json/WebAppLambdaIAMRole.json") # Required argument.
-  description           = "AWS IAM Role for Yousician Lambda."    # Optional argument, but keep it.
+  description           = "AWS IAM Role for WebApp Lambda."       # Optional argument, but keep it.
   force_detach_policies = true                                    # Optional argument, but keep it.
   name                  = "WebAppLambdaIAMRole"                   # Optional argument, but keep it.
 
@@ -142,11 +142,11 @@ module "yousician_aws_iam_role_policy_attachment" {
   source     = "./terraform/aws/iam/role_policy_attachment"
 
   depends_on = [
-    module.yousician_aws_iam_role,
+    module.webapp_aws_iam_role,
     module.yousician_aws_iam_policy,
   ]
 
-  role       = module.yousician_aws_iam_role.name  # Required argument.
+  role       = module.webapp_aws_iam_role.name  # Required argument.
   policy_arn = module.yousician_aws_iam_policy.arn # Required argument.
 
 }
@@ -225,7 +225,7 @@ module "yousician_aws_lambda_function" {
   ]
 
   function_name                  = "webapp"                                        # Required argument.
-  role                           = module.yousician_aws_iam_role.arn               # Required argument.
+  role                           = module.webapp_aws_iam_role.arn                  # Required argument.
   description                    = "WebApp Lambda Function"                        # Optional argument, but keep it.
   environment_variables          = {                                               # Optional argument, but keep it.
     region = data.aws_region.current.name,
