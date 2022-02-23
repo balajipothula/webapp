@@ -128,15 +128,16 @@ def getEngine(postgresql: dict):
     })
     logger.error(errorMessage)    
 
+"""
 region      = os.environ["region"]
-#secret     = os.environ["secret"]
-#postgresql = getCredentials(region = region, secret = secret)
-#url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
-#database   = databases.Database(url)
-#engine     = getEngine(postgresql)
-#metadata   = sqlalchemy.MetaData()
+secret     = os.environ["secret"]
+postgresql = getCredentials(region = region, secret = secret)
+url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
+database   = databases.Database(url)
+engine     = getEngine(postgresql)
+metadata   = sqlalchemy.MetaData()
 
-#metadata.create_all(engine)
+metadata.create_all(engine)
 
 song       = sqlalchemy.Table(
   "Song",
@@ -166,6 +167,7 @@ class Song(BaseModel):
 class Rating(BaseModel):
   id   : int
   rate : int
+"""
 
 app = FastAPI(
   title       = "WebApp",
@@ -173,6 +175,7 @@ app = FastAPI(
   version     = "2022-02-07"
 )
 
+"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
@@ -180,6 +183,7 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
+"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
