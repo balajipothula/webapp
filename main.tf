@@ -125,7 +125,7 @@ module "webapp_aws_iam_role" {
 }
 
 # Creation of AWS IAM Policy for Yousician Lambda Function.
-module "yousician_aws_iam_policy" {
+module "webapp_aws_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
 
@@ -143,17 +143,17 @@ module "webapp_aws_iam_role_policy_attachment" {
 
   depends_on = [
     module.webapp_aws_iam_role,
-    module.yousician_aws_iam_policy,
+    module.webapp_aws_iam_policy,
   ]
 
   role       = module.webapp_aws_iam_role.name  # Required argument.
-  policy_arn = module.yousician_aws_iam_policy.arn # Required argument.
+  policy_arn = module.webapp_aws_iam_policy.arn # Required argument.
 
 }
 
 # Creation of AWS S3 Bucket for Yousician Lambda Function.
 # Creation of AWS S3 Bucket for Yousician RDS Credentials Rotator Lambda Function.
-module "yousician_aws_s3_bucket" {
+module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
@@ -170,15 +170,15 @@ module "yousician_aws_s3_bucket" {
 }
 
 # Creation of AWS S3 Bucket Object for Yousician Lambda Function.
-module "yousician_aws_s3_bucket_object" {
+module "webapp_aws_s3_bucket_object" {
 
   source      = "./terraform/aws/s3/bucket_object"
 
   depends_on  = [
-    module.yousician_aws_s3_bucket,
+    module.webapp_aws_s3_bucket,
   ]
 
-  bucket      = module.yousician_aws_s3_bucket.id                # Required argument.
+  bucket      = module.webapp_aws_s3_bucket.id                # Required argument.
   key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # Required argument.
   acl         = "private"                                        # Optional argument, but keep it.
   etag        = filemd5(data.archive_file.webapp.output_path)    # Optional argument, but keep it.
@@ -193,7 +193,7 @@ module "yousician_aws_s3_bucket_object" {
 }
 
 # Creation of AWS Lambda Layer Version for Yousician Lambda Function.
-module "yousician_aws_lambda_layer_version" {
+module "webapp_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
@@ -212,16 +212,16 @@ module "yousician_aws_lambda_layer_version" {
 }
 
 # Creation of AWS Lambda Function for Yousician.
-module "yousician_aws_lambda_function" {
+module "webapp_aws_lambda_function" {
 
   source                         = "./terraform/aws/lambda/function"
 
   depends_on                     = [
-    module.yousician_aws_s3_bucket,
-    module.yousician_aws_s3_bucket_object,
+    module.webapp_aws_s3_bucket,
+    module.webapp_aws_s3_bucket_object,
     module.webapp_aws_iam_role_policy_attachment,
-    module.yousician_aws_lambda_layer_version,
-    module.yousician_aws_secretsmanager_secret,
+    module.webapp_aws_lambda_layer_version,
+    module.webapp_aws_secretsmanager_secret,
   ]
 
   function_name                  = "webapp"                                        # Required argument.
@@ -229,16 +229,16 @@ module "yousician_aws_lambda_function" {
   description                    = "WebApp Lambda Function"                        # Optional argument, but keep it.
   environment_variables          = {                                               # Optional argument, but keep it.
     region = data.aws_region.current.name,
-    secret = module.yousician_aws_secretsmanager_secret.id
+    secret = module.webapp_aws_secretsmanager_secret.id
   }
   handler                        = "lambda_function.lambda_handler"                # Optional argument, but keep it.
-  layers                         = [module.yousician_aws_lambda_layer_version.arn] # Optional argument, but keep it.
+  layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                             # Optional argument, but keep it.
   package_type                   = "Zip"                                           # Optional argument, but keep it.
   publish                        = false                                           # Optional argument, but keep it.
   reserved_concurrent_executions = -1                                              # Optional argument, but keep it.
   runtime                        = "python3.7"                                     # Optional argument, but keep it.
-  s3_bucket                      = module.yousician_aws_s3_bucket.id               # Optional argument, but keep it.
+  s3_bucket                      = module.webapp_aws_s3_bucket.id               # Optional argument, but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                               # Optional argument, but keep it.
     "Name"            = "webapp"
@@ -251,15 +251,15 @@ module "yousician_aws_lambda_function" {
 }
 
 # Creation of AWS CloudWatch Log Group for Yousician Lambda Function.
-module "yousician_aws_cloudwatch_log_group" {
+module "webapp_aws_cloudwatch_log_group" {
 
   source            = "./terraform/aws/cloudwatch/log_group"
 
   depends_on        = [
-    module.yousician_aws_lambda_function,
+    module.webapp_aws_lambda_function,
   ]
 
-  name              = "/aws/lambda/${module.yousician_aws_lambda_function.function_name}" # Optional argument, but keep it.
+  name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument, but keep it.
   retention_in_days = 14                                                                  # Optional argument, but keep it.
   tags              = {                                                                   # Optional argument, but keep it.
     "Name"            = "WebApp"
@@ -271,7 +271,7 @@ module "yousician_aws_cloudwatch_log_group" {
 }
 
 # Creation of AWS API Gateway V2 API for Yousician Lambda Function.
-module "yousician_aws_apigatewayv2_api" {
+module "webapp_aws_apigatewayv2_api" {
 
   source        = "./terraform/aws/apigatewayv2/api"
 
@@ -281,171 +281,171 @@ module "yousician_aws_apigatewayv2_api" {
 }
 
 # Creation of AWS API Gateway V2 Stage for Yousician Lambda Function.
-module "yousician_aws_apigatewayv2_stage" {
+module "webapp_aws_apigatewayv2_stage" {
 
   source      = "./terraform/aws/apigatewayv2/stage"
 
   depends_on  = [
-    module.yousician_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_api,
   ]
 
-  api_id      = module.yousician_aws_apigatewayv2_api.id # Required argument.
+  api_id      = module.webapp_aws_apigatewayv2_api.id # Required argument.
   name        = "$default"                               # Required argument.
   auto_deploy = true                                     # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Integration for Yousician Lambda Function.
-module "yousician_aws_apigatewayv2_integration" {
+module "webapp_aws_apigatewayv2_integration" {
 
   source             = "./terraform/aws/apigatewayv2/integration"
 
   depends_on         = [
-    module.yousician_aws_lambda_function,
-    module.yousician_aws_apigatewayv2_api,
+    module.webapp_aws_lambda_function,
+    module.webapp_aws_apigatewayv2_api,
   ]
 
-  api_id             = module.yousician_aws_apigatewayv2_api.id # Required argument.
+  api_id             = module.webapp_aws_apigatewayv2_api.id # Required argument.
   integration_type   = "AWS_PROXY"                              # Required argument.
-  integration_uri    = module.yousician_aws_lambda_function.arn # Optional argument, but keep it.
+  integration_uri    = module.webapp_aws_lambda_function.arn # Optional argument, but keep it.
   integration_method = "ANY"                                    # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Index - Route.
-module "yousician_aws_apigatewayv2_route_index" {
+module "webapp_aws_apigatewayv2_route_index" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /"                                                            # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Put Song - Route.
-module "yousician_aws_apigatewayv2_route_put_song" {
+module "webapp_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "PUT /song"                                                        # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs - Route.
-module "yousician_aws_apigatewayv2_route_get_songs" {
+module "webapp_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /songs"                                                       # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Put Song Rating - Route.
-module "yousician_aws_apigatewayv2_route_put_song_rating" {
+module "webapp_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "PUT /song/rating"                                                 # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Song Rating - Route.
-module "yousician_aws_apigatewayv2_route_get_song_rating" {
+module "webapp_aws_apigatewayv2_route_get_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /song/rating/{songId}"                                        # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs Search - Route.
-module "yousician_aws_apigatewayv2_route_get_songs_search" {
+module "webapp_aws_apigatewayv2_route_get_songs_search" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /songs/search"                                                # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs Average Difficulty - Route.
-module "yousician_aws_apigatewayv2_route_get_songs_avg_difficulty" {
+module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
   depends_on    = [
-    module.yousician_aws_apigatewayv2_api,
-    module.yousician_aws_apigatewayv2_integration,
+    module.webapp_aws_apigatewayv2_api,
+    module.webapp_aws_apigatewayv2_integration,
   ]
 
-  api_id        = module.yousician_aws_apigatewayv2_api.id                           # Required argument.
+  api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /songs/avg/difficulty"                                        # Required argument.
-  target        = "integrations/${module.yousician_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+  target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
 
 # Creation of AWS Lambda Permission to invoke Yousician Lambda Function by AWS API Gateway V2.
-module "yousician_aws_lambda_permission" {
+module "webapp_aws_lambda_permission" {
 
   source        = "./terraform/aws/lambda/permission"
 
   depends_on    = [
-    module.yousician_aws_lambda_function,
-    module.yousician_aws_apigatewayv2_api,
+    module.webapp_aws_lambda_function,
+    module.webapp_aws_apigatewayv2_api,
   ]
 
   action        = "lambda:InvokeFunction"                                      # Required argument.
-  function_name = module.yousician_aws_lambda_function.function_name           # Required argument.
+  function_name = module.webapp_aws_lambda_function.function_name           # Required argument.
   principal     = "apigateway.amazonaws.com"                                   # Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                               # Optional argument.
-  source_arn    = "${module.yousician_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
+  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
 
 }
 
 
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for Yousician Lambda Function.
-module "yousician_aws_rds_cluster" {
+module "webapp_aws_rds_cluster" {
 
   source                       = "./terraform/aws/rds/cluster"
 
@@ -479,12 +479,12 @@ module "yousician_aws_rds_cluster" {
 
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
-module "yousician_aws_secretsmanager_secret" {
+module "webapp_aws_secretsmanager_secret" {
 
   source                         = "./terraform/aws/secretsmanager/secret"
 
   depends_on                     = [
-    module.yousician_aws_rds_cluster,
+    module.webapp_aws_rds_cluster,
   ]
 
   description                    = "Yousician Secrets Manager" # Optional argument, but keep it.
@@ -502,22 +502,22 @@ module "yousician_aws_secretsmanager_secret" {
 
 # Creation of AWS Secrets Manager Version for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
-module "yousician_aws_secretsmanager_secret_version" {
+module "webapp_aws_secretsmanager_secret_version" {
 
   source        = "./terraform/aws/secretsmanager/secret_version"
 
   depends_on    = [
-    module.yousician_aws_secretsmanager_secret,
-    module.yousician_aws_rds_cluster,
+    module.webapp_aws_secretsmanager_secret,
+    module.webapp_aws_rds_cluster,
   ]
 
-  secret_id     = module.yousician_aws_secretsmanager_secret.id # Required argument.
+  secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                                  # Optional argument, but required if secret_binary is not set.                             
-    dbInstanceIdentifier = module.yousician_aws_rds_cluster.id
-    engine               = module.yousician_aws_rds_cluster.engine
-    host                 = module.yousician_aws_rds_cluster.endpoint
-    port                 = module.yousician_aws_rds_cluster.port
-    resourceId           = module.yousician_aws_rds_cluster.cluster_resource_id
+    dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
+    engine               = module.webapp_aws_rds_cluster.engine
+    host                 = module.webapp_aws_rds_cluster.endpoint
+    port                 = module.webapp_aws_rds_cluster.port
+    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
     database             = var.database_name
     username             = var.master_username
     password             = var.master_password
@@ -533,7 +533,7 @@ module "yousician_aws_secretsmanager_secret_version" {
 
 # Creation of AWS VPC Endpoint for Yousician Lambda Function
 # to access AWS Secrets Manager service.
-module "yousician_aws_vpc_endpoint" {
+module "webapp_aws_vpc_endpoint" {
 
   source              = "./terraform/aws/vpc/endpoint"
 
