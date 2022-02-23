@@ -20,6 +20,17 @@ variable "instance_type" {
   sensitive = false
 }
 
+variable "subnet_id" {
+  type        = string
+  default     = "subnet-1a42d556"
+  description = "VPC Subnet ID to launch in."
+  validation {
+    condition     = var.subnet_id != null
+    error_message = "Error: subnet_id value must not null."
+  }
+  sensitive = false
+}
+
 variable "tags" {
   type = map(string)
   default = {

@@ -119,7 +119,8 @@ module "webapp_aws_instance" {
 
   ami           = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
   instance_type = "t2.micro"              # Optional argument, but keep it.
-  tags   = {                              # Optional argument, but keep it.
+  subnet_id     = "subnet-1a42d556"       # Optional argument, but keep it.
+  tags          = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"
     "AppName"        = "Python FastAPI Web App"
     "DeveloperName"  = "Balaji Pothula"
