@@ -1,3 +1,14 @@
+variable "associate_public_ip_address" {
+  type        = bool
+  default     = false
+  description = "Whether to associate a public IP address with an instance in a VPC."
+  validation {
+    condition     = var.associate_public_ip_address != null && contains(tolist([true, false]), var.associate_public_ip_address)
+    error_message = "Error: publish value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
 variable "ami" {
   type        = string
   default     = "ami-00e232b942edaf8f9"
@@ -5,6 +16,17 @@ variable "ami" {
   validation {
     condition     = var.ami != null && 1 <= length(var.ami) && length(var.ami) <= 64
     error_message = "Error: ami value must not null, length must be in between 1 and 64 only."
+  }
+  sensitive = false
+}
+
+variable "count" {
+  type        = number
+  default     = 1
+  description = "Number of EC2 instances to create."
+  validation {
+    condition     = var.count != null && 0 < var.count && var.count < 4
+    error_message = "Error: ami value must not null, length must be in between 1 and 3 only."
   }
   sensitive = false
 }

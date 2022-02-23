@@ -10,8 +10,12 @@ provider "aws" {
 data "aws_region" "current" {
 }
 
+# Data Source: aws_caller_identity
 data "aws_caller_identity" "current" {
 }
+
+# Data Source: aws_partition
+data "aws_partition" "current" {}
 
 # Data Source: aws_vpc
 data "aws_vpc" "default" {
@@ -54,6 +58,23 @@ data "aws_security_groups" "default" {
     name   = "description"
     values = ["default VPC security group"]
   }
+
+}
+
+data "aws_ami" "default" {
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  most_recent = "true"
+  owners      = ["self"]
 
 }
 
@@ -117,10 +138,12 @@ module "webapp_aws_instance" {
 
   source = "./terraform/aws/instance"
 
-  ami           = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
-  instance_type = "t2.micro"              # Optional argument, but keep it.
-  subnet_id     = "subnet-9fa323e3"       # Optional argument, but keep it.
-  tags          = {                       # Optional argument, but keep it.
+  associate_public_ip_address = false                   # Optional argument, but keep it.
+  ami                         = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
+  count                       = 1                       # Optional argument, but keep it.
+  instance_type               = "t2.micro"              # Optional argument, but keep it.
+  subnet_id                   = "subnet-9fa323e3"       # Optional argument, but keep it.
+  tags                        = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"
     "AppName"        = "Python FastAPI Web App"
     "DeveloperName"  = "Balaji Pothula"
