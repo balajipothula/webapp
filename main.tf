@@ -58,10 +58,10 @@ data "aws_security_groups" "default" {
 }
 
 # Archive Lambda Function source code.
-data "archive_file" "yousician" {
+data "archive_file" "webapp" {
   type        = "zip"
-  source_file = local.yousician_src
-  output_path = "./${local.yousician_zip}"
+  source_file = local.webapp_src
+  output_path = "./${local.webapp_zip}"
 }
 
 locals {
@@ -69,8 +69,8 @@ locals {
   yyyymmdd      = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime      = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   layer_zip     = "./python/lib/layer.zip"
-  yousician_src = "./python/src/lambda_function.py"
-  yousician_zip = "yousician-${local.datetime}.zip"
+  webapp_src    = "./python/src/lambda_function.py"
+  webapp_zip = "webapp-${local.datetime}.zip"
 }
 
 # Update AWS Default Security Group Rules.
@@ -179,10 +179,10 @@ module "yousician_aws_s3_bucket_object" {
   ]
 
   bucket      = module.yousician_aws_s3_bucket.id                # Required argument.
-  key         = "/${local.yyyymmdd}/${local.yousician_zip}"      # Required argument.
+  key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # Required argument.
   acl         = "private"                                        # Optional argument, but keep it.
-  etag        = filemd5(data.archive_file.yousician.output_path) # Optional argument, but keep it.
-  source_code = data.archive_file.yousician.output_path          # Optional argument, but keep it.
+  etag        = filemd5(data.archive_file.webapp.output_path)    # Optional argument, but keep it.
+  source_code = data.archive_file.webapp.output_path             # Optional argument, but keep it.
   tags        = {                                                # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
@@ -239,7 +239,7 @@ module "yousician_aws_lambda_function" {
   reserved_concurrent_executions = -1                                              # Optional argument, but keep it.
   runtime                        = "python3.7"                                     # Optional argument, but keep it.
   s3_bucket                      = module.yousician_aws_s3_bucket.id               # Optional argument, but keep it.
-  s3_key                         = "${local.yyyymmdd}/${local.yousician_zip}"      # Optional argument, conflicts with filename and image_uri.
+  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                               # Optional argument, but keep it.
     "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web App"
@@ -460,7 +460,7 @@ module "yousician_aws_rds_cluster" {
   engine                       = "aurora-postgresql"                       # Optional argument, but keep it.
   engine_mode                  = "serverless"                              # Optional argument, but keep it.
   engine_version               = "10.14"                                   # Optional argument, but keep it.
-  final_snapshot_identifier    = "yousician-snapshot-at-${local.datetime}" # Optional argument, but keep it.
+  final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}" # Optional argument, but keep it.
   master_password              = var.master_password                       # Required argument.
   master_username              = var.master_username                       # Required argument.
   port                         = "5432"                                    # Optional argument, but keep it.
