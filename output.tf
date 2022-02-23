@@ -39,9 +39,3 @@ output "aws_security_groups_default_ids" {
   description = "IDs of the matches security groups."
   sensitive   = false
 }
-
-output "archive_file_yousician_output_path" {
-  value       = data.archive_file.yousician.output_path
-  description = "Yousician Web Application source file output path."
-  sensitive   = false
-}
