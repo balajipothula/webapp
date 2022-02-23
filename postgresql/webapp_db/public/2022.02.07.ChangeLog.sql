@@ -21,8 +21,3 @@ CREATE TABLE IF NOT EXISTS webapp_db.public."Rating"(
   "songId" BIGINT   NOT NULL,
   "rating" SMALLINT NOT NULL CHECK(0 < "rating" AND "rating" < 6)
 );
-
-CREATE TABLE IF NOT EXISTS webapp_db.public."Rating2"(
-  "songId" BIGINT   NOT NULL,
-  "rating" SMALLINT NOT NULL CHECK(0 < "rating" AND "rating" < 6)
-);
