@@ -112,7 +112,7 @@ resource "aws_default_security_group" "update" {
 
 }
 
-# Creation of AWS IAM Role for Yousician Lambda Function.
+# Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
@@ -124,19 +124,19 @@ module "webapp_aws_iam_role" {
 
 }
 
-# Creation of AWS IAM Policy for Yousician Lambda Function.
+# Creation of AWS IAM Policy for WebApp Lambda Function.
 module "webapp_aws_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
 
-  description = "AWS IAM Policy for Yousician Lambda."       # Optional argument, but keep it.
+  description = "AWS IAM Policy for WebApp Lambda."       # Optional argument, but keep it.
   name        = "WebAppLambdaIAMPolicy"                   # Optional argument, but keep it.
   path        = "/"                                          # Optional argument, but keep it.
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
 
-# Creation of AWS IAM Role Policy attachment for Yousician Lambda Function.
+# Creation of AWS IAM Role Policy attachment for WebApp Lambda Function.
 module "webapp_aws_iam_role_policy_attachment" {
 
   source     = "./terraform/aws/iam/role_policy_attachment"
@@ -151,8 +151,8 @@ module "webapp_aws_iam_role_policy_attachment" {
 
 }
 
-# Creation of AWS S3 Bucket for Yousician Lambda Function.
-# Creation of AWS S3 Bucket for Yousician RDS Credentials Rotator Lambda Function.
+# Creation of AWS S3 Bucket for WebApp Lambda Function.
+# Creation of AWS S3 Bucket for WebApp RDS Credentials Rotator Lambda Function.
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
@@ -169,7 +169,7 @@ module "webapp_aws_s3_bucket" {
 
 }
 
-# Creation of AWS S3 Bucket Object for Yousician Lambda Function.
+# Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
 
   source      = "./terraform/aws/s3/bucket_object"
@@ -192,12 +192,12 @@ module "webapp_aws_s3_bucket_object" {
 
 }
 
-# Creation of AWS Lambda Layer Version for Yousician Lambda Function.
+# Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
-  layer_name               = "yousician"                       # Required argument.
+  layer_name               = "webapp"                          # Required argument.
   compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
   compatible_runtimes      = ["python3.7"]                     # Optional argument, but keep it.
   description              = "Python Library."                 # Optional argument, but keep it.
@@ -250,7 +250,7 @@ module "webapp_aws_lambda_function" {
 
 }
 
-# Creation of AWS CloudWatch Log Group for Yousician Lambda Function.
+# Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_aws_cloudwatch_log_group" {
 
   source            = "./terraform/aws/cloudwatch/log_group"
@@ -270,7 +270,7 @@ module "webapp_aws_cloudwatch_log_group" {
 
 }
 
-# Creation of AWS API Gateway V2 API for Yousician Lambda Function.
+# Creation of AWS API Gateway V2 API for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_api" {
 
   source        = "./terraform/aws/apigatewayv2/api"
@@ -280,7 +280,7 @@ module "webapp_aws_apigatewayv2_api" {
 
 }
 
-# Creation of AWS API Gateway V2 Stage for Yousician Lambda Function.
+# Creation of AWS API Gateway V2 Stage for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_stage" {
 
   source      = "./terraform/aws/apigatewayv2/stage"
@@ -295,7 +295,7 @@ module "webapp_aws_apigatewayv2_stage" {
 
 }
 
-# Creation of AWS API Gateway V2 Integration for Yousician Lambda Function.
+# Creation of AWS API Gateway V2 Integration for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_integration" {
 
   source             = "./terraform/aws/apigatewayv2/integration"
@@ -312,7 +312,7 @@ module "webapp_aws_apigatewayv2_integration" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Index - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
 module "webapp_aws_apigatewayv2_route_index" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -328,7 +328,7 @@ module "webapp_aws_apigatewayv2_route_index" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Put Song - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
 module "webapp_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -344,7 +344,7 @@ module "webapp_aws_apigatewayv2_route_put_song" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs - Route.
 module "webapp_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -360,7 +360,7 @@ module "webapp_aws_apigatewayv2_route_get_songs" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Put Song Rating - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song Rating - Route.
 module "webapp_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -376,7 +376,7 @@ module "webapp_aws_apigatewayv2_route_put_song_rating" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Song Rating - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Song Rating - Route.
 module "webapp_aws_apigatewayv2_route_get_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -392,7 +392,7 @@ module "webapp_aws_apigatewayv2_route_get_song_rating" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs Search - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Search - Route.
 module "webapp_aws_apigatewayv2_route_get_songs_search" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -408,7 +408,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_search" {
 
 }
 
-# Creation of AWS API Gateway V2 Route for Yousician Lambda Function - Get Songs Average Difficulty - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Average Difficulty - Route.
 module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -424,7 +424,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
 }
 
-# Creation of AWS Lambda Permission to invoke Yousician Lambda Function by AWS API Gateway V2.
+# Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
 module "webapp_aws_lambda_permission" {
 
   source        = "./terraform/aws/lambda/permission"
@@ -444,7 +444,7 @@ module "webapp_aws_lambda_permission" {
 
 
 # Creation of Amazon Aurora Serverless PostgreSQL
-# Relational Database RDS Cluster for Yousician Lambda Function.
+# Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
 
   source                       = "./terraform/aws/rds/cluster"
@@ -531,7 +531,7 @@ module "webapp_aws_secretsmanager_secret_version" {
 }
 
 
-# Creation of AWS VPC Endpoint for Yousician Lambda Function
+# Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
 
