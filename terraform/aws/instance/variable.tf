@@ -20,17 +20,6 @@ variable "ami" {
   sensitive = false
 }
 
-variable "count" {
-  type        = number
-  default     = 1
-  description = "Number of EC2 instances to create."
-  validation {
-    condition     = var.count != null && 0 < var.count && var.count < 4
-    error_message = "Error: ami value must not null, length must be in between 1 and 3 only."
-  }
-  sensitive = false
-}
-
 variable "instance_type" {
   type        = string
   default     = "t2.micro"
