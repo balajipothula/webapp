@@ -211,7 +211,7 @@ module "webapp_aws_lambda_layer_version" {
 
 }
 
-# Creation of AWS Lambda Function for Yousician.
+# Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
   source                         = "./terraform/aws/lambda/function"
@@ -275,7 +275,7 @@ module "webapp_aws_apigatewayv2_api" {
 
   source        = "./terraform/aws/apigatewayv2/api"
 
-  name          = "yousician" # Required argument.
+  name          = "webapp"    # Required argument.
   protocol_type = "HTTP"      # Required argument.
 
 }
@@ -543,7 +543,7 @@ module "webapp_aws_vpc_endpoint" {
   subnet_ids          = data.aws_subnet_ids.available.ids                              # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids                           # Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # Optional argument, but keep it.
-    "Name"            = "yousician_secretsmanager"
+    "Name"            = "webapp_secretsmanager"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
@@ -551,4 +551,3 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
-
