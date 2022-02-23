@@ -117,7 +117,7 @@ module "webapp_aws_instance" {
 
   source = "./terraform/aws/instance"
 
-  ami           = "ami-0dafa01c8100180f8" # Optional argument, but keep it.
+  ami           = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
   instance_type = "t2.micro"              # Optional argument, but keep it.
   tags   = {                              # Optional argument, but keep it.
     "Name"           = "WebApp"

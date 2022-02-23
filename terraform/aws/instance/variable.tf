@@ -1,6 +1,6 @@
 variable "ami" {
   type        = string
-  default     = "ami-0dafa01c8100180f8"
+  default     = "ami-00e232b942edaf8f9"
   description = "AMI to use for the instance."
   validation {
     condition     = var.ami != null && 1 <= length(var.ami) && length(var.ami) <= 64
