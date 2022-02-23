@@ -15,7 +15,18 @@ variable "availability_zone" {
   description = "AZ to start the instance in."
   validation {
     condition     = var.availability_zone != null && contains(tolist(["eu-central-1a", "eu-central-1b", "eu-central-1c"]), var.availability_zone)
-    error_message = "Error: availability_zone value must not null and must be eu-central-1a , eu-central-1b , eu-central-1c"
+    error_message = "Error: availability_zone value must not null and must be eu-central-1a , eu-central-1b , eu-central-1c ."
+  }
+  sensitive = false
+}
+
+variable "capacity_reservation_specification" {
+  type        = string
+  default     = "none"
+  description = "Describes an instance's Capacity Reservation targeting option."
+  validation {
+    condition     = var.capacity_reservation_specification != null && contains(tolist(["open", "none"]), var.capacity_reservation_specification)
+    error_message = "Error: capacity_reservation_specification value must not null and value either open or none only."
   }
   sensitive = false
 }
