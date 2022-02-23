@@ -7,7 +7,7 @@ SELECT
   "level",
   "released"
 FROM
-  yousician_db.public."Song";
+  webapp_db.public."Song";
 
 -- select particular song record from the Song table.
 SELECT
@@ -18,14 +18,14 @@ SELECT
   "level",
   "released"
 FROM
-  yousician_db.public."Song"
+  webapp_db.public."Song"
 WHERE
   "songId" = 1;
 
 -- select songs in a pagination way from the Song table.
 SELECT
   *
-FROM yousician_db.public."Song"
+FROM webapp_db.public."Song"
 ORDER BY
   "songId" ASC
 LIMIT  2
@@ -35,7 +35,7 @@ OFFSET 0;
 SELECT
   *
 FROM
-  yousician_db.public."Song"
+  webapp_db.public."Song"
 WHERE
      artist ~* 'theY'
   OR title  ~* 'picM';
@@ -45,13 +45,13 @@ SELECT
   "id"
   "rate"
 FROM
-  yousician_db.public."Rating";
+  webapp_db.public."Rating";
 
 -- select particular song rating records from the Rating table.
 SELECT
   "rate"
 FROM
-  yousician_db.public."Rating"
+  webapp_db.public."Rating"
 WHERE
   "id" = 34;
 
@@ -61,7 +61,7 @@ SELECT
   MIN("rate")                AS "minRating",
   MAX("rate")                AS "maxRating"
 FROM
-  yousician_db.public."Rating"
+  webapp_db.public."Rating"
 WHERE
   "id" = 9;
 
@@ -69,12 +69,12 @@ WHERE
 SELECT
   AVG("difficulty")::numeric(10,2) AS "avgDifficulty"
 FROM
-  yousician_db.public."Song";
+  webapp_db.public."Song";
 
 -- select average difficulty of all songs belongs to particular level from Song table.
 SELECT
   AVG("difficulty")::numeric(10,2) AS "avgDifficulty"
 FROM
-  yousician_db.public."Song"
+  webapp_db.public."Song"
 WHERE
   "level" = 9;
