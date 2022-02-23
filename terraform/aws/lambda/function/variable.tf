@@ -3,7 +3,7 @@ variable "function_name" {
   default     = "generic"
   description = "Unique name of the Lambda Function."
   validation {
-    condition     = var.function_name != null && 1 <= length(var.function_name) && length(var.function_name) <= 64
+    condition     = var.function_name != null && 0 < length(var.function_name) && length(var.function_name) < 65
     error_message = "Error: function_name length must be in between 1 and 64 only."
   }
   sensitive = false
@@ -11,7 +11,7 @@ variable "function_name" {
 
 variable "role" {
   type        = string
-  default     = "arn:aws:iam:*:*:role/LambdaIAMRole"
+  default     = "arn:aws:iam:::role/LambdaIAMRole"
   description = "ARN of the Lambda function's execution role."
   validation {
     condition     = var.role != null
@@ -59,7 +59,7 @@ variable "description" {
   default     = "Lambda Function Module."
   description = "Description of what Lambda Function does."
   validation {
-    condition     = var.description != null && 0 <= length(var.description) && length(var.description) <= 256
+    condition     = var.description != null && 0 < length(var.description) && length(var.description) < 256
     error_message = "Error: description value must not null and description lenght not more than 256 charecters."
   }
   sensitive = false
@@ -344,7 +344,7 @@ variable "security_group_ids" {
   ]
   description = "Set of security group IDs associated with the Lambda Function."
   validation {
-    condition     = var.security_group_ids != null && 1 <= length(var.security_group_ids) && length(var.security_group_ids) <= 5
+    condition     = var.security_group_ids != null && 0 < length(var.security_group_ids) && length(var.security_group_ids) < 6
     error_message = "Error: security_group_ids value must not null and security_group_ids length must be in between 1 and 5."
   }
   sensitive = false
@@ -360,7 +360,7 @@ variable "subnet_ids" {
   ]
   description = "Set of subnet IDs associated with the Lambda Function."
   validation {
-    condition     = var.subnet_ids != null && 1 <= length(var.subnet_ids) && length(var.subnet_ids) <= 3
+    condition     = var.subnet_ids != null && 0 < length(var.subnet_ids) && length(var.subnet_ids) < 4
     error_message = "Error: subnet_ids value must not null and mode value either Active or PassThrough."
   }
   sensitive = false

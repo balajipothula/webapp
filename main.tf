@@ -112,6 +112,22 @@ resource "aws_default_security_group" "update" {
 
 }
 
+# Creation of AWS EC2 Instance for WebApp.
+module "webapp_aws_instance" {
+
+  source = "./terraform/aws/instance"
+
+  ami           = "ami-0dafa01c8100180f8" # Optional argument, but keep it.
+  instance_type = "t2.micro"              # Optional argument, but keep it.
+  tags   = {                              # Optional argument, but keep it.
+    "Name"           = "WebApp"
+    "AppName"        = "Python FastAPI Web App"
+    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperEmail" = "balan.pothula@gmail.com"
+  }
+
+}
+
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 

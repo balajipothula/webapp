@@ -8,3 +8,14 @@ variable "ami" {
   }
   sensitive = false
 }
+
+variable "instance_type" {
+  type        = string
+  default     = "t2.micro"
+  description = "The instance type to use for the instance."
+  validation {
+    condition     = var.instance_type != null && contains(tolist(["t2.nano", "t2.micro"]), var.instance_type)
+    error_message = "Error: instance_type value must not null and must be t2.nano , t2.micro , ..."
+  }
+  sensitive = false
+}
