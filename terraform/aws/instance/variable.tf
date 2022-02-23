@@ -1,3 +1,14 @@
+variable "ami" {
+  type        = string
+  default     = "ami-00e232b942edaf8f9"
+  description = "AMI to use for the instance."
+  validation {
+    condition     = var.ami != null && 1 <= length(var.ami) && length(var.ami) <= 64
+    error_message = "Error: ami value must not null, length must be in between 1 and 64 only."
+  }
+  sensitive = false
+}
+
 variable "associate_public_ip_address" {
   type        = bool
   default     = false
@@ -20,24 +31,13 @@ variable "availability_zone" {
   sensitive = false
 }
 
-variable "capacity_reservation_specification" {
+variable "capacity_reservation_preference" {
   type        = string
   default     = "none"
   description = "Describes an instance's Capacity Reservation targeting option."
   validation {
-    condition     = var.capacity_reservation_specification != null && contains(tolist(["open", "none"]), var.capacity_reservation_specification)
-    error_message = "Error: capacity_reservation_specification value must not null and value either open or none only."
-  }
-  sensitive = false
-}
-
-variable "ami" {
-  type        = string
-  default     = "ami-00e232b942edaf8f9"
-  description = "AMI to use for the instance."
-  validation {
-    condition     = var.ami != null && 1 <= length(var.ami) && length(var.ami) <= 64
-    error_message = "Error: ami value must not null, length must be in between 1 and 64 only."
+    condition     = var.capacity_reservation_preference != null && contains(tolist(["open", "none"]), var.capacity_reservation_preference)
+    error_message = "Error: capacity_reservation_preference value must not null and value either open or none only."
   }
   sensitive = false
 }
