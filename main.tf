@@ -137,7 +137,7 @@ module "yousician_aws_iam_policy" {
 }
 
 # Creation of AWS IAM Role Policy attachment for Yousician Lambda Function.
-module "yousician_aws_iam_role_policy_attachment" {
+module "webapp_aws_iam_role_policy_attachment" {
 
   source     = "./terraform/aws/iam/role_policy_attachment"
 
@@ -219,7 +219,7 @@ module "yousician_aws_lambda_function" {
   depends_on                     = [
     module.yousician_aws_s3_bucket,
     module.yousician_aws_s3_bucket_object,
-    module.yousician_aws_iam_role_policy_attachment,
+    module.webapp_aws_iam_role_policy_attachment,
     module.yousician_aws_lambda_layer_version,
     module.yousician_aws_secretsmanager_secret,
   ]
