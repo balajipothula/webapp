@@ -61,6 +61,7 @@ data "aws_security_groups" "default" {
 
 }
 
+/*
 data "aws_ami" "default" {
 
   filter {
@@ -77,6 +78,7 @@ data "aws_ami" "default" {
   owners      = ["self"]
 
 }
+*/
 
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
