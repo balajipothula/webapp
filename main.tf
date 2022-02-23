@@ -452,7 +452,7 @@ module "webapp_aws_rds_cluster" {
   allow_major_version_upgrade  = true                                      # Optional argument, but keep it.
   apply_immediately            = true                                      # Optional argument, but keep it.
   backup_retention_period      = 1                                         # Optional argument, but keep it.
-  cluster_identifier           = "yousician"                               # Optional argument, but keep it.
+  cluster_identifier           = "webapp"                                  # Optional argument, but keep it.
   copy_tags_to_snapshot        = true                                      # Optional argument, but keep it.
   database_name                = var.database_name                         # Optional argument, but keep it.
   deletion_protection          = false                                     # Optional argument, but keep it.
@@ -487,9 +487,9 @@ module "webapp_aws_secretsmanager_secret" {
     module.webapp_aws_rds_cluster,
   ]
 
-  description                    = "Yousician Secrets Manager" # Optional argument, but keep it.
+  description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
   force_overwrite_replica_secret = false                       # Optional argument, but keep it.
-  name                           = "yousician_secret"          # Optional argument, conflicts with name_prefix.
+  name                           = "webapp_secret"             # Optional argument, conflicts with name_prefix.
   recovery_window_in_days        = 7                           # Optional argument, but keep it.
   tags                           = {                           # Optional argument, but keep it.
     "Name"            = "WebApp"
