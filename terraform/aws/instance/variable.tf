@@ -9,6 +9,17 @@ variable "associate_public_ip_address" {
   sensitive = false
 }
 
+variable "availability_zone" {
+  type        = string
+  default     = "eu-central-1a"
+  description = "AZ to start the instance in."
+  validation {
+    condition     = var.availability_zone != null && contains(tolist(["eu-central-1a", "eu-central-1b", "eu-central-1c"]), var.availability_zone)
+    error_message = "Error: availability_zone value must not null and must be eu-central-1a , eu-central-1b , eu-central-1c"
+  }
+  sensitive = false
+}
+
 variable "ami" {
   type        = string
   default     = "ami-00e232b942edaf8f9"
