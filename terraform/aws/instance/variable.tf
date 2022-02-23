@@ -19,3 +19,19 @@ variable "instance_type" {
   }
   sensitive = false
 }
+
+variable "tags" {
+  type = map(string)
+  default = {
+    "AppName"        = "WebAppFastAPI"
+    "Division"       = "Platform"
+    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperEmail" = "balan.pothula@gmail.com"
+  }
+  description = "A map of tags to assign to the Lambda Function." 
+  validation {
+    condition     = var.tags != null && 0 < length(var.tags) && length(var.tags) < 51
+    error_message = "Error: tags at least one or more expected upto 50."
+  }
+  sensitive = false
+}
