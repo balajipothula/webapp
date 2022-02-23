@@ -187,7 +187,7 @@ async def shutdown():
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  return {"message": "Welcome to Python FastAPI Web Application"}
+  return {"message": "Welcome to WIPO File Service"}
 
 """
 @app.put("/song")
