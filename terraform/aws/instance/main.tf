@@ -11,10 +11,10 @@ resource "aws_instance" "generic" {
   disable_api_termination              = var.disable_api_termination              # Optional argument, but keep it.
 //ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
 
-  ebs_block_device = {
-  //for_each = length(keys(var.ebs_block_device_variables)) == 0 ? [] : [true]
+  dynamic "ebs_block_device" {
+    for_each = length(keys(var.ebs_block_device_variables)) == 0 ? [] : [true]
     content {
-      device_name = null
+      variables = var.ebs_block_device_variables
     }
   }
 
