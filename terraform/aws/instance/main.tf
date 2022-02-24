@@ -9,6 +9,7 @@ resource "aws_instance" "generic" {
   associate_public_ip_address          = var.associate_public_ip_address          # Optional argument, but keep it.
   availability_zone                    = var.availability_zone                    # Optional argument, but keep it.
   disable_api_termination              = var.disable_api_termination              # Optional argument, but keep it.
+  ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
   hibernation                          = var.hibernation                          # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior # Optional argument, but keep it.
   instance_type                        = var.instance_type                        # Optional argument, but keep it.
