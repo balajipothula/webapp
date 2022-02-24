@@ -186,6 +186,13 @@ variable "monitoring" {
   sensitive = false
 }
 
+variable "root_block_device" {
+  type        = list(map(string))
+  default     = []
+  description = "Configuration block to customize details about the root block device of the instance."
+  sensitive   = false
+}
+
 variable "security_groups" {
   type = list(string)
   default = [
