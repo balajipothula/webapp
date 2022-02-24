@@ -152,7 +152,14 @@ module "webapp_aws_instance" {
   associate_public_ip_address          = false                   # Optional argument, but keep it.
   availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
   disable_api_termination              = false                   # Optional argument, but keep it.
-  ebs_optimized                        = true                    # Optional argument, but keep it.
+//ebs_optimized                        = true                    # Optional argument, but keep it.
+  ebs_block_device {
+    delete_on_termination              = true
+    device_name                        = "/dev/sdh"
+    encrypted                          = false
+    volume_size                        = 10
+    volume_type                        = "gp2"
+  }
   hibernation                          = false                   # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.

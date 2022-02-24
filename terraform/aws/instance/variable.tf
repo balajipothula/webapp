@@ -64,6 +64,66 @@ variable "ebs_optimized" {
   sensitive = false
 }
 
+# ebs_block_device > delete_on_termination
+variable "delete_on_termination" {
+  type        = bool
+  default     = true
+  description = "Whether the volume should be destroyed on instance termination."
+  validation {
+    condition     = var.delete_on_termination != null && contains(tolist([true, false]), var.delete_on_termination)
+    error_message = "Error: delete_on_termination value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
+# ebs_block_device > device_name
+variable "device_name" {
+  type        = string
+  default     = "/dev/sdh"
+  description = "Device name."
+  validation {
+    condition     = var.device_name != null && contains(tolist(["/dev/sdh", "xvdh"]), var.device_name)
+    error_message = "Error: device_name value must not null and must be /dev/sdh or xvdh."
+  }
+  sensitive = false
+}
+
+# ebs_block_device > encrypted
+variable "encrypted" {
+  type        = bool
+  default     = false
+  description = "Enables EBS encryption on the volume."
+  validation {
+    condition     = var.encrypted != null && contains(tolist([true, false]), var.encrypted)
+    error_message = "Error: encrypted value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
+# ebs_block_device > volume_size
+variable "volume_size" {
+  type        = number
+  default     = 10
+  description = "A number of IPv6 addresses to associate with the primary network interface."
+  validation {
+    condition     = var.volume_size != null && 10 <= var.volume_size && var.volume_size <= 20 
+    error_message = "Error: ipv6_address_count value must not null and must be in between 10 and 20."
+  }
+  sensitive = false
+}
+
+# ebs_block_device > volume_type
+variable "volume_type" {
+  type        = string
+  default     = "gp2"
+  description = " Type of volume."
+  validation {
+    condition     = var.volume_type != null && contains(tolist(["standard", "gp2", "gp3", "io1", "io2", "sc1", "st1"]), var.volume_type)
+    error_message = "Error: volume_type value must not null and must be standard, gp2, gp3, io1, io2, sc1, or st1."
+  }
+  sensitive = false
+}
+
 variable "hibernation" {
   type        = bool
   default     = true
