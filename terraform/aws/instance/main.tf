@@ -13,7 +13,7 @@ resource "aws_instance" "generic" {
   hibernation                          = var.hibernation                          # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior # Optional argument, but keep it.
   instance_type                        = var.instance_type                        # Optional argument, but keep it.
-//ipv6_address_count                   = var.ipv6_address_count                   # Optional argument, but keep it.
+  ipv6_address_count                   = var.ipv6_address_count                   # Optional argument, but keep it.
   monitoring                           = var.monitoring                           # Optional argument, but keep it.
   subnet_id                            = var.subnet_id                            # Optional argument, but keep it.
   tags                                 = var.tags                                 # Optional argument, but keep it.
