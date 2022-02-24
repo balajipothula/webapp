@@ -42,6 +42,17 @@ variable "capacity_reservation_preference" {
   sensitive = false
 }
 
+variable "disable_api_termination" {
+  type        = bool
+  default     = false
+  description = "If true, enables EC2 Instance Termination Protection."
+  validation {
+    condition     = var.disable_api_termination != null && contains(tolist([true, false]), var.disable_api_termination)
+    error_message = "Error: disable_api_termination value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
 variable "instance_type" {
   type        = string
   default     = "t2.micro"
