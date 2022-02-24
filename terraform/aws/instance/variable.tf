@@ -53,6 +53,39 @@ variable "disable_api_termination" {
   sensitive = false
 }
 
+variable "ebs_optimized" {
+  type        = bool
+  default     = false
+  description = "If true, the launched EC2 instance will be EBS-optimized."
+  validation {
+    condition     = var.ebs_optimized != null && contains(tolist([true, false]), var.ebs_optimized)
+    error_message = "Error: ebs_optimized value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
+variable "hibernation" {
+  type        = bool
+  default     = true
+  description = "If true, the launched EC2 instance will support hibernation."
+  validation {
+    condition     = var.hibernation != null && contains(tolist([true, false]), var.hibernation)
+    error_message = "Error: hibernation value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
+variable "instance_initiated_shutdown_behavior" {
+  type        = string
+  default     = "stop"
+  description = "Shutdown behavior for the instance."
+  validation {
+    condition     = var.instance_initiated_shutdown_behavior != null && contains(tolist(["stop", "terminate"]), var.instance_initiated_shutdown_behavior)
+    error_message = "Error: instance_initiated_shutdown_behavior value must not null and must be stop or terminate."
+  }
+  sensitive = false
+}
+
 variable "instance_type" {
   type        = string
   default     = "t2.micro"
@@ -60,6 +93,17 @@ variable "instance_type" {
   validation {
     condition     = var.instance_type != null && contains(tolist(["t2.nano", "t2.micro"]), var.instance_type)
     error_message = "Error: instance_type value must not null and must be t2.nano , t2.micro , ..."
+  }
+  sensitive = false
+}
+
+variable "ipv6_address_count" {
+  type        = number
+  default     = 1
+  description = "A number of IPv6 addresses to associate with the primary network interface."
+  validation {
+    condition     = var.ipv6_address_count != null && 0 < var.ipv6_address_count && var.ipv6_address_count < 4
+    error_message = "Error: ipv6_address_count value must not null and must be in between 1 and 3."
   }
   sensitive = false
 }
