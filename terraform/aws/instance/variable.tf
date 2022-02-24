@@ -64,6 +64,13 @@ variable "ebs_optimized" {
   sensitive = false
 }
 
+variable "ebs_block_device_variables" {
+  type        = map(string)
+  description = "Map of ebs_block_device variables that are accessible from the instance code during execution."
+  default = {
+  }
+}
+
 # ebs_block_device > delete_on_termination
 variable "delete_on_termination" {
   type        = bool

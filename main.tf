@@ -153,22 +153,27 @@ module "webapp_aws_instance" {
   availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
   disable_api_termination              = false                   # Optional argument, but keep it.
 //ebs_optimized                        = true                    # Optional argument, but keep it.
-  ebs_block_device {
-    delete_on_termination              = true
-    device_name                        = "/dev/sdh"
-    encrypted                          = false
-    volume_size                        = 10
-    volume_type                        = "gp2"
+
+  ebs_block_device_variables           = {                       # Optional argument, but keep it.
+    delete_on_termination              = true                    # Optional block argument, but keep it.
+    device_name                        = "/dev/sdh"              # Optional block argument, but keep it.
+    encrypted                          = false                   # Optional block argument, but keep it.
+    volume_size                        = 10                      # Optional block argument, but keep it.
+    volume_type                        = "gp2"                   # Optional block argument, but keep it.
   }
+
   hibernation                          = false                   # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
 //ipv6_address_count                   = 1                       # Optional argument, but keep it.
   monitoring                           = false                   # Optional argument, but keep it.
+
   security_groups                      = [                       # Optional argument, but keep it.
     "default",
   ]
+
 //subnet_id                            = "subnet-a54b1ecf"       # Optional argument, but keep it.
+
   tags                                 = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"
     "AppName"        = "Python FastAPI Web App"
