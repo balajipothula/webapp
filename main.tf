@@ -163,9 +163,9 @@ module "webapp_aws_instance" {
   ebs_block_device                     = [
     {                                                            # Optional block, but keep it.
       delete_on_termination            = true                    # Optional block argument, but keep it.
-      device_name                      = "/dev/sdh"              # Optional block argument, but keep it.
+      device_name                      = "/dev/xvda"             # Optional block argument, but keep it.
       encrypted                        = false                   # Optional block argument, but keep it.
-      volume_size                      = 10                      # Optional block argument, but keep it.
+      volume_size                      = 8                       # Optional block argument, but keep it.
       volume_type                      = "gp2"                   # Optional block argument, but keep it.
     }
   ]
