@@ -122,7 +122,7 @@ variable "monitoring" {
 variable "security_groups" {
   type = list(string)
   default = [
-    "sg-086a967f",
+    "default",
   ]
   description = "A list of security group names to associate with."
   validation {
