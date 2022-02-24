@@ -12,9 +12,9 @@ resource "aws_instance" "generic" {
 //ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
 
   ebs_block_device = {
-    for_each = length(keys(var.ebs_block_device_variables)) == 0 ? [] : [true]
+  //for_each = length(keys(var.ebs_block_device_variables)) == 0 ? [] : [true]
     content {
-      variables = var.ebs_block_device_variables
+      device_name = null
     }
   }
 
