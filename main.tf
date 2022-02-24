@@ -151,11 +151,11 @@ module "webapp_aws_instance" {
   ami                                  = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
   associate_public_ip_address          = false                   # Optional argument, but keep it.
   availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
-//disable_api_termination              = false                   # Optional argument, but keep it.
+  disable_api_termination              = false                   # Optional argument, but keep it.
   hibernation                          = false                   # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
-  ipv6_address_count                   = 1                       # Optional argument, but keep it.
+//ipv6_address_count                   = 1                       # Optional argument, but keep it.
   monitoring                           = false                   # Optional argument, but keep it.
   subnet_id                            = "subnet-a54b1ecf"       # Optional argument, but keep it.
   tags                                 = {                       # Optional argument, but keep it.
