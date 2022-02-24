@@ -12,11 +12,11 @@ resource "aws_instance" "generic" {
 //ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
 
   ebs_block_device {
-    delete_on_termination              = true                    # Optional block argument, but keep it.
-    device_name                        = "/dev/sdh"              # Optional block argument, but keep it.
-    encrypted                          = false                   # Optional block argument, but keep it.
-    volume_size                        = 10                      # Optional block argument, but keep it.
-    volume_type                        = "gp2"                   # Optional block argument, but keep it.
+    delete_on_termination              = var.delete_on_termination                # Optional block argument, but keep it.
+    device_name                        = var.device_name                          # Optional block argument, but keep it.
+    encrypted                          = var.encrypted                            # Optional block argument, but keep it.
+    volume_size                        = var.volume_size                          # Optional block argument, but keep it.
+    volume_type                        = var.volume_type                          # Optional block argument, but keep it.
   }
 
   hibernation                          = var.hibernation                          # Optional argument, but keep it.
