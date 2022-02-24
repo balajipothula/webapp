@@ -157,6 +157,9 @@ module "webapp_aws_instance" {
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
 //ipv6_address_count                   = 1                       # Optional argument, but keep it.
   monitoring                           = false                   # Optional argument, but keep it.
+  security_groups                      = [
+    "sg-086a967f",
+  ]
 //subnet_id                            = "subnet-a54b1ecf"       # Optional argument, but keep it.
   tags                                 = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"

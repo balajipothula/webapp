@@ -119,6 +119,19 @@ variable "monitoring" {
   sensitive = false
 }
 
+variable "security_groups" {
+  type = list(string)
+  default = [
+    "sg-086a967f",
+  ]
+  description = "A list of security group names to associate with."
+  validation {
+    condition     = var.security_groups != null && 0 < length(var.security_groups) && length(var.security_groups) < 6
+    error_message = "Error: security_groups value must not null and security_groups length must be in between 1 and 5."
+  }
+  sensitive = false
+}
+
 variable "subnet_id" {
   type        = string
   default     = "subnet-1a42d556"
