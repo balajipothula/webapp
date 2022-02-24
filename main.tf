@@ -151,7 +151,7 @@ module "webapp_aws_instance" {
   ami                                  = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
   associate_public_ip_address          = false                   # Optional argument, but keep it.
   availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
-//disable_api_termination              = false                   # Optional argument, but keep it.
+  disable_api_termination              = false                   # Optional argument, but keep it.
   ebs_optimized                        = true                    # Optional argument, but keep it.
   hibernation                          = true                    # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
