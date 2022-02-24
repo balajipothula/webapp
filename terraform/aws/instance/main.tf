@@ -11,7 +11,7 @@ resource "aws_instance" "generic" {
   disable_api_termination              = var.disable_api_termination              # Optional argument, but keep it.
 //ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
 
-  ebs_block_device = {
+  ebs_block_device {
     delete_on_termination              = var.delete_on_termination                # Optional block argument, but keep it.
     device_name                        = var.device_name                          # Optional block argument, but keep it.
     encrypted                          = var.encrypted                            # Optional block argument, but keep it.

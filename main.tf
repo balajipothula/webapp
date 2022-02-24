@@ -154,7 +154,7 @@ module "webapp_aws_instance" {
   disable_api_termination              = false                   # Optional argument, but keep it.
 //ebs_optimized                        = true                    # Optional argument, but keep it.
 
-  ebs_block_device_variables           = {                       # Optional argument, but keep it.
+  ebs_block_device            {                       # Optional argument, but keep it.
     delete_on_termination              = true                    # Optional block argument, but keep it.
     device_name                        = "/dev/sdh"              # Optional block argument, but keep it.
     encrypted                          = false                   # Optional block argument, but keep it.
