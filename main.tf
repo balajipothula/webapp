@@ -99,6 +99,14 @@ locals {
 # AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
+  lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = true
+    ignore_changes        = [
+      tags
+    ]
+  }
+
   vpc_id = data.aws_vpc.default.id
 
   ingress {
