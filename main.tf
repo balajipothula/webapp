@@ -153,7 +153,7 @@ module "webapp_aws_instance" {
   availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
 //disable_api_termination              = false                   # Optional argument, but keep it.
 //ebs_optimized                        = true                    # Optional argument, but keep it.
-  hibernation                          = true                    # Optional argument, but keep it.
+  hibernation                          = false                   # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
 //ipv6_address_count                   = 1                       # Optional argument, but keep it.
