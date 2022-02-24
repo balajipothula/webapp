@@ -157,6 +157,7 @@ module "webapp_aws_instance" {
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
   ipv6_address_count                   = 1                       # Optional argument, but keep it.
+  monitoring                           = false                   # Optional argument, but keep it.
   subnet_id                            = "subnet-a54b1ecf"       # Optional argument, but keep it.
   tags                                 = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"

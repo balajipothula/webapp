@@ -108,6 +108,17 @@ variable "ipv6_address_count" {
   sensitive = false
 }
 
+variable "monitoring" {
+  type        = bool
+  default     = false
+  description = "If true, the launched EC2 instance will have detailed monitoring enabled."
+  validation {
+    condition     = var.monitoring != null && contains(tolist([true, false]), var.monitoring)
+    error_message = "Error: monitoring value must not null and value either true or false only."
+  }
+  sensitive = false
+}
+
 variable "subnet_id" {
   type        = string
   default     = "subnet-1a42d556"
