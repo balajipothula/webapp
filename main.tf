@@ -74,8 +74,14 @@ data "aws_ami" "default" {
     values = ["hvm"]
   }
 
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"]
+  }
+
   most_recent = "true"
   owners      = ["self"]
+  owners      = ["amazon"]
 
 }
 */

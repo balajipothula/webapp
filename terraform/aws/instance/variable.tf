@@ -64,6 +64,13 @@ variable "ebs_optimized" {
   sensitive = false
 }
 
+variable "ebs_block_device" {
+  type        = list(map(string))
+  default     = []
+  description = "One or more configuration blocks with additional EBS block devices to attach to the instance."
+  sensitive   = false
+}
+
 # ebs_block_device > delete_on_termination
 variable "delete_on_termination" {
   type        = bool
