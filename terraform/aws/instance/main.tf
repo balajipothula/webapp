@@ -12,13 +12,14 @@ resource "aws_instance" "generic" {
 //ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
 
   dynamic "ebs_block_device" {
-    for_each = var.ebs_block_device
+    for_each                           = var.ebs_block_device
     content {
-    delete_on_termination              = var.delete_on_termination                    # Optional block argument, but keep it.
-    device_name                        = var.device_name              # Optional block argument, but keep it.
-    encrypted                          = var.encrypted                   # Optional block argument, but keep it.
-    volume_size                        = var.volume_size                      # Optional block argument, but keep it.
-    volume_type                        = var.volume_type                   # Optional block argument, but keep it.
+      variables = var.ebs_block_device
+    //  delete_on_termination              = var.delete_on_termination                # Optional block argument, but keep it.
+    //  device_name                        = var.device_name                          # Optional block argument, but keep it.
+    //  encrypted                          = var.encrypted                            # Optional block argument, but keep it.
+    //  volume_size                        = var.volume_size                          # Optional block argument, but keep it.
+    //  volume_type                        = var.volume_type                          # Optional block argument, but keep it.
     }
   }
 
