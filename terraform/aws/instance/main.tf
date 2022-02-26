@@ -10,7 +10,7 @@ resource "aws_instance" "generic" {
   availability_zone                    = var.availability_zone                    # Optional argument, but keep it.
   disable_api_termination              = var.disable_api_termination              # Optional argument, but keep it.
 //ebs_optimized                        = var.ebs_optimized                        # Optional argument, but keep it.
-
+/*
   dynamic "ebs_block_device" {                                                    # Optional block, but keep it.
     for_each                           = var.ebs_block_device
     content {
@@ -21,7 +21,7 @@ resource "aws_instance" "generic" {
       volume_type                      = null                                     # Optional block argument, but keep it.
     }
   }
-
+*/
   hibernation                          = var.hibernation                          # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior # Optional argument, but keep it.
   instance_type                        = var.instance_type                        # Optional argument, but keep it.
