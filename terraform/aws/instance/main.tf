@@ -42,7 +42,7 @@ resource "aws_instance" "generic" {
   instance_type                        = var.instance_type                        # Optional argument, but keep it.
 //ipv6_address_count                   = var.ipv6_address_count                   # Optional argument, but keep it.
   monitoring                           = var.monitoring                           # Optional argument, but keep it.
-
+/*
   dynamic "root_block_device" {                                                   # Optional block, but keep it.
     for_each                           = var.root_block_device
     content {
@@ -52,11 +52,11 @@ resource "aws_instance" "generic" {
       volume_type                      = null                                     # Optional block argument, but keep it.
     }
   }
-
+*/
 //security_groups                      = var.security_groups                      # Optional argument, but keep it.
 //subnet_id                            = var.subnet_id                            # Optional argument, but keep it.
   tags                                 = var.tags                                 # Optional argument, but keep it.
-  tenancy                              = var.tenancy                              # Optional argument, but keep it.
-  vpc_security_group_ids               = var.vpc_security_group_ids               # Optional argument, but keep it.
+//tenancy                              = var.tenancy                              # Optional argument, but keep it.
+//vpc_security_group_ids               = var.vpc_security_group_ids               # Optional argument, but keep it.
 
 }
