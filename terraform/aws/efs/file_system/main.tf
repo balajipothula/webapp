@@ -14,8 +14,8 @@ resource "aws_efs_file_system" "generic" {
     transition_to_primary_storage_class = var.transition_to_primary_storage_class # Optional block argument, but keep it.
   }
   performance_mode                      = var.performance_mode                    # Optional argument, but keep it.
-  provisioned_throughput_in_mibps       = var.provisioned_throughput_in_mibps     # Optional argument, but keep it.
+  provisioned_throughput_in_mibps       = var.provisioned_throughput_in_mibps     # Optional argument, but only applicable with throughput_mode set to provisioned.
   tags                                  = var.tags                                # Optional argument, but keep it.
-  throughput_mode                       = var.throughput_mode                     # Optional argument, but keep it.
+  throughput_mode                       = var.throughput_mode                     # Optional argument, if value is provisioned, it will impact provisioned_throughput_in_mibps.
 
 }

@@ -42,13 +42,26 @@ variable "kms_key_id" {
   sensitive = false
 }
 
-variable "lifecycle_policy" {
+# lifecycle_policy > transition_to_ia
+variable "transition_to_ia" {
   type        = string
-  default     = "TransitionToIA"
-  description = "A file system lifecycle policy object."
+  default     = "AFTER_7_DAYS"
+  description = "Indicates how long it takes to transition files to the IA storage class."
   validation {
-    condition     = var.lifecycle_policy != null && contains(tolist(["TransitionToIA", "TransitionToPrimaryStorageClass"]), var.lifecycle_policy)
-    error_message = "Error: lifecycle_policy value must not null and value either TransitionToIA or TransitionToPrimaryStorageClass only."
+    condition     = var.transition_to_ia != null && contains(tolist(["AFTER_7_DAYS", "AFTER_14_DAYS", "AFTER_30_DAYS", "AFTER_60_DAYS", "AFTER_90_DAYS"]), var.transition_to_ia)
+    error_message = "Error: transition_to_ia value must not null and values are AFTER_7_DAYS, AFTER_14_DAYS, AFTER_30_DAYS, AFTER_60_DAYS, AFTER_90_DAYS."
+  }
+  sensitive = false
+}
+
+# lifecycle_policy > transition_to_primary_storage_class
+variable "transition_to_primary_storage_class" {
+  type        = string
+  default     = "AFTER_1_ACCESS"
+  description = "Describes the policy used to transition a file from infequent access storage to primary storage."
+  validation {
+    condition     = var.transition_to_primary_storage_class != null && contains(tolist(["AFTER_1_ACCESS"]), var.transition_to_primary_storage_class)
+    error_message = "Error: transition_to_primary_storage_class value must not null and value AFTER_1_ACCESS."
   }
   sensitive = false
 }
