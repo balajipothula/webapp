@@ -175,7 +175,7 @@ module "webapp_aws_instance" {
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
 //ipv6_address_count                   = 1                       # Optional argument, but keep it.
   monitoring                           = false                   # Optional argument, but keep it.
-
+/*
   root_block_device                    = [
     {                                                            # Optional block, but keep it.
       delete_on_termination            = true                    # Optional block argument, but keep it.
@@ -184,7 +184,7 @@ module "webapp_aws_instance" {
       volume_type                      = "gp2"                   # Optional block argument, but keep it.
     }
   ]
-
+*/
   security_groups                      = [                       # Optional argument, but keep it.
     "default",
   ]
