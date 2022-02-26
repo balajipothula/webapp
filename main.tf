@@ -159,7 +159,7 @@ module "webapp_aws_instance" {
 //availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
 //cpu_core_count                       = 1                       # Optional argument, will cause the resource to be destroyed and re-created.
 //cpu_threads_per_core                 = 1                       # Optional argument, will cause the resource to be destroyed and re-created.
-  disable_api_termination              = false                   # Optional argument, but keep it.
+//disable_api_termination              = false                   # Optional argument, but keep it.
 //ebs_optimized                        = false                   # Optional argument, but keep it.
 /*
   ebs_block_device                     = [
@@ -172,7 +172,7 @@ module "webapp_aws_instance" {
     }
   ]
 */
-  hibernation                          = false                   # Optional argument, but keep it.
+//hibernation                          = false                   # Optional argument, but keep it.
   instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
 //ipv6_address_count                   = 1                       # Optional argument, but keep it.
