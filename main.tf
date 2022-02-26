@@ -190,10 +190,11 @@ module "webapp_aws_instance" {
     }
   ]
 
+/*
   security_groups                      = [                       # Optional argument, but keep it.
     "default",
   ]
-
+*/
 //subnet_id                            = "subnet-a54b1ecf"       # Optional argument, but keep it.
 
   tags                                 = {                       # Optional argument, but keep it.
@@ -204,6 +205,7 @@ module "webapp_aws_instance" {
   }
 
   tenancy                              = "default"               # Optional argument, but keep it.
+  vpc_security_group_ids               = "sg-086a967f"           # Optional argument, but keep it.
 
 }
 

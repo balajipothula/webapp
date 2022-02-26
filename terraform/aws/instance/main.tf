@@ -38,9 +38,10 @@ resource "aws_instance" "generic" {
     }
   }
 
-  security_groups                      = var.security_groups                      # Optional argument, but keep it.
+//security_groups                      = var.security_groups                      # Optional argument, but keep it.
 //subnet_id                            = var.subnet_id                            # Optional argument, but keep it.
   tags                                 = var.tags                                 # Optional argument, but keep it.
   tenancy                              = var.tenancy                              # Optional argument, but keep it.
+  vpc_security_group_ids               = var.vpc_security_group_ids               # Optional argument, but keep it.
 
 }
