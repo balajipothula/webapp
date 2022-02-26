@@ -154,19 +154,6 @@ module "webapp_aws_instance" {
 
   source = "./terraform/aws/instance"
 
-  lifecycle {
-    ignore_changes = [
-      credit_specification,
-      disable_api_termination,
-      ebs_optimized,
-      ephemeral_block_device,
-      hibernation,
-      network_interface,
-      security_groups,
-      vpc_security_group_ids,
-    ]
-  }
-
   ami                                  = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
   associate_public_ip_address          = false                   # Optional argument, but keep it.
   availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.

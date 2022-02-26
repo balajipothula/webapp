@@ -5,6 +5,21 @@
 # Variable  name : function_name
 resource "aws_instance" "generic" {
 
+  lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = true
+    ignore_changes = [
+      credit_specification,
+      disable_api_termination,
+      ebs_optimized,
+      ephemeral_block_device,
+      hibernation,
+      network_interface,
+      security_groups,
+      vpc_security_group_ids,
+    ]
+  }
+
   ami                                  = var.ami                                  # Optional argument, but keep it.
   associate_public_ip_address          = var.associate_public_ip_address          # Optional argument, but keep it.
   availability_zone                    = var.availability_zone                    # Optional argument, but keep it.
