@@ -194,7 +194,7 @@ variable "root_block_device" {
 }
 
 variable "security_groups" {
-  type = list(string)
+  type    = list(string)
   default = [
     "default",
   ]
@@ -240,6 +240,19 @@ variable "tenancy" {
   validation {
     condition     = var.tenancy != null
     error_message = "Error: tenancy value must not null."
+  }
+  sensitive = false
+}
+
+variable "vpc_security_group_ids" {
+  type    = list(string)
+  default = [
+    "sg-086a967f",
+  ]
+  description = "A list of security group IDs to associate with."
+  validation {
+    condition     = var.vpc_security_group_ids != null && 0 < length(var.vpc_security_group_ids) && length(var.vpc_security_group_ids) < 6
+    error_message = "Error: vpc_security_group_ids value must not null and vpc_security_group_ids length must be in between 1 and 5."
   }
   sensitive = false
 }
