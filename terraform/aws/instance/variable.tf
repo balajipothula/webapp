@@ -232,3 +232,14 @@ variable "tags" {
   }
   sensitive = false
 }
+
+variable "tenancy" {
+  type        = string
+  default     = "default"
+  description = "VPC Subnet ID to launch in."
+  validation {
+    condition     = var.tenancy != null
+    error_message = "Error: tenancy value must not null."
+  }
+  sensitive = false
+}
