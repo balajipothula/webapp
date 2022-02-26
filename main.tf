@@ -205,7 +205,9 @@ module "webapp_aws_instance" {
   }
 
   tenancy                              = "default"               # Optional argument, but keep it.
-  vpc_security_group_ids               = "sg-086a967f"           # Optional argument, but keep it.
+  vpc_security_group_ids               = [                       # Optional argument, but keep it.
+    "sg-086a967f",
+  ]          
 
 }
 
