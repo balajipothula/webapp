@@ -193,7 +193,7 @@ module "webapp_aws_instance" {
 
   tags                                 = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"
-    "AppName"        = "Python FastAPI Web App"
+    "AppName"        = "Web Application"
     "DeveloperName"  = "Balaji Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
   }
