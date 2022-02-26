@@ -156,7 +156,7 @@ module "webapp_aws_instance" {
 
   ami                                  = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
   associate_public_ip_address          = false                   # Optional argument, but keep it.
-  availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
+//availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
 //cpu_core_count                       = 1                       # Optional argument, will cause the resource to be destroyed and re-created.
 //cpu_threads_per_core                 = 1                       # Optional argument, will cause the resource to be destroyed and re-created.
   disable_api_termination              = false                   # Optional argument, but keep it.
