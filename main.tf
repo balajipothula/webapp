@@ -184,7 +184,7 @@ module "webapp_aws_efs_file_system" {
 
 }
 
-# Mounting of AWS EFS (Elastic File System) AZ1 target for WebApp.
+# Mounting of AWS EFS (Elastic File System) az 1a target for WebApp.
 module "webapp_aws_efs_mount_target_az1" {
 
   source          = "./terraform/aws/efs/mount_target"
@@ -200,7 +200,7 @@ module "webapp_aws_efs_mount_target_az1" {
 
 }
 
-# Mounting of AWS EFS (Elastic File System) AZ2 target for WebApp.
+# Mounting of AWS EFS (Elastic File System) az 1b target for WebApp.
 module "webapp_aws_efs_mount_target_az2" {
 
   source          = "./terraform/aws/efs/mount_target"
