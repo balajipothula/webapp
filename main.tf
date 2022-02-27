@@ -133,6 +133,14 @@ resource "aws_default_security_group" "update" {
 
   ingress {
     cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
+    description = "NFS inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 2049
+    from_port   = 2049
+  }
+
+  ingress {
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
     description = "PostgreSQL inbound traffic rule."
     protocol    = "tcp"
     to_port     = 5432
@@ -152,7 +160,7 @@ resource "aws_default_security_group" "update" {
 # Creation of AWS EFS (Elastic File System) for WebApp.
 module "webapp_aws_efs_file_system" {
 
-  source = "./terraform/aws/efs/file_system"
+  source                                = "./terraform/aws/efs/file_system"
 
   availability_zone_name                = "eu-central-1a"                         # Optional argument, but keep it.
   creation_token                        = "webapp"                                # Optional argument, but keep it.
@@ -173,6 +181,22 @@ module "webapp_aws_efs_file_system" {
     "DeveloperEmail" = "balan.pothula@gmail.com"
   }
 //throughput_mode                       = var.throughput_mode                     # Optional argument, if value is provisioned, it will impact provisioned_throughput_in_mibps.
+
+}
+
+# Mounting of AWS EFS (Elastic File System) target for WebApp.
+module "webapp_aws_efs_mount_target" {
+
+  source          = "./terraform/aws/efs/mount_target"
+
+  depends_on      = [
+    module.webapp_aws_efs_file_system,
+  ]
+
+  file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
+  subnet_id       = var.subnet_id                        # Required argument.
+//ip_address      = var.ip_address                       # Optional argument, but keep it.
+  security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
 }
 
