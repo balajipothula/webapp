@@ -5,6 +5,8 @@
 # Variable  name : availability_zone_name
 resource "aws_efs_file_system" "generic" {
 
+  availability_zone_count               = 3                                       # Optional argument, but keep it.
+
   availability_zone_name                = var.availability_zone_name              # Optional argument, but keep it.
   creation_token                        = var.creation_token                      # Optional argument, but keep it.
   encrypted                             = var.encrypted                           # Optional argument, but keep it.
