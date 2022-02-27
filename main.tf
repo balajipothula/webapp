@@ -149,13 +149,40 @@ resource "aws_default_security_group" "update" {
 
 }
 
-# Creation of AWS EC2 Instance for WebApp.
+# Creation of AWS EFS (Elastic File System) for WebApp.
+module "webapp_aws_efs_file_system" {
+
+  source = "./terraform/aws/efs/file_system"
+
+  availability_zone_name                = "eu-central-1a"                         # Optional argument, but keep it.
+  creation_token                        = "webapp"                                # Optional argument, but keep it.
+  encrypted                             = false                                   # Optional argument, but keep it.
+//kms_key_id                            = var.kms_key_id                          # Optional argument, but required if encrypted set true.
+/*
+  lifecycle_policy {                                                              # Optional block, but keep it.
+    transition_to_ia                    = var.transition_to_ia                    # Optional block argument, but keep it.
+    transition_to_primary_storage_class = var.transition_to_primary_storage_class # Optional block argument, but keep it.
+  }
+*/
+  performance_mode                      = "generalPurpose"                        # Optional argument, but keep it.
+//provisioned_throughput_in_mibps       = 8                                       # Optional argument, but only applicable with throughput_mode set to provisioned.
+  tags                                  = {                                       # Optional argument, but keep it.
+    "Name"           = "WebApp"
+    "AppName"        = "WebApp"
+    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperEmail" = "balan.pothula@gmail.com"
+  }
+//throughput_mode                       = var.throughput_mode                     # Optional argument, if value is provisioned, it will impact provisioned_throughput_in_mibps.
+
+}
+
+# Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
 
   source = "./terraform/aws/instance"
 
   ami                                  = "ami-00e232b942edaf8f9" # Optional argument, but keep it.
-  associate_public_ip_address          = false                   # Optional argument, but keep it.
+//associate_public_ip_address          = false                   # Optional argument, but keep it.
 //availability_zone                    = "eu-central-1a"         # Optional argument, but keep it.
 //cpu_core_count                       = 1                       # Optional argument, will cause the resource to be destroyed and re-created.
 //cpu_threads_per_core                 = 1                       # Optional argument, will cause the resource to be destroyed and re-created.
@@ -173,7 +200,7 @@ module "webapp_aws_instance" {
   ]
 */
 //hibernation                          = false                   # Optional argument, but keep it.
-  instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
+//instance_initiated_shutdown_behavior = "stop"                  # Optional argument, but keep it.
   instance_type                        = "t2.micro"              # Optional argument, but keep it.
 //ipv6_address_count                   = 1                       # Optional argument, but keep it.
   monitoring                           = false                   # Optional argument, but keep it.
