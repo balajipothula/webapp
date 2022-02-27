@@ -194,7 +194,7 @@ module "webapp_aws_efs_mount_target" {
   ]
 
   file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
-  subnet_id       = var.subnet_id                        # Required argument.
+  subnet_id       = "subnet-a54b1ecf"                    # Required argument.
 //ip_address      = var.ip_address                       # Optional argument, but keep it.
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
