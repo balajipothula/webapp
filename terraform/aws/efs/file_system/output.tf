@@ -44,7 +44,7 @@ output "size_in_bytes" {
 }
 
 output "tags_all" {
-  value       = aws_efs_file_system.generic.tags_all
+  value       = aws_efs_file_system.generic.*.tags_all
   description = "A map of tags assigned to the resource."
   sensitive   = false
 }
