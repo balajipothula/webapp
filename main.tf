@@ -226,22 +226,6 @@ module "webapp_aws_efs_mount_target_az1" {
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
 }
-
-# Mounting of AWS EFS (Elastic File System) az 1b target for WebApp.
-module "webapp_aws_efs_mount_target_az2" {
-
-  source          = "./terraform/aws/efs/mount_target"
-
-  depends_on      = [
-    module.webapp_aws_efs_file_system,
-  ]
-
-  file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
-  subnet_id       = "subnet-9fa323e3"                    # Required argument.
-//ip_address      = var.ip_address                       # Optional argument, but keep it.
-  security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
-
-}
 */
 
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
