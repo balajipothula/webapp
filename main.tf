@@ -184,9 +184,26 @@ module "webapp_aws_efs_file_system" {
 
 }
 
-
 # Mounting of AWS EFS (Elastic File System) target for WebApp.
 module "webapp_aws_efs_mount_target" {
+
+  source          = "./terraform/aws/efs/mount_target"
+
+  depends_on      = [
+    module.webapp_aws_efs_file_system,
+  ]
+
+  file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
+  for_each        = toset(["subnet-a54b1ecf", "subnet-9fa323e3"])
+  subnet_id       = each.key                             # Required argument.
+//ip_address      = var.ip_address                       # Optional argument, but keep it.
+  security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
+
+}
+
+/*
+# Mounting of AWS EFS (Elastic File System) target for WebApp.
+module "webapp_aws_efs_mount_target_az_1" {
 
   source          = "./terraform/aws/efs/mount_target"
 
@@ -203,7 +220,7 @@ module "webapp_aws_efs_mount_target" {
 
 
 # Mounting of AWS EFS (Elastic File System) target for WebApp.
-module "webapp_aws_efs_mount_target_2" {
+module "webapp_aws_efs_mount_target_az_2" {
 
   source          = "./terraform/aws/efs/mount_target"
 
@@ -220,6 +237,7 @@ module "webapp_aws_efs_mount_target_2" {
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
 }
+*/
 
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
