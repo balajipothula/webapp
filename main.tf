@@ -198,12 +198,12 @@ module "webapp_aws_efs_mount_target" {
     module.webapp_aws_efs_file_system,
   ]
 
-  for_each = data.aws_subnet.default.id
+  for_each = ["subnet-a54b1ecf", "subnet-9fa323e3", "subnet-1a42d556"]
 
   file_system_id  = "webapp" # Required argument.
 
 //file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
-  subnet_id       = each.key
+  subnet_id       = each.value
 
 //ip_address      = var.ip_address                       # Optional argument, but keep it.
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
