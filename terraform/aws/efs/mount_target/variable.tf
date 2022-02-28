@@ -2,12 +2,10 @@ variable "file_system_id" {
   type        = string
   default     = "generic"
   description = "The ID of the file system for which the mount target is intended."
-/*  
   validation {
     condition     = var.file_system_id != null && 0 < length(var.file_system_id) && length(var.file_system_id) < 65
     error_message = "Error: file_system_id value must not null, length must be in between 1 and 64 only."
   }
-*/
   sensitive = false
 }
 
