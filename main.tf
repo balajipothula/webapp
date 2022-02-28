@@ -198,7 +198,7 @@ module "webapp_aws_efs_mount_target" {
     module.webapp_aws_efs_file_system,
   ]
 
-  for_each = data.aws_subnet.default.ids
+  for_each = data.aws_subnet.default.id
 
   file_system_id  = "webapp" # Required argument.
 
