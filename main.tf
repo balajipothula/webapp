@@ -198,7 +198,7 @@ module "webapp_aws_efs_mount_target" {
     module.webapp_aws_efs_file_system,
   ]
 
-  for_each = ["subnet-a54b1ecf", "subnet-9fa323e3", "subnet-1a42d556"]
+  for_each = { "subnet-a54b1ecf", "subnet-9fa323e3", "subnet-1a42d556" }
 
   file_system_id  = "webapp" # Required argument.
 
