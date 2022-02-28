@@ -1,6 +1,7 @@
 # Resource  type : aws_efs_mount_target
 # Resource  name : generic
 # Attribute name : id
+/*
 output "id" {
   value       = aws_efs_mount_target.generic.id
   description = "The ID of the mount target."
@@ -42,3 +43,4 @@ output "owner_id" {
   description = "AWS account ID that owns the resource."
   sensitive   = false
 }
+*/
