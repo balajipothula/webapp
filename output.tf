@@ -1,4 +1,3 @@
-/*
 output "aws_region_current_name" {
   value       = data.aws_region.current.name
   description = "The name of the selected region."
@@ -38,12 +37,5 @@ output "aws_subnet_ids_available_ids" {
 output "aws_security_groups_default_ids" {
   value       = data.aws_security_groups.default.ids
   description = "IDs of the matches security groups."
-  sensitive   = false
-}
-*/
-
-output "webapp_aws_efs_file_system_id" {
-  value       = module.webapp_aws_efs_file_system.id
-  description = "EFS File System ID."
   sensitive   = false
 }
