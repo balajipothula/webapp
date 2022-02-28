@@ -63,21 +63,26 @@ data "aws_security_groups" "default" {
 
 /*
 data "aws_ami" "default" {
+
   filter {
     name   = "root-device-type"
     values = ["ebs"]
   }
+
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+
   filter {
     name   = "name"
     values = ["amzn-ami-hvm-*-x86_64-gp2"]
   }
+
   most_recent = "true"
   owners      = ["self"]
   owners      = ["amazon"]
+
 }
 */
 
@@ -179,8 +184,8 @@ module "webapp_aws_efs_file_system" {
 
 }
 
-# Mounting of AWS EFS (Elastic File System) az 1a target for WebApp.
-module "webapp_aws_efs_mount_target_az1" {
+# Mounting of AWS EFS (Elastic File System) target for WebApp.
+module "webapp_aws_efs_mount_target" {
 
   source          = "./terraform/aws/efs/mount_target"
 
@@ -190,22 +195,6 @@ module "webapp_aws_efs_mount_target_az1" {
 
   file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
   subnet_id       = "subnet-a54b1ecf"                    # Required argument.
-//ip_address      = var.ip_address                       # Optional argument, but keep it.
-  security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
-
-}
-
-# Mounting of AWS EFS (Elastic File System) az 1b target for WebApp.
-module "webapp_aws_efs_mount_target_az2" {
-
-  source          = "./terraform/aws/efs/mount_target"
-
-  depends_on      = [
-    module.webapp_aws_efs_file_system,
-  ]
-
-  file_system_id  = module.webapp_aws_efs_file_system.id # Required argument.
-  subnet_id       = "subnet-9fa323e3"                    # Required argument.
 //ip_address      = var.ip_address                       # Optional argument, but keep it.
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
@@ -510,69 +499,98 @@ module "webapp_aws_apigatewayv2_route_index" {
 /*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
 module "webapp_aws_apigatewayv2_route_put_song" {
+
   source        = "./terraform/aws/apigatewayv2/route"
+
   depends_on    = [
     module.webapp_aws_apigatewayv2_api,
     module.webapp_aws_apigatewayv2_integration,
   ]
+
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "PUT /song"                                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
 }
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs - Route.
 module "webapp_aws_apigatewayv2_route_get_songs" {
+
   source        = "./terraform/aws/apigatewayv2/route"
+
   depends_on    = [
     module.webapp_aws_apigatewayv2_api,
     module.webapp_aws_apigatewayv2_integration,
   ]
+
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /songs"                                                    # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
 }
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song Rating - Route.
 module "webapp_aws_apigatewayv2_route_put_song_rating" {
+
   source        = "./terraform/aws/apigatewayv2/route"
+
   depends_on    = [
     module.webapp_aws_apigatewayv2_api,
     module.webapp_aws_apigatewayv2_integration,
   ]
+
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "PUT /song/rating"                                              # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
 }
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Song Rating - Route.
 module "webapp_aws_apigatewayv2_route_get_song_rating" {
+
   source        = "./terraform/aws/apigatewayv2/route"
+
   depends_on    = [
     module.webapp_aws_apigatewayv2_api,
     module.webapp_aws_apigatewayv2_integration,
   ]
+
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /song/rating/{songId}"                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
 }
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Search - Route.
 module "webapp_aws_apigatewayv2_route_get_songs_search" {
+
   source        = "./terraform/aws/apigatewayv2/route"
+
   depends_on    = [
     module.webapp_aws_apigatewayv2_api,
     module.webapp_aws_apigatewayv2_integration,
   ]
+
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /songs/search"                                             # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
 }
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Average Difficulty - Route.
 module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
+
   source        = "./terraform/aws/apigatewayv2/route"
+
   depends_on    = [
     module.webapp_aws_apigatewayv2_api,
     module.webapp_aws_apigatewayv2_integration,
   ]
+
   api_id        = module.webapp_aws_apigatewayv2_api.id                           # Required argument.
   route_key     = "GET /songs/avg/difficulty"                                     # Required argument.
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
+
 }
 */
 
@@ -582,7 +600,9 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
+
   source                       = "./terraform/aws/rds/cluster"
+
   allow_major_version_upgrade  = true                                      # Optional argument, but keep it.
   apply_immediately            = true                                      # Optional argument, but keep it.
   backup_retention_period      = 1                                         # Optional argument, but keep it.
@@ -608,14 +628,19 @@ module "webapp_aws_rds_cluster" {
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
+
 }
+
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
+
   source                         = "./terraform/aws/secretsmanager/secret"
+
   depends_on                     = [
     module.webapp_aws_rds_cluster,
   ]
+
   description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
   force_overwrite_replica_secret = false                       # Optional argument, but keep it.
   name                           = "webapp_secret"             # Optional argument, conflicts with name_prefix.
@@ -626,15 +651,20 @@ module "webapp_aws_secretsmanager_secret" {
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
+
 }
+
 # Creation of AWS Secrets Manager Version for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret_version" {
+
   source        = "./terraform/aws/secretsmanager/secret_version"
+
   depends_on    = [
     module.webapp_aws_secretsmanager_secret,
     module.webapp_aws_rds_cluster,
   ]
+
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
     dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
@@ -651,11 +681,16 @@ module "webapp_aws_secretsmanager_secret_version" {
     echo                 = "False"
     connect_timeout      = 30
   }) 
+
 }
+
+
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
+
   source              = "./terraform/aws/vpc/endpoint"
+
   service_name        = "com.amazonaws.${data.aws_region.current.name}.secretsmanager" # Required argument.
   vpc_id              = data.aws_vpc.default.id                                        # Required argument.
   private_dns_enabled = true                                                           # Optional argument, but applicable for endpoints of type Interface.
@@ -668,5 +703,6 @@ module "webapp_aws_vpc_endpoint" {
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
+
 }
 */
