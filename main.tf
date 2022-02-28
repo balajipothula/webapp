@@ -162,7 +162,7 @@ module "webapp_aws_efs_file_system" {
 
   source                                = "./terraform/aws/efs/file_system"
 
-//availability_zone_name                = "eu-central-1a"                         # Optional argument, but keep it.
+//availability_zone_name                = "eu-central-1a"                         # Optional argument, but comment it for Region wise spread of EFS.
   creation_token                        = "webapp"                                # Optional argument, but keep it.
   encrypted                             = false                                   # Optional argument, but keep it.
 //kms_key_id                            = var.kms_key_id                          # Optional argument, but required if encrypted set true.
