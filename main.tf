@@ -162,7 +162,7 @@ module "webapp_aws_efs_file_system" {
 
   source                                = "./terraform/aws/efs/file_system"
 
-  availability_zone_name                = "eu-central-1a"                         # Optional argument, but keep it.
+//availability_zone_name                = "eu-central-1a"                         # Optional argument, but keep it.
   creation_token                        = "webapp"                                # Optional argument, but keep it.
   encrypted                             = false                                   # Optional argument, but keep it.
 //kms_key_id                            = var.kms_key_id                          # Optional argument, but required if encrypted set true.
@@ -201,7 +201,7 @@ module "webapp_aws_efs_mount_target" {
 
 }
 
-/*
+
 # Mounting of AWS EFS (Elastic File System) target for WebApp.
 module "webapp_aws_efs_mount_target_2" {
 
@@ -219,7 +219,7 @@ module "webapp_aws_efs_mount_target_2" {
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
 }
-*/
+
 
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
