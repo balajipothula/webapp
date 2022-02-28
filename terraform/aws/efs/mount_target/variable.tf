@@ -1,5 +1,5 @@
 variable "file_system_id" {
-//type        = string
+  type        = string
   default     = "generic"
   description = "The ID of the file system for which the mount target is intended."
 /*  
