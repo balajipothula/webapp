@@ -270,6 +270,13 @@ variable "tenancy" {
   sensitive = false
 }
 
+variable "user_data" {
+  type        = string
+  default     = null
+  description = "User data to provide when launching the instance. Do not pass gzip-compressed data via this argument"
+  sensitive   = false
+}
+
 variable "vpc_security_group_ids" {
   type    = list(string)
   default = [

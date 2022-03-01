@@ -59,7 +59,7 @@ resource "aws_instance" "generic" {
 //subnet_id                            = var.subnet_id                            # Optional argument, but keep it.
   tags                                 = var.tags                                 # Optional argument, but keep it.
 //tenancy                              = var.tenancy                              # Optional argument, but keep it.
-  user_data                            = null                                     # Optional argument, but keep it.
+  user_data                            = var.user_data                            # Optional argument, but keep it.
   vpc_security_group_ids               = var.vpc_security_group_ids               # Optional argument, but keep it.
 
 }
