@@ -6,21 +6,6 @@ provider "aws" {
 
 }
 
-# User defined argument.
-variable "ami_map" {
-  type        = map(string)
-  default     = {
-    "eu-central-1" = "ami-0d271bb6d5ee95925"
-    "us-east-1"    = "ami-0fe78f0c5bf927432"
-  }
-  description = "A map of AWS Regions and AMI Names." 
-  validation {
-    condition     = var.ami_map != null && 0 < length(var.ami_map) && length(var.ami_map) < 11
-    error_message = "Error: ami_map at least one or more expected upto 10."
-  }
-  sensitive   = false
-}
-
 # Data Source: aws_region
 data "aws_region" "current" {
 }
