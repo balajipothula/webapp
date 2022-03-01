@@ -101,7 +101,7 @@ locals {
   webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-
+/*
 # AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
@@ -156,6 +156,7 @@ resource "aws_default_security_group" "update" {
   }
 
 }
+*/
 
 # Creation of AWS EFS (Elastic File System) for WebApp.
 module "webapp_aws_efs_file_system" {
@@ -258,11 +259,11 @@ module "webapp_aws_instance" {
   }
 
 //tenancy                              = "default"               # Optional argument, but keep it.
-/*
+
   vpc_security_group_ids               = [                       # Optional argument, but keep it.
     "sg-086a967f",
   ]          
-*/
+
 }
 
 # Creation of AWS IAM Role for WebApp Lambda Function.
