@@ -254,7 +254,7 @@ module "webapp_aws_instance" {
   tags                                 = {                       # Optional argument, but keep it.
     "Name"           = "WebApp"
     "AppName"        = "WebApp"
-    "DeveloperName"  = "Balaji Pothula"
+    "DeveloperName"  = "Balaji Rao Pothula"
     "DeveloperEmail" = "balan.pothula@gmail.com"
   }
 
