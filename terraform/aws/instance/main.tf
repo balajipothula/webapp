@@ -12,7 +12,7 @@ resource "aws_instance" "generic" {
       "credit_specification",
       "disable_api_termination",
       "ebs_optimized",
-      "ebs_block_device"
+      "ebs_block_device",
       "ephemeral_block_device",
       "hibernation",
       "network_interface",
