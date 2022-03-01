@@ -230,6 +230,7 @@ module "webapp_aws_instance" {
 //instance_initiated_shutdown_behavior = "stop"                          # Optional argument, but keep it.
   instance_type                        = "t2.micro"                      # Optional argument, but keep it.
 //ipv6_address_count                   = 1                               # Optional argument, but keep it.
+  key_name                             = "Terraform"                     # Optional argument, but keep it.
   monitoring                           = false                           # Optional argument, but keep it.
 
   root_block_device                    = [
