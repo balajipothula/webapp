@@ -21,7 +21,8 @@ resource "aws_instance" "generic" {
     ]
   }
 
-  ami                                  = var.ami                                  # Optional argument, but keep it.
+//ami                                  = var.ami                                  # Optional argument, but keep it.
+  ami_map                              = var.ami_map                              # User defined argument, but keep it.
   associate_public_ip_address          = var.associate_public_ip_address          # Optional argument, but keep it.
 //availability_zone                    = var.availability_zone                    # Optional argument, but keep it.
 //disable_api_termination              = var.disable_api_termination              # Optional argument, but keep it.

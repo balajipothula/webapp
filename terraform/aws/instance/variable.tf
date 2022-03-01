@@ -1,3 +1,4 @@
+# User defined argument.
 variable "ami_map" {
   type        = map(string)
   default     = {
