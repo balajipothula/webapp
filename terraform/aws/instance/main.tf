@@ -7,7 +7,7 @@ resource "aws_instance" "generic" {
 
   lifecycle {
   //create_before_destroy = true
-  //prevent_destroy       = false
+    prevent_destroy       = true
     ignore_changes = [
       "credit_specification",
       "disable_api_termination",
@@ -17,7 +17,7 @@ resource "aws_instance" "generic" {
       "hibernation",
       "network_interface",
       "security_groups",
-    //"vpc_security_group_ids",
+      "vpc_security_group_ids",
     ]
   }
 
