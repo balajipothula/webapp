@@ -101,7 +101,7 @@ locals {
   webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-/*
+
 # AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
@@ -156,7 +156,6 @@ resource "aws_default_security_group" "update" {
   }
 
 }
-*/
 
 # Creation of AWS EFS (Elastic File System) for WebApp.
 module "webapp_aws_efs_file_system" {
