@@ -190,6 +190,17 @@ variable "ipv6_address_count" {
   sensitive = false
 }
 
+variable "key_name" {
+  type        = string
+  default     = "generic"
+  description = "Key name of the Key Pair to use for the instance."
+  validation {
+    condition     = var.key_name != null
+    error_message = "Error: key_name value must not null."
+  }
+  sensitive = false
+}
+
 variable "monitoring" {
   type        = bool
   default     = false
