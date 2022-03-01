@@ -7,7 +7,7 @@ resource "aws_instance" "generic" {
 
   lifecycle {
     create_before_destroy = true
-    prevent_destroy       = true
+  //prevent_destroy       = true
     ignore_changes        = [
       credit_specification,
       disable_api_termination,
