@@ -117,6 +117,14 @@ resource "aws_default_security_group" "update" {
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 22
+    from_port   = 22
+  }
+
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]
     description = "API Gateway inbound traffic rule."
     protocol    = "tcp"
     to_port     = 80
