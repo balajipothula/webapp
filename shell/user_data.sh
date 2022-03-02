@@ -2,7 +2,7 @@
 
 # Author      : Balaji Pothula <balan.pothula@gmail.com>,
 # Date        : Wednesday, 02 March 2022,
-# Description : Installing / Compiling NGINX from Source Code.
+# Description : Installing Jenkins Server.
 
 # exit immediately if a command exits with a non-zero exit status.
 # set -e

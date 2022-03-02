@@ -276,7 +276,7 @@ module "webapp_aws_instance" {
   }
 
 //tenancy                              = "default"                       # Optional argument, but keep it.
-  user_data =                          = file("./shell/user_data.sh")    # Optional argument, but keep it.
+  user_data                            = file("./shell/user_data.sh")    # Optional argument, but keep it.
 
   vpc_security_group_ids               = [                               # Optional argument, but keep it.
     "sg-086a967f",
