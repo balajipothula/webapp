@@ -155,6 +155,14 @@ resource "aws_default_security_group" "update" {
     from_port   = 5432
   }
 
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "API Gateway inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 8080
+    from_port   = 8080
+  }
+
   egress {
     cidr_blocks = ["0.0.0.0/0"]
     description = "All outbound traffic rule."
@@ -268,13 +276,7 @@ module "webapp_aws_instance" {
   }
 
 //tenancy                              = "default"                       # Optional argument, but keep it.
-  
-  user_data = <<-EOF
-    #!/bin/bash
-    yum -y -q install nfs-utils
-    mkdir -p /home/ec2-user/terraform
-    mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0858aeb075dc7a734.efs.eu-central-1.amazonaws.com:/ /home/ec2-user/terraform
-  EOF
+  user_data =                          = file("./shell/user_data.sh")    # Optional argument, but keep it.
 
   vpc_security_group_ids               = [                               # Optional argument, but keep it.
     "sg-086a967f",
