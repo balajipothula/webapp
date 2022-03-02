@@ -268,14 +268,14 @@ module "webapp_aws_instance" {
   }
 
 //tenancy                              = "default"                       # Optional argument, but keep it.
-/*  
+  
   user_data = <<-EOF
     #!/bin/bash
     yum -y -q install nfs-utils
     mkdir -p /home/ec2-user/terraform
     mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0858aeb075dc7a734.efs.eu-central-1.amazonaws.com:/ /home/ec2-user/terraform
   EOF
-*/
+
   vpc_security_group_ids               = [                               # Optional argument, but keep it.
     "sg-086a967f",
   ]          
