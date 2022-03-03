@@ -1,3 +1,22 @@
+variable "configuration" {
+  type = list(map({
+    execute_command_configuration = list(map({
+      kms_key_id        = null
+      logging           = null
+      log_configuration = list(map({
+        cloud_watch_encryption_enabled = null
+        cloud_watch_log_group_name     = null
+        s3_bucket_name                 = null
+        s3_bucket_encryption_enabled   = null
+        s3_key_prefix                  = null
+      }))
+    }))
+  }))
+  default = []
+  description = "The execute command configuration for the cluster."
+  sensitive   = false
+}
+
 variable "capacity_providers" {
   type        = list(string)
   default     = ["FARGATE", "FARGATE_SPOT"]
@@ -39,7 +58,7 @@ variable "cloud_watch_encryption_enabled" {
   default     = false
   description = "Whether or not to enable encryption on the CloudWatch logs."
   validation {
-    condition     = contains(toset([true, false]), var.cloud_watch_encryption_enabled)
+    condition     = var.cloud_watch_encryption_enabled != null && contains(toset([true, false]), var.cloud_watch_encryption_enabled)
     error_message = "Error: cloud_watch_encryption_enabled value must be either true or false."
   }
   sensitive   = false
