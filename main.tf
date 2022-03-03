@@ -744,9 +744,9 @@ module "webapp_aws_ecr_repository" {
 
   image_tag_mutability = "IMMUTABLE" # Optional argument, but keep it.
 
-  image_scanning_configuration {     # Optional configuration block, but keep it.
+  image_scanning_configuration = [{     # Optional configuration block, but keep it.
     scan_on_push       = true        # Required block argument.
-  }
+  }]
 
   tags                 = {           # Optional argument, but keep it.
     "Name"            = "WebApp"

@@ -14,8 +14,11 @@ resource "aws_ecr_repository" "generic" {
 
   image_tag_mutability = var.image_tag_mutability # Optional argument, but keep it.
 
-  image_scanning_configuration {                  # Optional configuration block, but keep it.
-    scan_on_push       = var.scan_on_push         # Required block argument.
+  dynamic "image_scanning_configuration" {        # Optional configuration block, but keep it.
+    for_each           = var.image_scanning_configuration
+    content {
+      scan_on_push     = null                     # Required block argument.
+    }
   }
 
   tags                 = var.tags                 # Optional argument, but keep it.

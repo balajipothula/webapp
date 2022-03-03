@@ -10,6 +10,13 @@ variable "encryption_type" {
   sensitive   = false
 }
 
+variable "image_scanning_configuration" {
+  type        = list(map(string))
+  default     = []
+  description = "Configuration block that defines image scanning configuration for the repository."
+  sensitive   = false
+}
+
 // encryption_configuration configuration block argument.
 variable "kms_key" {
   type        = string
@@ -77,3 +84,6 @@ variable "tags" {
   }
   sensitive   = false
 }
+
+
+
