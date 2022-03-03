@@ -766,27 +766,32 @@ module "webapp_aws_ecs_cluster" {
 
   source                       = "./terraform/aws/ecs/cluster"
 
-  name                         = "webapp"    # Required argument.
+  name                         = "webapp"      # Required argument.
 
-  capacity_providers           = [           # Optional argument, but keep it.
+  capacity_providers           = [             # Optional argument, but keep it.
     "FARGATE",
   ]
 
-  configuration = [
-    {
-      execute_command_configuration = [
-        {
-          kms_key_id        = null
-          logging           = "OVERRIDE"
-          log_configuration = [
-            {
-              cloud_watch_encryption_enabled = false
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  configuration                = [{            # Optional configuration block, but keep it.
+
+    execute_command_configuration = [{         # Optional configuration block, but keep it.
+
+      kms_key_id        = null                 # Optional argument, but keep it.
+      logging           = "OVERRIDE"           # Optional block argument, but keep it.
+
+      log_configuration = [{                   # Optional configuration block, but keep it.
+
+        cloud_watch_encryption_enabled = false # Optional block argument, but keep it.
+        cloud_watch_log_group_name     = null  # Optional block argument, but keep it.
+        s3_bucket_name                 = null  # Optional block argument, but keep it.
+        s3_bucket_encryption_enabled   = null  # Optional block argument, but keep it.
+        s3_key_prefix                  = null  # Optional block argument, but keep it.
+
+      }]
+
+    }]
+
+  }]
 
   tags                         = {           # Optional argument, but keep it.
     "Name"            = "WebApp"

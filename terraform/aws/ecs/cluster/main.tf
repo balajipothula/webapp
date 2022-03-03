@@ -33,11 +33,9 @@ resource "aws_ecs_cluster" "generic" {
 
 
   dynamic "configuration" {
-
-    for_each                           = var.configuration
+    for_each = var.configuration
     content {
     }
-
   }
 
 /*
