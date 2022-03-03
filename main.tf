@@ -780,20 +780,18 @@ module "webapp_aws_ecs_cluster" {
       logging           = "OVERRIDE"           # Optional block argument, but keep it.
 
       log_configuration = [{                   # Optional configuration block, but keep it.
-
         cloud_watch_encryption_enabled = false # Optional block argument, but keep it.
         cloud_watch_log_group_name     = null  # Optional block argument, but keep it.
         s3_bucket_name                 = null  # Optional block argument, but keep it.
         s3_bucket_encryption_enabled   = null  # Optional block argument, but keep it.
         s3_key_prefix                  = null  # Optional block argument, but keep it.
-
       }]
 
     }]
 
   }]
 
-  tags                         = {           # Optional argument, but keep it.
+  tags                         = {             # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
