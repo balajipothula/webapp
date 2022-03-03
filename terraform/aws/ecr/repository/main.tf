@@ -20,7 +20,7 @@ resource "aws_ecr_repository" "generic" {
   dynamic "image_scanning_configuration" {                # Optional configuration block, but keep it.
     for_each           = var.image_scanning_configuration # 
     content {
-      scan_on_push     = null                             # Required block argument.
+      scan_on_push     = true                             # Required block argument.
     }
   }
 
