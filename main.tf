@@ -773,10 +773,10 @@ module "webapp_aws_ecs_cluster" {
   ]
 
   configuration = [
-    
+    {
+      execute_command_configuration = []
+    }
   ]
-
-
 
   tags                         = {           # Optional argument, but keep it.
     "Name"            = "WebApp"
