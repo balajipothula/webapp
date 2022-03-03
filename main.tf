@@ -218,6 +218,7 @@ module "webapp_aws_efs_mount_target" {
 
 }
 
+/*
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
 
@@ -241,7 +242,7 @@ module "webapp_aws_instance" {
       volume_type                      = "gp2"                           # Optional block argument, but keep it.
     }
   ]
-*/
+
 //hibernation                          = false                           # Optional argument, but keep it.
 //instance_initiated_shutdown_behavior = "stop"                          # Optional argument, but keep it.
   instance_type                        = "t2.micro"                      # Optional argument, but keep it.
@@ -265,7 +266,7 @@ module "webapp_aws_instance" {
   security_groups                      = [                               # Optional argument, but keep it.
     "default",
   ]
-*/
+
 //subnet_id                            = "subnet-a54b1ecf"               # Optional argument, but keep it.
 
   tags                                 = {                               # Optional argument, but keep it.
@@ -283,6 +284,7 @@ module "webapp_aws_instance" {
   ]          
 
 }
+*/
 
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
@@ -727,3 +729,30 @@ module "webapp_aws_vpc_endpoint" {
 
 }
 */
+
+# Creation of AWS ECR (Elastic Container Registry) Repository for WebApp.
+module "webapp_aws_ecr_repository" {
+
+  source               = "./terraform/aws/ecr/repository"
+
+  name                 = "webapp"    # Required argument.
+
+  encryption_configuration {         # Optional configuration block, but keep it.
+    encryption_type    = "AES256"    # Optional block argument but keep it.
+  //kms_key            = ""          # Optional block argument, but will become mandatory when encryption_type is KMS.
+  }
+
+  image_tag_mutability = "IMMUTABLE" # Optional argument, but keep it.
+
+  image_scanning_configuration {     # Optional configuration block, but keep it.
+    scan_on_push       = true        # Required block argument.
+  }
+
+  tags                 = {           # Optional argument, but keep it.
+    "Name"            = "WebApp"
+    "AppName"         = "Python FastAPI Web App"
+    "DeveloperName"   = "Balaji Pothula"
+    "DeveloperEmail"  = "balan.pothula@gmail.com"
+  }
+
+}
