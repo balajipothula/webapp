@@ -774,7 +774,12 @@ module "webapp_aws_ecs_cluster" {
 
   configuration = [
     {
-      execute_command_configuration = []
+      execute_command_configuration = [
+        {
+          kms_key_id = null
+          logging    = "OVERRIDE"
+        }
+      ]
     }
   ]
 
