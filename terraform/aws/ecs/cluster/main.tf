@@ -3,7 +3,9 @@
 # Attribute name : name
 # Argument       : var.name
 # Variable  name : name
-resource "aws_ecs_cluster" "job_log_web_ui_cluster" {
+resource "aws_ecs_cluster" "generic" {
+
+  name                                 = var.name                           # Required argument.
 
   capacity_providers                   = var.capacity_providers             # Optional argument, but keep it.
 
@@ -28,8 +30,6 @@ resource "aws_ecs_cluster" "job_log_web_ui_cluster" {
     base                              = var.base                            # Optional block argument.
   }
 */
-
-  name                                = var.name                            # Required argument.
 
   setting {                                                                 # Optional configuration block, but keep it.
     name                              = var.setting_name                    # Required block argument.

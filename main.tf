@@ -760,3 +760,20 @@ module "webapp_aws_ecr_repository" {
   }
 
 }
+
+# Creation of AWS ECS  (Elastic Container Service) Cluster for WebApp.
+module "webapp_aws_ecs_cluster" {
+
+  source                       = "./terraform/aws/ecs/cluster"
+
+  name                         = "webapp"    # Required argument.
+  capacity_providers           = "FARGATE"   # Optional argument, but keep it.
+
+  tags                         = {           # Optional argument, but keep it.
+    "Name"            = "WebApp"
+    "AppName"         = "Python FastAPI Web App"
+    "DeveloperName"   = "Balaji Pothula"
+    "DeveloperEmail"  = "balan.pothula@gmail.com"
+  }
+
+}
