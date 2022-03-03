@@ -615,11 +615,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-
-
-/*
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
@@ -707,7 +703,6 @@ module "webapp_aws_secretsmanager_secret_version" {
 
 }
 
-
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
@@ -767,7 +762,7 @@ module "webapp_aws_ecs_cluster" {
   capacity_providers                 = [        # Optional argument, but keep it.
     "FARGATE",
   ]
-
+/*
   configuration                      = [{       # Optional configuration block, but keep it.
 
     execute_command_configuration = [{          # Optional configuration block, but keep it.
@@ -786,7 +781,7 @@ module "webapp_aws_ecs_cluster" {
     }]
 
   }]
-
+*/
   default_capacity_provider_strategy = [{       # Optional configuration block.
     capacity_provider = "webapp"                # Required block argument.
     weight            = 50                      # Optional block argument.
