@@ -776,8 +776,13 @@ module "webapp_aws_ecs_cluster" {
     {
       execute_command_configuration = [
         {
-          kms_key_id = null
-          logging    = "OVERRIDE"
+          kms_key_id        = null
+          logging           = "OVERRIDE"
+          log_configuration = [
+            {
+              cloud_watch_encryption_enabled = false
+            }
+          ]
         }
       ]
     }
