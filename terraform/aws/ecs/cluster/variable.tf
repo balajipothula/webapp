@@ -5,10 +5,10 @@ variable "configuration" {
       logging           = string
       log_configuration = list(object({
         cloud_watch_encryption_enabled = string
-        cloud_watch_log_group_name     = string
-        s3_bucket_name                 = string
-        s3_bucket_encryption_enabled   = string
-        s3_key_prefix                  = string
+      //cloud_watch_log_group_name     = string
+      //s3_bucket_name                 = string
+      //s3_bucket_encryption_enabled   = string
+      //s3_key_prefix                  = string
       }))
     }))
   }))
