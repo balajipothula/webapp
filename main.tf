@@ -737,20 +737,16 @@ module "webapp_aws_ecr_repository" {
 
   name                         = "webapp"    # Required argument.
 
-  encryption_configuration     = [           # Optional configuration block, but keep it.
-    {          
+  encryption_configuration     = [{          # Optional configuration block, but keep it.
       encryption_type = "AES256"             # Optional block argument but keep it.
     //kms_key         = ""                   # Optional block argument, but will become mandatory when encryption_type is KMS.
-    }
-  ]
+  }]
 
   image_tag_mutability         = "IMMUTABLE" # Optional argument, but keep it.
 
-  image_scanning_configuration = [           # Optional configuration block, but keep it.
-    {     
+  image_scanning_configuration = [{          # Optional configuration block, but keep it. 
       scan_on_push = true                    # Required block argument.
-    }
-  ]
+  }]
 
   tags                         = {           # Optional argument, but keep it.
     "Name"            = "WebApp"
@@ -789,6 +785,12 @@ module "webapp_aws_ecs_cluster" {
 
     }]
 
+  }]
+
+  default_capacity_provider_strategy   = [{    # Optional configuration block.
+    capacity_provider = "webapp"               # Required block argument.
+    weight            = 50                     # Optional block argument.
+    base              = 3                      # Optional block argument.
   }]
 
   setting                              = [{    # Optional configuration block, but keep it.

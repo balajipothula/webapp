@@ -36,10 +36,10 @@ variable "configuration" {
 
 }
 
-variable "setting" {
+variable "default_capacity_provider_strategy" {
   type        = list(map(string))
   default     = []
-  description = "Configuration block with cluster settings."
+  description = "Configuration block for capacity provider strategy to use by default for the cluster."
   sensitive   = false
 }
 
@@ -130,7 +130,7 @@ variable "s3_key_prefix" {
 // default_capacity_provider_strategy configuration block argument.
 variable "capacity_provider" {
   type        = string
-  default     = "job_log_web_ui_capacity_provider"
+  default     = "generic"
   description = "The short name of the capacity provider."
   validation {
     condition     = var.capacity_provider != null
@@ -171,6 +171,13 @@ variable "name" {
     condition     = var.name != null && 1 <= length(var.name) && length(var.name) <= 255
     error_message = "Error: name value must not null, name lenght must be between 1 and 255 and name must start with alphabets."
   }
+  sensitive   = false
+}
+
+variable "setting" {
+  type        = list(map(string))
+  default     = []
+  description = "Configuration block with cluster settings."
   sensitive   = false
 }
 

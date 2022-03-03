@@ -15,20 +15,14 @@ resource "aws_ecs_cluster" "generic" {
     }
   }
 
-/*
-  default_capacity_provider_strategy {                                      # Optional configuration block.
-    capacity_provider                 = var.capacity_provider               # Required block argument.
-    weight                            = var.weight                          # Optional block argument.
-    base                              = var.base                            # Optional block argument.
+  dynamic "default_capacity_provider_strategy" {                            # Optional configuration block.
+    for_each = var.default_capacity_provider_strategy                       # Reading all default_capacity_provider_strategy configurations.
+    content {
+      capacity_provider = var.capacity_provider                             # Required block argument.
+      weight            = var.weight                                        # Optional block argument.
+      base              = var.base                                          # Optional block argument.
+    }   
   }
-*/
-
-/*
-  setting {                                                                 # Optional configuration block, but keep it.
-    name                              = var.setting_name                    # Required block argument.
-    value                             = var.setting_value                   # Required block argument.
-  }
-*/
 
   dynamic "setting" {                                                       # Optional block, but keep it.
     for_each = var.setting                                                  # Reading all setting configurations.
