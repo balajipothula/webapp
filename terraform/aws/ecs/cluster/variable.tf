@@ -37,7 +37,7 @@ variable "configuration" {
 }
 
 variable "setting" {
-  type        = list(map())
+  type        = list(map(string))
   default     = []
   description = "Configuration block with cluster settings."
   sensitive   = false
