@@ -767,7 +767,7 @@ module "webapp_aws_ecs_cluster" {
   source                       = "./terraform/aws/ecs/cluster"
 
   name                         = "webapp"    # Required argument.
-  capacity_providers           = "FARGATE"   # Optional argument, but keep it.
+  capacity_providers           = ["FARGATE"] # Optional argument, but keep it.
 
   tags                         = {           # Optional argument, but keep it.
     "Name"            = "WebApp"

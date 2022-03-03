@@ -3,7 +3,7 @@ variable "capacity_providers" {
   default     = ["FARGATE", "FARGATE_SPOT"]
   description = "List of short names of one or more capacity providers to associate with the cluster."
   validation {
-    condition     = var.capacity_providers != null && 1 <= length(var.capacity_providers)
+    condition     = var.capacity_providers != null && 0 < length(var.capacity_providers)
     error_message = "Error: capacity_providers value must not null."
   }
   sensitive   = false
