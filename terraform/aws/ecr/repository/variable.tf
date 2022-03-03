@@ -47,6 +47,7 @@ variable "image_tag_mutability" {
   sensitive   = false
 }
 
+/*
 // image_scanning_configuration configuration block argument.
 variable "scan_on_push" {
   type        = bool
@@ -58,6 +59,7 @@ variable "scan_on_push" {
   }
   sensitive   = false
 }
+*/
 
 variable "name" {
   type        = string
