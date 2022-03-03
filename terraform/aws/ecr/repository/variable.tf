@@ -1,6 +1,6 @@
 variable "encryption_configuration" {
-  type        = list(map(string))
-  default     = []
+  type        = map(string)
+  default     = {}
   description = "Encryption configuration for the repository."
   sensitive   = false
 }
