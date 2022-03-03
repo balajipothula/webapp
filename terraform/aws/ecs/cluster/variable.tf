@@ -1,14 +1,14 @@
 variable "configuration" {
   type = list(object({
     execute_command_configuration = list(object({
-      kms_key_id        = ""
-      logging           = ""
+      kms_key_id        = " "
+      logging           = " "
       log_configuration = list(object({
-        cloud_watch_encryption_enabled = ""
-        cloud_watch_log_group_name     = ""
-        s3_bucket_name                 = ""
-        s3_bucket_encryption_enabled   = ""
-        s3_key_prefix                  = ""
+        cloud_watch_encryption_enabled = " "
+        cloud_watch_log_group_name     = " "
+        s3_bucket_name                 = " "
+        s3_bucket_encryption_enabled   = " "
+        s3_key_prefix                  = " "
       }))
     }))
   }))
