@@ -1,18 +1,18 @@
 variable "configuration" {
   type = list(object({
     execute_command_configuration = list(object({
-      kms_key_id        = null
-      logging           = null
+      kms_key_id        = ""
+      logging           = ""
       log_configuration = list(object({
-        cloud_watch_encryption_enabled = null
-        cloud_watch_log_group_name     = null
-        s3_bucket_name                 = null
-        s3_bucket_encryption_enabled   = null
-        s3_key_prefix                  = null
+        cloud_watch_encryption_enabled = ""
+        cloud_watch_log_group_name     = ""
+        s3_bucket_name                 = ""
+        s3_bucket_encryption_enabled   = ""
+        s3_key_prefix                  = ""
       }))
     }))
   }))
-  default = []
+  default     = []
   description = "The execute command configuration for the cluster."
   sensitive   = false
 }
