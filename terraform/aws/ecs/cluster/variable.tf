@@ -1,5 +1,5 @@
 variable "configuration" {
-  type = list(map({
+  type = list(object({
     execute_command_configuration = list(object({
       kms_key_id        = null
       logging           = null
