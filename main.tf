@@ -733,22 +733,26 @@ module "webapp_aws_vpc_endpoint" {
 # Creation of AWS ECR (Elastic Container Registry) Repository for WebApp.
 module "webapp_aws_ecr_repository" {
 
-  source               = "./terraform/aws/ecr/repository"
+  source                       = "./terraform/aws/ecr/repository"
 
-  name                 = "webapp"    # Required argument.
+  name                         = "webapp"    # Required argument.
 
-  encryption_configuration = [{         # Optional configuration block, but keep it.
-    encryption_type    = "AES256"    # Optional block argument but keep it.
-  //kms_key            = ""          # Optional block argument, but will become mandatory when encryption_type is KMS.
-  }]
+  encryption_configuration     = [           # Optional configuration block, but keep it.
+    {          
+    encryption_type            = "AES256"    # Optional block argument but keep it.
+  //kms_key                    = ""          # Optional block argument, but will become mandatory when encryption_type is KMS.
+    }
+  ]
 
-  image_tag_mutability = "IMMUTABLE" # Optional argument, but keep it.
+  image_tag_mutability         = "IMMUTABLE" # Optional argument, but keep it.
 
-  image_scanning_configuration = [{     # Optional configuration block, but keep it.
-    scan_on_push       = true        # Required block argument.
-  }]
+  image_scanning_configuration = [           # Optional configuration block, but keep it.
+    {     
+      scan_on_push = true                    # Required block argument.
+    }
+  ]
 
-  tags                 = {           # Optional argument, but keep it.
+  tags                         = {           # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"

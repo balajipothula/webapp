@@ -17,13 +17,6 @@ variable "encryption_type" {
   sensitive   = false
 }
 
-variable "image_scanning_configuration" {
-  type        = list(map(string))
-  default     = []
-  description = "Configuration block that defines image scanning configuration for the repository."
-  sensitive   = false
-}
-
 // encryption_configuration configuration block argument.
 variable "kms_key" {
   type        = string
@@ -33,6 +26,13 @@ variable "kms_key" {
     condition     = var.kms_key != null
     error_message = "Error: kms_key value must not null."
   }
+  sensitive   = false
+}
+
+variable "image_scanning_configuration" {
+  type        = list(map(string))
+  default     = []
+  description = "Configuration block that defines image scanning configuration for the repository."
   sensitive   = false
 }
 
@@ -47,7 +47,6 @@ variable "image_tag_mutability" {
   sensitive   = false
 }
 
-/*
 // image_scanning_configuration configuration block argument.
 variable "scan_on_push" {
   type        = bool
@@ -59,7 +58,6 @@ variable "scan_on_push" {
   }
   sensitive   = false
 }
-*/
 
 variable "name" {
   type        = string
@@ -93,6 +91,3 @@ variable "tags" {
   }
   sensitive   = false
 }
-
-
-
