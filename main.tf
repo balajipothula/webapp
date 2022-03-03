@@ -760,45 +760,45 @@ module "webapp_aws_ecr_repository" {
 # Creation of AWS ECS  (Elastic Container Service) Cluster for WebApp.
 module "webapp_aws_ecs_cluster" {
 
-  source                       = "./terraform/aws/ecs/cluster"
+  source                             = "./terraform/aws/ecs/cluster"
 
-  name                         = "webapp"      # Required argument.
+  name                               = "webapp" # Required argument.
 
-  capacity_providers           = [             # Optional argument, but keep it.
+  capacity_providers                 = [        # Optional argument, but keep it.
     "FARGATE",
   ]
 
-  configuration                = [{            # Optional configuration block, but keep it.
+  configuration                      = [{       # Optional configuration block, but keep it.
 
-    execute_command_configuration = [{         # Optional configuration block, but keep it.
+    execute_command_configuration = [{          # Optional configuration block, but keep it.
 
-      kms_key_id        = null                 # Optional argument, but keep it.
-      logging           = "OVERRIDE"           # Optional block argument, but keep it.
+      kms_key_id        = null                  # Optional argument, but keep it.
+      logging           = "OVERRIDE"            # Optional block argument, but keep it.
 
-      log_configuration = [{                   # Optional configuration block, but keep it.
-        cloud_watch_encryption_enabled = false # Optional block argument, but keep it.
-        cloud_watch_log_group_name     = null  # Optional block argument, but keep it.
-        s3_bucket_name                 = null  # Optional block argument, but keep it.
-        s3_bucket_encryption_enabled   = null  # Optional block argument, but keep it.
-        s3_key_prefix                  = null  # Optional block argument, but keep it.
+      log_configuration = [{                    # Optional configuration block, but keep it.
+        cloud_watch_encryption_enabled = false  # Optional block argument, but keep it.
+        cloud_watch_log_group_name     = null   # Optional block argument, but keep it.
+        s3_bucket_name                 = null   # Optional block argument, but keep it.
+        s3_bucket_encryption_enabled   = null   # Optional block argument, but keep it.
+        s3_key_prefix                  = null   # Optional block argument, but keep it.
       }]
 
     }]
 
   }]
 
-  default_capacity_provider_strategy   = [{    # Optional configuration block.
-    capacity_provider = "webapp"               # Required block argument.
-    weight            = 50                     # Optional block argument.
-    base              = 3                      # Optional block argument.
+  default_capacity_provider_strategy = [{       # Optional configuration block.
+    capacity_provider = "webapp"                # Required block argument.
+    weight            = 50                      # Optional block argument.
+    base              = 3                       # Optional block argument.
   }]
 
-  setting                              = [{    # Optional configuration block, but keep it.
-    name  = "containerInsights"                # Required block argument.
-    value = "disabled"                         # Required block argument.
+  setting                            = [{       # Optional configuration block, but keep it.
+    name  = "containerInsights"                 # Required block argument.
+    value = "disabled"                          # Required block argument.
   }]
 
-  tags                                 = {     # Optional argument, but keep it.
+  tags                               = {        # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
