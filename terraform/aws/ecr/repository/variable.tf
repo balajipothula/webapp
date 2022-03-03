@@ -1,3 +1,10 @@
+variable "encryption_configuration" {
+  type        = list(map(string))
+  default     = []
+  description = "Encryption configuration for the repository."
+  sensitive   = false
+}
+
 // encryption_configuration configuration block argument.
 variable "encryption_type" {
   type        = string

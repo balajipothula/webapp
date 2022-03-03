@@ -737,10 +737,10 @@ module "webapp_aws_ecr_repository" {
 
   name                 = "webapp"    # Required argument.
 
-  encryption_configuration {         # Optional configuration block, but keep it.
+  encryption_configuration = [{         # Optional configuration block, but keep it.
     encryption_type    = "AES256"    # Optional block argument but keep it.
   //kms_key            = ""          # Optional block argument, but will become mandatory when encryption_type is KMS.
-  }
+  }]
 
   image_tag_mutability = "IMMUTABLE" # Optional argument, but keep it.
 
