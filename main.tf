@@ -762,7 +762,6 @@ module "webapp_aws_ecs_cluster" {
   capacity_providers                 = [        # Optional argument, but keep it.
     "FARGATE",
   ]
-
 /*
   configuration                      = [{       # Optional configuration block, but keep it.
 
@@ -782,14 +781,13 @@ module "webapp_aws_ecs_cluster" {
     }]
 
   }]
-*/
 
   default_capacity_provider_strategy = [{       # Optional configuration block.
     capacity_provider = "webapp"                # Required block argument.
     weight            = 50                      # Optional block argument.
     base              = 3                       # Optional block argument.
   }]
-
+*/
   setting                            = [{       # Optional configuration block, but keep it.
     name  = "containerInsights"                 # Required block argument.
     value = "disabled"                          # Required block argument.
