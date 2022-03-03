@@ -723,6 +723,7 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
+*/
 
 # Creation of AWS ECR (Elastic Container Registry) Repository for WebApp.
 module "webapp_aws_ecr_repository" {
@@ -750,7 +751,6 @@ module "webapp_aws_ecr_repository" {
   }
 
 }
-*/
 
 # Creation of AWS ECS  (Elastic Container Service) Cluster for WebApp.
 module "webapp_aws_ecs_cluster" {
