@@ -791,7 +791,12 @@ module "webapp_aws_ecs_cluster" {
 
   }]
 
-  tags                         = {             # Optional argument, but keep it.
+  setting                              = [{    # Optional configuration block, but keep it.
+    name  = "containerInsights"                # Required block argument.
+    value = "disabled"                         # Required block argument.
+  }]
+
+  tags                                 = {     # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
