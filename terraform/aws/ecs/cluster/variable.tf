@@ -1,9 +1,9 @@
 variable "configuration" {
   type = list(map({
-    execute_command_configuration = list(map({
+    execute_command_configuration = list(object({
       kms_key_id        = null
       logging           = null
-      log_configuration = list(map({
+      log_configuration = list(object({
         cloud_watch_encryption_enabled = null
         cloud_watch_log_group_name     = null
         s3_bucket_name                 = null
