@@ -218,7 +218,7 @@ module "webapp_aws_efs_mount_target" {
 
 }
 
-/*
+
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
 
@@ -284,7 +284,7 @@ module "webapp_aws_instance" {
   ]          
 
 }
-*/
+
 
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
@@ -723,7 +723,7 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
-*/
+
 
 # Creation of AWS ECR (Elastic Container Registry) Repository for WebApp.
 module "webapp_aws_ecr_repository" {
@@ -752,6 +752,7 @@ module "webapp_aws_ecr_repository" {
 
 }
 
+/*
 # Creation of AWS ECS  (Elastic Container Service) Cluster for WebApp.
 module "webapp_aws_ecs_cluster" {
 
@@ -787,7 +788,7 @@ module "webapp_aws_ecs_cluster" {
     weight            = 50                      # Optional block argument.
     base              = 3                       # Optional block argument.
   }]
-*/
+
   setting                            = [{       # Optional configuration block, but keep it.
     name  = "containerInsights"                 # Required block argument.
     value = "disabled"                          # Required block argument.
@@ -801,3 +802,5 @@ module "webapp_aws_ecs_cluster" {
   }
 
 }
+
+*/
