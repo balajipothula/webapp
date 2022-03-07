@@ -242,7 +242,7 @@ module "webapp_aws_instance" {
       volume_type                      = "gp2"                           # Optional block argument, but keep it.
     }
   ]
-
+*/
 //hibernation                          = false                           # Optional argument, but keep it.
 //instance_initiated_shutdown_behavior = "stop"                          # Optional argument, but keep it.
   instance_type                        = "t2.micro"                      # Optional argument, but keep it.
