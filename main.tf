@@ -266,7 +266,7 @@ module "webapp_aws_instance" {
   security_groups                      = [                               # Optional argument, but keep it.
     "default",
   ]
-
+*/
 //subnet_id                            = "subnet-a54b1ecf"               # Optional argument, but keep it.
 
   tags                                 = {                               # Optional argument, but keep it.
