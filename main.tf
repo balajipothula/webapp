@@ -218,7 +218,6 @@ module "webapp_aws_efs_mount_target" {
 
 }
 
-
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
 
