@@ -36,7 +36,7 @@ chmod 777 /home/ec2-user/root
 docker pull balajipothula/jenkins:openjdk11
 
 # run jenkins container.
-docker run --name jenkins -d -i --privileged -p 8080:8080 -v $HOME/root/.jenkins:/root/.jenkins -v $HOME/root/.m2:/root/m2 docker pull balajipothula/jenkins:openjdk11 sh
+# docker run --name jenkins -d -i --privileged -p 8080:8080 -v $HOME/root/.jenkins:/root/.jenkins -v $HOME/root/.m2:/root/m2 docker pull balajipothula/jenkins:openjdk11 sh
 
 # execute Jenkins in container.
-docker exec -i jenkins java -jar /root/.jenkins/jenkins.war --httpPort=8080 &
+# docker exec -i jenkins java -jar /root/.jenkins/jenkins.war --httpPort=8080 &
