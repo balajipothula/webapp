@@ -157,7 +157,7 @@ resource "aws_default_security_group" "update" {
 
   ingress {
     cidr_blocks = ["0.0.0.0/0"]
-    description = "API Gateway inbound traffic rule."
+    description = "Jenkins inbound traffic rule."
     protocol    = "tcp"
     to_port     = 8080
     from_port   = 8080
