@@ -33,7 +33,10 @@ mount -t nfs -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2
 chmod 777 /home/ec2-user/root
 
 # pull Jenkins supported Docker image.
-docker pull balajipothula/jenkins:openjdk8
+docker pull balajipothula/jenkins:openjdk11
 
-# run Jenkins.
-docker run --name jenkins -d -i --privileged -p 8080:8080 -v $HOME/root/.tomcat:/root/.tomcat -v $HOME/root/.jenkins:/root/.jenkins -v $HOME/root/.m2:/root/.m2 balajipothula/jenkins:openjdk8
+# run jenkins container.
+docker run --name jenkins -d -i --privileged -p 8080:8080 -v $HOME/root/.jenkins:/root/.jenkins -v $HOME/root/.m2:/root/m2 docker pull balajipothula/jenkins:openjdk11 sh
+
+# execute Jenkins in container.
+docker exec -i jenkins java -jar /root/.jenkins/jenkins.war --httpPort=8080 &
