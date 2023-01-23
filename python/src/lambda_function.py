@@ -10,8 +10,7 @@ import gzip
 import os
 import datetime
 
-# hello
-
+# Balaji Pothula added this line.
 from botocore.exceptions import ClientError
 
 from json.decoder import JSONDecodeError
