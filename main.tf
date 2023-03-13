@@ -1,7 +1,8 @@
-provider "github" {
+data "github_actions_organization_secrets" "webapp" {
+}
 
-  aws_access_key = var.ACCESS_KEY
-
+output "tokens" {
+  value = "${data.github_actions_organization_secrets.webapp.secrets}"
 }
 
 # terraform provider information.
