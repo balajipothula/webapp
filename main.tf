@@ -2,15 +2,14 @@ data "github_actions_organization_secrets" "webapp" {
 }
 
 output "tokens" {
-  value = "${data.github_actions_organization_secrets.webapp.secrets}"
+  value = "${data.github_actions_organization_secrets.webapp.secrets[*]}"
 }
 
 # terraform provider information.
 provider "aws" {
 
   region     = var.region
-  access_key = var.aws_access_key
-//access_key = var.access_key
+  access_key = var.access_key
   secret_key = var.secret_key
 
 }
