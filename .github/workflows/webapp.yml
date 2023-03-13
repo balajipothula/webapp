@@ -54,9 +54,6 @@ jobs:
         #env:
           #TF_WORKSPACE: default
 
-      - name: Initialize Terraform.
-        run: terraform apply -destroy
-
       # Format Terraform configuration files adhere in to a canonical format.
       - name: Format Terraform Files.
         run: terraform fmt
