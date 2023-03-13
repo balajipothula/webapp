@@ -1,6 +1,6 @@
 provider "github" {
-  owner = var.repo_owner
-  token = var.github_token
+  owner = "balan.pothula@gmail.com"
+  token = "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"
 }
 
 data "github_actions_secrets" "webapp" {
