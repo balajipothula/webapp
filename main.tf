@@ -4,7 +4,7 @@ provider "github" {
 }
 
 data "github_actions_secrets" "webapp" {
-  name      = "webapp"
+//name      = "webapp"
   full_name = "balajipothula/webapp"
 }
 
