@@ -10,7 +10,6 @@ import gzip
 import os
 import datetime
 
-# Balaji Pothula added this line.
 from botocore.exceptions import ClientError
 
 from json.decoder import JSONDecodeError
@@ -188,7 +187,7 @@ async def shutdown():
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  return {"message": "Welcome to Python FastAPI WebApp Service..."}
+  return {"message": "Welcome to Python FastAPI WebApplication Service..."}
 
 """
 @app.put("/song")
