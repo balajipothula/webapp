@@ -7,10 +7,10 @@ on:
 jobs:
   terraform:
     name: Running Terraform.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: Development
     # Use the Bash shell regardless whether
-    # the GitHub Actions runner is ubuntu-latest.
+    # the GitHub Actions runner is ubuntu-22.04.
     defaults:
       run:
         shell: bash
