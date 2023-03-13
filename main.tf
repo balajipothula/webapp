@@ -1,11 +1,9 @@
 provider "github" {
-app_auth {}
-//owner = "balan.pothula@gmail.com"
-//token = "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"
+  owner = "balan.pothula@gmail.com"
+  token = "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"
 }
 
 data "github_actions_secrets" "webapp" {
-//name      = "webapp"
   full_name = "balajipothula/webapp"
 }
 
