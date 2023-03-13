@@ -17,7 +17,7 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner.
       - name: Git Checkout.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Official Github Action to run Liquibase in your pipeline.
       #- name: Liquibase Pipeline.
