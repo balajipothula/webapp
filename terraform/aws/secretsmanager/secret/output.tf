@@ -13,12 +13,6 @@ output "arn" {
   sensitive   = false
 }
 
-output "rotation_enabled" {
-  value       = aws_secretsmanager_secret.generic.rotation_enabled
-  description = "Whether automatic rotation is enabled for this secret."
-  sensitive   = false
-}
-
 output "replica" {
   value       = aws_secretsmanager_secret.generic.replica
   description = "Attributes of a replica are described below."
