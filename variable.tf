@@ -11,16 +11,16 @@ variable "region" {
 
 variable "access_key" {
   type        = string
-  default     = null
-//default     = "AKIA2J3BLS3MBV3PLYPW"
+//default     = null
+  default     = "AKIA2J3BLS3MBV3PLYPW"
   description = "AWS_ACCESS_KEY_ID which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
 
 variable "secret_key" {
   type        = string
-  default     = null
-//default     = "r4veASwIACv/NSPza4Jo59W8yPk4dVkDC7OHP9oU"
+//default     = null
+  default     = "r4veASwIACv/NSPza4Jo59W8yPk4dVkDC7OHP9oU"
   description = "AWS_SECRET_ACCESS_KEY which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
