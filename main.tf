@@ -8,7 +8,7 @@ provider "github" {
 provider "aws" {
 
   region     = var.region
-  access_key = local.aws_access_key
+  access_key = github.aws_access_key
 //access_key = var.access_key
   secret_key = var.secret_key
 
