@@ -2,12 +2,12 @@
   "Version":"2012-10-17",
   "Statement":[
     {
-      "Sid":"YousicianS3IAMPolicy",
+      "Sid":"WebAppS3IAMPolicy",
       "Action":[
         "s3:GetObject"
       ],
       "Effect":"Allow",
-      "Resource":"arn:aws:s3:::webapp-aws-s3-bucket/*",
+      "Resource":"arn:aws:s3:::webapplication-aws-s3-bucket/*",
       "Principal":"*"
     }
   ]
