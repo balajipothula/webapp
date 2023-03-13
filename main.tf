@@ -1,4 +1,4 @@
-# Terraform provider information.
+# terraform provider information.
 provider "aws" {
 
   region     = var.region
