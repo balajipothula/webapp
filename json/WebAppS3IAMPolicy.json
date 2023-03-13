@@ -7,7 +7,7 @@
         "s3:GetObject"
       ],
       "Effect":"Allow",
-      "Resource":"arn:aws:s3:::webapp-aws-s3-bucket/*",
+      "Resource":"arn:aws:s3:::webapplication-aws-s3-bucket/*",
       "Principal":"*"
     }
   ]

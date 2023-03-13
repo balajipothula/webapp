@@ -234,7 +234,7 @@ variable "security_groups" {
 
 variable "subnet_id" {
   type        = string
-  default     = "subnet-1a42d556"
+  default     = "subnet-013922d91332c8ab8"
   description = "VPC Subnet ID to launch in."
   validation {
     condition     = var.subnet_id != null
