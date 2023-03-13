@@ -1,6 +1,6 @@
 provider "github" {
   owner = "balan.pothula@gmail.com"
-  token = "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"
+//token = "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"
 }
 
 data "github_actions_secrets" "webapp" {
