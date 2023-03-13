@@ -11,7 +11,7 @@ variable "file_system_id" {
 
 variable "subnet_id" {
   type        = string
-  default     = "subnet-a54b1ecf"
+  default     = "subnet-03fa50f3076b205e6"
   description = "The ID of the subnet to add the mount target in."
   validation {
     condition     = var.subnet_id != null
