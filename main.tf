@@ -173,6 +173,7 @@ resource "aws_default_security_group" "update" {
 
 }
 
+/*
 # Creation of AWS EFS (Elastic File System) for WebApp.
 module "webapp_aws_efs_file_system" {
 
@@ -187,7 +188,7 @@ module "webapp_aws_efs_file_system" {
     transition_to_ia                    = var.transition_to_ia                    # Optional block argument, but keep it.
     transition_to_primary_storage_class = var.transition_to_primary_storage_class # Optional block argument, but keep it.
   }
-*/
+
   performance_mode                      = "generalPurpose"                        # Optional argument, but keep it.
 //provisioned_throughput_in_mibps       = 8                                       # Optional argument, but only applicable with throughput_mode set to provisioned.
   tags                                  = {                                       # Optional argument, but keep it.
@@ -199,7 +200,9 @@ module "webapp_aws_efs_file_system" {
 //throughput_mode                       = var.throughput_mode                     # Optional argument, if value is provisioned, it will impact provisioned_throughput_in_mibps.
 
 }
+*/
 
+/*
 # Mounting of AWS EFS (Elastic File System) target for WebApp.
 module "webapp_aws_efs_mount_target" {
 
@@ -217,7 +220,9 @@ module "webapp_aws_efs_mount_target" {
   security_groups = data.aws_security_groups.default.ids # Optional argument, but keep it.
 
 }
+*/
 
+/*
 # Creation of AWS EC2 (Elastic Compute Cloud) Instance for WebApp.
 module "webapp_aws_instance" {
 
@@ -239,7 +244,7 @@ module "webapp_aws_instance" {
       volume_size                      = 8                               # Optional block argument, but keep it.
       volume_type                      = "gp2"                           # Optional block argument, but keep it.
   }]
-*/
+
 //hibernation                          = false                           # Optional argument, but keep it.
 //instance_initiated_shutdown_behavior = "stop"                          # Optional argument, but keep it.
   instance_type                        = "t2.micro"                      # Optional argument, but keep it.
@@ -261,7 +266,7 @@ module "webapp_aws_instance" {
   security_groups                      = [                               # Optional argument, but keep it.
     "default",
   ]
-*/
+
 //subnet_id                            = "subnet-a54b1ecf"               # Optional argument, but keep it.
 
   tags                                 = {                               # Optional argument, but keep it.
@@ -279,6 +284,7 @@ module "webapp_aws_instance" {
   ]          
 
 }
+*/
 
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
@@ -513,7 +519,6 @@ module "webapp_aws_apigatewayv2_route_index" {
 
 }
 
-/*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
 module "webapp_aws_apigatewayv2_route_put_song" {
 
@@ -718,7 +723,7 @@ module "webapp_aws_vpc_endpoint" {
 
 }
 
-
+/*
 # Creation of AWS ECR (Elastic Container Registry) Repository for WebApp.
 module "webapp_aws_ecr_repository" {
 
