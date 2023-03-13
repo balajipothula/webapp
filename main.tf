@@ -1,5 +1,5 @@
 provider "github" {
-  owner = "balan.pothula@gmail.com"
+//owner = "balan.pothula@gmail.com"
 //token = "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"
 }
 
