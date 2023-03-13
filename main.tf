@@ -1,10 +1,6 @@
 data "github_actions_organization_secrets" "webapp" {
 }
 
-output "tokens" {
-  value = "${data.github_actions_organization_secrets.webapp.secrets[*]}"
-}
-
 # terraform provider information.
 provider "aws" {
 
