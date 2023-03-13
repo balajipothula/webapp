@@ -33,9 +33,9 @@ variable "private_dns_enabled" {
 variable "subnet_ids" {
   type = list(string)
   default = [
-    "subnet-a54b1ecf",
-    "subnet-9fa323e3",
-    "subnet-1a42d556",
+    "subnet-013922d91332c8ab8",
+    "subnet-05cb6848703e6176d",
+    "subnet-03fa50f3076b205e6",
   ]
   description = "The ID of one or more subnets in which to create a network interface for the endpoint."
   validation {
