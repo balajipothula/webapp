@@ -1,3 +1,8 @@
+provider "github" {
+  owner = var.repo_owner
+  token = var.github_token
+}
+
 data "github_actions_secrets" "webapp" {
   name      = "webapp"
   full_name = "balajipothula/webapp"
