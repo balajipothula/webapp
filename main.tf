@@ -1,3 +1,9 @@
+provider "github" {
+
+  access_key = var.access_key
+
+}
+
 # terraform provider information.
 provider "aws" {
 
