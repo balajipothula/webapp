@@ -66,7 +66,7 @@ variable "license_info" {
 
 variable "s3_bucket" {
   type        = string
-  default     = "webapp-aws-s3-bucket"
+  default     = "webapplication-aws-s3-bucket"
   description = "S3 bucket location containing the function's deployment package, This bucket must reside in the same AWS region where you are creating the Lambda function."
   validation {
     condition     = var.s3_bucket != null
