@@ -1,4 +1,6 @@
-data "github_actions_organization_secrets" "webapp" {
+data "github_actions_secrets" "webapp" {
+  name      = "webapp"
+  full_name = "balajipothula/webapp"
 }
 
 # terraform provider information.
