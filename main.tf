@@ -1,15 +1,9 @@
-variable "token_github" {
-  type        = string
-  default     = null
-//default     = "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"
-  description = "GitHub token configured in 'webapp' repository."
-  sensitive   = true
-}
-
 provider "github" {
+
   owner = "balan.pothula@gmail.com"
   token = var.token_github
 //token = "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"
+
 }
 
 data "github_actions_secrets" "webapp" {
