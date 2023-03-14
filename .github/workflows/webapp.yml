@@ -68,9 +68,9 @@ jobs:
 
       # Generates an execution plan for Terraform.
       - name: Generate Terraform Plan.
-        run: terraform plan -no-color
+        run: terraform plan -var="token_github=${{ secrets.TOKEN_GITHUB }}"
         #continue-on-error: true
 
       # Apply an execution plan for Terraform.
-      - name: Apply Terraform Plan.
-        run: terraform apply -var="token_github=${{ secrets.TOKEN_GITHUB }}"
+      #- name: Apply Terraform Plan.
+        #run: terraform apply -var="token_github=${{ secrets.TOKEN_GITHUB }}"
