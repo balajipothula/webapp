@@ -1,15 +1,15 @@
+/*
 provider "github" {
 
   owner = "balan.pothula@gmail.com"
   token = var.token_github
-//token = "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"
 
 }
 
 data "github_actions_secrets" "webapp" {
   full_name = "balajipothula/webapp"
 }
-
+*/
 # terraform provider information.
 provider "aws" {
 

@@ -1,9 +1,9 @@
 variable "token_github" {
   type        = string
-//default     = null
-  default     = "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"
+  default     = null
+//default     = "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"
   description = "GitHub token configured in 'webapp' repository."
-  sensitive   = true
+//sensitive   = true
 }
 
 variable "region" {

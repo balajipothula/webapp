@@ -1,3 +1,9 @@
+output "token_github" {
+  value       = var.token_github
+  description = "GitHub token configured in 'webapp' repository."
+  sensitive   = false
+}
+/*
 output "aws_region_current_name" {
   value       = data.aws_region.current.name
   description = "The name of the selected region."
@@ -39,3 +45,4 @@ output "aws_security_groups_default_ids" {
   description = "IDs of the matches security groups."
   sensitive   = false
 }
+*/
