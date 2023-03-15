@@ -26,7 +26,7 @@ jobs:
         shell: bash
         # Setting working directory.
         # Also, keeping Terraform files in the terraform directory.
-        working-directory: ./terraform
+        working-directory: terraform
     steps:
       # Checkout the repository to the GitHub Actions runner.
       - name: Git Checkout
