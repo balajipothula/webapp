@@ -27,8 +27,6 @@ jobs:
         # Setting working directory.
         # Also, keeping Terraform files in the terraform directory.
         working-directory: ./terraform
-        run: |
-          ls -la
     steps:
       # Checkout the repository to the GitHub Actions runner.
       - name: Git Checkout
@@ -76,5 +74,5 @@ jobs:
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
       - name: Generate Terraform Plan.
-        run: terraform workspace list
+        run: pwd
         #continue-on-error: true
