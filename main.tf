@@ -344,7 +344,7 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapplication-aws-s3-bucket"        # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket"     # Optional argument, but keep it.
   acl    = "private"                             # Optional argument, but keep it.
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
   tags   = {                                     # Optional argument, but keep it.
@@ -674,7 +674,7 @@ module "webapp_aws_secretsmanager_secret" {
 
   description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
   force_overwrite_replica_secret = false                       # Optional argument, but keep it.
-  name                           = "webapp_secret"             # Optional argument, conflicts with name_prefix.
+  name                           = "webapplication_secret"     # Optional argument, conflicts with name_prefix.
   recovery_window_in_days        = 7                           # Optional argument, but keep it.
   tags                           = {                           # Optional argument, but keep it.
     "Name"            = "WebApp"
