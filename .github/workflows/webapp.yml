@@ -70,3 +70,6 @@ jobs:
       # Check that all Terraform configuration files adhere to a canonical format.
       - name: Check Terraform Files Format.
         run: terraform fmt -check
+      # Validate all Terraform configuration files.
+      - name: Validate Terraform Files.
+        run: terraform validate -no-color
