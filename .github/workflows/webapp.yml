@@ -27,6 +27,8 @@ jobs:
         # Setting working directory.
         # Also, keeping Terraform files in the terraform directory.
         working-directory: ./terraform
+        run: |
+          ls -la
     steps:
       # Checkout the repository to the GitHub Actions runner.
       - name: Git Checkout
