@@ -3,6 +3,7 @@ terraform {
 //cloud or remote blocks allows to store state remotely in Terraform Cloud.
 //cloud block is supported by 1.1.0 or higher versions of Terraform. 
 //cloud { }
+/*
   backend "remote" {
 
     hostname = "app.terraform.io"
@@ -16,7 +17,7 @@ terraform {
     }
 
   }
-
+*/
   required_providers {
 
     aws = {
