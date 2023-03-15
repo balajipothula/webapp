@@ -53,6 +53,7 @@ jobs:
       # loading any remote state, downloading modules, etc.
       - name: Initialize Terraform.
         run: terraform init -input=false -reconfigure
+        shell: bash
         #env:
           #TF_WORKSPACE: default
 
