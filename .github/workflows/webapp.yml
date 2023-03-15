@@ -74,5 +74,5 @@ jobs:
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
       - name: Generate Terraform Plan.
-        run: terraform plan -chdir=$(pwd)
+        run: terraform plan -chdir=$(pwd)/
         #continue-on-error: true
