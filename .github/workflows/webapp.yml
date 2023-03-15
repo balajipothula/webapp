@@ -1,24 +1,36 @@
 ---
-name: Create Lambda Function using Terraform
+name: WebApp deployment using Terraform.
 on:
   push:
     branches:
       - main
+  #pull_request:
+    #branches:
+      #- main
+env:
+  # Setting verbosity of Terraform logs.
+  TF_LOG: INFO
+  # Setting AWS Access Key Id and Secret Access Key.
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 jobs:
   terraform:
-    name: Running Terraform.
+    name: Running Terraform
+    # GitHub Actions runner is ubuntu-22.04.
     runs-on: ubuntu-22.04
-    environment: Development
-    # Use the Bash shell regardless whether
-    # the GitHub Actions runner is ubuntu-22.04.
+    # Environment is Development.
+    environment: dev
     defaults:
       run:
+        # Using bash shell.
         shell: bash
+        # Setting working directory.
+        # Also, keeping Terraform files in the terraform directory.
+        working-directory: ./terraform
     steps:
       # Checkout the repository to the GitHub Actions runner.
-      - name: Git Checkout.
+      - name: Git Checkout
         uses: actions/checkout@v3
-
       # Official Github Action to run Liquibase in your pipeline.
       #- name: Liquibase Pipeline.
         #uses: liquibase/liquibase-github-action@v3
@@ -29,7 +41,6 @@ jobs:
           #username: ${{ secrets.DB_USERNAME }}
           #password: ${{ secrets.DB_PASSWORD }}
           #url: ${{ secrets.DB_URL }}
-
       # Preparing and pushing documetation into README.md
       #- name: Prepare Terraform Doc and Push to README.md
         #uses: terraform-docs/gh-actions@main
@@ -38,43 +49,18 @@ jobs:
           #output-file: README.md
           #output-method: inject
           #git-push: "true"
-
-      # Install the latest version of Terraform CLI,
-      # and configure the Terraform CLI configuration file
-      # with a Terraform Cloud user API token.
-      - name: Setup Terraform.
+      # Installing the specified version of Terraform CLI on Runner.
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           #cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           terraform_version: 1.4.0
-          terraform_wrapper: false
-
+          #terraform_wrapper: false
       # Initialize a new or existing Terraform working directory by creating initial files,
       # loading any remote state, downloading modules, etc.
       - name: Initialize Terraform.
         run: terraform init -input=false -reconfigure
-        shell: bash
+        #run: terraform init -input=false -reconfigure
+        #shell: bash
         #env:
           #TF_WORKSPACE: default
-
-      # Format Terraform configuration files adhere in to a canonical format.
-      - name: Format Terraform Files.
-        run: terraform fmt
-
-      # Check that all Terraform configuration files adhere to a canonical format.
-      - name: Check Terraform Files Format.
-        run: terraform fmt -check
-
-      # Validate all Terraform configuration files.
-      - name: Validate Terraform Files.
-        run: terraform validate -no-color
-
-      # Generates an execution plan for Terraform.
-      - name: Generate Terraform Plan.
-        run: terraform plan -var="token_github=${{ secrets.TOKEN_GITHUB }}" -out webapp.plan
-        #continue-on-error: true
-
-      # Apply an execution plan for Terraform.
-      - name: Apply Terraform Plan.
-        run: terraform apply -input=false webapp.plan
-        #run: terraform apply -var="token_github=${{ secrets.TOKEN_GITHUB }}"
