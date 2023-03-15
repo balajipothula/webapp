@@ -73,8 +73,8 @@ jobs:
       - name: Terraform files validating.
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
-      #- name: Terraform plan generation.
-        #run: terraform plan -input=false -out=webapp.tfplan
+      - name: Terraform plan generation.
+        run: terraform plan -input=false -out=webapp.tfplan
         #continue-on-error: true
       # Apply an execution plan for Terraform.
       #- name: Terraform plan applying.
