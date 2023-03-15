@@ -26,7 +26,7 @@ jobs:
         shell: bash
         # Setting working directory.
         # Also, keeping Terraform files in the terraform directory.
-        working-directory: terraform
+        working-directory: .
     steps:
       # Checkout the repository to the GitHub Actions runner.
       - name: Git Checkout
@@ -59,19 +59,19 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files,
       # loading any remote state, downloading modules, etc.
       - name: Initialize Terraform.
-        run: terraform init -input=false -reconfigure
+        run: terraform -chdir=/home/runner/work/webapp/webapp/ init -input=false -reconfigure
         #shell: bash
         env:
           TF_WORKSPACE: default
       # Format Terraform configuration files adhere in to a canonical format.
       - name: Format Terraform Files.
-        run: terraform fmt
+        run: terraform -chdir=/home/runner/work/webapp/webapp/ fmt
       # Check that all Terraform configuration files adhere to a canonical format.
       - name: Check Terraform Files Format.
-        run: terraform fmt -check
+        run: terraform -chdir=/home/runner/work/webapp/webapp/ fmt -check
       # Validate all Terraform configuration files.
       - name: Validate Terraform Files.
-        run: terraform validate -no-color
+        run: terraform -chdir=/home/runner/work/webapp/webapp/ validate -no-color
       # Generates an execution plan for Terraform.
       - name: Generate Terraform Plan.
         run: terraform -chdir=/home/runner/work/webapp/webapp/ plan
