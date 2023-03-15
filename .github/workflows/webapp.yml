@@ -73,3 +73,7 @@ jobs:
       # Validate all Terraform configuration files.
       - name: Validate Terraform Files.
         run: terraform validate -no-color
+      # Generates an execution plan for Terraform.
+      - name: Generate Terraform Plan.
+        run: terraform plan -no-color -input=false -out webapp.tfplan
+        #continue-on-error: true
