@@ -64,3 +64,6 @@ jobs:
         #shell: bash
         #env:
           #TF_WORKSPACE: default
+      # Format Terraform configuration files adhere in to a canonical format.
+      - name: Format Terraform Files.
+        run: terraform fmt
