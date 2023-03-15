@@ -74,5 +74,5 @@ jobs:
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
       - name: Generate Terraform Plan.
-        run: terraform plan -input=false webapp.tfplan
+        run: terraform -chdir=./ plan -input=false webapp.tfplan
         #continue-on-error: true
