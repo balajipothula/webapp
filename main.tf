@@ -1,3 +1,4 @@
+/*
 provider "github" {
 
   owner = "balan.pothula@gmail.com"
@@ -8,7 +9,7 @@ provider "github" {
 data "github_actions_secrets" "webapp" {
   full_name = "balajipothula/webapp"
 }
-
+*/
 # terraform provider information.
 provider "aws" {
 
