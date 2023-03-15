@@ -59,7 +59,7 @@ jobs:
       # Initialize a new or existing Terraform working directory by creating initial files,
       # loading any remote state, downloading modules, etc.
       - name: Terraform initialization.
-        run: terraform init -input=false -reconfigure
+        run: terraform init -input=false -reconfigure && terraform de
         #shell: bash
         env:
           TF_WORKSPACE: default
@@ -73,9 +73,12 @@ jobs:
       - name: Terraform files validating.
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
-      - name: Terraform plan generation.
-        run: terraform plan -input=false -out=webapp.tfplan
+      #- name: Terraform plan generation.
+        #run: terraform plan -input=false -out=webapp.tfplan
         #continue-on-error: true
       # Apply an execution plan for Terraform.
+      #- name: Terraform plan applying.
+        #run: terraform apply -auto-approve -input=false webapp.tfplan
+      # Apply an execution plan for Terraform.
       - name: Terraform plan applying.
-        run: terraform apply -auto-approve -input=false webapp.tfplan
+        run: terraform apply -destroy
