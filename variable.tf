@@ -1,14 +1,13 @@
 variable "token_github" {
   type        = string
-//default     = null
-  default     = "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"
+  default     = null
   description = "GitHub token configured in 'webapp' repository."
 //sensitive   = true
 }
 
 variable "region" {
   type        = string
-  default     = "eu-central-1"
+  default     = "ap-south-2"
   description = "AWS Region to launch your resources."
   validation {
     condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
@@ -19,16 +18,14 @@ variable "region" {
 
 variable "access_key" {
   type        = string
-//default     = null
-  default     = "AKIA2J3BLS3MBV3PLYPW"
+  default     = null
   description = "AWS_ACCESS_KEY_ID which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
 
 variable "secret_key" {
   type        = string
-//default     = null
-  default     = "r4veASwIACv/NSPza4Jo59W8yPk4dVkDC7OHP9oU"
+  default     = null
   description = "AWS_SECRET_ACCESS_KEY which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
