@@ -75,7 +75,7 @@ resource "aws_rds_cluster" "generic" {
   enable_http_endpoint                = var.enable_http_endpoint                                 # Optional argument but keep it.
 //enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports                      # Optional argument but if enables getting error.
   engine                              = var.engine                                               # Optional argument but keep it.
-  engine_mode                         = var.engine_mode                                          # Optional argument but keep it.
+//engine_mode                         = var.engine_mode                                          # Optional argument but if enables getting error.
   engine_version                      = var.engine_version                                       # Optional argument but keep it.
   final_snapshot_identifier           = "${var.final_snapshot_identifier}-${local.datetime}"     # Optional argument but keep it.
 //global_cluster_identifier           = var.global_cluster_identifier                            # Optional argument.
