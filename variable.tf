@@ -7,7 +7,7 @@ variable "token_github" {
 
 variable "region" {
   type        = string
-  default     = "ap-south-2"
+  default     = "eu-central-1"
   description = "AWS Region to launch your resources."
   validation {
     condition     = var.region != null && length(regexall("[^a-z-a-z-0-9]", var.region)) == 0
