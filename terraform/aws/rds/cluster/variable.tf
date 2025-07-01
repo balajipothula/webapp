@@ -174,10 +174,10 @@ variable "engine_mode" {
 
 variable "engine_version" {
   type        = string
-  default     = "10.14"
+  default     = "16.1"
   description = "Aurora database engine version."
   validation {
-    condition     = var.engine_version != null && var.engine_version == "10.14"
+    condition     = var.engine_version != null
     error_message = "Error: engine value must not null."
   }
   sensitive   = false
