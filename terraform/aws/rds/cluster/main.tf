@@ -55,7 +55,6 @@ resource "aws_rds_cluster" "generic" {
       port,
       preferred_backup_window,
       preferred_maintenance_window,
-      scaling_configuration,
     ]
   }
 
@@ -97,15 +96,6 @@ resource "aws_rds_cluster" "generic" {
   //restore_to_time                   = var.restore_to_time                                      # Optional block argument, Conflicts with use_latest_restorable_time argument.
   }
 */
-
-//Configuration is only valid when engine_mode is set to serverless.
-  scaling_configuration {                                                                        # Optional argument block but keep it.
-    auto_pause                        = var.auto_pause                                           # Optional block argument.
-    max_capacity                      = var.max_capacity                                         # Optional block argument.
-    min_capacity                      = var.min_capacity                                         # Optional block argument.
-    seconds_until_auto_pause          = var.seconds_until_auto_pause                             # Optional block argument.
-    timeout_action                    = var.timeout_action                                       # Optional block argument.
-  }
 
 //RDS Aurora Serverless does not support loading data from S3.
 /*
