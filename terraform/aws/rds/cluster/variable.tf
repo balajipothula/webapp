@@ -164,7 +164,7 @@ variable "engine" {
 variable "engine_mode" {
   type        = string
   default     = "serverless-v2"
-  description = "The database engine mode, supported engine modes are: global, multimaster, parallelquery, provisioned, serverless."
+  description = "The database engine mode, supported engine modes are: global, multimaster, parallelquery, provisioned, serverless-v2."
   validation {
     condition     = var.engine_mode != null
     error_message = "Error: engine value must not null."
