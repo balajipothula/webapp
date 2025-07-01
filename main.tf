@@ -344,11 +344,11 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket"     # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket-1"   # Optional argument, but keep it.
   acl    = "private"                             # Optional argument, but keep it.
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
   tags   = {                                     # Optional argument, but keep it.
-    "Name"            = "WebApp"
+    "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
