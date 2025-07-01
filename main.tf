@@ -348,7 +348,7 @@ module "webapp_aws_s3_bucket" {
   acl    = "private"                             # Optional argument, but keep it.
   policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
   tags   = {                                     # Optional argument, but keep it.
-    "Name"            = "webapp"
+    "Name"            = "WebApplication"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
