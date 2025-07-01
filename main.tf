@@ -427,8 +427,8 @@ module "webapp_aws_lambda_function" {
   s3_bucket                      = module.webapp_aws_s3_bucket.id               # Optional argument, but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                            # Optional argument, but keep it.
-    "Name"            = "WebApp"
-    "AppName"         = "Python FastAPI Web App"
+    "Name"            = "webapp"
+    "AppName"         = "Python FastAPI Web Application"
     "DeveloperName"   = "Balaji Pothula"
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
