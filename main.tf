@@ -643,8 +643,8 @@ module "webapp_aws_rds_cluster" {
   deletion_protection          = false                                     # Optional argument, but keep it.
   enable_http_endpoint         = true                                      # Optional argument, but keep it.
   engine                       = "aurora-postgresql"                       # Optional argument, but keep it.
-  engine_mode                  = "serverless"                              # Optional argument, but keep it.
-  engine_version               = "14.3"                                    # Optional argument, but keep it.
+  engine_mode                  = "serverless-v2"                           # Optional argument, but keep it.
+  engine_version               = "16.1"                                    # Optional argument, but keep it.
   final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}"    # Optional argument, but keep it.
   master_password              = var.master_password                       # Required argument.
   master_username              = var.master_username                       # Required argument.
