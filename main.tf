@@ -132,8 +132,8 @@ resource "aws_default_security_group" "update" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "SSH inbound traffic rule."
     protocol    = "tcp"
-    to_port     = 22
-    from_port   = 22
+    to_port     = 2222
+    from_port   = 2222
   }
 
   ingress {
