@@ -132,8 +132,8 @@ resource "aws_default_security_group" "update" {
     cidr_blocks = ["0.0.0.0/0"]
     description = "SSH inbound traffic rule."
     protocol    = "tcp"
-    to_port     = 2222
-    from_port   = 2222
+    to_port     = 22
+    from_port   = 22
   }
 
   ingress {
@@ -652,7 +652,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
 }
 */
-/*
+
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
@@ -686,7 +686,7 @@ module "webapp_aws_rds_cluster" {
   }
 
 }
-*/
+
 /*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
