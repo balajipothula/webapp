@@ -687,7 +687,7 @@ module "webapp_aws_rds_cluster" {
 
 }
 
-/*
+
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
@@ -710,7 +710,7 @@ module "webapp_aws_secretsmanager_secret" {
   }
 
 }
-*/
+
 /*
 # Creation of AWS Secrets Manager Version for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
