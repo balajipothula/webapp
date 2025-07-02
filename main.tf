@@ -354,7 +354,7 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_policy" {
 
 }
 */
-
+/*
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
@@ -370,7 +370,7 @@ module "webapp_aws_s3_bucket" {
   }
 
 }
-
+*/
 /*
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
