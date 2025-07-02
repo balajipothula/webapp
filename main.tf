@@ -105,7 +105,7 @@ data "archive_file" "webapp" {
   source_file = local.webapp_src
   output_path = "./${local.webapp_zip}"
 }
-
+*/
 locals {
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
@@ -114,7 +114,7 @@ locals {
   webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-*/
+
 # AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
