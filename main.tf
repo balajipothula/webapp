@@ -98,7 +98,7 @@ data "aws_ami" "default" {
 
 }
 */
-
+/*
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
@@ -114,7 +114,7 @@ locals {
   webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-
+*/
 # AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
@@ -298,7 +298,7 @@ module "webapp_aws_instance" {
 
 }
 */
-
+/*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -310,7 +310,8 @@ module "webapp_aws_iam_role" {
   name                  = "WebAppLambdaIAMRole"                   # Optional argument, but keep it.
 
 }
-
+*/
+/*
 # Creation of AWS IAM Policy for WebApp Lambda Function.
 module "webapp_aws_iam_policy" {
 
@@ -322,7 +323,8 @@ module "webapp_aws_iam_policy" {
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
-
+*/
+/*
 # Creation of AWS IAM Role Policy attachment for WebApp Lambda Function.
 module "webapp_aws_iam_role_policy_attachment" {
 
@@ -337,9 +339,10 @@ module "webapp_aws_iam_role_policy_attachment" {
   policy_arn = module.webapp_aws_iam_policy.arn # Required argument.
 
 }
-
+*/
 # Creation of AWS S3 Bucket for WebApp Lambda Function.
 # Creation of AWS S3 Bucket for WebApp RDS Credentials Rotator Lambda Function.
+
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
@@ -356,6 +359,7 @@ module "webapp_aws_s3_bucket" {
 
 }
 
+/*
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
 
@@ -378,7 +382,8 @@ module "webapp_aws_s3_bucket_object" {
   }
 
 }
-
+*/
+/*
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -396,7 +401,8 @@ module "webapp_aws_lambda_layer_version" {
   source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
 
 }
-
+*/
+/*
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
@@ -435,7 +441,8 @@ module "webapp_aws_lambda_function" {
   timeout                        = 60                                           # Optional argument, but keep it.
 
 }
-
+*/
+/*
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_aws_cloudwatch_log_group" {
 
@@ -455,7 +462,8 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-
+*/
+/*
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_api" {
 
@@ -465,7 +473,8 @@ module "webapp_aws_apigatewayv2_api" {
   protocol_type = "HTTP"      # Required argument.
 
 }
-
+*/
+/*
 # Creation of AWS API Gateway V2 Stage for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_stage" {
 
@@ -480,7 +489,8 @@ module "webapp_aws_apigatewayv2_stage" {
   auto_deploy = true                                  # Optional argument, but keep it.
 
 }
-
+*/
+/*
 # Creation of AWS API Gateway V2 Integration for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_integration" {
 
@@ -497,7 +507,8 @@ module "webapp_aws_apigatewayv2_integration" {
   integration_method = "ANY"                                 # Optional argument, but keep it.
 
 }
-
+*/
+/*
 # Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
 module "webapp_aws_lambda_permission" {
 
@@ -512,10 +523,11 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name           # Required argument.
   principal     = "apigateway.amazonaws.com"                                # Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                            # Optional argument.
-  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
+  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}//*" # Optional argument. Update here
 
 }
-
+*/
+/*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
 module "webapp_aws_apigatewayv2_route_index" {
 
@@ -627,7 +639,8 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-
+*/
+/*
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
@@ -661,7 +674,8 @@ module "webapp_aws_rds_cluster" {
   }
 
 }
-
+*/
+/*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
@@ -684,7 +698,8 @@ module "webapp_aws_secretsmanager_secret" {
   }
 
 }
-
+*/
+/*
 # Creation of AWS Secrets Manager Version for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret_version" {
@@ -714,7 +729,8 @@ module "webapp_aws_secretsmanager_secret_version" {
   }) 
 
 }
-
+*/
+/*
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
@@ -735,7 +751,7 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
 
 }
-
+*/
 /*
 # Creation of AWS ECR (Elastic Container Registry) Repository for WebApp.
 module "webapp_aws_ecr_repository" {
@@ -763,7 +779,7 @@ module "webapp_aws_ecr_repository" {
   }
 
 }
-
+*/
 /*
 # Creation of AWS ECS  (Elastic Container Service) Cluster for WebApp.
 module "webapp_aws_ecs_cluster" {
