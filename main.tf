@@ -343,13 +343,25 @@ module "webapp_aws_iam_role_policy_attachment" {
 # Creation of AWS S3 Bucket for WebApp Lambda Function.
 # Creation of AWS S3 Bucket for WebApp RDS Credentials Rotator Lambda Function.
 
+/*
+data "aws_iam_policy_document" "webapp_aws_s3_bucket_policy" {
+
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["arn:aws:s3:::*"]
+    effect = "Allow"
+  }
+
+}
+*/
+
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
   bucket = "webapp-aws-lambda-src-s3-bucket-5"   # Optional argument, but keep it.
   acl    = "private"                             # Optional argument, but keep it.
-  policy = file("./json/WebAppS3IAMPolicy.json") # Optional argument, but keep it.
+  policy = file("./json/WebAppLambdaSrcS3IAMPolicy.json") # Optional argument, but keep it. s3_bucket_policy
   tags   = {                                     # Optional argument, but keep it.
     "Name"            = "WebApplication"
     "AppName"         = "Python FastAPI Web App"
