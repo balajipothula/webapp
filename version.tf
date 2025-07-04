@@ -5,7 +5,6 @@ backend "s3" {
   region       = "eu-central-1"
   bucket       = "webapp-tf-state-s3-bucket"
   key          = "webapp/tf-state/dev/"
-  use_lockfile = false
 
 }
 
