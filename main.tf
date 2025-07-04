@@ -371,7 +371,7 @@ module "webapp_aws_s3_bucket" {
 
 }
 
-/*
+
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
 
@@ -394,7 +394,7 @@ module "webapp_aws_s3_bucket_object" {
   }
 
 }
-*/
+
 /*
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
