@@ -395,7 +395,7 @@ module "webapp_aws_s3_bucket_object" {
 
 }
 
-/*
+
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -413,7 +413,7 @@ module "webapp_aws_lambda_layer_version" {
   source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
 
 }
-*/
+
 /*
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
