@@ -454,7 +454,7 @@ module "webapp_aws_lambda_function" {
 
 }
 
-/*
+
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_aws_cloudwatch_log_group" {
 
@@ -474,7 +474,7 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-*/
+
 /*
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_api" {
