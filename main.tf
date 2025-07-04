@@ -298,7 +298,7 @@ module "webapp_aws_instance" {
 
 }
 */
-/*
+
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -310,8 +310,8 @@ module "webapp_aws_iam_role" {
   name                  = "WebAppLambdaIAMRole"                   # Optional argument, but keep it.
 
 }
-*/
-/*
+
+
 # Creation of AWS IAM Policy for WebApp Lambda Function.
 module "webapp_aws_iam_policy" {
 
@@ -323,8 +323,8 @@ module "webapp_aws_iam_policy" {
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
-*/
-/*
+
+
 # Creation of AWS IAM Role Policy attachment for WebApp Lambda Function.
 module "webapp_aws_iam_role_policy_attachment" {
 
@@ -339,7 +339,7 @@ module "webapp_aws_iam_role_policy_attachment" {
   policy_arn = module.webapp_aws_iam_policy.arn # Required argument.
 
 }
-*/
+
 # Creation of AWS S3 Bucket for WebApp Lambda Function.
 # Creation of AWS S3 Bucket for WebApp RDS Credentials Rotator Lambda Function.
 
