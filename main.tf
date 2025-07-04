@@ -98,14 +98,14 @@ data "aws_ami" "default" {
 
 }
 */
-/*
+
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
   source_file = local.webapp_src
   output_path = "./${local.webapp_zip}"
 }
-*/
+
 locals {
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
