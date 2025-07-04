@@ -652,7 +652,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
 }
 */
-
+/*
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
@@ -686,8 +686,8 @@ module "webapp_aws_rds_cluster" {
   }
 
 }
-
-
+*/
+/*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
@@ -710,7 +710,7 @@ module "webapp_aws_secretsmanager_secret" {
   }
 
 }
-
+*/
 /*
 # Creation of AWS Secrets Manager Version for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
