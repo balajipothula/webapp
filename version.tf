@@ -1,5 +1,13 @@
 terraform {
 
+backend "s3" {
+
+  region = "eu-central-1"
+  bucket = "webapp-tf-state-s3-bucket"
+  key    = "webapp/tf-state/dev/
+
+}
+
 //cloud or remote blocks allows to store state remotely in Terraform Cloud.
 //cloud block is supported by 1.1.0 or higher versions of Terraform. 
 //cloud { }
