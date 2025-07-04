@@ -354,12 +354,12 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_policy" {
 
 }
 */
-/*
+
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket-8"   # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket"   # Optional argument, but keep it.
   acl    = "private"                             # Optional argument, but keep it.
   policy = file("./json/WebAppLambdaSrcS3IAMPolicy.json") # Optional argument, but keep it. s3_bucket_policy
   tags   = {                                     # Optional argument, but keep it.
@@ -370,7 +370,7 @@ module "webapp_aws_s3_bucket" {
   }
 
 }
-*/
+
 /*
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
