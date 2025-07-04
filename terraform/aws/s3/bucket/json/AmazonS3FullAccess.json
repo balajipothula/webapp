@@ -6,7 +6,7 @@
       "Principal": "*",
       "Action": "s3:GetObject",
       "Resource": [
-        "arn:aws:s3:::webapp-aws-lambda-src-s3-bucket-8/*"
+        "arn:aws:s3:::webapp-aws-lambda-src-s3-bucket-10/*"
       ]
     }
   ]
