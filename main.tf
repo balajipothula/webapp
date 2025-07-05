@@ -20,12 +20,10 @@ provider "aws" {
 }
 
 # Data Source: aws_region
-data "aws_region" "current" {
-}
+data "aws_region" "current" {}
 
 # Data Source: aws_caller_identity
-data "aws_caller_identity" "current" {
-}
+data "aws_caller_identity" "current" {}
 
 # Data Source: aws_partition
 data "aws_partition" "current" {}
@@ -107,7 +105,9 @@ data "archive_file" "webapp" {
 }
 
 locals {
-  account_id = data.aws_caller_identity.current.account_id
+  account_id  = data.aws_caller_identity.current.account_id
+  caller_user = data.aws_caller_identity.current.caller_user
+
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
@@ -346,14 +346,14 @@ module "webapp_aws_iam_role_policy_attachment" {
 */
 
 
-data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
+data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
   statement {
     sid = "WebAppLambdaSrcS3BucketPolicy"
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${local.account_id}:root"]
+      identifiers = ["arn:aws:iam::${local.account_id}:${local.caller_user}"]
     }
     actions = [
       "s3:GetObject"
@@ -370,11 +370,10 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket-11"           # Optional argument, but keep it.
-  acl    = "private"                                      # Optional argument, but keep it.
-  //policy = file("./json/WebAppLambdaSrcS3IAMPolicy.json") # Optional argument, but keep it. s3_bucket_policy
-  policy = data.aws_iam_policy_document.webapp_aws_s3_bucket_iam_policy.json
-  tags   = {                                              # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket-11"                              # Optional argument, but keep it.
+  acl    = "private"                                                         # Optional argument, but keep it.
+  policy = data.aws_iam_policy_document.webapp_aws_s3_bucket_iam_policy.json # Optional argument, but keep it.
+  tags   = {                                                                 # Optional argument, but keep it.
     "Name"            = "WebApplication"
     "AppName"         = "Python FastAPI Web App"
     "DeveloperName"   = "Balaji Pothula"
