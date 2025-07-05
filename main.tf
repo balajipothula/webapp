@@ -107,6 +107,7 @@ data "archive_file" "webapp" {
 }
 
 locals {
+  account_id = ${data.aws_caller_identity.current.account_id}
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
@@ -350,7 +351,7 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+      identifiers = ["arn:aws:iam::${local.account_id}:root"]
     }
     actions = [
       "s3:GetObject"
