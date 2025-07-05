@@ -18,7 +18,7 @@ provider "aws" {
   secret_key = var.secret_key
 
 }
-
+/*
 # Data Source: aws_region
 data "aws_region" "current" {}
 
@@ -96,7 +96,7 @@ data "aws_ami" "default" {
 
 }
 */
-
+/*
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
@@ -112,7 +112,7 @@ locals {
   webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
-
+*/
 # AWS Default Security Group Update.
 resource "aws_default_security_group" "update" {
 
@@ -342,7 +342,7 @@ module "webapp_aws_iam_role_policy_attachment" {
 }
 */
 
-
+/*
 data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
   statement {
@@ -361,7 +361,7 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
   }
 
 }
-
+*/
 
 module "webapp_aws_s3_bucket" {
 
