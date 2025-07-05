@@ -216,7 +216,6 @@ module "webapp_aws_iam_role" {
 }
 
 
-
 # Creation of AWS IAM Policy for WebApp Lambda Function.
 module "webapp_aws_iam_policy" {
 
