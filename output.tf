@@ -1,9 +1,12 @@
+/*
 output "token_github" {
   value       = var.token_github
   description = "GitHub token configured in 'webapp' repository."
   sensitive   = false
 }
-/*
+*/
+
+
 output "aws_region_current_name" {
   value       = data.aws_region.current.name
   description = "The name of the selected region."
@@ -16,6 +19,13 @@ output "aws_caller_identity_current_account_id" {
   sensitive   = false
 }
 
+output "aws_caller_identity_current_user_id" {
+  value       = data.aws_caller_identity.current.user_id
+  description = "Unique identifier of the calling entity."
+  sensitive   = false
+}
+
+/*
 output "aws_vpc_default_id" {
   value       = data.aws_vpc.default.id
   description = "The id of the specific VPC to retrieve."
