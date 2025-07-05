@@ -209,10 +209,10 @@ module "webapp_aws_iam_role" {
   source                = "./terraform/aws/iam/role"
 
   #assume_role_policy    = file("./json/WebAppLambdaIAMRole.json") # Required argument.
-  assume_role_policy    = data.aws_iam_policy_document.webapp_lambda_iam_role.json
-  description           = "AWS IAM Role for WebApp Lambda."       # Optional argument, but keep it.
-  force_detach_policies = true                                    # Optional argument, but keep it.
-  name                  = "WebAppLambdaIAMRole"                   # Optional argument, but keep it.
+  assume_role_policy    = data.aws_iam_policy_document.webapp_lambda_iam_role.json  # Required argument.
+  description           = "AWS IAM Role for WebApp Lambda."                         # Optional argument, but keep it.
+  force_detach_policies = true                                                      # Optional argument, but keep it.
+  name                  = "WebAppLambdaIAMRole"                                     # Optional argument, but keep it.
 
 }
 
