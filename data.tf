@@ -81,12 +81,15 @@ data "aws_ami" "default" {
 }
 */
 
+
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
   type        = "zip"
   source_file = local.webapp_src
   output_path = "./${local.webapp_zip}"
 }
+
+
 
 locals {
   timestamp  = timestamp()
@@ -96,6 +99,8 @@ locals {
   webapp_src = "./python/src/lambda_function.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
+
+
 
 # WebApp Lambda Python Source S3 Bucket IAM Policy Document. 
 data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
@@ -117,6 +122,8 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
 }
 
+
+
 # WebApp Lambda IAM Role Policy.
 data "aws_iam_policy_document" "webapp_lambda_iam_role" {
   statement {
@@ -131,6 +138,7 @@ data "aws_iam_policy_document" "webapp_lambda_iam_role" {
     actions = ["sts:AssumeRole"]
   }
 }
+
 
 
 # WebApp Lambda Monitoring IAM Policy.
