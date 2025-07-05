@@ -97,6 +97,7 @@ locals {
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
+# WebApp Lambda Python Source S3 Bucket IAM Policy Document. 
 data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
   statement {
@@ -114,4 +115,19 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
     ]
   }
 
+}
+
+# WebApp Lambda IAM Role Policy.
+data "aws_iam_policy_document" "webapp_lambda_iam_role" {
+  statement {
+    sid = "WebAppLambdaIAMRolePolicy"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
 }
