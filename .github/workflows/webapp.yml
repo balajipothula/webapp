@@ -77,8 +77,8 @@ jobs:
         run: terraform plan -input=false -out=webapp.tfplan
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      - name: Terraform plan applying.
-        run: terraform apply -auto-approve -input=false webapp.tfplan
+      #- name: Terraform plan applying.
+        #run: terraform apply -auto-approve -input=false webapp.tfplan
       # Apply an execution plan for Terraform.
       - name: Terraform plan destroying.
-        run: terraform apply -destroy
+        run: terraform apply -auto-approve -input=false -destroy
