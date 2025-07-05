@@ -8,7 +8,7 @@ provider "aws" {
 }
 
 
-
+/*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -177,7 +177,7 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-
+*/
 
 /*
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
