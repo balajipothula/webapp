@@ -299,6 +299,7 @@ module "webapp_aws_instance" {
 }
 */
 
+/*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -310,8 +311,9 @@ module "webapp_aws_iam_role" {
   name                  = "WebAppLambdaIAMRole"                   # Optional argument, but keep it.
 
 }
+*/
 
-
+/*
 # Creation of AWS IAM Policy for WebApp Lambda Function.
 module "webapp_aws_iam_policy" {
 
@@ -323,7 +325,9 @@ module "webapp_aws_iam_policy" {
   policy      = file("./json/WebAppLambdaIAMPolicy.json") # Required argument.
 
 }
+*/
 
+/*
 # Creation of AWS IAM Role Policy attachment for WebApp Lambda Function.
 module "webapp_aws_iam_role_policy_attachment" {
 
@@ -338,9 +342,7 @@ module "webapp_aws_iam_role_policy_attachment" {
   policy_arn = module.webapp_aws_iam_policy.arn # Required argument.
 
 }
-
-# Creation of AWS S3 Bucket for WebApp Lambda Function.
-# Creation of AWS S3 Bucket for WebApp RDS Credentials Rotator Lambda Function.
+*/
 
 data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
 
@@ -348,7 +350,7 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::804756347993:&{aws:username}"]
+      identifiers = ["arn:aws:iam::&{aws:user_id}:&{aws:username}"]
     }
     actions = [
       "s3:GetObject"
@@ -364,7 +366,7 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket-10"           # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket-11"           # Optional argument, but keep it.
   acl    = "private"                                      # Optional argument, but keep it.
   //policy = file("./json/WebAppLambdaSrcS3IAMPolicy.json") # Optional argument, but keep it. s3_bucket_policy
   policy = data.aws_iam_policy_document.webapp_aws_s3_bucket_iam_policy.json
