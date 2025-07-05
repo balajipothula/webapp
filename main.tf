@@ -345,6 +345,7 @@ module "webapp_aws_iam_role_policy_attachment" {
 }
 */
 
+/*
 data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
 
   statement {
@@ -362,6 +363,7 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
   }
 
 }
+*/
 
 module "webapp_aws_s3_bucket" {
 
