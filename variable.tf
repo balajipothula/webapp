@@ -2,7 +2,7 @@ variable "token_github" {
   type        = string
   default     = null
   description = "GitHub token configured in 'webapp' repository."
-//sensitive   = true
+  sensitive   = true
 }
 
 variable "region" {
