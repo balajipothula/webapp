@@ -350,7 +350,7 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::804756347993:root"]
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
     }
     actions = [
       "s3:GetObject"
