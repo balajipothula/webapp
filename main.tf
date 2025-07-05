@@ -107,7 +107,7 @@ data "archive_file" "webapp" {
 }
 
 locals {
-  account_id = ${data.aws_caller_identity.current.account_id}
+  account_id = data.aws_caller_identity.current.account_id
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
