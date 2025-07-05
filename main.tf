@@ -106,6 +106,7 @@ data "archive_file" "webapp" {
 
 locals {
   account_id  = data.aws_caller_identity.current.account_id
+  arn         = data.aws_caller_identity.current.arn
   username    = regex("^arn:aws:iam::\\d+:(.+)$", data.aws_caller_identity.current.arn)[0]
 
   timestamp  = timestamp()
@@ -353,13 +354,14 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${local.account_id}:${local.username}"]
+      identifiers = data.aws_caller_identity.current.arn
+      #identifiers = ["arn:aws:iam::${local.account_id}:${local.username}"]
     }
     actions = [
       "s3:GetObject"
     ]
     resources = [
-      "arn:aws:s3:::webapp-aws-lambda-src-s3-bucket-11/*"
+      "arn:aws:s3:::webapp-aws-lambda-src-s3-bucket-12/*"
     ]
   }
 
@@ -370,7 +372,7 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket-11"                                 # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket-12"                                 # Optional argument, but keep it.
   acl    = "private"                                                            # Optional argument, but keep it.
   policy = data.aws_iam_policy_document.webapp_lambda_src_s3_bucket_policy.json # Optional argument, but keep it.
   tags   = {                                                                    # Optional argument, but keep it.
