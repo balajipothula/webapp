@@ -36,7 +36,7 @@ module "webapp_aws_iam_policy" {
 }
 
 
-/*
+
 # Creation of AWS IAM Role Policy attachment for WebApp Lambda Function.
 module "webapp_aws_iam_role_policy_attachment" {
 
@@ -51,7 +51,8 @@ module "webapp_aws_iam_role_policy_attachment" {
   policy_arn = module.webapp_aws_iam_policy.arn # Required argument.
 
 }
-*/
+
+
 
 module "webapp_aws_s3_bucket" {
 
@@ -69,7 +70,8 @@ module "webapp_aws_s3_bucket" {
 
 }
 
-/*
+
+
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function.
 module "webapp_aws_s3_bucket_object" {
 
@@ -92,9 +94,9 @@ module "webapp_aws_s3_bucket_object" {
   }
 
 }
-*/
 
-/*
+
+
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -112,9 +114,9 @@ module "webapp_aws_lambda_layer_version" {
   source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
@@ -153,9 +155,9 @@ module "webapp_aws_lambda_function" {
   timeout                        = 60                                           # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_aws_cloudwatch_log_group" {
 
@@ -175,7 +177,7 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-*/
+
 
 /*
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
