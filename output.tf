@@ -4,8 +4,6 @@ output "token_github" {
   description = "GitHub token configured in 'webapp' repository."
   sensitive   = false
 }
-*/
-
 
 output "aws_region_current_name" {
   value       = data.aws_region.current.name
@@ -18,10 +16,11 @@ output "aws_caller_identity_current_account_id" {
   description = "AWS Account ID number of the account that owns or contains the calling entity."
   sensitive   = false
 }
+*/
 
-output "aws_caller_identity_current_user_id" {
-  value       = data.aws_caller_identity.current.user_id
-  description = "Unique identifier of the calling entity."
+output "aws_caller_identity_current_arn" {
+  value       = data.aws_caller_identity.current.arn
+  description = "ARN associated with the calling entity."
   sensitive   = false
 }
 

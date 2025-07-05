@@ -353,7 +353,7 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${local.account_id}:${local.username}"]
+      identifiers = ["arn:aws:iam::${local.account_id}:root"]
     }
     actions = [
       "s3:GetObject"
