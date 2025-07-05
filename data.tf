@@ -1,6 +1,8 @@
+/*
 data "github_actions_secrets" "webapp" {
   full_name = "balajipothula/webapp"
 }
+*/
 
 # Data Source: aws_region
 data "aws_region" "current" {}
@@ -55,6 +57,7 @@ data "aws_security_groups" "default" {
 
 }
 
+/*
 data "aws_ami" "default" {
 
   filter {
@@ -76,6 +79,7 @@ data "aws_ami" "default" {
   owners      = ["amazon"]
 
 }
+*/
 
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
