@@ -106,7 +106,7 @@ data "archive_file" "webapp" {
 
 locals {
   account_id  = data.aws_caller_identity.current.account_id
-  user_id     = data.aws_caller_identity.current.user_id
+  username    = regex("^.*user/(.*)", data.aws_caller_identity.current.arn)[0]
 
   timestamp  = timestamp()
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
@@ -353,7 +353,7 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${local.account_id}:root"]
+      identifiers = ["arn:aws:iam::${local.account_id}:${local.username}"]
     }
     actions = [
       "s3:GetObject"
