@@ -350,7 +350,7 @@ data "aws_iam_policy_document" "webapp_aws_s3_bucket_iam_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::&{aws:user_id}:&{aws:username}"]
+      identifiers = ["arn:aws:iam::804756347993:root"]
     }
     actions = [
       "s3:GetObject"
@@ -366,7 +366,7 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket-11"           # Optional argument, but keep it.
+  bucket = "webapp-aws-lambda-src-s3-bucket-10"           # Optional argument, but keep it.
   acl    = "private"                                      # Optional argument, but keep it.
   //policy = file("./json/WebAppLambdaSrcS3IAMPolicy.json") # Optional argument, but keep it. s3_bucket_policy
   policy = data.aws_iam_policy_document.webapp_aws_s3_bucket_iam_policy.json
