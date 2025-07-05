@@ -354,7 +354,7 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = [${data.aws_caller_identity.current.arn}]
+      identifiers = ["${data.aws_caller_identity.current.arn}"]
       #identifiers = ["arn:aws:iam::${local.account_id}:${local.username}"]
     }
     actions = [
