@@ -80,5 +80,5 @@ jobs:
       - name: Terraform plan applying.
         run: terraform apply -auto-approve -input=false webapp.tfplan
       # Apply an execution plan for Terraform.
-      - name: Terraform plan destroying.
-        run: terraform apply -destroy
+      #- name: Terraform plan destroying.
+        #run: terraform apply -destroy

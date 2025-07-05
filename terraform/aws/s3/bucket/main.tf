@@ -5,10 +5,10 @@
 # Variable  name : bucket
 resource "aws_s3_bucket" "generic" {
 
-  bucket        = var.bucket                                          # Optional argument but keep it.
-//bucket_prefix = var.bucket_prefix                                   # Optional argument, conflicts with bucket.
-  acl           = var.acl                                             # Optional argument but keep it.
-  policy        = null # Optional argument but keep it.
-  tags          = var.tags                                            # Optional argument but keep it.
+  bucket        = var.bucket        # Optional argument but keep it.
+//bucket_prefix = var.bucket_prefix # Optional argument, conflicts with bucket.
+  acl           = var.acl           # Optional argument but keep it.
+  policy        = null              # Optional argument but keep it.
+  tags          = var.tags          # Optional argument but keep it.
 
 }
