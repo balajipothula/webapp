@@ -131,3 +131,74 @@ data "aws_iam_policy_document" "webapp_lambda_iam_role" {
     actions = ["sts:AssumeRole"]
   }
 }
+
+
+# WebApp Lambda Monitoring IAM Policy.
+data "aws_iam_policy_document" "webapp_lambda_monitoring_policy" {
+  statement {
+    sid = "WebAppLambdaMonitoringPolicy"
+    effect = "Allow"
+
+    actions = [
+      "cloudformation:DescribeStacks",
+      "cloudformation:ListStackResources",
+      "cloudwatch:ListMetrics",
+      "cloudwatch:GetMetricData",
+      "cloudwatch:PutMetricData",
+      "cloudwatch:PutMetricStream",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs",
+      "ec2:CreateNetworkInterface",
+      "kms:ListAliases",
+      "iam:GetPolicy",
+      "iam:GetPolicyVersion",
+      "iam:GetRole",
+      "iam:GetRolePolicy",
+      "iam:ListAttachedRolePolicies",
+      "iam:ListRolePolicies",
+      "iam:ListRoles",
+      "lambda:*",
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:DescribeLogGroups",
+      "logs:PutLogEvents",
+      "secretsmanager:GetSecretValue",
+      "states:DescribeStateMachine",
+      "states:ListStateMachines",
+      "tag:GetResources",
+      "xray:GetTraceSummaries",
+      "xray:BatchGetTraces"
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    effect = "Allow"
+
+    actions = ["iam:PassRole"]
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "iam:PassedToService"
+
+      values = ["lambda.amazonaws.com"]
+    }
+  }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "logs:DescribeLogStreams",
+      "logs:GetLogEvents",
+      "logs:FilterLogEvents"
+    ]
+
+    resources = ["arn:aws:logs:*:*:log-group:/aws/lambda/*"]
+  }
+}
