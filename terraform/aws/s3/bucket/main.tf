@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "generic" {
 //bucket_prefix = var.bucket_prefix # Optional argument, conflicts with bucket.
   acl           = var.acl           # Optional argument but keep it.
 //policy        = null              # Optional argument but keep it.
-  policy = data.aws_iam_policy_document.webapp_aws_s3_bucket_iam_policy.json
+  policy = var.policy
   tags          = var.tags          # Optional argument but keep it.
 
 }
