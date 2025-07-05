@@ -8,7 +8,7 @@ provider "aws" {
 }
 
 
-/*
+
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -177,7 +177,7 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-*/
+
 
 /*
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
@@ -475,7 +475,7 @@ module "webapp_aws_vpc_endpoint" {
 
   service_name        = "com.amazonaws.${data.aws_region.current.name}.secretsmanager" # Required argument.
   vpc_id              = data.aws_vpc.default.id                                        # Required argument.
-  private_dns_enabled = false                                                           # Optional argument, but applicable for endpoints of type Interface.
+  private_dns_enabled = false                                                          # Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnet_ids.available.ids                              # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids                           # Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # Optional argument, but keep it.
