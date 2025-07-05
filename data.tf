@@ -73,7 +73,6 @@ data "aws_ami" "default" {
   }
 
   most_recent = "true"
-  owners      = ["self"]
   owners      = ["amazon"]
 
 }
