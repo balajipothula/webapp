@@ -489,20 +489,6 @@ module "webapp_aws_vpc_endpoint" {
 }
 */
 
-
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 4.26.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-east-1"
-}
-
 resource "aws_db_subnet_group" "aurora_subnets" {
   name       = "aurora-subnet-group"
   subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with private subnet IDs
