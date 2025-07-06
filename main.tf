@@ -519,6 +519,7 @@ resource "aws_rds_cluster" "aurora_pg_v2" {
   cluster_identifier      = "aurora-pg-serverless-v2"
   engine                  = "aurora-postgresql"
   engine_version          = "15.3" # use a version that supports Serverless v2
+  enable_http_endpoint    = true
   database_name           = "mydatabase"
   master_username         = "dbadmin"
   master_password         = "StrongPassword123!"
