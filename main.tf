@@ -406,7 +406,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "webapp-db-subnet-group"
-  subnet_ids = data.aws_subnet_ids.available.ids
+  subnet_ids = data.aws_subnets.available.ids
   description = "WebApp Aurora Serverless v2 PostgreSQL Subnet Group."
 }
 
@@ -512,7 +512,7 @@ module "webapp_aws_vpc_endpoint" {
   service_name        = "com.amazonaws.${data.aws_region.current.name}.secretsmanager" # Required argument.
   vpc_id              = data.aws_vpc.default.id                                        # Required argument.
   private_dns_enabled = false                                                          # Optional argument, but applicable for endpoints of type Interface.
-  subnet_ids          = data.aws_subnet_ids.available.ids                              # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
+  subnet_ids          = data.aws_subnets.available.ids                                 # Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids                           # Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # Optional argument, but keep it.
     "Name"            = "webapp_secretsmanager"

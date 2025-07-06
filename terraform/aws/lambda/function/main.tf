@@ -6,9 +6,12 @@ data "aws_region" "current" {
 data "aws_vpc" "default" {
 }
 
-# Data Source: aws_subnet_ids
-data "aws_subnet_ids" "available" {
-  vpc_id = data.aws_vpc.default.id
+# Data Source: aws_subnets
+data "aws_subnets" "available" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
 # Data Source: aws_security_groups
@@ -85,7 +88,7 @@ resource "aws_lambda_function" "generic" {
 
   vpc_config {                                                          # Optional argument block but keep it.
     security_group_ids           = data.aws_security_groups.default.ids # Required block argument.
-    subnet_ids                   = data.aws_subnet_ids.available.ids    # Required block argument.
+    subnet_ids                   = data.aws_subnets.available.ids       # Required block argument.
   }
 
 }

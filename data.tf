@@ -31,9 +31,12 @@ data "aws_availability_zones" "available" {
 
 }
 
-# Data Source: aws_subnet_ids
-data "aws_subnet_ids" "available" {
-  vpc_id = data.aws_vpc.default.id
+# Data Source: aws_subnets
+data "aws_subnets" "available" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
 # Data Source: aws_subnet
