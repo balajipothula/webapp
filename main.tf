@@ -167,7 +167,7 @@ module "webapp_aws_lambda_function" {
     region = data.aws_region.current.name,
   //secret = module.webapp_aws_secretsmanager_secret.id
   }
-  handler                        = "lambda_function.lambda_handler"             # Optional argument, but keep it.
+  handler                        = "lambda_function.handler"                    # Optional argument, but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 128                                          # Optional argument, but keep it.
   package_type                   = "Zip"                                        # Optional argument, but keep it.
