@@ -173,7 +173,7 @@ module "webapp_aws_lambda_function" {
   package_type                   = "Zip"                                        # Optional argument, but keep it.
   publish                        = false                                        # Optional argument, but keep it.
   reserved_concurrent_executions = -1                                           # Optional argument, but keep it.
-  runtime                        = "python3.9"                                  # Optional argument, but keep it.
+  runtime                        = "python3.7"                                  # Optional argument, but keep it.
   s3_bucket                      = module.webapp_aws_s3_bucket.id               # Optional argument, but keep it.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # Optional argument, conflicts with filename and image_uri.
   tags                           = {                                            # Optional argument, but keep it.
