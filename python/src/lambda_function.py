@@ -7,4 +7,8 @@ app = FastAPI()
 def root():
     return {"message": "Hello from Lambda"}
 
-lambda_handler = Mangum(app)
+# Create a Mangum adapter
+adapter = Mangum(app)
+
+def lambda_handler(event, context):
+    return adapter(event, context)
