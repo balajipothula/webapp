@@ -453,7 +453,7 @@ module "webapp_aws_secretsmanager_secret" {
   source                         = "./terraform/aws/secretsmanager/secret"
 
   depends_on                     = [
-    module.webapp_aws_rds_cluster,
+    aws_rds_cluster.webapp_aws_rds_cluster,
   ]
 
   description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
@@ -479,16 +479,16 @@ module "webapp_aws_secretsmanager_secret_version" {
 
   depends_on    = [
     module.webapp_aws_secretsmanager_secret,
-    module.webapp_aws_rds_cluster,
+    aws_rds_cluster.webapp_aws_rds_cluster,
   ]
 
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
-    dbInstanceIdentifier = module.webapp_aws_rds_cluster.id
-    engine               = module.webapp_aws_rds_cluster.engine
-    host                 = module.webapp_aws_rds_cluster.endpoint
-    port                 = module.webapp_aws_rds_cluster.port
-    resourceId           = module.webapp_aws_rds_cluster.cluster_resource_id
+    dbInstanceIdentifier = aws_rds_cluster.webapp_aws_rds_cluster.id
+    engine               = aws_rds_cluster.webapp_aws_rds_cluster.engine
+    host                 = aws_rds_cluster.webapp_aws_rds_cluster.endpoint
+    port                 = aws_rds_cluster.webapp_aws_rds_cluster.port
+    resourceId           = aws_rds_cluster.webapp_aws_rds_cluster.cluster_resource_id
     database             = var.database_name
     username             = var.master_username
     password             = var.master_password
