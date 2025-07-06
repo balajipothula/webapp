@@ -47,14 +47,14 @@ variable "ami_map" {
 
 variable "master_username" {
   type        = string
-  default     = "webapp"
+  default     = "webapp_db_admin"
   description = "Username for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
 
 variable "master_password" {
   type        = string
-  default     = "WebApplication"
+  default     = "WebApplication#2025"
   description = "Password for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
   sensitive   = true
 }
