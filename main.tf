@@ -515,6 +515,38 @@ resource "aws_security_group" "aurora_sg" {
   }
 }
 
+# AWS Default Security Group Update.
+resource "aws_default_security_group" "update" {
+
+  lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = true
+    ignore_changes        = [
+      tags
+    ]
+  }
+
+  vpc_id = data.aws_vpc.default.id
+
+  ingress {
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
+    description = "PostgreSQL inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 5432
+    from_port   = 5432
+  }
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "All outbound traffic rule."
+    protocol    = "all"
+    to_port     = 0
+    from_port   = 0
+  }
+
+}
+
+
 resource "aws_rds_cluster" "aurora_pg_v2" {
   cluster_identifier      = "aurora-pg-serverless-v2"
   engine                  = "aurora-postgresql"
@@ -524,7 +556,7 @@ resource "aws_rds_cluster" "aurora_pg_v2" {
   master_username         = "dbadmin"
   master_password         = "StrongPassword123!"
   db_subnet_group_name    = aws_db_subnet_group.aurora_subnets.name
-  vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
+  vpc_security_group_ids  = [aws_security_group.aurora_sg.id, aws_default_security_group.update.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
   storage_encrypted       = true
