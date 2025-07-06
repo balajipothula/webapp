@@ -8,7 +8,7 @@ provider "aws" {
 }
 
 
-
+/*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -177,7 +177,7 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-
+*/
 
 /*
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
@@ -373,7 +373,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 }
 */
 
-
+/*
 # Creation of Amazon Aurora Serverless PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_aws_rds_cluster" {
@@ -407,7 +407,7 @@ module "webapp_aws_rds_cluster" {
   }
 
 }
-
+*/
 
 /*
 # Creation of AWS Secrets Manager Secret for
@@ -488,3 +488,53 @@ module "webapp_aws_vpc_endpoint" {
 
 }
 */
+
+
+resource "aws_db_subnet_group" "aurora_subnets" {
+  name       = "aurora-subnet-group"
+  subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with your private subnets
+  description = "Aurora DB Subnet Group"
+}
+
+resource "aws_security_group" "aurora_sg" {
+  name        = "aurora-sg"
+  description = "Allow PostgreSQL access"
+  vpc_id      = "vpc-03ac1efd3137519b4" # Replace with your VPC ID
+
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["172.31.32.0/20"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_rds_cluster" "aurora_pg" {
+  cluster_identifier      = "aurora-pg-sls-v1"
+  engine                  = "aurora-postgresql"
+  engine_version          = "10.14" # or any version supported by Aurora Serverless v1
+  master_username         = "dbadmin"
+  master_password         = "StrongPassword123!"
+  database_name           = "webapp_db"
+  db_subnet_group_name    = aws_db_subnet_group.aurora_subnets.name
+  vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
+  backup_retention_period = 1
+  preferred_backup_window = "07:00-09:00"
+  engine_mode             = "serverless"
+
+  scaling_configuration {
+    auto_pause               = true
+    min_capacity             = 2
+    max_capacity             = 4
+    seconds_until_auto_pause = 300
+  }
+
+  skip_final_snapshot = true
+}
