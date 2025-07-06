@@ -521,24 +521,23 @@ module "webapp_aws_vpc_endpoint" {
 
 
 
-resource "aws_db_subnet_group" "aurora_subnets" {
+resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "aurora-subnet-group"
-  #subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with private subnet IDs
   subnet_ids = data.aws_subnet_ids.available.ids
-  description = "Aurora DB subnet group"
+  description = "WebApp Aurora Serverless V2 PostgreSQL Subnet Group."
 }
 
 
 
-resource "aws_rds_cluster" "aurora_pg_v2" {
+resource "aws_rds_cluster" "webapp_rds_cluster" {
   cluster_identifier      = "aurora-pg-serverless-v2"
   engine                  = "aurora-postgresql"
-  engine_version          = "15.3" # use a version that supports Serverless v2
+  engine_version          = "15.3"
   enable_http_endpoint    = true
-  database_name           = "mydatabase"
-  master_username         = "dbadmin"
-  master_password         = "StrongPassword123!"
-  db_subnet_group_name    = aws_db_subnet_group.aurora_subnets.name
+  database_name           = var.database_name
+  master_username         = var.master_username
+  master_password         = var.master_password
+  db_subnet_group_name    = aws_db_subnet_group.webapp_db_subnet_group.name
   vpc_security_group_ids  = [aws_default_security_group.update.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
@@ -551,11 +550,13 @@ resource "aws_rds_cluster" "aurora_pg_v2" {
   }
 }
 
-resource "aws_rds_cluster_instance" "aurora_pg_v2_instance" {
-  identifier              = "aurora-pg-v2-instance-1"
-  cluster_identifier      = aws_rds_cluster.aurora_pg_v2.id
+
+
+resource "aws_rds_cluster_instance" "webapp_rds_cluster_instance" {
+  identifier              = "webapp-rds-cluster-instance"
+  cluster_identifier      = aws_rds_cluster.webapp_rds_cluster.id
   instance_class          = "db.serverless"
-  engine                  = aws_rds_cluster.aurora_pg_v2.engine
-  engine_version          = aws_rds_cluster.aurora_pg_v2.engine_version
+  engine                  = aws_rds_cluster.webapp_rds_cluster.engine
+  engine_version          = aws_rds_cluster.webapp_rds_cluster.engine_version
   publicly_accessible     = false
 }
