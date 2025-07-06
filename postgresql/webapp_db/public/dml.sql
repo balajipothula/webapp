@@ -20,7 +20,7 @@ INSERT INTO webapp_db.public."Rating"(
   "rate"
 )
 VALUES(
-  34,
+  5,
   2
 );
 

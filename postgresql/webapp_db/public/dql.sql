@@ -1,6 +1,6 @@
 -- select records from the Song table.
 SELECT
-  "songId"
+  "songId",
   "artist",
   "title",
   "difficulty",
@@ -11,7 +11,7 @@ FROM
 
 -- select particular song record from the Song table.
 SELECT
-  "songId"
+  "songId",
   "artist",
   "title",
   "difficulty",
@@ -37,12 +37,12 @@ SELECT
 FROM
   webapp_db.public."Song"
 WHERE
-     artist ~* 'theY'
-  OR title  ~* 'picM';
+     artist ~* 'the Y'
+  OR title  ~* 'pic M';
 
 -- select records from the Rating table.
 SELECT
-  "id"
+  "id",
   "rate"
 FROM
   webapp_db.public."Rating";
@@ -53,7 +53,7 @@ SELECT
 FROM
   webapp_db.public."Rating"
 WHERE
-  "id" = 34;
+  "id" = 4;
 
 -- select particular song average, minimum and maximum rating from the Rating table.
 SELECT
