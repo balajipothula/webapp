@@ -244,12 +244,8 @@ variable "reserved_concurrent_executions" {
 
 variable "runtime" {
   type        = string
-  default     = "python3.9"
+  default     = null
   description = "Lambda Function execution runtime environment."
-  validation {
-    condition     = var.runtime != null
-    error_message = "Error: runtime value must not null."
-  }
   sensitive = false
 }
 

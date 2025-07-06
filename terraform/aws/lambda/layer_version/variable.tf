@@ -22,12 +22,8 @@ variable "compatible_architectures" {
 
 variable "compatible_runtimes" {
   type        = list(string)
-  default     = ["python3.9" ]
+  default     = null
   description = "List of Runtimes this layer is compatible with."
-  validation {
-    condition     = var.compatible_runtimes != null
-    error_message = "Error: compatible_runtimes value must not null."
-  }
   sensitive   = false
 }
 
