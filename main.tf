@@ -490,10 +490,23 @@ module "webapp_aws_vpc_endpoint" {
 */
 
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.26.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
 resource "aws_db_subnet_group" "aurora_subnets" {
   name       = "aurora-subnet-group"
-  subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with your private subnets
-  description = "Aurora DB Subnet Group"
+  subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with private subnet IDs
+  description = "Aurora DB subnet group"
 }
 
 resource "aws_security_group" "aurora_sg" {
@@ -516,24 +529,31 @@ resource "aws_security_group" "aurora_sg" {
   }
 }
 
-resource "aws_rds_cluster" "aurora_pg" {
-  cluster_identifier      = "aurora-pg-sls-v1"
+resource "aws_rds_cluster" "aurora_pg_v2" {
+  cluster_identifier      = "aurora-pg-serverless-v2"
   engine                  = "aurora-postgresql"
-  engine_version          = "10.14"
-  engine_mode             = "serverless"
+  engine_version          = "15.3" # use a version that supports Serverless v2
   database_name           = "mydatabase"
   master_username         = "dbadmin"
   master_password         = "StrongPassword123!"
   db_subnet_group_name    = aws_db_subnet_group.aurora_subnets.name
   vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
-  backup_retention_period = 1
+  backup_retention_period = 7
+  engine_mode             = "provisioned"
+  storage_encrypted       = true
+  skip_final_snapshot     = true
 
-  scaling_configuration {
-    auto_pause               = true
-    min_capacity             = 2
-    max_capacity             = 4
-    seconds_until_auto_pause = 300
+  serverlessv2_scaling_configuration {
+    min_capacity = 0.5
+    max_capacity = 2.0
   }
+}
 
-  skip_final_snapshot = true
+resource "aws_rds_cluster_instance" "aurora_pg_v2_instance" {
+  identifier              = "aurora-pg-v2-instance-1"
+  cluster_identifier      = aws_rds_cluster.aurora_pg_v2.id
+  instance_class          = "db.serverless"
+  engine                  = aws_rds_cluster.aurora_pg_v2.engine
+  engine_version          = aws_rds_cluster.aurora_pg_v2.engine_version
+  publicly_accessible     = false
 }
