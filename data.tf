@@ -39,12 +39,6 @@ data "aws_subnets" "available" {
   }
 }
 
-# Get details for each subnet
-data "aws_subnet" "each" {
-  for_each = toset(data.aws_subnets.default.ids)
-  id       = each.value
-}
-
 # Data Source: aws_security_groups
 data "aws_security_groups" "default" {
 
