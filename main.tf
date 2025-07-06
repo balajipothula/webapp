@@ -38,7 +38,7 @@ resource "aws_default_security_group" "update" {
 
 }
 
-/*
+
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -207,9 +207,9 @@ module "webapp_aws_cloudwatch_log_group" {
   }
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 API for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_api" {
 
@@ -219,9 +219,9 @@ module "webapp_aws_apigatewayv2_api" {
   protocol_type = "HTTP"      # Required argument.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Stage for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_stage" {
 
@@ -236,9 +236,9 @@ module "webapp_aws_apigatewayv2_stage" {
   auto_deploy = true                                  # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Integration for WebApp Lambda Function.
 module "webapp_aws_apigatewayv2_integration" {
 
@@ -255,9 +255,9 @@ module "webapp_aws_apigatewayv2_integration" {
   integration_method = "ANY"                                 # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
 module "webapp_aws_lambda_permission" {
 
@@ -275,9 +275,9 @@ module "webapp_aws_lambda_permission" {
   source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}//*" # Optional argument. Update here
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
 module "webapp_aws_apigatewayv2_route_index" {
 
@@ -293,9 +293,9 @@ module "webapp_aws_apigatewayv2_route_index" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
 module "webapp_aws_apigatewayv2_route_put_song" {
 
@@ -311,9 +311,9 @@ module "webapp_aws_apigatewayv2_route_put_song" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs - Route.
 module "webapp_aws_apigatewayv2_route_get_songs" {
 
@@ -329,9 +329,9 @@ module "webapp_aws_apigatewayv2_route_get_songs" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song Rating - Route.
 module "webapp_aws_apigatewayv2_route_put_song_rating" {
 
@@ -347,9 +347,9 @@ module "webapp_aws_apigatewayv2_route_put_song_rating" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Song Rating - Route.
 module "webapp_aws_apigatewayv2_route_get_song_rating" {
 
@@ -365,9 +365,9 @@ module "webapp_aws_apigatewayv2_route_get_song_rating" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Search - Route.
 module "webapp_aws_apigatewayv2_route_get_songs_search" {
 
@@ -383,9 +383,9 @@ module "webapp_aws_apigatewayv2_route_get_songs_search" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Average Difficulty - Route.
 module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
@@ -401,43 +401,8 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-*/
 
-/*
-# Creation of Amazon Aurora Serverless PostgreSQL
-# Relational Database RDS Cluster for WebApp Lambda Function.
-module "webapp_aws_rds_cluster" {
 
-  source                       = "./terraform/aws/rds/cluster"
-
-  allow_major_version_upgrade  = true                                      # Optional argument, but keep it.
-  apply_immediately            = true                                      # Optional argument, but keep it.
-  backup_retention_period      = 1                                         # Optional argument, but keep it.
-  cluster_identifier           = "webapp"                                  # Optional argument, but keep it.
-  copy_tags_to_snapshot        = true                                      # Optional argument, but keep it.
-  database_name                = var.database_name                         # Optional argument, but keep it.
-  deletion_protection          = false                                     # Optional argument, but keep it.
-  enable_http_endpoint         = true                                      # Optional argument, but keep it.
-  engine                       = "aurora-postgresql"                       # Optional argument, but keep it.
- #engine_mode                  = "serverless-v2"                           # Optional argument, comment it.
-  engine_version               = "16.1"                                    # Optional argument, but keep it.
-  final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}"    # Optional argument, but keep it.
-  master_password              = var.master_password                       # Required argument.
-  master_username              = var.master_username                       # Required argument.
-  port                         = "5432"                                    # Optional argument, but keep it.
-  preferred_backup_window      = "00:00-00:59"                             # Optional argument, but keep it.
-  preferred_maintenance_window = "sun:01:00-sun:02:00"                     # Optional argument, but keep it.
-  skip_final_snapshot          = true                                      # Optional argument, but keep it.
-  storage_encrypted            = true                                      # Optional argument, but keep it.
-  tags                         = {                                         # Optional argument, but keep it.
-    "Name"            = "WebApp"
-    "AppName"         = "Python FastAPI Web App"
-    "DeveloperName"   = "Balaji Pothula"
-    "DeveloperEmail"  = "balan.pothula@gmail.com"
-  }
-
-}
-*/
 
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "webapp-db-subnet-group"
@@ -480,7 +445,7 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
 }
 
 
-/*
+
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
@@ -503,9 +468,9 @@ module "webapp_aws_secretsmanager_secret" {
   }
 
 }
-*/
 
-/*
+
+
 # Creation of AWS Secrets Manager Version for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret_version" {
@@ -535,9 +500,9 @@ module "webapp_aws_secretsmanager_secret_version" {
   }) 
 
 }
-*/
 
-/*
+
+
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
@@ -556,6 +521,43 @@ module "webapp_aws_vpc_endpoint" {
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
   vpc_endpoint_type   = "Interface"                                                    # Optional argument, but keep it.
+
+}
+
+
+
+/*
+# Creation of Amazon Aurora Serverless PostgreSQL
+# Relational Database RDS Cluster for WebApp Lambda Function.
+module "webapp_aws_rds_cluster" {
+
+  source                       = "./terraform/aws/rds/cluster"
+
+  allow_major_version_upgrade  = true                                      # Optional argument, but keep it.
+  apply_immediately            = true                                      # Optional argument, but keep it.
+  backup_retention_period      = 1                                         # Optional argument, but keep it.
+  cluster_identifier           = "webapp"                                  # Optional argument, but keep it.
+  copy_tags_to_snapshot        = true                                      # Optional argument, but keep it.
+  database_name                = var.database_name                         # Optional argument, but keep it.
+  deletion_protection          = false                                     # Optional argument, but keep it.
+  enable_http_endpoint         = true                                      # Optional argument, but keep it.
+  engine                       = "aurora-postgresql"                       # Optional argument, but keep it.
+ #engine_mode                  = "serverless-v2"                           # Optional argument, comment it.
+  engine_version               = "16.1"                                    # Optional argument, but keep it.
+  final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}"    # Optional argument, but keep it.
+  master_password              = var.master_password                       # Required argument.
+  master_username              = var.master_username                       # Required argument.
+  port                         = "5432"                                    # Optional argument, but keep it.
+  preferred_backup_window      = "00:00-00:59"                             # Optional argument, but keep it.
+  preferred_maintenance_window = "sun:01:00-sun:02:00"                     # Optional argument, but keep it.
+  skip_final_snapshot          = true                                      # Optional argument, but keep it.
+  storage_encrypted            = true                                      # Optional argument, but keep it.
+  tags                         = {                                         # Optional argument, but keep it.
+    "Name"            = "WebApp"
+    "AppName"         = "Python FastAPI Web App"
+    "DeveloperName"   = "Balaji Pothula"
+    "DeveloperEmail"  = "balan.pothula@gmail.com"
+  }
 
 }
 */
