@@ -7,6 +7,36 @@ provider "aws" {
 
 }
 
+# AWS Default Security Group Update.
+resource "aws_default_security_group" "update" {
+
+  lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = true
+    ignore_changes        = [
+      tags
+    ]
+  }
+
+  vpc_id = data.aws_vpc.default.id
+
+  ingress {
+    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
+    description = "PostgreSQL inbound traffic rule."
+    protocol    = "tcp"
+    to_port     = 5432
+    from_port   = 5432
+  }
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "All outbound traffic rule."
+    protocol    = "all"
+    to_port     = 0
+    from_port   = 0
+  }
+
+}
 
 /*
 # Creation of AWS IAM Role for WebApp Lambda Function.
@@ -489,62 +519,15 @@ module "webapp_aws_vpc_endpoint" {
 }
 */
 
+
+
 resource "aws_db_subnet_group" "aurora_subnets" {
   name       = "aurora-subnet-group"
-  subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with private subnet IDs
+  #subnet_ids = ["subnet-0b38eba129bcc0e9d", "subnet-0f6df153234e92e74", "subnet-0a166a585b3103912"] # Replace with private subnet IDs
+  subnet_ids = data.aws_subnet_ids.available.ids
   description = "Aurora DB subnet group"
 }
 
-resource "aws_security_group" "aurora_sg" {
-  name        = "aurora-sg"
-  description = "Allow PostgreSQL access"
-  vpc_id      = "vpc-03ac1efd3137519b4" # Replace with your VPC ID
-
-  ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["172.31.32.0/20"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-# AWS Default Security Group Update.
-resource "aws_default_security_group" "update" {
-
-  lifecycle {
-    create_before_destroy = true
-    prevent_destroy       = true
-    ignore_changes        = [
-      tags
-    ]
-  }
-
-  vpc_id = data.aws_vpc.default.id
-
-  ingress {
-    cidr_blocks = [for subnet in data.aws_subnet.default : subnet.cidr_block]
-    description = "PostgreSQL inbound traffic rule."
-    protocol    = "tcp"
-    to_port     = 5432
-    from_port   = 5432
-  }
-
-  egress {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "All outbound traffic rule."
-    protocol    = "all"
-    to_port     = 0
-    from_port   = 0
-  }
-
-}
 
 
 resource "aws_rds_cluster" "aurora_pg_v2" {
@@ -556,7 +539,7 @@ resource "aws_rds_cluster" "aurora_pg_v2" {
   master_username         = "dbadmin"
   master_password         = "StrongPassword123!"
   db_subnet_group_name    = aws_db_subnet_group.aurora_subnets.name
-  vpc_security_group_ids  = [aws_security_group.aurora_sg.id, aws_default_security_group.update.id]
+  vpc_security_group_ids  = [aws_default_security_group.update.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
   storage_encrypted       = true
