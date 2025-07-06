@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS webapp_db.public."Song"(
 -- changeset BalajiPothula:2022-02-11T17:15:00Z
 -- create Rating table.
 CREATE TABLE IF NOT EXISTS webapp_db.public."Rating"(
-  "songId" BIGINT   NOT NULL,
-  "rating" SMALLINT NOT NULL CHECK(0 < "rating" AND "rating" < 6)
+  "id" BIGINT   NOT NULL,
+  "rate" SMALLINT NOT NULL CHECK(0 < "rate" AND "rate" < 6)
 );
