@@ -439,6 +439,47 @@ module "webapp_aws_rds_cluster" {
 }
 */
 
+resource "aws_db_subnet_group" "webapp_db_subnet_group" {
+  name       = "webapp-db-subnet-group"
+  subnet_ids = data.aws_subnet_ids.available.ids
+  description = "WebApp Aurora Serverless v2 PostgreSQL Subnet Group."
+}
+
+
+
+resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
+  cluster_identifier      = "webapp-rds-cluster"
+  engine                  = "aurora-postgresql"
+  engine_version          = "15.3"
+  enable_http_endpoint    = true
+  database_name           = var.database_name
+  master_username         = var.master_username
+  master_password         = var.master_password
+  db_subnet_group_name    = aws_db_subnet_group.webapp_db_subnet_group.name
+  vpc_security_group_ids  = [aws_default_security_group.update.id]
+  backup_retention_period = 7
+  engine_mode             = "provisioned"
+  storage_encrypted       = true
+  skip_final_snapshot     = true
+
+  serverlessv2_scaling_configuration {
+    min_capacity = 0.5
+    max_capacity = 2.0
+  }
+}
+
+
+
+resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
+  identifier              = "webapp-rds-cluster-instance"
+  cluster_identifier      = aws_rds_cluster.webapp_aws_rds_cluster.id
+  instance_class          = "db.serverless"
+  engine                  = aws_rds_cluster.webapp_aws_rds_cluster.engine
+  engine_version          = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
+  publicly_accessible     = false
+}
+
+
 /*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
@@ -521,42 +562,3 @@ module "webapp_aws_vpc_endpoint" {
 
 
 
-resource "aws_db_subnet_group" "webapp_db_subnet_group" {
-  name       = "aurora-subnet-group"
-  subnet_ids = data.aws_subnet_ids.available.ids
-  description = "WebApp Aurora Serverless v2 PostgreSQL Subnet Group."
-}
-
-
-
-resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
-  cluster_identifier      = "aurora-pg-serverless-v2"
-  engine                  = "aurora-postgresql"
-  engine_version          = "15.3"
-  enable_http_endpoint    = true
-  database_name           = var.database_name
-  master_username         = var.master_username
-  master_password         = var.master_password
-  db_subnet_group_name    = aws_db_subnet_group.webapp_db_subnet_group.name
-  vpc_security_group_ids  = [aws_default_security_group.update.id]
-  backup_retention_period = 7
-  engine_mode             = "provisioned"
-  storage_encrypted       = true
-  skip_final_snapshot     = true
-
-  serverlessv2_scaling_configuration {
-    min_capacity = 0.5
-    max_capacity = 2.0
-  }
-}
-
-
-
-resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
-  identifier              = "webapp-rds-cluster-instance"
-  cluster_identifier      = aws_rds_cluster.webapp_aws_rds_cluster.id
-  instance_class          = "db.serverless"
-  engine                  = aws_rds_cluster.webapp_aws_rds_cluster.engine
-  engine_version          = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
-  publicly_accessible     = false
-}
