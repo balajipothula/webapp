@@ -519,15 +519,14 @@ resource "aws_security_group" "aurora_sg" {
 resource "aws_rds_cluster" "aurora_pg" {
   cluster_identifier      = "aurora-pg-sls-v1"
   engine                  = "aurora-postgresql"
-  engine_version          = "10.14" # or any version supported by Aurora Serverless v1
+  engine_version          = "10.14"
+  engine_mode             = "serverless"
+  database_name           = "mydatabase"
   master_username         = "dbadmin"
   master_password         = "StrongPassword123!"
-  database_name           = "webapp_db"
   db_subnet_group_name    = aws_db_subnet_group.aurora_subnets.name
   vpc_security_group_ids  = [aws_security_group.aurora_sg.id]
   backup_retention_period = 1
-  preferred_backup_window = "07:00-09:00"
-  engine_mode             = "serverless"
 
   scaling_configuration {
     auto_pause               = true
