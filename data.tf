@@ -93,7 +93,7 @@ locals {
   yyyymmdd   = formatdate("YYYY/MM/DD",          local.timestamp)   
   datetime   = formatdate("YYYY-MM-DD-hh-mm-ss", local.timestamp)
   layer_zip  = "./python/lib/layer.zip"
-  webapp_src = "./python/src/lambda_function.py"
+  webapp_src = "./python/src/main.py"
   webapp_zip = "webapp-${local.datetime}.zip"
 }
 
