@@ -103,10 +103,6 @@ resource "aws_apigatewayv2_stage" "default" {
 }
 
 
-
-
-
-
 /*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
