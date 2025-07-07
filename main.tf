@@ -37,7 +37,7 @@ resource "aws_default_security_group" "update" {
   }
 
 }
-/*
+
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -123,7 +123,7 @@ module "webapp_aws_s3_bucket_object" {
 }
 
 
-/*
+
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -141,9 +141,9 @@ module "webapp_aws_lambda_layer_version" {
   source_code_hash         = filebase64sha256(local.layer_zip) # Optional argument, but keep it.
 
 }
-*/
 
-/*
+
+
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
@@ -153,7 +153,7 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_s3_bucket,
     module.webapp_aws_s3_bucket_object,
     module.webapp_aws_iam_role_policy_attachment,
-  //module.webapp_aws_lambda_layer_version,
+    module.webapp_aws_lambda_layer_version,
   //module.webapp_aws_secretsmanager_secret,
   ]
 
@@ -164,7 +164,7 @@ module "webapp_aws_lambda_function" {
     region = data.aws_region.current.name,
   //secret = module.webapp_aws_secretsmanager_secret.id
   }
-  handler                        = "lambda_function.handler"                    # Optional argument, but keep it.
+  handler                        = "main.handler"                               # Optional argument, but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
   memory_size                    = 256                                          # Optional argument, but keep it.
   package_type                   = "Zip"                                        # Optional argument, but keep it.
@@ -195,7 +195,7 @@ module "webapp_aws_cloudwatch_log_group" {
   ]
 
   name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # Optional argument, but keep it.
-  retention_in_days = 14                                                               # Optional argument, but keep it.
+  retention_in_days = 1                                                                # Optional argument, but keep it.
   tags              = {                                                                # Optional argument, but keep it.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
