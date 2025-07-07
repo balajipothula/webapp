@@ -36,10 +36,15 @@ jobs:
         uses: liquibase-github-actions/update@v4.32.0
         with:
           classpath: './postgresql/webapp_db/public'
-          changeLogFile: '2025.07.07.ChangeLog.sql'
+          changeLogFile: 'master.xml'
           username: ${{ secrets.DB_USERNAME }}
           password: ${{ secrets.DB_PASSWORD }}
           url: ${{ secrets.DB_URL }}
+          defaultSchemaName: 'public'
+          driver: 'org.postgresql.Driver'
+          rollbackOnError: true
+          showSummary: 'summary'
+          showSummaryOutput: 'console'
       # Preparing and pushing documetation into README.md
       #- name: Prepare Terraform Doc and Push to README.md
         #uses: terraform-docs/gh-actions@main
