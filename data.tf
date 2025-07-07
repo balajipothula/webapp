@@ -113,7 +113,7 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
       "s3:GetObject"
     ]
     resources = [
-      "arn:aws:s3:::webapp-aws-lambda-src-s3-bucket-13/*"
+      "arn:aws:s3:::webapp-aws-lambda-src-s3-bucket-14/*"
     ]
   }
 
