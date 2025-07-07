@@ -32,19 +32,19 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v3
       # Official Github Action to run Liquibase in your pipeline.
-      - name: Liquibase Pipeline.
-        uses: liquibase-github-actions/update@v4.32.0
-        with:
-          classpath: './postgresql/webapp_db/public'
-          changeLogFile: 'master.xml'
-          username: ${{ secrets.DB_USERNAME }}
-          password: ${{ secrets.DB_PASSWORD }}
-          url: ${{ secrets.DB_URL }}
-          defaultSchemaName: 'public'
-          driver: 'org.postgresql.Driver'
-          rollbackOnError: true
-          showSummary: 'summary'
-          showSummaryOutput: 'console'
+      #- name: Liquibase Pipeline.
+        #uses: liquibase-github-actions/update@v4.32.0
+        #with:
+          #classpath: './postgresql/webapp_db/public'
+          #changeLogFile: 'master.xml'
+          #username: ${{ secrets.DB_USERNAME }}
+          #password: ${{ secrets.DB_PASSWORD }}
+          #url: ${{ secrets.DB_URL }}
+          #defaultSchemaName: 'public'
+          #driver: 'org.postgresql.Driver'
+          #rollbackOnError: true
+          #showSummary: 'summary'
+          #showSummaryOutput: 'console'
       # Preparing and pushing documetation into README.md
       #- name: Prepare Terraform Doc and Push to README.md
         #uses: terraform-docs/gh-actions@main
@@ -81,8 +81,8 @@ jobs:
         run: terraform plan -input=false -out=webapp.tfplan
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      - name: Terraform plan applying.
-        run: terraform apply -auto-approve -input=false webapp.tfplan
+      #- name: Terraform plan applying.
+        #run: terraform apply -auto-approve -input=false webapp.tfplan
       # Apply an execution plan for Terraform.
-      #- name: Terraform plan destroying.
-        #run: terraform apply -auto-approve -input=false -destroy
+      - name: Terraform plan destroying.
+        run: terraform apply -auto-approve -input=false -destroy
