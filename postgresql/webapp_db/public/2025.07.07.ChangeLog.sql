@@ -1,8 +1,8 @@
 -- liquibase formatted sql
 
 -- comment: Please do not change the value of author:changsetid
--- here author is BalajiPothula and changsetid 2022-02-11T14:50:00Z
--- changeset BalajiPothula:2022-02-11T14:50:00Z
+-- here author is BalajiPothula and changsetid 2025-07-07T15:00:00Z
+-- changeset BalajiPothula:2025-07-07T15:00:00Z
 -- create Song table.
 CREATE TABLE IF NOT EXISTS webapp_db.public."Song"(
   "songId"     BIGSERIAL PRIMARY KEY,
@@ -14,10 +14,10 @@ CREATE TABLE IF NOT EXISTS webapp_db.public."Song"(
 );
 
 -- comment: Please do not change the value of author:changsetid
--- here author is BalajiPothula and changsetid 2022-02-11T17:15:00Z
--- changeset BalajiPothula:2022-02-11T17:15:00Z
+-- here author is BalajiPothula and changsetid 2025-07-07T15:00:00Z
+-- changeset BalajiPothula:2025-07-07T15:00:00Z
 -- create Rating table.
 CREATE TABLE IF NOT EXISTS webapp_db.public."Rating"(
-  "id" BIGINT   NOT NULL,
+  "id"   BIGINT   NOT NULL,
   "rate" SMALLINT NOT NULL CHECK(0 < "rate" AND "rate" < 6)
 );

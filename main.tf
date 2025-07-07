@@ -398,7 +398,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # Optional argument, but keep it.
 
 }
-
+*/
 
 
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
@@ -442,7 +442,7 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
 }
 
 
-
+/*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
