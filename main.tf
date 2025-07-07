@@ -22,7 +22,7 @@ resource "aws_default_security_group" "update" {
 
   ingress {
     #cidr_blocks = ["172.31.16.0/20", "172.31.0.0/20", "172.31.32.0/20"]
-    cidr_blocks = [data.aws_vpc.selected.cidr_block]
+    cidr_blocks = [data.aws_vpc.default.cidr_block]
     description = "PostgreSQL inbound traffic rule."
     protocol    = "tcp"
     to_port     = 5432
