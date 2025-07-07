@@ -21,7 +21,6 @@ resource "aws_default_security_group" "update" {
   vpc_id = data.aws_vpc.default.id
 
   ingress {
-    #cidr_blocks = ["172.31.16.0/20", "172.31.0.0/20", "172.31.32.0/20"]
     cidr_blocks = [data.aws_vpc.default.cidr_block]
     description = "PostgreSQL inbound traffic rule."
     protocol    = "tcp"
