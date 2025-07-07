@@ -7,4 +7,5 @@ app = FastAPI()
 def root():
     return {"message": "Hello from Lambda"}
 
+# Testing Application.
 handler = Mangum(app)
