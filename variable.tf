@@ -45,6 +45,13 @@ variable "ami_map" {
   sensitive   = false
 }
 
+variable "webapp_lambda_src_s3_bucket_name" {
+  type        = string
+  default     = "webapp-aws-lambda-src-s3-bucket-14"
+  description = "WebApp AWS Lambda Source code S3 Bucket Name."
+  sensitive   = true
+}
+
 variable "master_username" {
   type        = string
   default     = "webapp_db_admin"

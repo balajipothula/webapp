@@ -88,7 +88,7 @@ module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = "webapp-aws-lambda-src-s3-bucket-14"                                 # Optional argument, but keep it.
+  bucket = var.webapp_lambda_src_s3_bucket_name                                 # Optional argument, but keep it.
   acl    = "private"                                                            # Optional argument, but keep it.
   policy = data.aws_iam_policy_document.webapp_lambda_src_s3_bucket_policy.json # Optional argument, but keep it.
   tags   = {                                                                    # Optional argument, but keep it.
