@@ -400,7 +400,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 }
 */
 
-
+/*
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "webapp-db-subnet-group"
   subnet_ids = data.aws_subnets.available.ids
