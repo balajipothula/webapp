@@ -272,9 +272,6 @@ module "webapp_aws_lambda_permission" {
   source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*/*" # Optional argument. Update here
 }
 
-arn:aws:execute-api:eu-central-1:804756347993:qjkcvcvmy8
-
-
 
 
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
