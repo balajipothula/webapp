@@ -6,4 +6,4 @@ lambda_handler = Mangum(app)
 
 @app.get("/")
 async def read_root():
-    return {"message": "Hello from Lambda"}
+    return {"message": "Hello World!"}
