@@ -1,5 +1,9 @@
-def lambda_handler(event, context):
-    return {
-        'statusCode': 200,
-        'body': 'Hello World...'
-    }
+from fastapi import FastAPI
+from mangum import Mangum
+
+app = FastAPI()
+lambda_handler = Mangum(app)
+
+@app.get("/")
+async def read_root():
+    return {"message": "Hello from Lambda"}
