@@ -154,7 +154,7 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_s3_bucket_object,
     module.webapp_aws_iam_role_policy_attachment,
     module.webapp_aws_lambda_layer_version,
-  //module.webapp_aws_secretsmanager_secret,
+    module.webapp_aws_secretsmanager_secret,
   ]
 
   function_name                  = "webapp"                                     # Required argument.
@@ -162,7 +162,7 @@ module "webapp_aws_lambda_function" {
   description                    = "WebApp Lambda Function"                     # Optional argument, but keep it.
   environment_variables          = {                                            # Optional argument, but keep it.
     region = data.aws_region.current.name,
-  //secret = module.webapp_aws_secretsmanager_secret.id
+    secret = module.webapp_aws_secretsmanager_secret.id
   }
   handler                        = "lambda_function.lambda_handler"             # Optional argument, but keep it.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # Optional argument, but keep it.
