@@ -188,8 +188,6 @@ async def shutdown():
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  logger.info(region)
-  logger.info(secret)
   return {"message": "Welcome to Python FastAPI WebApplication Service..."}
 
 """
