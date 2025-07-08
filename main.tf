@@ -455,7 +455,7 @@ module "webapp_aws_secretsmanager_secret" {
 
   description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
   force_overwrite_replica_secret = false                       # Optional argument, but keep it.
-  name                           = "webapp_db_secrets"         # Optional argument, conflicts with name_prefix.
+  name                           = "webapp_db-creds"           # Optional argument, conflicts with name_prefix.
   recovery_window_in_days        = 7                           # Optional argument, but keep it.
   tags                           = {                           # Optional argument, but keep it.
     "Name"            = "WebApp"
