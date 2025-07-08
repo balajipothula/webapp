@@ -440,18 +440,18 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
   engine_version          = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
   publicly_accessible     = false
 }
+*/
 
 
-/*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
 
   source                         = "./terraform/aws/secretsmanager/secret"
 
-  depends_on                     = [
-    aws_rds_cluster.webapp_aws_rds_cluster,
-  ]
+//depends_on                     = [
+//  aws_rds_cluster.webapp_aws_rds_cluster,
+//]
 
   description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
   force_overwrite_replica_secret = false                       # Optional argument, but keep it.
@@ -490,7 +490,7 @@ module "webapp_aws_secretsmanager_secret_version" {
     username             = var.master_username
     password             = var.master_password
     dialect              = "postgresql"
-    driver               = "psycopg2"
+    driver               = "psycopg"
     schema               = "public"
     echo                 = "False"
     connect_timeout      = 30
@@ -499,7 +499,7 @@ module "webapp_aws_secretsmanager_secret_version" {
 }
 
 
-
+/*
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {

@@ -53,6 +53,3 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 */
-output "aws_security_groups_default_ids" {
-  value       = module.webapp_aws_apigatewayv2_api.execution_arn
-}
