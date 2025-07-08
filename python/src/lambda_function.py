@@ -1,9 +1,11 @@
-from fastapi import FastAPI
-from mangum import Mangum
+import json
 
-app = FastAPI()
-lambda_handler = Mangum(app)
-
-@app.get("/")
-async def read_root():
-    return {"message": "Hello World!"}
+def lambda_handler(event, context):
+    response = {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": json.dumps({"message": "Success!"})
+    }
+    return response
