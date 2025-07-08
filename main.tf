@@ -270,7 +270,7 @@ module "webapp_aws_lambda_permission" {
   principal     = "apigateway.amazonaws.com"                                # Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                            # Optional argument.
   #source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}//*" # Optional argument. Update here
-   source_arn   = "arn:aws:execute-api:eu-central-1:804756347993:qjkcvcvmy8/*/*/*"
+   source_arn   = "arn:aws:lambda:eu-central-1:804756347993:function:webapp"
 }
 
 
