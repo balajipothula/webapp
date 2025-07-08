@@ -43,7 +43,8 @@ logging.getLogger("botocore").setLevel(logging.ERROR)
 
 logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
-#logger.setLevel(logging.INFO)
+logger.setLevel(logging.INFO)
+
 
 
 def getCredentials(region: str, secret: str) -> dict:
@@ -128,9 +129,6 @@ def getEngine(postgresql: dict):
     })
     logger.error(errorMessage)    
 
-
-region     = os.environ["region"]
-secret     = os.environ["secret"]
 """
 postgresql = getCredentials(region = region, secret = secret)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
