@@ -400,7 +400,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 }
 */
 
-/*
+
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "webapp-db-subnet-group"
   subnet_ids = data.aws_subnets.available.ids
@@ -440,7 +440,7 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
   engine_version          = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
   publicly_accessible     = false
 }
-*/
+
 
 
 # Creation of AWS Secrets Manager Secret for
@@ -449,9 +449,9 @@ module "webapp_aws_secretsmanager_secret" {
 
   source                         = "./terraform/aws/secretsmanager/secret"
 
-//depends_on                     = [
-//  aws_rds_cluster.webapp_aws_rds_cluster,
-//]
+  depends_on                     = [
+    aws_rds_cluster.webapp_aws_rds_cluster,
+  ]
 
   description                    = "WebApp Secrets Manager"    # Optional argument, but keep it.
   force_overwrite_replica_secret = false                       # Optional argument, but keep it.
@@ -474,10 +474,10 @@ module "webapp_aws_secretsmanager_secret_version" {
 
   source        = "./terraform/aws/secretsmanager/secret_version"
 
-//depends_on    = [
-//  module.webapp_aws_secretsmanager_secret,
-//  aws_rds_cluster.webapp_aws_rds_cluster,
-//]
+  depends_on    = [
+    module.webapp_aws_secretsmanager_secret,
+    aws_rds_cluster.webapp_aws_rds_cluster,
+  ]
 
   secret_id     = module.webapp_aws_secretsmanager_secret.id # Required argument.
   secret_string = jsonencode({                               # Optional argument, but required if secret_binary is not set.                             
