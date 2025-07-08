@@ -269,7 +269,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name             # Required argument.
   principal     = "apigateway.amazonaws.com"                                  # Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                              # Optional argument.
-  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*/*" # Optional argument.
+  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*" # Optional argument.
 
 }
 
