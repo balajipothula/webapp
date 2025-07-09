@@ -3,16 +3,6 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Data Source: aws_subnet_ids
-data "aws_subnet_ids" "available" {
-  vpc_id = data.aws_vpc.default.id
-}
-
-# Data Source: aws_subnet
-data "aws_subnet" "default" {
-  for_each = data.aws_subnet_ids.available.ids
-  id       = each.value
-}
 
 # Resource type : aws_security_group
 # Resource name : generic
@@ -56,7 +46,6 @@ resource "aws_security_group" "generic" {
   name_prefix             = var.name_prefix                        # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete  = var.revoke_rules_on_delete             # ✅ Optional argument.
   tags                    = var.tags                               # ✅ Optional argument — recommended to keep.
-  default_tags            = var.default_tags                       # ✅ Optional argument
-  vpc_id                  = var.vpc_id                             # ✅ Optional argument, ❗ Forces new resource.
+  vpc_id                  = data.aws_vpc.default.id                # ✅ Optional argument, ❗ Forces new resource.
 
 }

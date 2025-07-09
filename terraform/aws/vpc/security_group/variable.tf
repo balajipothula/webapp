@@ -84,20 +84,6 @@ variable "tags" {
   sensitive = false
 }
 
-variable "default_tags" {
-  type = map(string)
-  default = {
-    "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
-  }
-  description = "Map of default_tags to assign to the Security Group." 
-  validation {
-    condition     = var.default_tags != null && 0 < length(var.default_tags) && length(var.default_tags) < 51
-    error_message = "Error: default_tags at least one or more expected upto 50."
-  }
-  sensitive = false
-}
-
 variable "vpc_id" {
   type        = string
   default     = null
