@@ -62,7 +62,7 @@ variable "revoke_rules_on_delete" {
   default     = false
   description = "Instruct Terraform to revoke all of the Security Groups attached ingress and egress rules before deleting the rule itself. "
   validation {
-    condition     = var.publish != null && contains(tolist([true, false]), var.publish)
+    condition     = var.revoke_rules_on_delete != null && contains(tolist([true, false]), var.revoke_rules_on_delete)
     error_message = "Error: revoke_rules_on_delete value must not null and revoke_rules_on_delete value either true or false only."
   }
   sensitive = false
