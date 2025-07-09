@@ -68,6 +68,17 @@ module "webapp_aws_security_group" {
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
       self               = null                               # ✅ Optional argument — recommended to keep.
     }
+    {
+      from_port          = 22                                 # 🔒 Required argument.
+      to_port            = 22                                 # 🔒 Required argument.
+      protocol           = "tcp"                              # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
+      description        = "SSH inbound traffic rule."        # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    }
   ]
 
   ingress_rules = [
@@ -87,7 +98,7 @@ module "webapp_aws_security_group" {
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                              # ✅ Optional argument.
   tags   = {                                                  # ✅ Optional argument — recommended to keep.
-    "Name"               = "WebApplication"
+    "Name"               = "WebAppSG"
     "AppName"            = "Python FastAPI Web App"
   }
 
