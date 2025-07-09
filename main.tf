@@ -131,9 +131,9 @@ module "webapp_aws_lambda_layer_version" {
 
   layer_name               = "webapp"                          # Required argument.
   compatible_architectures = ["arm64", "x86_64"]               # Optional argument, but keep it.
-  compatible_runtimes      = ["python3.9"]                    # Optional argument, but keep it.
+  compatible_runtimes      = ["python3.9"]                     # Optional argument, but keep it.
   description              = "Python Library."                 # Optional argument, but keep it.
-  filename                 = local.layer_zip                   # Optional argument, conflicts with s3_bucket, s3_key and s3_object_version.
+  filename                 = local.layer_zip                   # Optional argument, 🤜💥🤛 conflicts with `s3_bucket`, `s3_key` and `s3_object_version`.
   license_info             = "Apache License 2.0"              # Optional argument, but keep it.
 //s3_bucket                = var.s3_bucket                     # Optional argument, conflicts with filename.
 //s3_key                   = var.s3_key                        # Optional argument, conflicts with filename.
@@ -157,10 +157,10 @@ module "webapp_aws_lambda_function" {
     module.webapp_aws_secretsmanager_secret,
   ]
 
-  function_name                  = "webapp"                                     # Required argument.
+  function_name                  = "webapp"                                     # Required argument, ❗ modification creates new resource.
   role                           = module.webapp_aws_iam_role.arn               # Required argument.
-  description                    = "WebApp Lambda Function"                     # Optional argument, but keep it.
-  environment_variables          = {                                            # Optional argument, but keep it.
+  description                    = "WebApp Lambda Function"                     # Optional argument, ✓ but keep it.
+  environment_variables          = {                                            # Optional argument, ✓ but keep it.
     region = data.aws_region.current.name,
     secret = module.webapp_aws_secretsmanager_secret.id
   }
