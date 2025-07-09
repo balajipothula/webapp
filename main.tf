@@ -53,8 +53,8 @@ module "webapp_aws_security_group" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = var.name                           # ✅ Optional argument, ❗ Forces new resource.
-  description            = var.description                    # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-aws-security-group"        # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
 
   egress_rules = [
     {
