@@ -48,6 +48,60 @@ resource "aws_default_security_group" "update" {
 }
 */
 
+# Creation of AWS Security Group for WebApp.
+module "webapp_aws_security_group" {
+
+  source                 = "./terraform/aws/vpc/security_group"
+
+  name                   = var.name                           # ✅ Optional argument, ❗ Forces new resource.
+  description            = var.description                    # ✅ Optional argument, ❗ Forces new resource.
+
+  egress_rules = [
+    {
+      from_port          = 5432                               # 🔒 Required argument.
+      to_port            = 5432                               # 🔒 Required argument.
+      protocol           = "tcp"                              # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
+      description        = "PostgreSQL inbound traffic rule." # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    }
+  ]
+
+  ingress_rules = [
+    {
+      from_port          = 0                                  # 🔒 Required argument.
+      to_port            = 0                                  # 🔒 Required argument.
+      protocol           = "all"                              # 🔒 Required argument.
+      cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
+      description        = "All outbound traffic rule."       # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    }
+  ]
+
+  name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
+  revoke_rules_on_delete = false                              # ✅ Optional argument.
+  tags   = {                                                  # ✅ Optional argument — recommended to keep.
+    "Name"               = "WebApplication"
+    "AppName"            = "Python FastAPI Web App"
+  }
+
+  default_tags = {                                            # ✅ Optional argument — recommended to keep.
+    "DeveloperName"      = "Balaji Pothula"
+    "DeveloperEmail"     = "balan.pothula@gmail.com"
+  }
+
+  vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
+
+}
+
+
+
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -145,9 +199,9 @@ module "webapp_aws_lambda_layer_version" {
   description              = "Python Library."                 # ✅ Optional argument — recommended to keep.
   filename                 = local.layer_zip                   # ✅ Optional argument, 🤜💥🤛 conflicts with `s3_bucket`, `s3_key` and `s3_object_version`.
   license_info             = "Apache License 2.0"              # ✅ Optional argument — recommended to keep.
-//s3_bucket                = var.s3_bucket                     # ✅ Optional argument, 🤜💥🤛 conflicts with filename.
-//s3_key                   = var.s3_key                        # ✅ Optional argument, 🤜💥🤛 conflicts with filename.
-//s3_object_version        = var.s3_object_version             # ✅ Optional argument, 🤜💥🤛 conflicts with filename.
+//s3_bucket                = var.s3_bucket                     # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`.
+//s3_key                   = var.s3_key                        # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`.
+//s3_object_version        = var.s3_object_version             # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`.
   source_code_hash         = filebase64sha256(local.layer_zip) # ✅ Optional argument — recommended to keep.
 
 }
@@ -182,7 +236,7 @@ module "webapp_aws_lambda_function" {
   reserved_concurrent_executions = -1                                           # ✅ Optional argument — recommended to keep.
   runtime                        = "python3.9"                                  # ✅ Optional argument — recommended to keep.
   s3_bucket                      = module.webapp_aws_s3_bucket.id               # ✅ Optional argument — recommended to keep.
-  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # ✅ Optional argument, 🤜💥🤛 conflicts with filename and image_uri.
+  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # ✅ Optional argument, 🤜💥🤛 conflicts with `filename` and `image_uri`.
   tags                           = {                                            # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web Application"
@@ -428,7 +482,7 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   master_username         = var.master_username
   master_password         = var.master_password
   db_subnet_group_name    = aws_db_subnet_group.webapp_db_subnet_group.name
-  vpc_security_group_ids  = [aws_default_security_group.update.id]
+  vpc_security_group_ids  = [module.webapp_aws_security_group.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
   storage_encrypted       = true
