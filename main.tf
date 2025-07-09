@@ -67,7 +67,7 @@ module "webapp_aws_security_group" {
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
       self               = null                               # ✅ Optional argument — recommended to keep.
-    }
+    },
     {
       from_port          = 22                                 # 🔒 Required argument.
       to_port            = 22                                 # 🔒 Required argument.
