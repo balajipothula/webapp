@@ -36,6 +36,7 @@ resource "aws_security_group" "generic" {
       security_groups  = try(egress.value.security_groups, null)   # ✅ Optional argument — recommended to keep.
       self             = try(egress.value.self, null)              # ✅ Optional argument — recommended to keep.
     }
+  }  
 
   dynamic "ingress" {
     for_each = var.ingress_rules
@@ -50,7 +51,8 @@ resource "aws_security_group" "generic" {
       security_groups  = try(ingress.value.security_groups, null)  # ✅ Optional argument — recommended to keep.
       self             = try(ingress.value.self, null)             # ✅ Optional argument — recommended to keep.
     }
-
+  }
+  
   name_prefix             = var.name_prefix                        # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete  = var.revoke_rules_on_delete             # ✅ Optional argument.
   tags                    = var.tags                               # ✅ Optional argument — recommended to keep.
