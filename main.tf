@@ -91,11 +91,6 @@ module "webapp_aws_security_group" {
     "AppName"            = "Python FastAPI Web App"
   }
 
-  default_tags = {                                            # ✅ Optional argument — recommended to keep.
-    "DeveloperName"      = "Balaji Pothula"
-    "DeveloperEmail"     = "balan.pothula@gmail.com"
-  }
-
   vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
 
 }
