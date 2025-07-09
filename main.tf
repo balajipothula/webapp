@@ -313,7 +313,7 @@ module "webapp_aws_apigatewayv2_integration" {
 }
 
 
-
+/*
 # Creation of AWS Lambda Permission to invoke WebApp Lambda Function by AWS API Gateway V2.
 module "webapp_aws_lambda_permission" {
 
@@ -328,10 +328,10 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name             # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                  # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                              # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*/*"   # ✅ Optional argument — recommended to keep.
+  source_arn    = "${module.webapp_aws_apigatewayv2_api.execution_arn}/*//*"  # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 /*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
