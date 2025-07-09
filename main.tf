@@ -96,7 +96,7 @@ module "webapp_aws_security_group" {
 }
 
 
-
+/*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
 
@@ -333,7 +333,7 @@ module "webapp_aws_lambda_permission" {
 }
 
 
-
+/*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
 module "webapp_aws_apigatewayv2_route_index" {
 
@@ -349,7 +349,7 @@ module "webapp_aws_apigatewayv2_route_index" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 /*
 # Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
@@ -459,7 +459,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 }
 */
 
-
+/*
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "webapp-db-subnet-group"
   subnet_ids = data.aws_subnets.available.ids
