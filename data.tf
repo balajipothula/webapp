@@ -52,6 +52,17 @@ data "aws_subnets" "available" {
   }
 }
 
+
+data "aws_subnet_ids" "default" {
+  vpc_id = data.aws_vpc.default.id
+}
+
+# Data Source: aws_subnet - iterate over all subnets in default AWS VPC.
+data "aws_subnet" "each" {
+  for_each = toset(data.aws_subnet_ids.default.ids)
+  id       = each.value
+}
+
 # Data Source: aws_security_groups
 data "aws_security_groups" "default" {
 
