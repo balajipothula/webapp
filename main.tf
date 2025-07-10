@@ -51,6 +51,14 @@ resource "aws_default_security_group" "update" {
 # Creation of AWS Security Group for WebApp.
 module "webapp_aws_security_group" {
 
+  lifecycle {
+    create_before_destroy = true
+  //prevent_destroy       = true
+    ignore_changes        = [
+      tags,
+    ]
+  }
+
   source                 = "./terraform/aws/vpc/security_group"
 
   name                   = "webapp-aws-security-group"        # ✅ Optional argument, ❗ Forces new resource.
@@ -81,7 +89,7 @@ module "webapp_aws_security_group" {
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
       self               = null                               # ✅ Optional argument — recommended to keep.
-    }
+    },
   ]
 
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
