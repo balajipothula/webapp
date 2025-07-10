@@ -55,6 +55,7 @@ module "webapp_aws_security_group" {
 
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                              # ✅ Optional argument.
+
   tags   = {                                                  # ✅ Optional argument — recommended to keep.
     "Name"               = "WebAppSG"
     "AppName"            = "Python FastAPI Web App"
@@ -77,6 +78,8 @@ module "webapp_aws_iam_role" {
   name                  = "WebAppLambdaIAMRole"                                     # ✅ Optional argument — recommended to keep.
 
 }
+
+
 
 # Creation of AWS IAM Policy for WebApp Lambda Function.
 module "webapp_aws_iam_policy" {
@@ -109,6 +112,7 @@ module "webapp_aws_iam_role_policy_attachment" {
 
 
 
+# 
 module "webapp_aws_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
@@ -426,7 +430,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-*/
+
 
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_aws_db_subnet_group" {
@@ -445,15 +449,6 @@ module "webapp_aws_db_subnet_group" {
 
 }
 
-/*
-resource "aws_db_subnet_group" "webapp_db_subnet_group" {
-  name       = "webapp-db-subnet-group"
-  subnet_ids = data.aws_subnets.available.ids
-  description = "WebApp Aurora Serverless v2 PostgreSQL Subnet Group."
-}
-
-
-
 resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   cluster_identifier      = "webapp-rds-cluster"
   engine                  = "aurora-postgresql"
@@ -462,7 +457,7 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   database_name           = var.database_name
   master_username         = var.master_username
   master_password         = var.master_password
-  db_subnet_group_name    = aws_db_subnet_group.webapp_db_subnet_group.name
+  db_subnet_group_name    = module.webapp_aws_db_subnet_group.name
   vpc_security_group_ids  = [module.webapp_aws_security_group.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
@@ -486,7 +481,27 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
   publicly_accessible     = false
 }
 
+module "webapp_rds_cluster_instance" {
+  
+  source = "./terraform/aws/rds/cluster_instance"
 
+  identifier                   = "webapp-rds-cluster-instance"
+  identifier_prefix            = null
+  cluster_identifier           = aws_rds_cluster.webapp_aws_rds_cluster.id
+  instance_class               = "db.serverless"
+  engine                       = aws_rds_cluster.webapp_aws_rds_cluster.engine
+  engine_version               = "15.3"
+  db_subnet_group_name         = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
+  publicly_accessible          = true
+  auto_minor_version_upgrade   = true
+  performance_insights_enabled = false
+
+  tags = {
+    Name     = "WebAppRDSClusterInstance"
+    AppName  = "FastAPI WebApp"
+  }
+
+}
 
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
