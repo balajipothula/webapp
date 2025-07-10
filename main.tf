@@ -428,6 +428,23 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 }
 */
 
+# Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
+module "webapp_aws_db_subnet_group" {
+
+  source      = "./terraform/aws/rds/db_subnet_group"
+
+  name        = "webapp-aws-db-subnet-group"            # ✅ Optional argument, ❗ Forces new resource.
+  name_prefix = null                                    # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `name`.
+  description = "WebApp DB Subnet Group for PostgreSQL" # ✅ Optional argument — recommended to keep.
+  subnet_ids  = data.aws_subnet_ids.available.ids       # 🔒 Required argument
+  tags = {                                              # ✅ Optional argument — recommended to keep.
+    "Name"     = "WebAppDBSubnetGroup"
+    "AppName"  = "FastAPI WebApp"
+    "Env"      = "dev"
+  }
+
+}
+
 /*
 resource "aws_db_subnet_group" "webapp_db_subnet_group" {
   name       = "webapp-db-subnet-group"

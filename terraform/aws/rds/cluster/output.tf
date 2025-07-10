@@ -1,4 +1,4 @@
-# Resource  type : resource "aws_rds_cluster" "generic" {
+# Resource  type : aws_rds_cluster
 # Resource  name : generic
 # Attribute name : arn
 output "arn" {

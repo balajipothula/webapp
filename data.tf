@@ -52,14 +52,15 @@ data "aws_subnets" "available" {
   }
 }
 
-
-data "aws_subnet_ids" "default" {
+# Data Source: aws_subnet_ids
+data "aws_subnet_ids" "available" {
   vpc_id = data.aws_vpc.default.id
 }
 
+
 # Data Source: aws_subnet - iterate over all subnets in default AWS VPC.
 data "aws_subnet" "each" {
-  for_each = toset(data.aws_subnet_ids.default.ids)
+  for_each = toset(data.aws_subnet_ids.available.ids)
   id       = each.value
 }
 
