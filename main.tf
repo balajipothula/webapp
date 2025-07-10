@@ -15,38 +15,7 @@ provider "aws" {
 
 }
 
-/*
-# AWS Default Security Group Update.
-resource "aws_default_security_group" "update" {
 
-  lifecycle {
-    create_before_destroy = true
-    prevent_destroy       = true
-    ignore_changes        = [
-      tags
-    ]
-  }
-
-  vpc_id = data.aws_vpc.default.id
-
-  ingress {
-    cidr_blocks = [data.aws_vpc.default.cidr_block]
-    description = "PostgreSQL inbound traffic rule."
-    protocol    = "tcp"
-    to_port     = 5432
-    from_port   = 5432
-  }
-
-  egress {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "All outbound traffic rule."
-    protocol    = "all"
-    to_port     = 0
-    from_port   = 0
-  }
-
-}
-*/
 
 # Creation of AWS Security Group for WebApp.
 module "webapp_aws_security_group" {

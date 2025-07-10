@@ -18,6 +18,19 @@ data "aws_vpc" "default" {
   default = true
 }
 
+# Data Source: aws_internet_gateway - first IGW in the VPC.
+data "aws_internet_gateway" "default" {
+  filter {
+    name   = "attachment.vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
+# Data Source: aws_route_tables - all route tables in the VPC.
+data "aws_route_tables" "all" {
+  vpc_id = data.aws_vpc.default.id
+}
+
 # Data Source: aws_availability_zones
 data "aws_availability_zones" "available" {
 
