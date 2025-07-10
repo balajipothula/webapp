@@ -436,7 +436,7 @@ module "webapp_aws_db_subnet_group" {
   name        = "webapp-aws-db-subnet-group"            # ✅ Optional argument, ❗ Forces new resource.
   name_prefix = null                                    # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `name`.
   description = "WebApp DB Subnet Group for PostgreSQL" # ✅ Optional argument — recommended to keep.
-  subnet_ids  = data.aws_subnet_ids.available.ids       # 🔒 Required argument
+  subnet_ids  = data.aws_subnets.available.ids          # 🔒 Required argument
   tags = {                                              # ✅ Optional argument — recommended to keep.
     "Name"     = "WebAppDBSubnetGroup"
     "AppName"  = "FastAPI WebApp"

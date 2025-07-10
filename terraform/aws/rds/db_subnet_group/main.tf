@@ -3,9 +3,13 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Data Source: aws_subnet_ids
-data "aws_subnet_ids" "available" {
-  vpc_id = data.aws_vpc.default.id
+# Data Source: aws_subnets
+# Fetch subnet IDs in default VPC
+data "aws_subnets" "available" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
 # Resource type : aws_db_subnet_group
@@ -14,10 +18,10 @@ data "aws_subnet_ids" "available" {
 # Variable name : name
 resource "aws_db_subnet_group" "generic" {
 
-  name        = var.name                          # ✅ Optional argument, ❗ Forces new resource.
-  name_prefix = var.name_prefix                   # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `name`.
-  description = var.description                   # ✅ Optional argument — recommended to keep.
-  subnet_ids  = data.aws_subnet_ids.available.ids # 🔒 Required argument
-  tags        = var.tags                          # ✅ Optional argument — recommended to keep.
+  name        = var.name                       # ✅ Optional argument, ❗ Forces new resource.
+  name_prefix = var.name_prefix                # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `name`.
+  description = var.description                # ✅ Optional argument — recommended to keep.
+  subnet_ids  = data.aws_subnets.available.ids # 🔒 Required argument
+  tags        = var.tags                       # ✅ Optional argument — recommended to keep.
 
 }
