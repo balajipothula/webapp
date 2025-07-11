@@ -496,30 +496,30 @@ module "webapp_db_rds_cluster_instance" {
     module.webapp_db_aws_db_subnet_group,
   ]
 
-  apply_immediately                     = false                                         # ✅ Optional argument.
-  auto_minor_version_upgrade            = true                                          # ✅ Optional argument.
-  availability_zone                     = element(data.aws_availability_zones.available.names, count.index) # ✅ Optional argument, ❗ Forces new resource.
-  ca_cert_identifier                    = null                                          # ✅ Optional argument.
-  cluster_identifier                    = aws_rds_cluster.webapp_aws_rds_cluster.id     # 🔒 Required argument, ❗ Forces new resource.
-  copy_tags_to_snapshot                 = false                                         # ✅ Optional argument.
-  custom_iam_instance_profile           = null                                          # ✅ Optional argument.
-  db_parameter_group_name               = null                                          # ✅ Optional argument.
-  db_subnet_group_name                  = module.webapp_db_aws_db_subnet_group.id       # 🔒 Required argument, if `publicly_accessible = false`, Optional otherwise, ❗ Forces new resource.
-  engine_version                        = "15.3"                                        # ✅ Optional argument — recommended to keep.
-  engine                                = aws_rds_cluster.webapp_aws_rds_cluster.engine # 🔒 Required argument, ❗ Forces new resource.
-  identifier_prefix                     = null                                          # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `identifier`.
-  identifier                            = "webapp-db-rds-cluster-instance"              # ✅ Optional argument, ❗ Forces new resource.
-  instance_class                        = "db.serverless"                               # 🔒 Required argument.
-  monitoring_interval                   = 0                                             # ✅ Optional argument.
-  monitoring_role_arn                   = null                                          # ✅ Optional argument.
-  performance_insights_enabled          = false                                         # ✅ Optional argument.
-//performance_insights_kms_key_id       = var.performance_insights_kms_key_id           # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
-//performance_insights_retention_period = var.performance_insights_retention_period     # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
-  preferred_backup_window               = null                                          # ✅ Optional argument, if it set at the cluster level, this must be `null`.
-  preferred_maintenance_window          = null                                          # ✅ Optional argument — recommended to keep.
-  promotion_tier                        = 0                                             # ✅ Optional argument.
-  publicly_accessible                   = true                                          # ✅ Optional argument — recommended to keep.
-  tags = {                                                                              # ✅ Optional argument — recommended to keep.
+  apply_immediately                     = false                                          # ✅ Optional argument.
+  auto_minor_version_upgrade            = true                                           # ✅ Optional argument.
+  availability_zone                     = data.aws_availability_zones.available.names[0] # ✅ Optional argument, ❗ Forces new resource.
+  ca_cert_identifier                    = null                                           # ✅ Optional argument.
+  cluster_identifier                    = aws_rds_cluster.webapp_aws_rds_cluster.id      # 🔒 Required argument, ❗ Forces new resource.
+  copy_tags_to_snapshot                 = false                                          # ✅ Optional argument.
+  custom_iam_instance_profile           = null                                           # ✅ Optional argument.
+  db_parameter_group_name               = null                                           # ✅ Optional argument.
+  db_subnet_group_name                  = module.webapp_db_aws_db_subnet_group.id        # 🔒 Required argument, if `publicly_accessible = false`, Optional otherwise, ❗ Forces new resource.
+  engine_version                        = "15.3"                                         # ✅ Optional argument — recommended to keep.
+  engine                                = aws_rds_cluster.webapp_aws_rds_cluster.engine  # 🔒 Required argument, ❗ Forces new resource.
+  identifier_prefix                     = null                                           # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `identifier`.
+  identifier                            = "webapp-db-rds-cluster-instance"               # ✅ Optional argument, ❗ Forces new resource.
+  instance_class                        = "db.serverless"                                # 🔒 Required argument.
+  monitoring_interval                   = 0                                              # ✅ Optional argument.
+  monitoring_role_arn                   = null                                           # ✅ Optional argument.
+  performance_insights_enabled          = false                                          # ✅ Optional argument.
+//performance_insights_kms_key_id       = var.performance_insights_kms_key_id            # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
+//performance_insights_retention_period = var.performance_insights_retention_period      # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
+  preferred_backup_window               = null                                           # ✅ Optional argument, if it set at the cluster level, this must be `null`.
+  preferred_maintenance_window          = null                                           # ✅ Optional argument — recommended to keep.
+  promotion_tier                        = 0                                              # ✅ Optional argument.
+  publicly_accessible                   = true                                           # ✅ Optional argument — recommended to keep.
+  tags = {                                                                               # ✅ Optional argument — recommended to keep.
     Name     = "webapp_db-rds-cluster-instance"
     AppName  = "FastAPI WebApp"
   }
