@@ -162,11 +162,11 @@ variable "performance_insights_kms_key_id" {
 
 variable "performance_insights_retention_period" {
   type        = number
-  default     = 7
+  default     = null
   description = "Amount of time in days to retain Performance Insights data."
   validation {
-    condition     = contains([7, 731], var.performance_insights_retention_period) || (var.performance_insights_retention_period % 31 == 0 && 31 <= var.performance_insights_retention_period && var.performance_insights_retention_period <= 713)
-    error_message = "Error: performance_insights_retention_period valid values are 7, 731 (2 years) or a multiple of 31."
+    condition     = var.performance_insights_retention_period == null || contains([7, 731], var.performance_insights_retention_period) || (var.performance_insights_retention_period % 31 == 0 && 31 <= var.performance_insights_retention_period && var.performance_insights_retention_period <= 713)
+    error_message = "Error: performance_insights_retention_period valid values are null, 7, 731 (2 years) or a multiple of 31."
   }
   sensitive = false
 }

@@ -492,16 +492,17 @@ module "webapp_db_rds_cluster_instance" {
   
   source = "./terraform/aws/rds/cluster_instance"
 
-  identifier                   = "webapp-db-rds-cluster-instance"
-  identifier_prefix            = null
-  cluster_identifier           = aws_rds_cluster.webapp_aws_rds_cluster.id
-  instance_class               = "db.serverless"
-  engine                       = aws_rds_cluster.webapp_aws_rds_cluster.engine
-  engine_version               = "15.3"
-  db_subnet_group_name         = module.webapp_db_aws_db_subnet_group.id
-  publicly_accessible          = true
-  auto_minor_version_upgrade   = true
-  performance_insights_enabled = false
+  identifier                            = "webapp-db-rds-cluster-instance"
+  identifier_prefix                     = null
+  cluster_identifier                    = aws_rds_cluster.webapp_aws_rds_cluster.id
+  instance_class                        = "db.serverless"
+  engine                                = aws_rds_cluster.webapp_aws_rds_cluster.engine
+  engine_version                        = "15.3"
+  db_subnet_group_name                  = module.webapp_db_aws_db_subnet_group.id
+  publicly_accessible                   = true
+  auto_minor_version_upgrade            = true
+  performance_insights_enabled          = false
+  performance_insights_retention_period = null
 
   tags = {
     Name     = "webapp_db-rds-cluster-instance"

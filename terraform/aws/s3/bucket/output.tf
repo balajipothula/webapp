@@ -42,9 +42,3 @@ output "tags_all" {
   description = "A map of tags assigned to the resource."
   sensitive   = false
 }
-
-output "website_domain" {
-  value       = aws_s3_bucket.generic.website_domain
-  description = "The domain of the website endpoint."
-  sensitive   = false
-}
