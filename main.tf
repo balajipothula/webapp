@@ -492,7 +492,7 @@ module "webapp_db_rds_cluster_instance" {
   
   source = "./terraform/aws/rds/cluster_instance"
 
-  identifier                   = "webapp_db-rds-cluster-instance"
+  identifier                   = "webapp-db-rds-cluster-instance"
   identifier_prefix            = null
   cluster_identifier           = aws_rds_cluster.webapp_aws_rds_cluster.id
   instance_class               = "db.serverless"
