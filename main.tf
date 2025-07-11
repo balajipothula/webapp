@@ -503,7 +503,7 @@ module "webapp_db_rds_cluster_instance" {
   auto_minor_version_upgrade            = true
   performance_insights_enabled          = false
   performance_insights_kms_key_id       = null
-  performance_insights_retention_period = null
+  performance_insights_retention_period = 0
 
   tags = {
     Name     = "webapp_db-rds-cluster-instance"
