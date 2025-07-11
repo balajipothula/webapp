@@ -141,7 +141,7 @@ variable "monitoring_role_arn" {
   sensitive   = false
 }
 
-
+# if `performance_insights_enabled = true` then `performance_insights_kms_key_id` and `performance_insights_retention_period` values must be provided.
 variable "performance_insights_enabled" {
   type        = bool
   default     = false
@@ -153,6 +153,7 @@ variable "performance_insights_enabled" {
   sensitive = false
 }
 
+# if `performance_insights_enabled = true` then `performance_insights_kms_key_id` values must be provided.
 variable "performance_insights_kms_key_id" {
   type        = string
   default     = null
@@ -160,6 +161,7 @@ variable "performance_insights_kms_key_id" {
   sensitive   = false
 }
 
+# if `performance_insights_enabled = true` then `performance_insights_retention_period` values must be provided.
 variable "performance_insights_retention_period" {
   type        = number
   default     = null
