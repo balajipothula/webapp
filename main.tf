@@ -498,7 +498,7 @@ module "webapp_db_rds_cluster_instance" {
 
   apply_immediately                     = false                                         # ✅ Optional argument.
   auto_minor_version_upgrade            = true                                          # ✅ Optional argument.
-  availability_zone                     = data.aws_availability_zones.available.names   # ✅ Optional argument, ❗ Forces new resource.
+  availability_zone                     = element(data.aws_availability_zones.available.names, count.index) # ✅ Optional argument, ❗ Forces new resource.
   ca_cert_identifier                    = null                                          # ✅ Optional argument.
   cluster_identifier                    = aws_rds_cluster.webapp_aws_rds_cluster.id     # 🔒 Required argument, ❗ Forces new resource.
   copy_tags_to_snapshot                 = false                                         # ✅ Optional argument.
