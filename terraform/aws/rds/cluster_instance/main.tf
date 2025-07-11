@@ -22,8 +22,8 @@ resource "aws_rds_cluster_instance" "generic" {
   monitoring_interval                   = var.monitoring_interval                   # ✅ Optional argument — recommended to keep.
   monitoring_role_arn                   = var.monitoring_role_arn                   # ✅ Optional argument.
   performance_insights_enabled          = var.performance_insights_enabled          # ✅ Optional argument.
-  performance_insights_kms_key_id       = var.performance_insights_kms_key_id       # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
-  performance_insights_retention_period = var.performance_insights_retention_period # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
+//performance_insights_kms_key_id       = var.performance_insights_kms_key_id       # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
+//performance_insights_retention_period = var.performance_insights_retention_period # 🔒 Required argument, if `performance_insights_enabled = true`, Optional otherwise.
   preferred_backup_window               = var.preferred_backup_window               # ✅ Optional argument, if it set at the cluster level, this must be `null`.
   preferred_maintenance_window          = var.preferred_maintenance_window          # ✅ Optional argument — recommended to keep.
   promotion_tier                        = var.promotion_tier                        # ✅ Optional argument.
