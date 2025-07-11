@@ -1,6 +1,7 @@
 -- liquibase formatted sql
 
 -- changeset BalajiPothula:2025-07-11T11:00:00Z
+
 -- create Song table.
 CREATE TABLE IF NOT EXISTS webapp_db.public."Song"(
   "songId"     BIGSERIAL PRIMARY KEY,
@@ -11,7 +12,6 @@ CREATE TABLE IF NOT EXISTS webapp_db.public."Song"(
   "released"   VARCHAR   NOT NULL
 );
 
--- changeset BalajiPothula:2025-07-11T11:00:00Z
 -- create Rating table.
 CREATE TABLE IF NOT EXISTS webapp_db.public."Rating"(
   "id"   BIGINT   NOT NULL,
