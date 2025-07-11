@@ -434,7 +434,7 @@ module "webapp_db_aws_security_group" {
 
 
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
-module "webapp_aws_db_subnet_group" {
+module "webapp_db_aws_db_subnet_group" {
 
   source      = "./terraform/aws/rds/db_subnet_group"
 
@@ -461,7 +461,7 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   database_name           = var.database_name
   master_username         = var.master_username
   master_password         = var.master_password
-  db_subnet_group_name    = module.webapp_aws_db_subnet_group.name
+  db_subnet_group_name    = module.webapp_db_aws_db_subnet_group.id
   vpc_security_group_ids  = [module.webapp_db_aws_security_group.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
@@ -498,7 +498,7 @@ module "webapp_db_rds_cluster_instance" {
   instance_class               = "db.serverless"
   engine                       = aws_rds_cluster.webapp_aws_rds_cluster.engine
   engine_version               = "15.3"
-  db_subnet_group_name         = module.webapp_aws_db_subnet_group.id
+  db_subnet_group_name         = module.webapp_db_aws_db_subnet_group.id
   publicly_accessible          = true
   auto_minor_version_upgrade   = true
   performance_insights_enabled = false
