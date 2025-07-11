@@ -432,7 +432,7 @@ module "webapp_db_aws_security_group" {
 }
 
 
-
+/*
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -476,17 +476,6 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
 }
 
 
-/*
-resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
-  identifier              = "webapp-rds-cluster-instance"
-  cluster_identifier      = aws_rds_cluster.webapp_aws_rds_cluster.id
-  instance_class          = "db.serverless"
-  engine                  = aws_rds_cluster.webapp_aws_rds_cluster.engine
-  engine_version          = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
-  publicly_accessible     = false
-}
-*/
-
 
 module "webapp_db_rds_cluster_instance" {
   
@@ -525,7 +514,7 @@ module "webapp_db_rds_cluster_instance" {
   }
 
 }
-
+*/
 
 /*
 # Creation of AWS Secrets Manager Secret for
