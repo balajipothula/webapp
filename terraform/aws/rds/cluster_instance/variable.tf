@@ -165,16 +165,13 @@ variable "performance_insights_retention_period" {
   default     = 7
   description = "Amount of time in days to retain Performance Insights data."
   validation {
-    condition = contains([7, 731], var.performance_insights_retention_period) ||
-      (
-        var.performance_insights_retention_period % 31 == 0 &&
-        31 <= var.performance_insights_retention_period &&
-        var.performance_insights_retention_period <= 713
-      )
-    error_message = "Error: Valid values are 7, 731 (2 years), or a multiple of 31 between 31 and 713."
+    condition     = contains([7, 731], var.performance_insights_retention_period) || (var.performance_insights_retention_period % 31 == 0 && 31 <= var.performance_insights_retention_period && var.performance_insights_retention_period <= 713)
+    error_message = "Error: performance_insights_retention_period valid values are 7, 731 (2 years) or a multiple of 31."
   }
   sensitive = false
 }
+
+
 
 variable "preferred_backup_window" {
   type        = string
