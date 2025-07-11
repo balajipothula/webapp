@@ -164,7 +164,7 @@ variable "performance_insights_kms_key_id" {
 # if `performance_insights_enabled = true` then `performance_insights_retention_period` values must be provided.
 variable "performance_insights_retention_period" {
   type        = number
-  default     = null
+  default     = 0
   description = "Amount of time in days to retain Performance Insights data."
   validation {
     condition     = var.performance_insights_retention_period == null || contains([7, 731], var.performance_insights_retention_period) || (var.performance_insights_retention_period % 31 == 0 && 31 <= var.performance_insights_retention_period && var.performance_insights_retention_period <= 713)
