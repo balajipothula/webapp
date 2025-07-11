@@ -59,7 +59,7 @@ module "webapp_aws_iam_role_policy_attachment" {
   policy_arn = module.webapp_aws_iam_policy.arn # 🔒 Required argument.
 
 }
-
+*/
 
 
 # 
@@ -105,7 +105,7 @@ module "webapp_aws_s3_bucket_object" {
 }
 
 
-
+/*
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 

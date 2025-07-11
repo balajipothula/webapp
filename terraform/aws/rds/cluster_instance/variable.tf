@@ -106,8 +106,8 @@ variable "identifier" {
   default     = "rds-cluster-instance"
   description = "Identifier for the RDS instance."
   validation {
-    condition     = 0 < length(var.identifier)
-    error_message = "Error: identifier must not be empty."
+    condition     = 0 < length(var.identifier) && can(regex("^[a-z][a-z0-9-]*$", var.identifier))
+    error_message = "Error: identifier must not empyth, must contain only lowercase letters, numbers, and hyphens (a-z, 0-9, -)."
   }
   sensitive = false
 }
@@ -170,8 +170,6 @@ variable "performance_insights_retention_period" {
   }
   sensitive = false
 }
-
-
 
 variable "preferred_backup_window" {
   type        = string
