@@ -430,6 +430,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
+*/
 
 
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
@@ -448,6 +449,8 @@ module "webapp_aws_db_subnet_group" {
   }
 
 }
+
+
 
 resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   cluster_identifier      = "webapp-rds-cluster"
@@ -471,7 +474,7 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
 }
 
 
-
+/*
 resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
   identifier              = "webapp-rds-cluster-instance"
   cluster_identifier      = aws_rds_cluster.webapp_aws_rds_cluster.id
@@ -480,6 +483,8 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
   engine_version          = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
   publicly_accessible     = false
 }
+*/
+
 
 module "webapp_rds_cluster_instance" {
   
@@ -491,7 +496,7 @@ module "webapp_rds_cluster_instance" {
   instance_class               = "db.serverless"
   engine                       = aws_rds_cluster.webapp_aws_rds_cluster.engine
   engine_version               = "15.3"
-  db_subnet_group_name         = aws_rds_cluster.webapp_aws_rds_cluster.engine_version
+  db_subnet_group_name         = module.webapp_aws_db_subnet_group.id
   publicly_accessible          = true
   auto_minor_version_upgrade   = true
   performance_insights_enabled = false
@@ -503,6 +508,8 @@ module "webapp_rds_cluster_instance" {
 
 }
 
+
+/*
 # Creation of AWS Secrets Manager Secret for
 # Amazon Aurora Serverless PostgreSQL Relational Database RDS Cluster.
 module "webapp_aws_secretsmanager_secret" {
