@@ -16,56 +16,6 @@ provider "aws" {
 }
 
 
-
-# Creation of AWS Security Group for WebApp.
-module "webapp_aws_security_group" {
-
-  source                 = "./terraform/aws/vpc/security_group"
-
-  name                   = "webapp-aws-security-group"        # ✅ Optional argument, ❗ Forces new resource.
-  description            = "WebApp AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
-
-  egress_rules = [
-    {
-      from_port          = 5432                               # 🔒 Required argument.
-      to_port            = 5432                               # 🔒 Required argument.
-      protocol           = "tcp"                              # 🔒 Required argument.
-      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
-      description        = "PostgreSQL inbound traffic rule." # ✅ Optional argument — recommended to keep.
-      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
-      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
-      security_groups    = null                               # ✅ Optional argument — recommended to keep.
-      self               = null                               # ✅ Optional argument — recommended to keep.
-    },
-  ]
-
-  ingress_rules = [
-    {
-      from_port          = 0                                  # 🔒 Required argument.
-      to_port            = 0                                  # 🔒 Required argument.
-      protocol           = "all"                              # 🔒 Required argument.
-      cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
-      description        = "All outbound traffic rule."       # ✅ Optional argument — recommended to keep.
-      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
-      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
-      security_groups    = null                               # ✅ Optional argument — recommended to keep.
-      self               = null                               # ✅ Optional argument — recommended to keep.
-    },
-  ]
-
-  name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
-  revoke_rules_on_delete = false                              # ✅ Optional argument.
-
-  tags   = {                                                  # ✅ Optional argument — recommended to keep.
-    "Name"               = "WebAppSG"
-    "AppName"            = "Python FastAPI Web App"
-  }
-
-  vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
-
-}
-
-
 /*
 # Creation of AWS IAM Role for WebApp Lambda Function.
 module "webapp_aws_iam_role" {
@@ -433,17 +383,67 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 */
 
 
+# Creation of AWS Security Group for WebApp.
+module "webapp_db_aws_security_group" {
+
+  source                 = "./terraform/aws/vpc/security_group"
+
+  name                   = "webapp_db-aws-security-group"     # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp DB AWS Security Group"     # ✅ Optional argument, ❗ Forces new resource.
+
+  egress_rules = [
+    {
+      from_port          = 5432                               # 🔒 Required argument.
+      to_port            = 5432                               # 🔒 Required argument.
+      protocol           = "tcp"                              # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
+      description        = "PostgreSQL inbound traffic rule." # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    },
+  ]
+
+  ingress_rules = [
+    {
+      from_port          = 0                                  # 🔒 Required argument.
+      to_port            = 0                                  # 🔒 Required argument.
+      protocol           = "all"                              # 🔒 Required argument.
+      cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
+      description        = "All outbound traffic rule."       # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    },
+  ]
+
+  name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
+  revoke_rules_on_delete = false                              # ✅ Optional argument.
+
+  tags   = {                                                  # ✅ Optional argument — recommended to keep.
+    "Name"               = "webapp_db-sg"
+    "AppName"            = "Python FastAPI Web App"
+  }
+
+  vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
+
+}
+
+
+
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_aws_db_subnet_group" {
 
   source      = "./terraform/aws/rds/db_subnet_group"
 
-  name        = "webapp-aws-db-subnet-group"            # ✅ Optional argument, ❗ Forces new resource.
+  name        = "webapp_db-aws-db-subnet-group"         # ✅ Optional argument, ❗ Forces new resource.
   name_prefix = null                                    # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `name`.
   description = "WebApp DB Subnet Group for PostgreSQL" # ✅ Optional argument — recommended to keep.
   subnet_ids  = data.aws_subnets.available.ids          # 🔒 Required argument
   tags = {                                              # ✅ Optional argument — recommended to keep.
-    "Name"     = "WebAppDBSubnetGroup"
+    "Name"     = "webapp_db-subnet-group"
     "AppName"  = "FastAPI WebApp"
     "Env"      = "dev"
   }
@@ -453,6 +453,7 @@ module "webapp_aws_db_subnet_group" {
 
 
 resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
+
   cluster_identifier      = "webapp-rds-cluster"
   engine                  = "aurora-postgresql"
   engine_version          = "15.3"
@@ -461,7 +462,7 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   master_username         = var.master_username
   master_password         = var.master_password
   db_subnet_group_name    = module.webapp_aws_db_subnet_group.name
-  vpc_security_group_ids  = [module.webapp_aws_security_group.id]
+  vpc_security_group_ids  = [module.webapp_db_aws_security_group.id]
   backup_retention_period = 7
   engine_mode             = "provisioned"
   storage_encrypted       = true
@@ -471,6 +472,7 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
     min_capacity = 0.5
     max_capacity = 2.0
   }
+
 }
 
 
@@ -486,11 +488,11 @@ resource "aws_rds_cluster_instance" "webapp_aws_rds_cluster_instance" {
 */
 
 
-module "webapp_rds_cluster_instance" {
+module "webapp_db_rds_cluster_instance" {
   
   source = "./terraform/aws/rds/cluster_instance"
 
-  identifier                   = "webapp-rds-cluster-instance"
+  identifier                   = "webapp_db-rds-cluster-instance"
   identifier_prefix            = null
   cluster_identifier           = aws_rds_cluster.webapp_aws_rds_cluster.id
   instance_class               = "db.serverless"
@@ -502,7 +504,7 @@ module "webapp_rds_cluster_instance" {
   performance_insights_enabled = false
 
   tags = {
-    Name     = "WebAppRDSClusterInstance"
+    Name     = "webapp_db-rds-cluster-instance"
     AppName  = "FastAPI WebApp"
   }
 
