@@ -449,9 +449,9 @@ module "webapp_db_aws_db_subnet_group" {
   }
 
 }
+*/
 
-
-
+/*
 resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
 
   cluster_identifier      = "webapp-rds-cluster"
@@ -474,9 +474,9 @@ resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
   }
 
 }
+*/
 
-
-
+/*
 module "webapp_db_rds_cluster_instance" {
   
   source = "./terraform/aws/rds/cluster_instance"
