@@ -432,7 +432,7 @@ module "webapp_db_aws_security_group" {
 }
 
 
-/*
+
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -449,39 +449,91 @@ module "webapp_db_aws_db_subnet_group" {
   }
 
 }
-*/
 
-/*
-resource "aws_rds_cluster" "webapp_aws_rds_cluster" {
+# 
+module "webapp_db_aws_rds_cluster" {
 
-  cluster_identifier      = "webapp-rds-cluster"
-  engine                  = "aurora-postgresql"
-  engine_version          = "15.3"
-  enable_http_endpoint    = true
-  database_name           = var.database_name
-  master_username         = var.master_username
-  master_password         = var.master_password
-  db_subnet_group_name    = module.webapp_db_aws_db_subnet_group.id
-  vpc_security_group_ids  = [module.webapp_db_aws_security_group.id]
-  backup_retention_period = 7
-  engine_mode             = "provisioned"
-  storage_encrypted       = true
-  skip_final_snapshot     = true
+  source      = "./terraform/aws/rds/cluster"
 
-  serverlessv2_scaling_configuration {
-    min_capacity = 0.5
-    max_capacity = 2.0
+  depends_on = [
+    module.webapp_db_aws_db_subnet_group,
+  ]
+
+  allocated_storage                   = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
+  allow_major_version_upgrade         = false                                                     # ✅ Optional argument — 🧩 inter-related with `db_instance_parameter_group_name`.
+  apply_immediately                   = false                                                     # ✅ Optional argument — recommended to keep.
+  availability_zones                  = slice(data.aws_availability_zones.available.names, 0, 3)  # ✅ Optional argument — recommended to keep.
+  backtrack_window                    = 0                                                         # ✅ Optional argument — recommended to keep.
+  backup_retention_period             = 1                                                         # ✅ Optional argument — recommended to keep.
+  cluster_identifier                  = "webapp-db-aws-rds-cluster"                               # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `cluster_identifier_prefix`.
+  cluster_identifier_prefix           = null                                                      # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `cluster_identifier`.
+  copy_tags_to_snapshot               = false                                                     # ✅ Optional argument — recommended to keep.
+  database_name                       = var.database_name                                         # ✅ Optional argument — 🚨 highly recommended to keep.
+  db_cluster_instance_class           = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
+  db_cluster_parameter_group_name     = null                                                      # ✅ Optional argument.
+  db_instance_parameter_group_name    = null                                                      # ✅ Optional argument — 🧩 inter-related with `allow_major_version_upgrade`.
+  db_subnet_group_name                = module.webapp_db_aws_db_subnet_group.id                   # ✅ Optional argument — 🚨 highly recommended to keep, ❗ must match with `aws_rds_cluster_instance` resource `db_subnet_group_name` variable.
+  db_system_id                        = null                                                      # ✅ Optional argument.
+  delete_automated_backups            = true                                                      # ✅ Optional argument — recommended to keep.
+  deletion_protection                 = false                                                     # ✅ Optional argument — 🚨 highly recommended to keep.
+  enable_global_write_forwarding      = false                                                     # ✅ Optional argument — 🚨 highly recommended to keep.
+  enable_http_endpoint                = true                                                      # ✅ Optional argument — 🚨 `engine_mode` must be 'serverless'.
+  enabled_cloudwatch_logs_exports     = []                                                        # ✅ Optional argument.
+  engine                              = "aurora-postgresql"                                       # 🔒 Required argument.
+  engine_mode                         = "provisioned"                                             # ✅ Optional argument — 🚨 highly recommended to keep.
+  engine_version                      = "15.3"                                                    # ✅ Optional argument — 🚨 highly recommended to keep.
+  final_snapshot_identifier           = null                                                      # ✅ Optional argument — recommended to keep.
+//final_snapshot_identifier           = "${var.final_snapshot_identifier}-${local.datetime}"      # ✅ Optional argument — recommended to keep.
+  global_cluster_identifier           = null                                                      # ✅ Optional argument.
+  iam_database_authentication_enabled = false                                                     # ✅ Optional argument.
+  iam_roles                           = []                                                        # ✅ Optional argument.
+  iops                                = null                                                      # ✅ Optional argument — 🧩 inter-related with `availability_zones`.
+  kms_key_id                          = null                                                      # ✅ Optional argument — 🚨 `storage_encrypted` must be 'true'.
+  manage_master_user_password         = false                                                     # ✅ Optional argument — 🚨 `master_password` must be 'null'.
+  master_password                     = var.master_password                                       # 🔒 Required argument — 🚨 `manage_master_user_password` must be 'false'.
+  master_user_secret_kms_key_id       = null                                                      # ✅ Optional argument.
+  master_username                     = var.master_username                                       # 🔒 Required argument.
+  network_type                        = null                                                      # ✅ Optional argument — recommended to keep.
+  port                                = 5432                                                      # ✅ Optional argument — 🚨 highly recommended to keep.
+  preferred_backup_window             = null                                                      # ✅ Optional argument — recommended to keep.
+  preferred_maintenance_window        = null                                                      # ✅ Optional argument — recommended to keep.
+  replication_source_identifier       = null                                                      # ✅ Optional argument.
+  restore_to_point_in_time            = [
+    {   
+    }
+  ]
+  scaling_configuration               = [
+    {
+    }
+  ]
+  serverlessv2_scaling_configuration  = [
+    {
+      min_capacity = 0.5
+      max_capacity = 2.0
+    }
+  ]
+  skip_final_snapshot                 = true                                                      # ✅ Optional argument — recommended to keep.
+  snapshot_identifier                 = null                                                      # ✅ Optional argument — 🤜💥🤛 Conflicts with `global_cluster_identifier`.
+  source_region                       = null                                                      # ✅ Optional argument.
+  storage_encrypted                   = true                                                      # ✅ Optional argument.
+  storage_type                        = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
+  tags                                = {                                                         # ✅ Optional argument — recommended to keep.
+    "Name"     = "webapp_db-aws-rds-cluster"
+    "AppName"  = "FastAPI WebApp"
+    "Env"      = "dev"
   }
+  vpc_security_group_ids              = [module.webapp_db_aws_security_group.id]                  # ✅ Optional argument — 🚨 highly recommended to keep.
 
 }
-*/
 
-/*
+
+
 module "webapp_db_rds_cluster_instance" {
   
   source = "./terraform/aws/rds/cluster_instance"
 
   depends_on = [
+    module.webapp_db_aws_rds_cluster,
     module.webapp_db_aws_db_subnet_group,
   ]
 
@@ -489,13 +541,13 @@ module "webapp_db_rds_cluster_instance" {
   auto_minor_version_upgrade            = true                                           # ✅ Optional argument.
   availability_zone                     = data.aws_availability_zones.available.names[0] # ✅ Optional argument, ❗ Forces new resource.
   ca_cert_identifier                    = null                                           # ✅ Optional argument.
-  cluster_identifier                    = aws_rds_cluster.webapp_aws_rds_cluster.id      # 🔒 Required argument, ❗ Forces new resource.
+  cluster_identifier                    = module.webapp_db_aws_rds_cluster.id            # 🔒 Required argument, ❗ Forces new resource.
   copy_tags_to_snapshot                 = false                                          # ✅ Optional argument.
   custom_iam_instance_profile           = null                                           # ✅ Optional argument.
   db_parameter_group_name               = null                                           # ✅ Optional argument.
   db_subnet_group_name                  = module.webapp_db_aws_db_subnet_group.id        # 🔒 Required argument, if `publicly_accessible = false`, Optional otherwise, ❗ Forces new resource.
   engine_version                        = "15.3"                                         # ✅ Optional argument — recommended to keep.
-  engine                                = aws_rds_cluster.webapp_aws_rds_cluster.engine  # 🔒 Required argument, ❗ Forces new resource.
+  engine                                = module.webapp_db_aws_rds_cluster.engine        # 🔒 Required argument, ❗ Forces new resource.
   identifier_prefix                     = null                                           # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `identifier`.
   identifier                            = "webapp-db-rds-cluster-instance"               # ✅ Optional argument, ❗ Forces new resource.
   instance_class                        = "db.serverless"                                # 🔒 Required argument.
@@ -514,7 +566,7 @@ module "webapp_db_rds_cluster_instance" {
   }
 
 }
-*/
+
 
 /*
 # Creation of AWS Secrets Manager Secret for

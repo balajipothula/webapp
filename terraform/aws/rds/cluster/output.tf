@@ -9,19 +9,19 @@ output "arn" {
 
 output "id" {
   value       = aws_rds_cluster.generic.id
-  description = "The RDS Cluster Identifier."
+  description = "RDS Cluster Identifier."
   sensitive   = false
 }
 
 output "cluster_identifier" {
   value       = aws_rds_cluster.generic.cluster_identifier
-  description = "The RDS Cluster Identifier"
+  description = "RDS Cluster Identifier"
   sensitive   = false
 }
 
 output "cluster_resource_id" {
   value       = aws_rds_cluster.generic.cluster_resource_id
-  description = "The RDS Cluster Resource ID."
+  description = "RDS Cluster Resource ID."
   sensitive   = false
 }
 
@@ -45,19 +45,19 @@ output "backup_retention_period" {
 
 output "preferred_backup_window" {
   value       = aws_rds_cluster.generic.preferred_backup_window
-  description = "The daily time range during which the backups happen."
+  description = "Daily time range during which the backups happen."
   sensitive   = false
 }
 
 output "preferred_maintenance_window" {
   value       = aws_rds_cluster.generic.preferred_maintenance_window
-  description = "The maintenance window."
+  description = "Maintenance window."
   sensitive   = false
 }
 
 output "endpoint" {
   value       = aws_rds_cluster.generic.endpoint
-  description = "The DNS address of the RDS instance."
+  description = "DNS address of the RDS instance."
   sensitive   = false
 }
 
@@ -69,32 +69,39 @@ output "reader_endpoint" {
 
 output "engine" {
   value       = aws_rds_cluster.generic.engine 
-  description = "The database engine."
+  description = "Database engine."
   sensitive   = false
 }
 
 output "engine_version_actual" {
   value       = aws_rds_cluster.generic.engine_version_actual 
-  description = "The running version of the database."
+  description = "Running version of the database."
   sensitive   = false
 }
 
 output "database_name" {
   value       = aws_rds_cluster.generic.database_name 
-  description = "The database name."
+  description = "Database name."
   sensitive   = false
 }
 
 output "port" {
   value       = aws_rds_cluster.generic.port 
-  description = "The database port."
+  description = "Database port."
   sensitive   = false
 }
 
 output "master_username" {
   value       = aws_rds_cluster.generic.master_username 
-  description = "The master username for the database."
-  sensitive   = false
+  description = "Master username for the database."
+  sensitive   = true
+}
+
+# Only available when `manage_master_user_password` is set to 'true'.
+output "master_user_secret" {
+  value       = aws_rds_cluster.generic.master_user_secret 
+  description = "Block that specifies the master user secret."
+  sensitive   = true
 }
 
 output "storage_encrypted" {
