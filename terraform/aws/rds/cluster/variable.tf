@@ -244,7 +244,7 @@ variable "engine_version" {
 # Note: If omitted, no final snapshot will be made.
 variable "final_snapshot_identifier" {
   type        = string
-  default     = null
+  default     = "aws-rds-cluster-snapshot"
   description = "Name of your final DB snapshot when this DB cluster is deleted."
   sensitive   = false
 }
