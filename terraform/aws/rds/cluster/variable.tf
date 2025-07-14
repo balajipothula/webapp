@@ -279,7 +279,7 @@ variable "iops" {
   default     = null
   description = "Provisioned IOPS to be initially allocated for each DB instance in the Multi-AZ DB cluster."
   validation {
-    condition     = var.iops == null || (1000 <= var.iops && var.iops <= 40000)
+    condition     = var.iops == null || can(1000 <= var.iops && var.iops <= 40000)
     error_message = "iops either null or between 1000 and 40000."
   }
   sensitive   = false
@@ -333,7 +333,7 @@ variable "network_type" {
   default     = null
   description = "Network type of the cluster."
   validation {
-    condition     = var.network_type == null || contains(["IPV4", "DUAL"], var.network_type)
+    condition     = var.network_type == null || can(contains(["IPV4", "DUAL"], var.network_type))
     error_message = "network_type either null or must be IPV4 or DUAL if specified."
   }
   sensitive   = false
@@ -463,17 +463,26 @@ variable "storage_type" {
   default     = null
   description = "Specifies the storage type to be associated with the DB cluster."
   validation {
-    condition     = var.storage_type == null || contains(["", "aurora-iopt1", "io1"], var.storage_type)
+    condition     = var.storage_type == null || can(contains(["", "aurora-iopt1", "io1"], var.storage_type))
     error_message = "storage_type must be one of: '', 'aurora-iopt1', 'io1'."
   }
   sensitive   = false
 }
 
 variable "tags" {
-  type        = map(string)
-  default     = {}
-  description = "A map of tags to assign to the DB cluster."
-  sensitive   = false
+  type = map(string)
+  default = {
+    AppName        = "WebAppFastAPI"
+    Division       = "Platform"
+    DeveloperName  = "Balaji Pothula"
+    DeveloperEmail = "balan.pothula@gmail.com"
+  }
+  description = "Map of tags to assign to the instance."
+  validation {
+    condition     = 0 < length(var.tags) && length(var.tags) < 51
+    error_message = "Error: tags at least one or more expected up to 50."
+  }
+  sensitive = false
 }
 
 variable "vpc_security_group_ids" {
