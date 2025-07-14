@@ -85,10 +85,10 @@ variable "cluster_identifier_prefix" {
   default     = null
   description = "Creates a unique cluster identifier beginning with the specified prefix."
   validation {
-    condition     = var.cluster_identifier == null || (
-                      can(regex("^[a-z][a-z0-9\\-]{0,62}$", var.cluster_identifier)) &&
-                      !endswith(var.cluster_identifier, "-") &&
-                      !contains(var.cluster_identifier, "--")
+    condition     = var.cluster_identifier_prefix == null || (
+                      can(regex("^[a-z][a-z0-9\\-]{0,62}$", var.cluster_identifier_prefix)) &&
+                      !endswith(var.cluster_identifier_prefix, "-") &&
+                      !contains(var.cluster_identifier_prefix, "--")
                     )
     error_message = "cluster_identifier_prefix must start with a lowercase letter, contain only lowercase letters, numbers, and hyphens (no consecutive or trailing hyphens), and be 1-63 characters long."
   }
