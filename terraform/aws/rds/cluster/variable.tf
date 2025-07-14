@@ -64,19 +64,19 @@ variable "backup_retention_period" {
   sensitive   = false
 }
 
-variable "cluster_identifier" {
+variable "cluster_identifier_prefix" {
   type        = string
   default     = null
-  description = "The cluster identifier. If omitted, Terraform will assign a random, unique identifier."
+  description = "Creates a unique cluster identifier beginning with the specified prefix."
   validation {
     condition = (
-      var.cluster_identifier == null || (
-        can(regex("^[a-z][a-z0-9\\-]{0,62}$", var.cluster_identifier)) &&
-        !endswith(var.cluster_identifier, "-") &&
-        !can(regex("--", var.cluster_identifier))
+      var.cluster_identifier_prefix == null || (
+        can(regex("^[a-z][a-z0-9\\-]{0,62}$", var.cluster_identifier_prefix)) &&
+        !endswith(var.cluster_identifier_prefix != null ? var.cluster_identifier_prefix : "", "-") &&
+        !can(regex("--", var.cluster_identifier_prefix))
       )
     )
-    error_message = "cluster_identifier must start with a lowercase letter, contain only lowercase letters, numbers, and hyphens (no trailing or consecutive hyphens), and be 1–63 characters long."
+    error_message = "cluster_identifier_prefix must start with a lowercase letter, contain only lowercase letters, numbers, and hyphens (no trailing or consecutive hyphens), and be 1–63 characters long."
   }
   sensitive = false
 }
