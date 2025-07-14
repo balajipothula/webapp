@@ -383,7 +383,7 @@ module "webapp_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 */
 
 
-# Creation of AWS Security Group for WebApp.
+# WebApp DB AWS Security Group.
 module "webapp_db_aws_security_group" {
 
   source                 = "./terraform/aws/vpc/security_group"
@@ -397,7 +397,7 @@ module "webapp_db_aws_security_group" {
       to_port            = 5432                               # 🔒 Required argument.
       protocol           = "tcp"                              # 🔒 Required argument.
       cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
-      description        = "PostgreSQL inbound traffic rule." # ✅ Optional argument — recommended to keep.
+      description        = "PostgreSQL outbound traffic rule" # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
@@ -411,7 +411,7 @@ module "webapp_db_aws_security_group" {
       to_port            = 0                                  # 🔒 Required argument.
       protocol           = "all"                              # 🔒 Required argument.
       cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
-      description        = "All outbound traffic rule."       # ✅ Optional argument — recommended to keep.
+      description        = "All inbound traffic rule"         # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
@@ -432,7 +432,7 @@ module "webapp_db_aws_security_group" {
 }
 
 
-
+/*
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -450,13 +450,14 @@ module "webapp_db_aws_db_subnet_group" {
 
 }
 
-# 
+# WebApp DB AWS RDS Cluster. 
 module "webapp_db_aws_rds_cluster" {
 
   source      = "./terraform/aws/rds/cluster"
 
   depends_on = [
     module.webapp_db_aws_db_subnet_group,
+    module.webapp_db_aws_security_group,
   ]
 
   allocated_storage                   = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
@@ -498,9 +499,9 @@ module "webapp_db_aws_rds_cluster" {
   preferred_backup_window             = null                                                      # ✅ Optional argument — recommended to keep.
   preferred_maintenance_window        = null                                                      # ✅ Optional argument — recommended to keep.
   replication_source_identifier       = null                                                      # ✅ Optional argument.
-  restore_to_point_in_time            = null
-  scaling_configuration               = null
-  serverlessv2_scaling_configuration  = {
+  restore_to_point_in_time            = null                                                      # ✅ Optional argument block.
+  scaling_configuration               = null                                                      # ✅ Optional argument block.
+  serverlessv2_scaling_configuration  = {                                                         # ✅ Optional argument block — 🚨 highly recommended to keep.
     min_capacity = 0.5
     max_capacity = 2.0
   }
@@ -520,7 +521,7 @@ module "webapp_db_aws_rds_cluster" {
 
 
 
-module "webapp_db_rds_cluster_instance" {
+module "webapp_db_aws_rds_cluster_instance_0" {
   
   source = "./terraform/aws/rds/cluster_instance"
 
@@ -541,7 +542,7 @@ module "webapp_db_rds_cluster_instance" {
   engine_version                        = "15.3"                                         # ✅ Optional argument — recommended to keep.
   engine                                = module.webapp_db_aws_rds_cluster.engine        # 🔒 Required argument, ❗ Forces new resource.
   identifier_prefix                     = null                                           # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `identifier`.
-  identifier                            = "webapp-db-rds-cluster-instance"               # ✅ Optional argument, ❗ Forces new resource.
+  identifier                            = "webapp-db-aws-rds-cluster-instance"           # ✅ Optional argument, ❗ Forces new resource.
   instance_class                        = "db.serverless"                                # 🔒 Required argument.
   monitoring_interval                   = 0                                              # ✅ Optional argument.
   monitoring_role_arn                   = null                                           # ✅ Optional argument.
@@ -553,7 +554,7 @@ module "webapp_db_rds_cluster_instance" {
   promotion_tier                        = 0                                              # ✅ Optional argument.
   publicly_accessible                   = true                                           # ✅ Optional argument — recommended to keep.
   tags = {                                                                               # ✅ Optional argument — recommended to keep.
-    Name     = "webapp_db-rds-cluster-instance"
+    Name     = "webapp_db-aws-rds-cluster-instance"
     AppName  = "FastAPI WebApp"
   }
 
