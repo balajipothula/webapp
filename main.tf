@@ -483,7 +483,7 @@ module "webapp_db_aws_rds_cluster" {
   engine_mode                         = "provisioned"                                             # ✅ Optional argument — 🚨 highly recommended to keep.
   engine_version                      = "15.3"                                                    # ✅ Optional argument — 🚨 highly recommended to keep.
   final_snapshot_identifier           = null                                                      # ✅ Optional argument — recommended to keep.
-//final_snapshot_identifier           = "${var.final_snapshot_identifier}-${local.datetime}"      # ✅ Optional argument — recommended to keep.
+//final_snapshot_identifier           = "webapp-db-snapshot-${local.datetime}"                    # ✅ Optional argument — recommended to keep.
   global_cluster_identifier           = null                                                      # ✅ Optional argument.
   iam_database_authentication_enabled = false                                                     # ✅ Optional argument.
   iam_roles                           = []                                                        # ✅ Optional argument.
