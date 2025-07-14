@@ -498,20 +498,15 @@ module "webapp_db_aws_rds_cluster" {
   preferred_backup_window             = null                                                      # ✅ Optional argument — recommended to keep.
   preferred_maintenance_window        = null                                                      # ✅ Optional argument — recommended to keep.
   replication_source_identifier       = null                                                      # ✅ Optional argument.
-  restore_to_point_in_time            = [
-    {   
-    }
-  ]
-  scaling_configuration               = [
-    {
-    }
-  ]
-  serverlessv2_scaling_configuration  = [
-    {
-      min_capacity = 0.5
-      max_capacity = 2.0
-    }
-  ]
+  restore_to_point_in_time            = {
+
+  }
+  scaling_configuration               = {
+  }
+  serverlessv2_scaling_configuration  = {
+    min_capacity = 0.5
+    max_capacity = 2.0
+  }
   skip_final_snapshot                 = true                                                      # ✅ Optional argument — recommended to keep.
   snapshot_identifier                 = null                                                      # ✅ Optional argument — 🤜💥🤛 Conflicts with `global_cluster_identifier`.
   source_region                       = null                                                      # ✅ Optional argument.

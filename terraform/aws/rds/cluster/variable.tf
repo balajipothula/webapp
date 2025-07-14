@@ -3,8 +3,8 @@ variable "allocated_storage" {
   default     = null
   description = "The amount of storage in gibibytes (GiB) to allocate to each DB instance in the Multi-AZ DB cluster."
   validation {
-    condition     = var.allocated_storage == null || (100 <= var.allocated_storage && var.allocated_storage <= 65536)
-    error_message = "allocated_storage must be not null, between 100 and 65536 GiB for Multi-AZ DB clusters."
+    condition     = var.allocated_storage == null || can(100 <= var.allocated_storage && var.allocated_storage <= 65536)
+    error_message = "allocated_storage must be null or between 100 and 65536 GiB for Multi-AZ DB clusters."
   }
   sensitive = false
 }
