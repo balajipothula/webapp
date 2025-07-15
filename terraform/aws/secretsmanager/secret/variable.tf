@@ -22,13 +22,9 @@ variable "force_overwrite_replica_secret" {
 
 variable "kms_key_id" {
   type        = string
-  default     = "aws/secretsmanager"
+  default     = null
   description = "ARN or Id of the AWS KMS key to be used to encrypt the secret values in the versions stored in this secret."
-  validation {
-    condition     = var.kms_key_id != null
-    error_message = "Error: kms_key_id must not null."
-  }
-  sensitive = false
+  sensitive   = false
 }
 
 variable "name" {
@@ -47,7 +43,7 @@ variable "name_prefix" {
   default     = "generic-"
   description = "Creates a unique name beginning with the specified prefix."
   validation {
-    condition     = var.name_prefix != null && 0 < length(var.name_prefix) && length(var.name_prefix) < 17
+    condition     = 0 < length(var.name_prefix) && length(var.name_prefix) < 17
     error_message = "Error: name_prefix must not null and length must be in between 1 and 16 only."
   }
   sensitive = false
