@@ -487,7 +487,7 @@ variable "tags" {
 
 variable "vpc_security_group_ids" {
   type        = list(string)
-  default     = []
+  default     = null
   description = "List of VPC security groups to associate with the Cluster."
   sensitive   = false
 }
