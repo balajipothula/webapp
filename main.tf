@@ -390,8 +390,7 @@ module "webapp_db_aws_security_group" {
 
   name                   = "webapp_db-aws-security-group"     # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"     # ✅ Optional argument, ❗ Forces new resource.
-
-  egress_rules = [
+  egress_rules           = [
     {
       from_port          = 5432                               # 🔒 Required argument.
       to_port            = 5432                               # 🔒 Required argument.
@@ -404,8 +403,7 @@ module "webapp_db_aws_security_group" {
       self               = null                               # ✅ Optional argument — recommended to keep.
     },
   ]
-
-  ingress_rules = [
+  ingress_rules          = [
     {
       from_port          = 0                                  # 🔒 Required argument.
       to_port            = 0                                  # 🔒 Required argument.
@@ -418,15 +416,12 @@ module "webapp_db_aws_security_group" {
       self               = null                               # ✅ Optional argument — recommended to keep.
     },
   ]
-
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                              # ✅ Optional argument.
-
-  tags   = {                                                  # ✅ Optional argument — recommended to keep.
+  tags                   = {                                  # ✅ Optional argument — recommended to keep.
     "Name"               = "webapp_db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
-
   vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
 
 }
@@ -450,7 +445,8 @@ module "webapp_db_aws_db_subnet_group" {
 
 }
 
-# WebApp DB AWS RDS Cluster. 
+# Creation of Amazon Aurora Serverless PostgreSQL
+# Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_db_aws_rds_cluster" {
 
   source      = "./terraform/aws/rds/cluster"
@@ -497,7 +493,9 @@ module "webapp_db_aws_rds_cluster" {
   network_type                        = null                                                      # ✅ Optional argument — recommended to keep.
   port                                = 5432                                                      # ✅ Optional argument — 🚨 highly recommended to keep.
   preferred_backup_window             = null                                                      # ✅ Optional argument — recommended to keep.
+//preferred_backup_window             = "00:00-00:59"                                             # ✅ Optional argument — recommended to keep.
   preferred_maintenance_window        = null                                                      # ✅ Optional argument — recommended to keep.
+//preferred_maintenance_window        = "sun:01:00-sun:02:00"                                     # ✅ Optional argument — recommended to keep.
   replication_source_identifier       = null                                                      # ✅ Optional argument.
   restore_to_point_in_time            = null                                                      # ✅ Optional argument block.
   scaling_configuration               = null                                                      # ✅ Optional argument block.
@@ -637,43 +635,6 @@ module "webapp_aws_vpc_endpoint" {
     "DeveloperEmail"  = "balan.pothula@gmail.com"
   }
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
-
-}
-
-
-
-/*
-# Creation of Amazon Aurora Serverless PostgreSQL
-# Relational Database RDS Cluster for WebApp Lambda Function.
-module "webapp_aws_rds_cluster" {
-
-  source                       = "./terraform/aws/rds/cluster"
-
-  allow_major_version_upgrade  = true                                      # ✅ Optional argument — recommended to keep.
-  apply_immediately            = true                                      # ✅ Optional argument — recommended to keep.
-  backup_retention_period      = 1                                         # ✅ Optional argument — recommended to keep.
-  cluster_identifier           = "webapp"                                  # ✅ Optional argument — recommended to keep.
-  copy_tags_to_snapshot        = true                                      # ✅ Optional argument — recommended to keep.
-  database_name                = var.database_name                         # ✅ Optional argument — recommended to keep.
-  deletion_protection          = false                                     # ✅ Optional argument — recommended to keep.
-  enable_http_endpoint         = true                                      # ✅ Optional argument — recommended to keep.
-  engine                       = "aurora-postgresql"                       # ✅ Optional argument — recommended to keep.
- #engine_mode                  = "serverless-v2"                           # ✅ Optional argument - comment it.
-  engine_version               = "16.1"                                    # ✅ Optional argument — recommended to keep.
-  final_snapshot_identifier    = "webapp-snapshot-at-${local.datetime}"    # ✅ Optional argument — recommended to keep.
-  master_password              = var.master_password                       # 🔒 Required argument.
-  master_username              = var.master_username                       # 🔒 Required argument.
-  port                         = "5432"                                    # ✅ Optional argument — recommended to keep.
-  preferred_backup_window      = "00:00-00:59"                             # ✅ Optional argument — recommended to keep.
-  preferred_maintenance_window = "sun:01:00-sun:02:00"                     # ✅ Optional argument — recommended to keep.
-  skip_final_snapshot          = true                                      # ✅ Optional argument — recommended to keep.
-  storage_encrypted            = true                                      # ✅ Optional argument — recommended to keep.
-  tags                         = {                                         # ✅ Optional argument — recommended to keep.
-    "Name"            = "WebApp"
-    "AppName"         = "Python FastAPI Web App"
-    "DeveloperName"   = "Balaji Pothula"
-    "DeveloperEmail"  = "balan.pothula@gmail.com"
-  }
 
 }
 */
