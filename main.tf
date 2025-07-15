@@ -543,7 +543,7 @@ module "webapp_db_aws_rds_cluster_instance_0" {
   promotion_tier                        = 0                                              # ✅ Optional argument.
   publicly_accessible                   = true                                           # ✅ Optional argument — recommended to keep.
   tags = {                                                                               # ✅ Optional argument — recommended to keep.
-    Name     = "webapp_db-aws-rds-cluster-instance"
+    Name     = "webapp_db-aws-rds-cluster-instance-0"
     AppName  = "FastAPI WebApp"
   }
 
