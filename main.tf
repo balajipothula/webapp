@@ -502,7 +502,7 @@ module "webapp_db_aws_rds_cluster" {
     "Name"     = "webapp_db-aws-rds-cluster"
     "AppName"  = "FastAPI WebApp"
   }
-  vpc_security_group_ids              = module.webapp_db_aws_security_group.id                    # ✅ Optional argument — 🚨 highly recommended to keep.
+  vpc_security_group_ids              = [module.webapp_db_aws_security_group.id]                  # ✅ Optional argument — 🚨 highly recommended to keep.
 
 }
 
