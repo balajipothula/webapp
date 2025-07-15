@@ -519,7 +519,7 @@ module "webapp_db_aws_rds_cluster_instance_0" {
     module.webapp_db_aws_db_subnet_group,
   ]
 
-  apply_immediately                     = false                                          # ✅ Optional argument.
+  apply_immediately                     = true                                          # ✅ Optional argument.
   auto_minor_version_upgrade            = true                                           # ✅ Optional argument.
   availability_zone                     = data.aws_availability_zones.available.names[0] # ✅ Optional argument, ❗ Forces new resource.
   ca_cert_identifier                    = null                                           # ✅ Optional argument.
