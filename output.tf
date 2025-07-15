@@ -53,3 +53,9 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 */
+
+output "webapp_db_aws_security_group_id" {
+  value       = module.webapp_db_aws_security_group.id
+  description = "WebApp Database AWS Security Group ID."
+  sensitive   = false
+}
