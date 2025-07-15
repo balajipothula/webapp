@@ -40,10 +40,10 @@ variable "name" {
 
 variable "name_prefix" {
   type        = string
-  default     = null
+  default     = "generic-"
   description = "Creates a unique name beginning with the specified prefix."
   validation {
-    condition     = var.name_prefix == null || (0 < length(var.name_prefix) && length(var.name_prefix) < 17)
+    condition     = (0 < length(var.name_prefix) && length(var.name_prefix) < 17)
     error_message = "Error: name_prefix either null or length must be in between 1 and 16 only."
   }
   sensitive = false
