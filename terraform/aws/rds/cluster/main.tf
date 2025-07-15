@@ -128,6 +128,6 @@ resource "aws_rds_cluster" "generic" {
   storage_encrypted                   = var.storage_encrypted                                     # ✅ Optional argument.
   storage_type                        = var.storage_type                                          # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
   tags                                = var.tags                                                  # ✅ Optional argument — recommended to keep.
-  vpc_security_group_ids              = null                                                      # ✅ Optional argument — 🚨 highly recommended to keep.
+  vpc_security_group_ids              = var.vpc_security_group_ids                                # ✅ Optional argument — 🚨 highly recommended to keep.
 
 }

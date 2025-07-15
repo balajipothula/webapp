@@ -487,9 +487,10 @@ variable "tags" {
 
 variable "vpc_security_group_ids" {
   type        = list(string)
+  default     = null
   description = "List of VPC security groups to associate with the Cluster."
   validation {
-    condition     = 0 < length(var.vpc_security_group_ids)
+    condition     = var.vpc_security_group_ids == null || 0 < length(var.vpc_security_group_ids)
     error_message = "Error: vpc_security_group_ids at least one security group ID must be provided."
   }
   sensitive   = false
