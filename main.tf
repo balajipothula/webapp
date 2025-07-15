@@ -435,6 +435,13 @@ module "webapp_db_aws_db_subnet_group" {
 
 }
 
+
+
+# 🛡️ Ensures the `webapp_db_aws_security_group` is fully created before being used in `webapp_db_aws_rds_cluster`.
+resource "null_resource" "webapp_db_aws_security_group_ready_hook" { depends_on = [module.webapp_db_aws_security_group] }
+
+
+
 # Creation of Amazon Aurora Serverless V2 PostgreSQL
 # Relational Database RDS Cluster for WebApp Lambda Function.
 module "webapp_db_aws_rds_cluster" {
@@ -442,8 +449,9 @@ module "webapp_db_aws_rds_cluster" {
   source      = "./terraform/aws/rds/cluster"
 
   depends_on = [
-    module.webapp_db_aws_db_subnet_group,
+    null_resource.webapp_db_aws_security_group_ready_hook,
     module.webapp_db_aws_security_group,
+    module.webapp_db_aws_db_subnet_group,
   ]
 
   allocated_storage                   = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.

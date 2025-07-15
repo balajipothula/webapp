@@ -491,3 +491,14 @@ variable "vpc_security_group_ids" {
   description = "List of VPC security groups to associate with the Cluster."
   sensitive   = false
 }
+
+
+variable "vpc_security_group_ids" {
+  type        = list(string)
+  description = "List of VPC security groups to associate with the Cluster."
+  validation {
+    condition     = 0 < length(var.vpc_security_group_ids)
+    error_message = "Error: vpc_security_group_ids at least one security group ID must be provided."
+  }
+  sensitive   = false
+}
