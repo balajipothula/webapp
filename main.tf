@@ -437,8 +437,7 @@ module "webapp_db_aws_db_subnet_group" {
 
 
 
-# Creation of Amazon Aurora Serverless V2 PostgreSQL
-# Relational Database RDS Cluster for WebApp Lambda Function.
+# Creation of Amazon Aurora Serverless V2 PostgreSQL for WebApp Lambda Function.
 module "webapp_db_aws_rds_cluster" {
 
   source      = "./terraform/aws/rds/cluster"
