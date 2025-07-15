@@ -465,7 +465,7 @@ module "webapp_db_aws_rds_cluster" {
   cluster_identifier                  = "webapp-db-aws-rds-cluster"                               # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `cluster_identifier_prefix`.
   cluster_identifier_prefix           = null                                                      # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `cluster_identifier`.
   copy_tags_to_snapshot               = false                                                     # ✅ Optional argument — recommended to keep.
-  database_name                       = var.database_name                                         # ✅ Optional argument — 🚨 highly recommended to keep.
+  database_name                       = var.webapp_database_name                                  # ✅ Optional argument — 🚨 highly recommended to keep.
   db_cluster_instance_class           = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
   db_cluster_parameter_group_name     = null                                                      # ✅ Optional argument.
   db_instance_parameter_group_name    = null                                                      # ✅ Optional argument — 🧩 inter-related with `allow_major_version_upgrade`.
@@ -486,10 +486,10 @@ module "webapp_db_aws_rds_cluster" {
   iam_roles                           = []                                                        # ✅ Optional argument.
   iops                                = null                                                      # ✅ Optional argument — 🧩 inter-related with `availability_zones`.
   kms_key_id                          = null                                                      # ✅ Optional argument — 🚨 `storage_encrypted` must be 'true'.
-  manage_master_user_password         = false                                                     # ✅ Optional argument — 🚨 `master_password` must be 'null'.
-  master_password                     = var.master_password                                       # 🔒 Required argument — 🚨 `manage_master_user_password` must be 'false'.
+  manage_master_user_password         = false                                                     # ✅ Optional argument — 🚨 `webapp_db_master_password` must be 'null'.
+  master_password                     = var.webapp_db_master_password                             # 🔒 Required argument — 🚨 `manage_master_user_password` must be 'false'.
   master_user_secret_kms_key_id       = null                                                      # ✅ Optional argument.
-  master_username                     = var.master_username                                       # 🔒 Required argument.
+  master_username                     = var.webapp_db_master_username                             # 🔒 Required argument.
   network_type                        = null                                                      # ✅ Optional argument — recommended to keep.
   port                                = 5432                                                      # ✅ Optional argument — 🚨 highly recommended to keep.
   preferred_backup_window             = null                                                      # ✅ Optional argument — recommended to keep.
@@ -593,19 +593,19 @@ module "webapp_aws_secretsmanager_secret_version" {
 
   depends_on    = [
     module.webapp_aws_secretsmanager_secret,
-    aws_rds_cluster.webapp_aws_rds_cluster,
+    module.webapp_db_aws_rds_cluster,
   ]
 
   secret_id     = module.webapp_aws_secretsmanager_secret.id # 🔒 Required argument.
   secret_string = jsonencode({                               # ✅ Optional argument, but required if `secret_binary` is not set.                             
-    dbInstanceIdentifier = aws_rds_cluster.webapp_aws_rds_cluster.id
-    engine               = aws_rds_cluster.webapp_aws_rds_cluster.engine
-    host                 = aws_rds_cluster.webapp_aws_rds_cluster.endpoint
-    port                 = aws_rds_cluster.webapp_aws_rds_cluster.port
-    resourceId           = aws_rds_cluster.webapp_aws_rds_cluster.cluster_resource_id
-    database             = var.database_name
-    username             = var.master_username
-    password             = var.master_password
+    dbInstanceIdentifier = module.webapp_db_aws_rds_cluster.id
+    engine               = module.webapp_db_aws_rds_cluster.engine
+    host                 = module.webapp_db_aws_rds_cluster.endpoint
+    port                 = module.webapp_db_aws_rds_cluster.port
+    resourceId           = module.webapp_db_aws_rds_cluster.cluster_resource_id
+    database             = var.webapp_database_name
+    username             = var.webapp_db_master_username
+    password             = var.webapp_db_master_password
     dialect              = "postgresql"
     driver               = "psycopg"
     schema               = "public"
