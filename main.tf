@@ -373,7 +373,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 }
 
 
-/*
+
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
 module "webapp_db_aws_security_group" {
 
@@ -624,4 +624,3 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
-*/
