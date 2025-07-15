@@ -531,7 +531,7 @@ module "webapp_db_aws_rds_cluster_instance_0" {
   engine_version                        = "15.3"                                         # ✅ Optional argument — recommended to keep.
   engine                                = module.webapp_db_aws_rds_cluster.engine        # 🔒 Required argument, ❗ Forces new resource.
   identifier_prefix                     = null                                           # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `identifier`.
-  identifier                            = "webapp-db-aws-rds-cluster-instance"           # ✅ Optional argument, ❗ Forces new resource.
+  identifier                            = "webapp-db-aws-rds-cluster-instance-0"           # ✅ Optional argument, ❗ Forces new resource.
   instance_class                        = "db.serverless"                                # 🔒 Required argument.
   monitoring_interval                   = 0                                              # ✅ Optional argument.
   monitoring_role_arn                   = null                                           # ✅ Optional argument.
