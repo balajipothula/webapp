@@ -487,14 +487,6 @@ variable "tags" {
 
 variable "vpc_security_group_ids" {
   type        = list(string)
-  default     = null
-  description = "List of VPC security groups to associate with the Cluster."
-  sensitive   = false
-}
-
-
-variable "vpc_security_group_ids" {
-  type        = list(string)
   description = "List of VPC security groups to associate with the Cluster."
   validation {
     condition     = 0 < length(var.vpc_security_group_ids)
