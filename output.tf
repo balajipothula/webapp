@@ -1,10 +1,4 @@
 /*
-output "token_github" {
-  value       = var.token_github
-  description = "GitHub token configured in 'webapp' repository."
-  sensitive   = false
-}
-
 output "aws_region_current_name" {
   value       = data.aws_region.current.name
   description = "The name of the selected region."
@@ -53,9 +47,3 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 */
-
-output "webapp_db_aws_security_group_id" {
-  value       = module.webapp_db_aws_security_group.id
-  description = "WebApp Database AWS Security Group ID."
-  sensitive   = false
-}
