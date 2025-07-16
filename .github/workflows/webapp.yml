@@ -72,18 +72,29 @@ jobs:
       # Apply an execution plan for Terraform.
       #- name: Terraform plan destroying.
         #run: terraform apply -auto-approve -input=false -destroy
-      # Official Github Action to run Liquibase in your pipeline.
-      #- name: Run Liquibase Update
-        #uses: liquibase-github-actions/update@v4.32.0
-        #with:
-          #classpath: './postgresql/webapp_db/public'
-          #changeLogFile: './postgresql/webapp_db/public/master.xml'
-          #username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
-          #password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
-          # URL : jdbc:postgresql://<host>:<port>/<dbname>
-          #url: ${{ secrets.WEBAPP_DB_MASTER_URL }}
-          #defaultSchemaName: 'public'
-          #driver: 'org.postgresql.Driver'
-          #rollbackOnError: true
-          #showSummary: 'summary'
-          #showSummaryOutput: 'console'
+      # Deploy any changes in the changelog file that have not been deployed
+      - name: Liquibase Update Action
+        uses: liquibase-github-actions/update@v4.32.0
+        with:
+          # The root changelog.
+          changelogFile: "./postgresql/webapp_db/public/master.xml"
+          # The JDBC database connection URL.
+          url: ${{ secrets.WEBAPP_DB_MASTER_URL }} # jdbc:postgresql://<host>:<port>/<dbname>
+          # The default schema name to use for the database connection.
+          defaultSchemaName: "public"
+          # The JDBC driver class
+          driver: "org.postgresql.Driver"
+          # Password to use to connect to the database.
+          password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
+          # Rollback all changesets if any fails.
+          rollbackOnError: true
+          # Type of update results summary to show.
+          # Values can be "off", "summary", or "verbose".
+          showSummary: "summary"
+          # Summary output to report update summary results.
+          # Values can be "log", "console", or "all".
+          showSummaryOutput: "console"
+          # Username to use to connect to the database.
+          username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
+          # Additional classpath entries to use.
+          classpath: "./postgresql/webapp_db/public"
