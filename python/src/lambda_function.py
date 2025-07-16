@@ -42,7 +42,6 @@ logging.getLogger("boto3").setLevel(logging.ERROR)
 logging.getLogger("botocore").setLevel(logging.ERROR)
 
 logger = logging.getLogger()
-logger.setLevel(logging.ERROR)
 logger.setLevel(logging.INFO)
 
 def getCredentials(region: str, secret: str) -> dict:
@@ -66,6 +65,7 @@ def getCredentials(region: str, secret: str) -> dict:
       region_name  = region
     )
     secretValue = client.get_secret_value(SecretId=secret)
+    print(secretValue)
   except ClientError as clientError:
     logger.setLevel(logging.ERROR)
     exception = clientError.response["Error"]["Code"]
