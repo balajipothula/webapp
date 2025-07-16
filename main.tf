@@ -134,12 +134,12 @@ module "webapp_aws_lambda_function" {
     module.webapp_db_aws_secretsmanager_secret,
   ]
 
-  function_name                  = "webapp"                                     # 🔒 Required argument, ❗ Forces new resource.
+  function_name                  = "webapp-lambda-function"                     # 🔒 Required argument, ❗ Forces new resource.
   role                           = module.webapp_lambda_aws_iam_role.arn        # 🔒 Required argument.
   description                    = "WebApp Lambda Function"                     # ✅ Optional argument — recommended to keep.
   environment_variables          = {                                            # ✅ Optional argument — recommended to keep.
     region = data.aws_region.current.name,
-    secret = module.webapp_db_aws_secretsmanager_secret.id
+    secret = module.webapp_db_aws_secretsmanager_secret.name,
   }
   handler                        = "lambda_function.lambda_handler"             # ✅ Optional argument — recommended to keep.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # ✅ Optional argument — recommended to keep.
