@@ -175,6 +175,7 @@ app = FastAPI(
   version     = "2025-07-16"
 )
 
+"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
@@ -182,6 +183,7 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
+"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
