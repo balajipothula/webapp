@@ -57,8 +57,6 @@ def getCredentials(region: str, secret: str) -> dict:
     credentialDict : dict
     PostgreSQL Server credentials.
   """
-  print(region)
-  print(secret)
   try:
     # Creating Secrets Manager Client.
     session = boto3.session.Session()
@@ -131,6 +129,8 @@ def getEngine(postgresql: dict):
 
 region     = os.environ["region"]
 secret     = os.environ["secret"]
+print(region)
+print(secret)
 postgresql = getCredentials(region = region, secret = secret)
 """
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
