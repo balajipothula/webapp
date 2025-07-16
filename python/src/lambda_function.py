@@ -44,6 +44,30 @@ logging.getLogger("botocore").setLevel(logging.ERROR)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
+def get_secret():
+
+    secret_name = "webapp-db-credential"
+    region_name = "eu-central-1"
+
+    # Create a Secrets Manager client
+    session = boto3.session.Session()
+    client = session.client(
+        service_name='secretsmanager',
+        region_name=region_name
+    )
+
+    try:
+        get_secret_value_response = client.get_secret_value(
+            SecretId=secret_name
+        )
+    except ClientError as e:
+        raise e
+
+    secret = get_secret_value_response['SecretString']
+    print(secret)
+
+
 def getCredentials(region: str, secret: str) -> dict:
   """
   Get PostgreSQL Server credentials from Secrets Manager,
@@ -65,7 +89,6 @@ def getCredentials(region: str, secret: str) -> dict:
       region_name  = region
     )
     secretValue = client.get_secret_value(SecretId=secret)
-    print(secretValue)
   except ClientError as clientError:
     logger.setLevel(logging.ERROR)
     exception = clientError.response["Error"]["Code"]
@@ -130,8 +153,9 @@ def getEngine(postgresql: dict):
 
 region     = os.environ["region"]
 secret     = os.environ["secret"]
-postgresql = getCredentials(region = region, secret = secret)
+get_secret()
 """
+postgresql = getCredentials(region = region, secret = secret)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
 database   = databases.Database(url)
 engine     = getEngine(postgresql)
