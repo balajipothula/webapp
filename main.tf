@@ -143,7 +143,7 @@ module "webapp_aws_lambda_function" {
   }
   handler                        = "lambda_function.lambda_handler"             # ✅ Optional argument — recommended to keep.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # ✅ Optional argument — recommended to keep.
-  memory_size                    = 512                                          # ✅ Optional argument — recommended to keep.
+  memory_size                    = 256                                          # ✅ Optional argument — recommended to keep.
   package_type                   = "Zip"                                        # ✅ Optional argument — recommended to keep.
   publish                        = false                                        # ✅ Optional argument — recommended to keep.
   reserved_concurrent_executions = -1                                           # ✅ Optional argument — recommended to keep.
