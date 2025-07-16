@@ -45,8 +45,6 @@ logger = logging.getLogger()
 logger.setLevel(logging.ERROR)
 logger.setLevel(logging.INFO)
 
-
-
 def getCredentials(region: str, secret: str) -> dict:
   """
   Get PostgreSQL Server credentials from Secrets Manager,
@@ -132,7 +130,7 @@ def getEngine(postgresql: dict):
 
 region     = os.environ["region"]
 secret     = os.environ["secret"]
-"""
+
 postgresql = getCredentials(region = region, secret = secret)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
 database   = databases.Database(url)
@@ -140,6 +138,7 @@ engine     = getEngine(postgresql)
 metadata   = sqlalchemy.MetaData()
 metadata.create_all(engine)
 
+"""
 song       = sqlalchemy.Table(
   "Song",
   metadata,
@@ -173,10 +172,9 @@ class Rating(BaseModel):
 app = FastAPI(
   title       = "WebApp",
   description = "Web Application using Python FastAPI",
-  version     = "2022-02-07"
+  version     = "2025-07-16"
 )
 
-"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
@@ -184,16 +182,15 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
-"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  return {"message": "Welcome to Python FastAPI WebApplication Service..."}
+  return {"message": "Welcome to Python FastAPI WebApp Service..."}
 
 """
 @app.put("/song")
 async def insertSong(song: Song):
-  query  = "INSERT INTO webapp_db.public."Song"(artist, title, difficulty, level, released) VALUES (:artist, :title, :difficulty, :level, :released)"
+  query  = 'INSERT INTO webapp_db.public."Song"(artist, title, difficulty, level, released) VALUES (:artist, :title, :difficulty, :level, :released)'
   values = { "artist": song.artist, "title": song.title, "difficulty": song.difficulty, "level": song.level, "released": song.released }
   await database.execute(query = query, values = values)
   return {"message": "Hurray new song inserted :)"}
@@ -201,7 +198,7 @@ async def insertSong(song: Song):
 @app.get("/songs")
 async def songs(page: int = -1):
   if page < 0: return await database.fetch_all(query = song.select())
-  query  = "SELECT * FROM webapp_db.public."Song" ORDER BY "songId" LIMIT :limit OFFSET :offset"
+  query  = 'SELECT * FROM webapp_db.public."Song" ORDER BY "songId" LIMIT :limit OFFSET :offset'
   limit  = 4
   offset = limit * page
   values = { "limit": limit, "offset": offset }
@@ -210,29 +207,29 @@ async def songs(page: int = -1):
 @app.put("/song/rating")
 async def insertRating(rating: Rating):
   if 5 < rating.rate or rating.rate < 1: return {"message": "Song rating must be in between 1 and 5 :("}
-  query  = "INSERT INTO webapp_db.public."Rating"(id, rate) VALUES (:id, :rate)"
+  query  = 'INSERT INTO webapp_db.public."Rating"(id, rate) VALUES (:id, :rate)'
   values = { "id": rating.id, "rate": rating.rate }
   await database.execute(query = query, values = values)
   return {"message": "Your rating is taken into consideration :)"}
 
 @app.get("/song/rating/{songId}")
 async def getSongAvgMinMaxRating(songId: int):
-  query  = "SELECT AVG("rate")::NUMERIC(10,2) AS "avgRating", MIN("rate") AS "minRating", MAX("rate") AS "maxRating" FROM webapp_db.public."Rating" WHERE "id" = :id"
+  query  = 'SELECT AVG("rate")::NUMERIC(10,2) AS "avgRating", MIN("rate") AS "minRating", MAX("rate") AS "maxRating" FROM webapp_db.public."Rating" WHERE "id" = :id'
   values = { "id": songId }
   return await database.fetch_one(query = query, values = values)
 
 @app.get("/songs/search")
 async def getSongsSearch(parameter: str):
-  query  = "SELECT * FROM webapp_db.public."Song" WHERE artist ~* :artist OR title ~* :title"
+  query  = 'SELECT * FROM webapp_db.public."Song" WHERE artist ~* :artist OR title ~* :title'
   values = { "artist": parameter, "title": parameter }
   return await database.fetch_all(query = query, values = values)
 
 @app.get("/songs/avg/difficulty")
 async def getSongsAvgDifficulty(level: int = 0):
-  query  = " SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM webapp_db.public."Song" "
+  query  = 'SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM webapp_db.public."Song"'
   values = None
   if 0 < level:
-    query  = "SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM webapp_db.public."Song" WHERE "level" = :level"
+    query  = 'SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM webapp_db.public."Song" WHERE "level" = :level'
     values = { "level": level }
   return await database.fetch_all(query = query, values = values)
 """
