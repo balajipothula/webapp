@@ -55,14 +55,14 @@ variable "webapp_lambda_src_s3_bucket_name" {
 variable "webapp_db_master_username" {
   type        = string
   default     = "webapp_db_admin"
-  description = "Username for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
+  description = "Username for the PostgreSQL master database user."
   sensitive   = true
 }
 
 variable "webapp_db_master_password" {
   type        = string
   default     = "WebApplication#2025"
-  description = "Password for the PostgreSQL master database user, which is stored in HashiCorp Terraform Cloud."
+  description = "Password for the PostgreSQL master database user."
   sensitive   = true
 }
 
@@ -73,6 +73,6 @@ variable "webapp_database_name" {
     condition     = var.webapp_database_name != null && 5 < length(var.webapp_database_name) && length(var.webapp_database_name) < 33
     error_message = "Error: webapp_database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
   }
-  description = "Database name for the PostgreSQL database, which is stored in HashiCorp Terraform Cloud."
+  description = "Database name for the PostgreSQL database."
   sensitive   = true
 }
