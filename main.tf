@@ -154,7 +154,7 @@ module "webapp_aws_lambda_function" {
     "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web Application"
   }
-  timeout                        = 60                                           # ✅ Optional argument — recommended to keep.
+  timeout                        = 120                                          # ✅ Optional argument — recommended to keep.
 
 }
 
