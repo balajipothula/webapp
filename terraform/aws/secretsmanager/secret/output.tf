@@ -24,3 +24,9 @@ output "tags_all" {
   description = "Map of tags assigned to the resource."
   sensitive   = false
 }
+
+output "name" {
+  value       = aws_secretsmanager_secret.generic.name
+  description = "Name of the Secrets Manager secret."
+  sensitive   = false
+}
