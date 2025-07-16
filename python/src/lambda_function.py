@@ -131,8 +131,8 @@ def getEngine(postgresql: dict):
 region     = os.environ["region"]
 secret     = os.environ["secret"]
 
-postgresql = getCredentials(region = region, secret = secret)
 """
+postgresql = getCredentials(region = region, secret = secret)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
 database   = databases.Database(url)
 engine     = getEngine(postgresql)
