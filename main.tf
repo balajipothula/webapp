@@ -185,15 +185,15 @@ module "webapp_lambda_aws_apigatewayv2_api" {
 
   source        = "./terraform/aws/apigatewayv2/api"
 
-  name          = "webapp"    # 🔒 Required argument.
-  protocol_type = "HTTP"      # 🔒 Required argument.
+  name          = "webapp-lambda-api-gateway" # 🔒 Required argument.
+  protocol_type = "HTTP"                      # 🔒 Required argument.
 
 }
 
 
 
 # Creation of AWS API Gateway V2 Stage for WebApp Lambda Function.
-module "webapp_aws_apigatewayv2_stage" {
+module "webapp_lambda_aws_apigatewayv2_stage" {
 
   source      = "./terraform/aws/apigatewayv2/stage"
 
@@ -202,8 +202,8 @@ module "webapp_aws_apigatewayv2_stage" {
   ]
 
   api_id      = module.webapp_lambda_aws_apigatewayv2_api.id # 🔒 Required argument.
-  name        = "$default"                            # 🔒 Required argument.
-  auto_deploy = true                                  # ✅ Optional argument — recommended to keep.
+  name        = "$default"                                   # 🔒 Required argument.
+  auto_deploy = true                                         # ✅ Optional argument — recommended to keep.
 
 }
 
