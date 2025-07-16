@@ -211,8 +211,7 @@ async def shutdown():
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
-  get_secret()
-  return {"message": "Welcome to Python FastAPI WebApp Service..."}
+  return { "message": "Welcome to Python FastAPI WebApp Service..." }
 
 """
 @app.put("/song")
