@@ -57,9 +57,6 @@ def getCredentials(region: str, secret: str) -> dict:
     credentialDict : dict
     PostgreSQL Server credentials.
   """
-  print(region)
-  print(secret)
-
   try:
     # Creating Secrets Manager Client.
     session = boto3.session.Session()
@@ -68,6 +65,7 @@ def getCredentials(region: str, secret: str) -> dict:
       region_name  = region
     )
     secretValue = client.get_secret_value(SecretId=secret)
+    print(secretValue)
   except ClientError as clientError:
     logger.setLevel(logging.ERROR)
     exception = clientError.response["Error"]["Code"]
