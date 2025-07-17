@@ -597,7 +597,7 @@ module "webapp_aws_secretsmanager_secret_version" {
     username             = var.webapp_db_master_username
     password             = var.webapp_db_master_password
     dialect              = "postgresql"
-    driver               = "psycopg"
+    driver               = "psycopg2"
     schema               = "public"
     echo                 = "False"
     connect_timeout      = 30

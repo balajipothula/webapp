@@ -2,7 +2,7 @@ import boto3
 import json
 import logging
 import os
-import psycopg
+import psycopg2
 import sys
 import traceback
 import base64
