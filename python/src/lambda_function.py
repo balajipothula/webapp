@@ -45,29 +45,6 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
-def get_secret():
-
-    secret_name = "webapp-db-credentials-1"
-    region_name = "eu-central-1"
-
-    # Create a Secrets Manager client
-    session = boto3.session.Session()
-    client = session.client(
-        service_name='secretsmanager',
-        region_name=region_name
-    )
-
-    try:
-        get_secret_value_response = client.get_secret_value(
-            SecretId=secret_name
-        )
-    except ClientError as e:
-        raise e
-
-    secret = get_secret_value_response['SecretString']
-    print(secret)
-
-
 def getCredentials(region: str, secret: str) -> dict:
   """
   Get PostgreSQL Server credentials from Secrets Manager,
@@ -154,13 +131,11 @@ def getEngine(postgresql: dict):
 region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
-"""
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
 database   = databases.Database(url)
 engine     = getEngine(postgresql)
 metadata   = sqlalchemy.MetaData()
 metadata.create_all(engine)
-"""
 
 """
 song       = sqlalchemy.Table(
@@ -180,6 +155,7 @@ rating       = sqlalchemy.Table(
   sqlalchemy.Column("id",   sqlalchemy.BigInteger),
   sqlalchemy.Column("rate", sqlalchemy.SmallInteger)
 )
+"""
 
 class Song(BaseModel):
   artist     : str
@@ -191,7 +167,6 @@ class Song(BaseModel):
 class Rating(BaseModel):
   id   : int
   rate : int
-"""
 
 app = FastAPI(
   title       = "WebApp",
@@ -199,7 +174,7 @@ app = FastAPI(
   version     = "2025-07-16"
 )
 
-"""
+
 @app.on_event("startup")
 async def startup():
   await database.connect()
@@ -207,12 +182,11 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
-"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   #return { "message": "Welcome to Python FastAPI WebApp Service..." }
-  return { "message": postgresql }
+  return { "message": engine }
 
 """
 @app.put("/song")
