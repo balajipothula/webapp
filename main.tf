@@ -106,7 +106,7 @@ module "webapp_aws_lambda_layer_version" {
 
   source                   = "./terraform/aws/lambda/layer_version"
 
-  layer_name               = "webapp"                           # 🔒 Required argument.
+  layer_name               = "webapp-lambda-layer"              # 🔒 Required argument.
   compatible_architectures = ["arm64", "x86_64"]                # ✅ Optional argument — recommended to keep.
   compatible_runtimes      = ["python3.9"]                      # ✅ Optional argument — recommended to keep.
   description              = "Python Lib — FastAPI, SQLAlchemy" # ✅ Optional argument — recommended to keep.
@@ -242,7 +242,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # ✅ Optional argument — recommended to keep. 📝 "╱*╱*"
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # ✅ Optional argument — recommended to keep. 📝 "╱*╱*" 💡
 
 }
 
