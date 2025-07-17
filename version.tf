@@ -31,7 +31,7 @@ backend "s3" {
 
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.36.0"
+      version = "~> 5.75.1"
     }
 
     github = {

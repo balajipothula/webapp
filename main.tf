@@ -108,7 +108,7 @@ module "webapp_aws_lambda_layer_version" {
 
   layer_name               = "webapp-lambda-layer"              # 🔒 Required argument.
   compatible_architectures = ["arm64", "x86_64"]                # ✅ Optional argument — recommended to keep.
-  compatible_runtimes      = ["python3.12"]                     # ✅ Optional argument — recommended to keep.
+  compatible_runtimes      = ["python3.13"]                     # ✅ Optional argument — recommended to keep.
   description              = "Python Lib — FastAPI, SQLAlchemy" # ✅ Optional argument — recommended to keep.
   filename                 = local.layer_zip                    # ✅ Optional argument, 🤜💥🤛 conflicts with `s3_bucket`, `s3_key` and `s3_object_version`.
   license_info             = "Apache License 2.0"               # ✅ Optional argument — recommended to keep.
@@ -147,7 +147,7 @@ module "webapp_aws_lambda_function" {
   package_type                   = "Zip"                                        # ✅ Optional argument — recommended to keep.
   publish                        = false                                        # ✅ Optional argument — recommended to keep.
   reserved_concurrent_executions = -1                                           # ✅ Optional argument — recommended to keep.
-  runtime                        = "python3.12"                                 # ✅ Optional argument — recommended to keep.
+  runtime                        = "python3.13"                                 # ✅ Optional argument — recommended to keep.
   s3_bucket                      = module.webapp_lambda_src_s3_bucket.id        # ✅ Optional argument — recommended to keep.
   s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # ✅ Optional argument, 🤜💥🤛 conflicts with `filename` and `image_uri`.
   tags                           = {                                            # ✅ Optional argument — recommended to keep.
