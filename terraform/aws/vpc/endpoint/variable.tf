@@ -24,7 +24,7 @@ variable "private_dns_enabled" {
   default     = true
   description = "Whether or not to associate a private hosted zone with the specified VPC."
   validation {
-    condition     = can(bool(var.private_dns_enabled))
+    condition     = var.private_dns_enabled != null && contains(tolist([true, false]), var.private_dns_enabled)
     error_message = "Error: private_dns_enabled value must not null and value either true or false only."
   }
   sensitive   = false
