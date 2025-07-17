@@ -106,8 +106,10 @@ def getEngine(postgresql: dict):
       password   = postgresql["password"],
       host       = postgresql["host"],
       port       = postgresql["port"],
-      database   = postgresql["database"]
+      database   = postgresql["database"],
+      query      = None
     )
+    print(f"Connecting using URL: {url}")
     engine = create_engine(
       url,
       echo         = eval(postgresql["echo"]),
@@ -185,7 +187,7 @@ async def shutdown():
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   #return { "message": "Welcome to Python FastAPI WebApp Service..." }
-  return { "message": engine }
+  return { "message": postgresql }
 
 """
 @app.put("/song")
