@@ -47,7 +47,7 @@ logger.setLevel(logging.INFO)
 
 def get_secret():
 
-    secret_name = "webapp-db-credential"
+    secret_name = "webapp-db-credentials-1"
     region_name = "eu-central-1"
 
     # Create a Secrets Manager client
