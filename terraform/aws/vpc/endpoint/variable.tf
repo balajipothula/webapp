@@ -24,7 +24,7 @@ variable "private_dns_enabled" {
   default     = true
   description = "Whether or not to associate a private hosted zone with the specified VPC."
   validation {
-    condition     = var.private_dns_enabled != null && contains(tolist([true, false]), var.private_dns_enabled)
+    condition     = can(bool(var.private_dns_enabled))
     error_message = "Error: private_dns_enabled value must not null and value either true or false only."
   }
   sensitive   = false
@@ -32,28 +32,22 @@ variable "private_dns_enabled" {
 
 variable "subnet_ids" {
   type = list(string)
-  default = [
-    "subnet-013922d91332c8ab8",
-    "subnet-05cb6848703e6176d",
-    "subnet-03fa50f3076b205e6",
-  ]
+  default = null
   description = "The ID of one or more subnets in which to create a network interface for the endpoint."
   validation {
-    condition     = var.subnet_ids != null && 0 < length(var.subnet_ids) && length(var.subnet_ids) < 4
-    error_message = "Error: subnet_ids value must not null."
+    condition     = var.subnet_ids == null || (0 < length(var.subnet_ids) && length(var.subnet_ids) < 4)
+    error_message = "Error: subnet_ids must be null or a list of 1 to 3 subnet IDs."
   }
   sensitive = false
 }
 
 variable "security_group_ids" {
   type = list(string)
-  default = [
-    "",
-  ]
+  default = null
   description = " The ID of one or more security groups to associate with the network interface."
   validation {
-    condition     = var.security_group_ids != null && 0 < length(var.security_group_ids) && length(var.security_group_ids) < 6
-    error_message = "Error: security_group_ids value must not null."
+    condition     = var.security_group_ids == null || 0 < length(var.security_group_ids) && length(var.security_group_ids) < 6
+    error_message = "Error: security_group_ids must be null or a list of 1 to 5 security group IDs."
   }
   sensitive   = false
 }
@@ -63,13 +57,11 @@ variable "tags" {
   default = {
     "AppName"        = "WebAppFastAPI"
     "Division"       = "Platform"
-    "DeveloperName"  = "Balaji Pothula"
-    "DeveloperEmail" = "balan.pothula@gmail.com"
   }
   description = "A map of tags to assign to the Lambda Function." 
   validation {
     condition     = var.tags != null && 0 < length(var.tags) && length(var.tags) < 51
-    error_message = "Error: tags at least one or more expected upto 50."
+    error_message = "Error: tags must be a map with 1 to 50 key-value pairs."
   }
   sensitive = false
 }
@@ -79,8 +71,8 @@ variable "vpc_endpoint_type" {
   default     = "Interface"
   description = "The VPC endpoint type."
   validation {
-    condition     = var.vpc_endpoint_type != null && contains(tolist(["Gateway", "GatewayLoadBalancer", "Interface"]), var.vpc_endpoint_type)
-    error_message = "Error: vpc_endpoint_type must not null and value either Gateway or GatewayLoadBalancer or Interface only."
+    condition     = can(var.vpc_endpoint_type) && contains(["Gateway", "GatewayLoadBalancer", "Interface"], var.vpc_endpoint_type)
+    error_message = "Error: vpc_endpoint_type must be either 'Gateway', 'GatewayLoadBalancer', or 'Interface'."
   }
   sensitive = false
 }
