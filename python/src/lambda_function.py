@@ -171,12 +171,12 @@ app = FastAPI(
   version     = "2025-07-16"
 )
 
-
+"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
 
-"""
+
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
@@ -186,7 +186,6 @@ async def shutdown():
 def index(request: Request):
   return { "message": "Welcome to Python FastAPI WebApp Service..." }
 
-"""
 @app.put("/song")
 async def insertSong(song: Song):
   query  = 'INSERT INTO webapp_db.public."Song"(artist, title, difficulty, level, released) VALUES (:artist, :title, :difficulty, :level, :released)'
@@ -231,6 +230,6 @@ async def getSongsAvgDifficulty(level: int = 0):
     query  = 'SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM webapp_db.public."Song" WHERE "level" = :level'
     values = { "level": level }
   return await database.fetch_all(query = query, values = values)
-"""
+
 
 lambda_handler = Mangum(app)
