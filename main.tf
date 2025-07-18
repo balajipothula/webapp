@@ -143,7 +143,7 @@ module "webapp_aws_lambda_function" {
   }
   handler                        = "lambda_function.lambda_handler"             # ✅ Optional argument — recommended to keep.
   layers                         = [module.webapp_aws_lambda_layer_version.arn] # ✅ Optional argument — recommended to keep.
-  memory_size                    = 256                                          # ✅ Optional argument — recommended to keep.
+  memory_size                    = 128                                          # ✅ Optional argument — recommended to keep.
   package_type                   = "Zip"                                        # ✅ Optional argument — recommended to keep.
   publish                        = false                                        # ✅ Optional argument — recommended to keep.
   reserved_concurrent_executions = -1                                           # ✅ Optional argument — recommended to keep.
@@ -563,7 +563,7 @@ module "webapp_db_aws_secretsmanager_secret" {
   description                    = "webapp_db Secrets Manager" # ✅ Optional argument — recommended to keep.
   force_overwrite_replica_secret = false                       # ✅ Optional argument — recommended to keep.
   kms_key_id                     = null                        # ✅ Optional argument.
-  name                           = "webapp-db-credentials-2"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
+  name                           = "webapp-db-credentials-3"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
 //name_prefix                    = "prefix-"                   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`, better to comment it.
   recovery_window_in_days        = 7                           # ✅ Optional argument — recommended to keep.
   tags                           = {                           # ✅ Optional argument — recommended to keep.
