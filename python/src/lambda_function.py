@@ -106,8 +106,7 @@ def getEngine(postgresql: dict):
       password   = postgresql["password"],
       host       = postgresql["host"],
       port       = postgresql["port"],
-      database   = postgresql["database"],
-      query      = None
+      database   = postgresql["database"]
     )
     print(f"Connecting using URL: {url}")
     engine = create_engine(
