@@ -131,16 +131,11 @@ region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
-parsed = make_url(url)
-"""
-print(url)
 database   = databases.Database(url)
 engine     = getEngine(postgresql)
 metadata   = sqlalchemy.MetaData()
 metadata.create_all(engine)
-"""
 
-"""
 song       = sqlalchemy.Table(
   "Song",
   metadata,
@@ -158,7 +153,6 @@ rating       = sqlalchemy.Table(
   sqlalchemy.Column("id",   sqlalchemy.BigInteger),
   sqlalchemy.Column("rate", sqlalchemy.SmallInteger)
 )
-"""
 
 class Song(BaseModel):
   artist     : str
@@ -177,7 +171,6 @@ app = FastAPI(
   version     = "2025-07-16"
 )
 
-"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
@@ -185,7 +178,6 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
-"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
