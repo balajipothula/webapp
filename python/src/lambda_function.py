@@ -127,9 +127,8 @@ def getEngine(postgresql: dict):
 region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
-
-"""
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
+"""
 print(url)
 database   = databases.Database(url)
 engine     = getEngine(postgresql)
@@ -187,7 +186,7 @@ async def shutdown():
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   #return { "message": "Welcome to Python FastAPI WebApp Service..." }
-  return { "message": postgresql }
+  return { "message": url }
 
 
 @app.put("/song")
