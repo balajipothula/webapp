@@ -103,7 +103,7 @@ def getEngine(postgresql: dict):
     PostgreSQL Database Server connection.
   """
   try:
-    url_object = URL.create(
+    url= URL.create(
       drivername = postgresql["dialect"] + "+" + postgresql["driver"],
       username   = postgresql["username"],
       password   = postgresql["password"],
@@ -112,7 +112,7 @@ def getEngine(postgresql: dict):
       database   = postgresql["database"],
       query      = None
     )
-    engine = create_engine(url_object)
+    engine = create_engine(url)
     #connect = engine.connect()
     #return connect
     return engine
@@ -175,14 +175,16 @@ app = FastAPI(
 async def startup():
   await database.connect()
 
+"""
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
+"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   #return { "message": "Welcome to Python FastAPI WebApp Service..." }
-  return { "message": parsed }
+  return { "message": engine }
 
 
 @app.put("/song")
