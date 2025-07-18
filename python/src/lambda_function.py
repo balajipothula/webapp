@@ -132,9 +132,10 @@ secret       = os.environ["secret"]
 postgresql   = getCredentials(region = region, secret = secret)
 database_url = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
 database     = databases.Database(database_url)
-print(database)
 engine       = getEngine(postgresql)
+print(engine)
 metadata     = sqlalchemy.MetaData()
+print(metadata)
 metadata.create_all(engine)
 
 song       = sqlalchemy.Table(
