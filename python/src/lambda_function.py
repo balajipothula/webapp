@@ -100,20 +100,15 @@ def getEngine(postgresql: dict):
     PostgreSQL Database Server connection.
   """
   try:
-    url = URL(
-      drivername = postgresql["dialect"] + "+" + postgresql["driver"],
-      username   = postgresql["username"],
-      password   = postgresql["password"],
-      host       = postgresql["host"],
-      port       = postgresql["port"],
-      database   = postgresql["database"]
+    url_object = URL.create(
+      drivername="postgresql+psycopg2",
+      username="webapp_db_admin",
+      password="WebApplication#2025",
+      host="webapp-db-aws-rds-cluster.cluster-cr2kcy2i0idd.eu-central-1.rds.amazonaws.com",
+      port=5432,
+      database="webapp_db"
     )
-    print(f"Connecting using URL: {url}")
-    engine = create_engine(
-      url,
-      echo         = eval(postgresql["echo"]),
-      connect_args = { "connect_timeout": int(postgresql["connect_timeout"]) }
-    )
+    engine = create_engine(url_object)
     #connect = engine.connect()
     #return connect
     return engine
