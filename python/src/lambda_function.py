@@ -127,12 +127,15 @@ def getEngine(postgresql: dict):
 region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
-#url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
-#print(url)
-#database   = databases.Database(url)
+
+"""
+url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
+print(url)
+database   = databases.Database(url)
 engine     = getEngine(postgresql)
 metadata   = sqlalchemy.MetaData()
 metadata.create_all(engine)
+"""
 
 """
 song       = sqlalchemy.Table(
@@ -171,7 +174,7 @@ app = FastAPI(
   version     = "2025-07-16"
 )
 
-
+"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
@@ -179,13 +182,14 @@ async def startup():
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
+"""
 
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   #return { "message": "Welcome to Python FastAPI WebApp Service..." }
   return { "message": postgresql }
 
-"""
+
 @app.put("/song")
 async def insertSong(song: Song):
   query  = 'INSERT INTO webapp_db.public."Song"(artist, title, difficulty, level, released) VALUES (:artist, :title, :difficulty, :level, :released)'
