@@ -234,6 +234,6 @@ async def getSongsAvgDifficulty(level: int = 0):
     query  = 'SELECT AVG("difficulty")::NUMERIC(10,2) AS "avgDifficulty" FROM webapp_db.public."Song" WHERE "level" = :level'
     values = { "level": level }
   return await database.fetch_all(query = query, values = values)
-"""
+
 
 lambda_handler = Mangum(app)
