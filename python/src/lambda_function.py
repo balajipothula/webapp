@@ -38,6 +38,9 @@ from typing import List
 import databases
 import sqlalchemy
 
+
+from sqlalchemy.engine.url import make_url
+
 logging.getLogger("boto3").setLevel(logging.ERROR)
 logging.getLogger("botocore").setLevel(logging.ERROR)
 
@@ -128,7 +131,7 @@ region     = os.environ["region"]
 secret     = os.environ["secret"]
 postgresql = getCredentials(region = region, secret = secret)
 url        = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
-
+parsed = make_url(url)
 """
 print(url)
 database   = databases.Database(url)
@@ -187,7 +190,7 @@ async def shutdown():
 @app.get("/", name="Index", tags=["Index"])
 def index(request: Request):
   #return { "message": "Welcome to Python FastAPI WebApp Service..." }
-  return { "message": url }
+  return { "message": parsed }
 
 
 @app.put("/song")
