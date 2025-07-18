@@ -101,12 +101,13 @@ def getEngine(postgresql: dict):
   """
   try:
     url_object = URL.create(
-      drivername="postgresql+psycopg2",
-      username="webapp_db_admin",
-      password="WebApplication#2025",
-      host="webapp-db-aws-rds-cluster.cluster-cr2kcy2i0idd.eu-central-1.rds.amazonaws.com",
-      port=int(5432),
-      database="webapp_db"
+      drivername = postgresql["dialect"] + "+" + postgresql["driver"],
+      username   = postgresql["username"],
+      password   = postgresql["password"],
+      host       = postgresql["host"],
+      port       = postgresql["port"],
+      database   = postgresql["database"],
+      query      = None
     )
     engine = create_engine(url_object)
     #connect = engine.connect()
