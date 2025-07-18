@@ -133,9 +133,7 @@ postgresql   = getCredentials(region = region, secret = secret)
 database_url = postgresql["dialect"] + "+" + postgresql["driver"] + "://" + postgresql["username"] + ":" + postgresql["password"] + "@" + postgresql["host"] + ":" + str(postgresql["port"]) + "/" + postgresql["database"]
 database     = databases.Database(database_url)
 engine       = getEngine(postgresql)
-print(engine)
 metadata     = sqlalchemy.MetaData()
-print(metadata)
 metadata.create_all(engine)
 
 song       = sqlalchemy.Table(
@@ -174,11 +172,11 @@ app = FastAPI(
 )
 
 
-"""
 @app.on_event("startup")
 async def startup():
   await database.connect()
 
+"""
 @app.on_event("shutdown")
 async def shutdown():
   await database.disconnect()
