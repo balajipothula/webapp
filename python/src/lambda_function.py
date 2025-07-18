@@ -105,7 +105,7 @@ def getEngine(postgresql: dict):
       username   = postgresql["username"],
       password   = postgresql["password"],
       host       = postgresql["host"],
-      port       = postgresql["port"],
+      port       = int(postgresql["port"]),
       database   = postgresql["database"],
       query      = None
     )
