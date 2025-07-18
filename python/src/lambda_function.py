@@ -105,7 +105,7 @@ def getEngine(postgresql: dict):
       username="webapp_db_admin",
       password="WebApplication#2025",
       host="webapp-db-aws-rds-cluster.cluster-cr2kcy2i0idd.eu-central-1.rds.amazonaws.com",
-      port=5432,
+      port=int(5432),
       database="webapp_db"
     )
     engine = create_engine(url_object)
