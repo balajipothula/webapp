@@ -61,7 +61,7 @@ variable "webapp_db_master_username" {
 
 variable "webapp_db_master_password" {
   type        = string
-  default     = "WebApplication#2025"
+  default     = "WebApp2025"
   description = "Password for the PostgreSQL master database user."
   sensitive   = true
 }
