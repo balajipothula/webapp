@@ -11,10 +11,10 @@ variable "description" {
 
 variable "name_prefix" {
   type        = string
-  default     = null
+  default     = "generic"
   description = "Creates a unique name beginning with the specified prefix."
   validation {
-    condition     = var.name_prefix == null || length(var.name_prefix) <= 16
+    condition     = length(var.name_prefix) <= 16
     error_message = "Error: name_prefix must be null or up to 16 characters."
   }
   sensitive = false

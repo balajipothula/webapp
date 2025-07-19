@@ -36,7 +36,7 @@ module "webapp_lambda_monitoring_iam_policy" {
   source      = "./terraform/aws/iam/policy"
 
   description = "WebApp Lambda Function CloudWatch Monitoring AWS IAM Policy."    # ✅ Optional argument, but keep it, ❗ Forces new resource.
-//name_prefix = null                                                              # ✅ Optional argument — conflicts with `name`, ❗ Forces new resource.
+//name_prefix = "dev-webapp"                                                      # ✅ Optional argument — conflicts with `name`, ❗ Forces new resource.
   name        = "WebAppLambdaMonitoringIAMPolicy"                                 # ✅ Optional argument — conflicts with `name_prefix`, ❗ Forces new resource. 
   path        = "/"                                                               # ✅ Optional argument, but keep it.
   policy      = data.aws_iam_policy_document.webapp_lambda_monitoring_policy.json # 🔒 Required argument.
