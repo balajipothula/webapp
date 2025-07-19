@@ -59,7 +59,7 @@ module "webapp_lambda_aws_iam_role_policy_attachment" {
     module.webapp_lambda_monitoring_iam_policy,
   ]
 
-  name       = "webapp-lambda-iam-role-policy-attachment"     # 🔒 Required argument — ❗ Forces new resource.
+  name       = "webapp-lambda-iam-role-and-policy-attachment" # 🔒 Required argument — ❗ Forces new resource.
   policy_arn = module.webapp_lambda_monitoring_iam_policy.arn # 🔒 Required argument.
   users      = null                                           # ✅ Optional argument.
   roles      = [module.webapp_lambda_aws_iam_role.name]       # ✅ Optional argument.
