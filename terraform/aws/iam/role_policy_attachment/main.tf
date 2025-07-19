@@ -1,12 +1,3 @@
-/*
-resource "aws_iam_role_policy_attachment" "generic" {
-
-  role       = var.role       # Required argument.
-  policy_arn = var.policy_arn # Required argument.
-
-}
-*/
-
 # Resource type : aws_iam_policy
 # Resource name : generic
 # Argument name : policy
