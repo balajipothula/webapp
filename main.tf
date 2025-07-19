@@ -16,7 +16,7 @@ provider "aws" {
 
 
 
-# Creation of AWS IAM Role for WebApp Lambda Function.
+# Creation of WebApp Lambda Function AWS IAM Role.
 module "webapp_lambda_aws_iam_role" {
 
   source                = "./terraform/aws/iam/role"
@@ -30,12 +30,12 @@ module "webapp_lambda_aws_iam_role" {
 
 
 
-# WebApp Lambda Function CloudWatch Monitoring AWS IAM Policy.
+# Creation of WebApp Lambda Function CloudWatch Monitoring AWS IAM Policy.
 module "webapp_lambda_monitoring_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
 
-  description = "WebApp Lambda Function CloudWatch Monitoring AWS IAM Policy."    # ✅ Optional argument, but keep it, ❗ Forces new resource.
+  description = "WebApp Lambda Function CloudWatch Monitoring IAM Policy."        # ✅ Optional argument, but keep it, ❗ Forces new resource.
 //name_prefix = "dev-webapp"                                                      # ✅ Optional argument — conflicts with `name`, ❗ Forces new resource.
   name        = "WebAppLambdaMonitoringIAMPolicy"                                 # ✅ Optional argument — conflicts with `name_prefix`, ❗ Forces new resource. 
   path        = "/"                                                               # ✅ Optional argument, but keep it.
@@ -49,7 +49,7 @@ module "webapp_lambda_monitoring_iam_policy" {
 
 
 
-# Creation of AWS IAM Role Policy attachment for WebApp Lambda Function.
+# Attachment of WebApp Lambda IAM Role and  CloudWatch Monitoring IAM Policy to WebApp Lambda Function.
 module "webapp_lambda_aws_iam_role_policy_attachment" {
 
   source     = "./terraform/aws/iam/role_policy_attachment"
@@ -59,8 +59,11 @@ module "webapp_lambda_aws_iam_role_policy_attachment" {
     module.webapp_lambda_monitoring_iam_policy,
   ]
 
-  role       = module.webapp_lambda_aws_iam_role.name         # 🔒 Required argument.
+  name       = "webapp-lambda-iam-role-policy-attachment"     # 🔒 Required argument — ❗ Forces new resource.
   policy_arn = module.webapp_lambda_monitoring_iam_policy.arn # 🔒 Required argument.
+  users      = null                                           # ✅ Optional argument.
+  roles      = [module.webapp_lambda_aws_iam_role.name]       # ✅ Optional argument.
+  groups     = null                                           # ✅ Optional argument.
 
 }
 
