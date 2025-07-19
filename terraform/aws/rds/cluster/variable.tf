@@ -474,8 +474,6 @@ variable "tags" {
   default = {
     AppName        = "WebAppFastAPI"
     Division       = "Platform"
-    DeveloperName  = "Balaji Pothula"
-    DeveloperEmail = "balan.pothula@gmail.com"
   }
   description = "Map of tags to assign to the instance."
   validation {

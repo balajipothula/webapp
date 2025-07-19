@@ -135,26 +135,26 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
 
 
-# 📄 IAM Trust Policy for WebApp Lambda to Assume the Role.
+# 📄 IAM Trust Policy for WebApp Lambda to Assume the Role ⛑️.
 data "aws_iam_policy_document" "webapp_lambda_iam_role" {
 
   statement {
-    sid = "WebAppLambdaIAMRolePolicy"          # ✅ Statement ID — useful for debugging.
-    effect = "Allow"                           # 🔒 Required — must be "Allow" for assume role.
+    sid = "WebAppLambdaIAMRolePolicy"
+    effect = "Allow"
 
     principals {
-      type        = "Service"                  # 🔒 Lambda service needs to assume the role.
-      identifiers = ["lambda.amazonaws.com"]   # 🔒 Trust relationship with AWS Lambda.
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
     }
 
-    actions = ["sts:AssumeRole"]               # 🔒 Required — STS AssumeRole permission.
+    actions = ["sts:AssumeRole"]
   }
 
 }
 
 
 
-# WebApp Lambda Monitoring IAM Policy.
+# 📄 WebApp Lambda Monitoring IAM Policy 🔐.
 data "aws_iam_policy_document" "webapp_lambda_monitoring_policy" {
   statement {
     sid = "WebAppLambdaMonitoringPolicy"

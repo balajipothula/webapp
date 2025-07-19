@@ -1,39 +1,27 @@
 # Resource  type : aws_iam_policy
 # Resource  name : generic
-# Attribute name : id
-output "id" {
-  value       = aws_iam_policy.generic.id
-  description = "The ARN assigned by AWS to this policy."
-  sensitive   = false
-}
-
+# Attribute name : arn
 output "arn" {
   value       = aws_iam_policy.generic.arn
   description = "The ARN assigned by AWS to this policy."
   sensitive   = false
 }
 
-output "description" {
-  value       = aws_iam_policy.generic.description
-  description = "The description of the policy."
+output "attachment_count" {
+  value       = aws_iam_policy.generic.attachment_count
+  description = "Number of entities (users, groups, and roles) that the policy is attached to."
+  sensitive   = false
+}
+
+output "id" {
+  value       = aws_iam_policy.generic.id
+  description = "The ARN assigned by AWS to this policy."
   sensitive   = false
 }
 
 output "name" {
   value       = aws_iam_policy.generic.name
   description = "The name of the policy."
-  sensitive   = false
-}
-
-output "path" {
-  value       = aws_iam_policy.generic.path
-  description = "The path of the policy in IAM."
-  sensitive   = false
-}
-
-output "policy" {
-  value       = aws_iam_policy.generic.policy
-  description = "The policy document."
   sensitive   = false
 }
 

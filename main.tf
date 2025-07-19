@@ -30,15 +30,20 @@ module "webapp_lambda_aws_iam_role" {
 
 
 
-# Creation of AWS IAM Policy for WebApp Lambda Function.
-module "webapp_lambda_aws_iam_policy" {
+# WebApp Lambda Function CloudWatch Monitoring AWS IAM Policy.
+module "webapp_lambda_monitoring_iam_policy" {
 
   source      = "./terraform/aws/iam/policy"
 
-  description = "AWS IAM Policy for Monitoring WebApp Lambda."                    # ✅ Optional argument — recommended to keep.
-  name        = "WebAppLambdaMonitoringIAMPolicy"                                 # ✅ Optional argument — recommended to keep.
-  path        = "/"                                                               # ✅ Optional argument — recommended to keep.
+  description = "WebApp Lambda Function CloudWatch Monitoring AWS IAM Policy."    # ✅ Optional argument, but keep it, ❗ Forces new resource.
+//name_prefix = null                                                              # ✅ Optional argument — conflicts with `name`, ❗ Forces new resource.
+  name        = "WebAppLambdaMonitoringIAMPolicy"                                 # ✅ Optional argument — conflicts with `name_prefix`, ❗ Forces new resource. 
+  path        = "/"                                                               # ✅ Optional argument, but keep it.
   policy      = data.aws_iam_policy_document.webapp_lambda_monitoring_policy.json # 🔒 Required argument.
+  tags   = {                                                                      # ✅ Optional argument — recommended to keep.
+    "Name"            = "WebApp"
+    "AppName"         = "Python FastAPI Web App"
+  }
 
 }
 
@@ -51,16 +56,16 @@ module "webapp_lambda_aws_iam_role_policy_attachment" {
 
   depends_on = [
     module.webapp_lambda_aws_iam_role,
-    module.webapp_lambda_aws_iam_policy,
+    module.webapp_lambda_monitoring_iam_policy,
   ]
 
-  role       = module.webapp_lambda_aws_iam_role.name  # 🔒 Required argument.
-  policy_arn = module.webapp_lambda_aws_iam_policy.arn # 🔒 Required argument.
+  role       = module.webapp_lambda_aws_iam_role.name         # 🔒 Required argument.
+  policy_arn = module.webapp_lambda_monitoring_iam_policy.arn # 🔒 Required argument.
 
 }
 
 
-
+/*
 # Creation of AWS S3 Bucket for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_bucket" {
 
@@ -242,7 +247,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # ✅ Optional argument — recommended to keep. 📝 "╱*╱*" 💡
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//" # ✅ Optional argument — recommended to keep. 📝 "╱*╱*" 💡
 
 }
 
@@ -625,3 +630,4 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
+*/
