@@ -101,7 +101,7 @@ module "webapp_lambda_src_s3_bucket_policy" {
 }
 
 
-/*
+
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_bucket_object" {
 
@@ -124,7 +124,7 @@ module "webapp_lambda_src_s3_bucket_object" {
 }
 
 
-
+/*
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -674,7 +674,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
 }
 
 
-
+/*
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
@@ -698,4 +698,4 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
