@@ -1,44 +1,45 @@
 # Resource  type : aws_s3_bucket
 # Resource  name : generic
 # Attribute name : id
-output "id" {
+
+output "s3_bucket_id" {
   value       = aws_s3_bucket.generic.id
-  description = "The name of the bucket."
+  description = "Name of the bucket."
   sensitive   = false
 }
 
-output "arn" {
+output "s3_bucket_arn" {
   value       = aws_s3_bucket.generic.arn
-  description = "The ARN of the bucket."
+  description = "ARN of the bucket."
   sensitive   = false
 }
 
-output "bucket_domain_name" {
+output "s3_bucket_domain_name" {
   value       = aws_s3_bucket.generic.bucket_domain_name
-  description = "The bucket domain name."
+  description = "Bucket domain name."
   sensitive   = false
 }
 
-output "bucket_regional_domain_name" {
+output "s3_bucket_regional_domain_name" {
   value       = aws_s3_bucket.generic.bucket_regional_domain_name
-  description = "The bucket region-specific domain name."
+  description = "Region-specific bucket domain name."
   sensitive   = false
 }
 
 output "hosted_zone_id" {
   value       = aws_s3_bucket.generic.hosted_zone_id
-  description = "The Route 53 Hosted Zone ID for this bucket's region."
+  description = "Route 53 Hosted Zone ID for the bucket's region."
   sensitive   = false
 }
 
 output "region" {
   value       = aws_s3_bucket.generic.region
-  description = "The AWS region this bucket resides in."
+  description = "AWS region where the bucket resides."
   sensitive   = false
 }
 
 output "tags_all" {
   value       = aws_s3_bucket.generic.tags_all
-  description = "A map of tags assigned to the resource."
+  description = "All tags assigned to the bucket, including inherited tags."
   sensitive   = false
 }

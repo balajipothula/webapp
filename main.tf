@@ -74,13 +74,27 @@ module "webapp_lambda_src_s3_bucket" {
 
   source = "./terraform/aws/s3/bucket"
 
-  bucket = var.webapp_lambda_src_s3_bucket_name                                 # ✅ Optional argument, but keep it, ❗ Forces new resource.
-  acl    = "private"                                                            # ✅ Optional argument — recommended to keep.
-  policy = data.aws_iam_policy_document.webapp_lambda_src_s3_bucket_policy.json # ✅ Optional argument — recommended to keep.
-  tags   = {                                                                    # ✅ Optional argument — recommended to keep.
+  bucket              = var.webapp_lambda_src_s3_bucket_name # ✅ Optional argument, but keep it, ❗ Forces new resource.
+//bucket_prefix       = var.bucket_prefix                    # ✅ Optional argument, ❗ Forces new resource.
+  force_destroy       = false                                # ✅ Optional argument, but keep it.
+  object_lock_enabled = false                                # ✅ Optional argument, ❗ Forces new resource.
+  tags   = {                                                 # ✅ Optional argument — recommended to keep.
     "Name"            = "WebApp"
     "AppName"         = "Python FastAPI Web App"
   }
+
+}
+
+module "webapp_lambda_src_s3_bucket_policy" {
+
+  source = "./terraform/aws/s3/bucket_policy"
+
+  depends_on  = [
+    module.webapp_lambda_src_s3_bucket,
+  ]
+
+  bucket = module.webapp_lambda_src_s3_bucket.bucket                            # 🔒 Required argument.
+  policy = data.aws_iam_policy_document.webapp_lambda_src_s3_bucket_policy.json # 🔒 Required argument
 
 }
 
