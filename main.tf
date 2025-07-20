@@ -139,7 +139,7 @@ module "webapp_lambda_src_s3_object" {
   acl                            = "private"                                     # ✅ Optional argument.
   bucket_key_enabled             = false                                         # ✅ Optional argument.
   cache_control                  = null                                          # ✅ Optional argument.
-  checksum_algorithm             = null                                          # ✅ Optional argument.
+//checksum_algorithm             = null                                          # ✅ Optional argument.
 //content_base64                 = null                                          # ✅ Optional argument, 🤜💥🤛 conflicts with `content` and `source`.
   content_disposition            = null                                          # ✅ Optional argument.
   content_encoding               = null                                          # ✅ Optional argument.
@@ -150,11 +150,11 @@ module "webapp_lambda_src_s3_object" {
   force_destroy                  = false                                         # ✅ Optional argument.
   kms_key_id                     = null                                          # ✅ Optional argument.
   metadata                       = null                                          # ✅ Optional argument.
-  object_lock_legal_hold_status  = null                                          # ✅ Optional argument.
-  object_lock_mode               = null                                          # ✅ Optional argument.
+//object_lock_legal_hold_status  = null                                          # ✅ Optional argument.
+//object_lock_mode               = null                                          # ✅ Optional argument.
   object_lock_retain_until_date  = null                                          # ✅ Optional argument.
   override_provider              = null                                          # ✅ Optional argument.
-  server_side_encryption         = null                                          # ✅ Optional argument.
+//server_side_encryption         = null                                          # ✅ Optional argument.
   source_hash                    = null                                          # ✅ Optional argument.
   source_path                    = data.archive_file.webapp.output_path          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
   storage_class                  = "STANDARD"                                    # ✅ Optional argument.
