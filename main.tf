@@ -93,7 +93,7 @@ module "webapp_lambda_src_s3_bucket_policy" {
     module.webapp_lambda_src_s3_bucket,
   ]
 
-  bucket = module.webapp_lambda_src_s3_bucket.bucket                            # 🔒 Required argument.
+  bucket = module.webapp_lambda_src_s3_bucket.name                              # 🔒 Required argument.
   policy = data.aws_iam_policy_document.webapp_lambda_src_s3_bucket_policy.json # 🔒 Required argument
 
 }
