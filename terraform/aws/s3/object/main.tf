@@ -9,7 +9,7 @@ resource "aws_s3_object" "generic" {
   acl                            = var.acl                            # ✅ Optional argument.
   bucket_key_enabled             = var.bucket_key_enabled             # ✅ Optional argument.
   cache_control                  = var.cache_control                  # ✅ Optional argument.
-//checksum_algorithm             = var.checksum_algorithm             # ✅ Optional argument.
+//checksum_algorithm             = var.checksum_algorithm             # ✅ Optional argument, but keep it commented.
   content_base64                 = var.content_base64                 # ✅ Optional argument, 🤜💥🤛 conflicts with `content` and `source`.
   content_disposition            = var.content_disposition            # ✅ Optional argument.
   content_encoding               = var.content_encoding               # ✅ Optional argument.
@@ -20,11 +20,11 @@ resource "aws_s3_object" "generic" {
   force_destroy                  = var.force_destroy                  # ✅ Optional argument.
   kms_key_id                     = var.kms_key_id                     # ✅ Optional argument.
   metadata                       = var.metadata                       # ✅ Optional argument.
-//object_lock_legal_hold_status  = var.object_lock_legal_hold_status  # ✅ Optional argument.
-//object_lock_mode               = var.object_lock_mode               # ✅ Optional argument.
+//object_lock_legal_hold_status  = var.object_lock_legal_hold_status  # ✅ Optional argument, but keep it commented.
+//object_lock_mode               = var.object_lock_mode               # ✅ Optional argument, but keep it commented.
   object_lock_retain_until_date  = var.object_lock_retain_until_date  # ✅ Optional argument.
-//override_provider              = var.override_provider              # ✅ Optional argument.
-//server_side_encryption         = var.server_side_encryption         # ✅ Optional argument.
+//override_provider              = var.override_provider              # ✅ Optional argument, but keep it commented.
+//server_side_encryption         = var.server_side_encryption         # ✅ Optional argument, but keep it commented.
   source_hash                    = var.source_hash                    # ✅ Optional argument.
   source                         = var.source_path                    # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
   storage_class                  = var.storage_class                  # ✅ Optional argument.

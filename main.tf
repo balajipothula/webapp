@@ -101,29 +101,6 @@ module "webapp_lambda_src_s3_bucket_policy" {
 }
 
 
-/*
-# Creation of AWS S3 Bucket Object for WebApp Lambda Function Python Source.
-module "webapp_lambda_src_s3_bucket_object" {
-
-  source      = "./terraform/aws/s3/bucket_object"
-
-  depends_on  = [
-    module.webapp_lambda_src_s3_bucket,
-  ]
-
-  bucket      = module.webapp_lambda_src_s3_bucket.id         # 🔒 Required argument, ❗ Forces new resource.
-  key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
-  acl         = "private"                                     # ✅ Optional argument — recommended to keep.
-  etag        = filemd5(data.archive_file.webapp.output_path) # ✅ Optional argument — recommended to keep.
-  source_code = data.archive_file.webapp.output_path          # ✅ Optional argument — recommended to keep.
-  tags        = {                                             # ✅ Optional argument — recommended to keep.
-    "Name"            = "WebApp"
-    "AppName"         = "Python FastAPI Web App"
-  }
-
-}
-*/
-
 
 # Creation of AWS S3 Object for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_object" {
@@ -139,7 +116,7 @@ module "webapp_lambda_src_s3_object" {
   acl                            = "private"                                     # ✅ Optional argument.
   bucket_key_enabled             = false                                         # ✅ Optional argument.
   cache_control                  = null                                          # ✅ Optional argument.
-//checksum_algorithm             = null                                          # ✅ Optional argument.
+//checksum_algorithm             = null                                          # ✅ Optional argument, but keep it commented.
 //content_base64                 = null                                          # ✅ Optional argument, 🤜💥🤛 conflicts with `content` and `source`.
   content_disposition            = null                                          # ✅ Optional argument.
   content_encoding               = null                                          # ✅ Optional argument.
@@ -150,11 +127,11 @@ module "webapp_lambda_src_s3_object" {
   force_destroy                  = false                                         # ✅ Optional argument.
   kms_key_id                     = null                                          # ✅ Optional argument.
   metadata                       = null                                          # ✅ Optional argument.
-//object_lock_legal_hold_status  = null                                          # ✅ Optional argument.
-//object_lock_mode               = null                                          # ✅ Optional argument.
+//object_lock_legal_hold_status  = null                                          # ✅ Optional argument, but keep it commented.
+//object_lock_mode               = null                                          # ✅ Optional argument, but keep it commented.
   object_lock_retain_until_date  = null                                          # ✅ Optional argument.
-//override_provider              = null                                          # ✅ Optional argument.
-//server_side_encryption         = null                                          # ✅ Optional argument.
+//override_provider              = null                                          # ✅ Optional argument, but keep it commented.
+//server_side_encryption         = null                                          # ✅ Optional argument, but keep it commented.
   source_hash                    = null                                          # ✅ Optional argument.
   source_path                    = data.archive_file.webapp.output_path          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
   storage_class                  = "STANDARD"                                    # ✅ Optional argument.
