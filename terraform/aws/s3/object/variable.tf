@@ -53,11 +53,13 @@ variable "cache_control" {
   sensitive   = false
 }
 
+/*
 variable "checksum_algorithm" {
   type        = string
   description = "Indicates the algorithm used to create the checksum for the object."
   sensitive = false
 }
+*/
 
 variable "content_base64" {
   type        = string
@@ -133,12 +135,15 @@ variable "metadata" {
   sensitive   = false
 }
 
+/*
 variable "object_lock_legal_hold_status" {
   type        = string
   description = "Legal hold status that you want to apply to the specified object."
   sensitive = false
 }
+*/
 
+/*
 variable "object_lock_mode" {
   type        = string
   description = "Object lock retention mode that you want to apply to this object."
@@ -148,6 +153,7 @@ variable "object_lock_mode" {
   }
   sensitive = false
 }
+*/
 
 variable "object_lock_retain_until_date" {
   type        = string
@@ -163,11 +169,13 @@ variable "override_provider" {
   sensitive   = false
 }
 
+/*
 variable "server_side_encryption" {
   type        = string
   description = "Server-side encryption of the object in S3."
   sensitive = false
 }
+*/
 
 variable "source_hash" {
   type        = string
