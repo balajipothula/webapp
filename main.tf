@@ -85,6 +85,8 @@ module "webapp_lambda_src_s3_bucket" {
 
 }
 
+
+
 module "webapp_lambda_src_s3_bucket_policy" {
 
   source = "./terraform/aws/s3/bucket_policy"
@@ -109,7 +111,7 @@ module "webapp_lambda_src_s3_bucket_object" {
     module.webapp_lambda_src_s3_bucket,
   ]
 
-  bucket      = module.webapp_lambda_src_s3_bucket.id         # 🔒 Required argument, ❗ modification creates new resource.
+  bucket      = module.webapp_lambda_src_s3_bucket.id         # 🔒 Required argument, ❗ Forces new resource.
   key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
   acl         = "private"                                     # ✅ Optional argument — recommended to keep.
   etag        = filemd5(data.archive_file.webapp.output_path) # ✅ Optional argument — recommended to keep.
@@ -393,7 +395,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
@@ -401,7 +403,7 @@ module "webapp_db_aws_security_group" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp_db-aws-security-group"     # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-db-aws-security-group"     # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"     # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
@@ -440,7 +442,7 @@ module "webapp_db_aws_security_group" {
 }
 
 
-
+/*
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -626,12 +628,60 @@ module "webapp_aws_secretsmanager_secret_version" {
   }) 
 
 }
+*/
+
+# Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
+module "webapp_lambda_access_secretsmanager_sg" {
+
+  source                 = "./terraform/aws/vpc/security_group"
+
+  name                   = "webapp-lambda-access-secretsmanager-sg" # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp Lambda Access SecretsManager SG" # ✅ Optional argument, ❗ Forces new resource.
+  egress_rules           = [
+    {
+      from_port          = 443                                # 🔒 Required argument.
+      to_port            = 443                                # 🔒 Required argument.
+      protocol           = "tcp"                              # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
+      description        = "PostgreSQL outbound traffic rule" # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    },
+  ]
+  ingress_rules          = [
+    {
+      from_port          = 0                                  # 🔒 Required argument.
+      to_port            = 0                                  # 🔒 Required argument.
+      protocol           = "all"                              # 🔒 Required argument.
+      cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
+      description        = "All inbound traffic rule"         # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    },
+  ]
+  name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
+  revoke_rules_on_delete = false                              # ✅ Optional argument.
+  tags                   = {                                  # ✅ Optional argument — recommended to keep.
+    "Name"               = "webapp_db-sg"
+    "AppName"            = "Python FastAPI Web App"
+  }
+  vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
+
+}
 
 
 
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
+
+  depends_on = [
+    module.webapp_lambda_access_secretsmanager_sg,
+  ]
 
   source              = "./terraform/aws/vpc/endpoint"
 
@@ -640,6 +690,7 @@ module "webapp_aws_vpc_endpoint" {
   private_dns_enabled = true                                                           # ✅ Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids                           # ✅ Optional argument, but required for endpoints of type Interface.
+//security_group_ids  = module.webapp_lambda_access_secretsmanager_sg.id               # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp_secretsmanager"
     "AppName"         = "Python FastAPI Web App"
@@ -647,4 +698,4 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
-*/
+
