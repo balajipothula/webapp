@@ -631,12 +631,12 @@ module "webapp_aws_secretsmanager_secret_version" {
 */
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
-module "webapp_lambda_access_secretsmanager_sg" {
+module "webapp_lambda_access_secretsmanager_vpce_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp-lambda-access-secretsmanager-sg" # ✅ Optional argument, ❗ Forces new resource.
-  description            = "WebApp Lambda Access SecretsManager SG" # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-lambda-access-secretsmanager-vpce-sg" # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp Lambda Access SecretsManager VPCE SG" # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
       from_port          = 443                                # 🔒 Required argument.
@@ -680,7 +680,7 @@ module "webapp_lambda_access_secretsmanager_sg" {
 module "webapp_aws_vpc_endpoint" {
 
   depends_on = [
-    module.webapp_lambda_access_secretsmanager_sg,
+    module.webapp_lambda_access_secretsmanager_vpce_sg,
   ]
 
   source              = "./terraform/aws/vpc/endpoint"
@@ -690,7 +690,7 @@ module "webapp_aws_vpc_endpoint" {
   private_dns_enabled = true                                                           # ✅ Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = data.aws_security_groups.default.ids                           # ✅ Optional argument, but required for endpoints of type Interface.
-//security_group_ids  = module.webapp_lambda_access_secretsmanager_sg.id               # ✅ Optional argument, but required for endpoints of type Interface.
+//security_group_ids  = module.webapp_lambda_access_secretsmanager_vpce_sg.id          # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp_secretsmanager"
     "AppName"         = "Python FastAPI Web App"
