@@ -153,7 +153,7 @@ module "webapp_lambda_src_s3_object" {
 //object_lock_legal_hold_status  = null                                          # ✅ Optional argument.
 //object_lock_mode               = null                                          # ✅ Optional argument.
   object_lock_retain_until_date  = null                                          # ✅ Optional argument.
-  override_provider              = null                                          # ✅ Optional argument.
+//override_provider              = null                                          # ✅ Optional argument.
 //server_side_encryption         = null                                          # ✅ Optional argument.
   source_hash                    = null                                          # ✅ Optional argument.
   source_path                    = data.archive_file.webapp.output_path          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`

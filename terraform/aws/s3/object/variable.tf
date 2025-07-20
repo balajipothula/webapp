@@ -55,10 +55,9 @@ variable "cache_control" {
 
 variable "checksum_algorithm" {
   type        = string
-  default     = null
   description = "Indicates the algorithm used to create the checksum for the object."
   validation {
-    condition     = var.checksum_algorithm == null || contains(["CRC32","CRC32C","SHA1","SHA256"], var.checksum_algorithm)
+    condition     = contains(["CRC32","CRC32C","SHA1","SHA256"], var.checksum_algorithm)
     error_message = "Error: checksum_algorithm must be CRC32, CRC32C, SHA1, or SHA256."
   }
   sensitive = false
@@ -140,10 +139,9 @@ variable "metadata" {
 
 variable "object_lock_legal_hold_status" {
   type        = string
-  default     = null
   description = "Legal hold status that you want to apply to the specified object."
   validation {
-    condition     = var.object_lock_legal_hold_status == null || contains(["ON","OFF"], var.object_lock_legal_hold_status)
+    condition     = contains(["ON","OFF"], var.object_lock_legal_hold_status)
     error_message = "Error: object_lock_legal_hold_status must be ON or OFF."
   }
   sensitive = false
@@ -151,10 +149,9 @@ variable "object_lock_legal_hold_status" {
 
 variable "object_lock_mode" {
   type        = string
-  default     = null
   description = "Object lock retention mode that you want to apply to this object."
   validation {
-    condition     = var.object_lock_mode == null || contains(["GOVERNANCE","COMPLIANCE"], var.object_lock_mode)
+    condition     = contains(["GOVERNANCE","COMPLIANCE"], var.object_lock_mode)
     error_message = "Error: object_lock_mode must be GOVERNANCE or COMPLIANCE."
   }
   sensitive = false
@@ -176,10 +173,9 @@ variable "override_provider" {
 
 variable "server_side_encryption" {
   type        = string
-  default     = null
   description = "Server-side encryption of the object in S3."
   validation {
-    condition     = var.server_side_encryption == null || contains(["AES256","aws:kms"], var.server_side_encryption)
+    condition     = contains(["AES256","aws:kms"], var.server_side_encryption)
     error_message = "Error: server_side_encryption must be AES256 or aws:kms."
   }
   sensitive = false
