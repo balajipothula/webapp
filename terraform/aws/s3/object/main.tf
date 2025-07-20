@@ -26,7 +26,7 @@ resource "aws_s3_object" "generic" {
   override_provider              = var.override_provider              # ✅ Optional argument.
   server_side_encryption         = var.server_side_encryption         # ✅ Optional argument.
   source_hash                    = var.source_hash                    # ✅ Optional argument.
-  source                         = var.source                         # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
+  source                         = var.source_path                    # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
   storage_class                  = var.storage_class                  # ✅ Optional argument.
   tags                           = var.tags                           # ✅ Optional argument.
   website_redirect               = var.website_redirect               # ✅ Optional argument.

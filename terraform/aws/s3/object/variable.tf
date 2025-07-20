@@ -192,7 +192,7 @@ variable "source_hash" {
   sensitive   = false
 }
 
-variable "source" {
+variable "source_path" {
   type        = string
   default     = null
   description = "Path to a file that will be read and uploaded as raw bytes for the object content."
