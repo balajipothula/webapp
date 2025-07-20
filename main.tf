@@ -68,7 +68,7 @@ module "webapp_lambda_aws_iam_role_policy_attachment" {
 }
 
 
-/*
+
 # Creation of AWS S3 Bucket for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_bucket" {
 
@@ -85,7 +85,7 @@ module "webapp_lambda_src_s3_bucket" {
 }
 
 
-
+/*
 # Creation of AWS S3 Bucket Object for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_bucket_object" {
 
