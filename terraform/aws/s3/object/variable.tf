@@ -56,10 +56,6 @@ variable "cache_control" {
 variable "checksum_algorithm" {
   type        = string
   description = "Indicates the algorithm used to create the checksum for the object."
-  validation {
-    condition     = contains(["CRC32","CRC32C","SHA1","SHA256"], var.checksum_algorithm)
-    error_message = "Error: checksum_algorithm must be CRC32, CRC32C, SHA1, or SHA256."
-  }
   sensitive = false
 }
 
@@ -140,10 +136,6 @@ variable "metadata" {
 variable "object_lock_legal_hold_status" {
   type        = string
   description = "Legal hold status that you want to apply to the specified object."
-  validation {
-    condition     = contains(["ON","OFF"], var.object_lock_legal_hold_status)
-    error_message = "Error: object_lock_legal_hold_status must be ON or OFF."
-  }
   sensitive = false
 }
 
@@ -174,10 +166,6 @@ variable "override_provider" {
 variable "server_side_encryption" {
   type        = string
   description = "Server-side encryption of the object in S3."
-  validation {
-    condition     = contains(["AES256","aws:kms"], var.server_side_encryption)
-    error_message = "Error: server_side_encryption must be AES256 or aws:kms."
-  }
   sensitive = false
 }
 
