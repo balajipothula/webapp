@@ -39,7 +39,7 @@ variable "object_lock_enabled" {
   default     = false
   description = "Indicates whether this bucket has an Object Lock configuration enabled."
   validation {
-    condition     = var.force_destroy == null || contains([true, false], var.force_destroy)
+    condition     = var.object_lock_enabled == null || contains([true, false], var.object_lock_enabled)
     error_message = "Error: object_lock_enabled must be either true or false."
   }
   sensitive = false
