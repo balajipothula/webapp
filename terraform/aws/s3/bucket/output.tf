@@ -2,25 +2,25 @@
 # Resource  name : generic
 # Attribute name : id
 
-output "s3_bucket_id" {
+output "id" {
   value       = aws_s3_bucket.generic.id
   description = "Name of the bucket."
   sensitive   = false
 }
 
-output "s3_bucket_arn" {
+output "arn" {
   value       = aws_s3_bucket.generic.arn
   description = "ARN of the bucket."
   sensitive   = false
 }
 
-output "s3_bucket_domain_name" {
+output "bucket_domain_name" {
   value       = aws_s3_bucket.generic.bucket_domain_name
   description = "Bucket domain name."
   sensitive   = false
 }
 
-output "s3_bucket_regional_domain_name" {
+output "bucket_regional_domain_name" {
   value       = aws_s3_bucket.generic.bucket_regional_domain_name
   description = "Region-specific bucket domain name."
   sensitive   = false
