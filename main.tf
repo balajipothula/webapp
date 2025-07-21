@@ -485,7 +485,6 @@ module "webapp_db_aws_rds_cluster" {
   source      = "./terraform/aws/rds/cluster"
 
   depends_on = [
-    data.aws_availability_zones.available,
     module.webapp_db_aws_db_subnet_group,
     module.webapp_db_aws_security_group,
   ]
@@ -557,7 +556,6 @@ module "webapp_db_aws_rds_cluster_instance_0" {
   source = "./terraform/aws/rds/cluster_instance"
 
   depends_on = [
-    data.aws_availability_zones.available,
     module.webapp_db_aws_rds_cluster,
     module.webapp_db_aws_db_subnet_group,
   ]
@@ -656,10 +654,6 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  depends_on    = [
-    data.aws_vpc.default,
-  ]
-
   name                   = "webapp-lambda-access-secretsmanager-vpce-sg" # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp Lambda Access SecretsManager VPCE SG" # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
@@ -705,9 +699,6 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
 module "webapp_aws_vpc_endpoint" {
 
   depends_on = [
-    data.aws_region.current,
-    data.aws_vpc.default,
-    data.aws_subnets.available,
     module.webapp_lambda_access_secretsmanager_vpce_sg,
   ]
 
@@ -718,7 +709,7 @@ module "webapp_aws_vpc_endpoint" {
   private_dns_enabled = true                                                           # ✅ Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
 //security_group_ids  = data.aws_security_groups.default.ids                           # ✅ Optional argument, but required for endpoints of type Interface.
-  security_group_ids  = module.webapp_lambda_access_secretsmanager_vpce_sg.id          # ✅ Optional argument, but required for endpoints of type Interface.
+  security_group_ids  = [module.webapp_lambda_access_secretsmanager_vpce_sg.id]        # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp_secretsmanager"
     "AppName"         = "Python FastAPI Web App"
