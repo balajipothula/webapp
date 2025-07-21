@@ -36,7 +36,7 @@ module "webapp_lambda_monitoring_iam_policy" {
   source      = "./terraform/aws/iam/policy"
 
   description = "WebApp Lambda Function CloudWatch Monitoring IAM Policy."        # ✅ Optional argument, but keep it, ❗ Forces new resource.
-//name_prefix = "dev-webapp"                                                      # ✅ Optional argument — conflicts with `name`, ❗ Forces new resource.
+//name_prefix = "dev-webapp"                                                      # ✅ Optional argument — conflicts with `name`, keep it commented, ❗ Forces new resource.
   name        = "WebAppLambdaMonitoringIAMPolicy"                                 # ✅ Optional argument — conflicts with `name_prefix`, ❗ Forces new resource. 
   path        = "/"                                                               # ✅ Optional argument, but keep it.
   policy      = data.aws_iam_policy_document.webapp_lambda_monitoring_policy.json # 🔒 Required argument.
@@ -117,12 +117,12 @@ module "webapp_lambda_src_s3_object" {
   bucket_key_enabled             = false                                         # ✅ Optional argument.
   cache_control                  = null                                          # ✅ Optional argument.
 //checksum_algorithm             = null                                          # ✅ Optional argument, but keep it commented.
-//content_base64                 = null                                          # ✅ Optional argument, 🤜💥🤛 conflicts with `content` and `source`.
+//content_base64                 = null                                          # ✅ Optional argument, 🤜💥🤛 conflicts with `content` and `source`, so keep it commented.
   content_disposition            = null                                          # ✅ Optional argument.
   content_encoding               = null                                          # ✅ Optional argument.
   content_language               = "en-US"                                       # ✅ Optional argument.
   content_type                   = null                                          # ✅ Optional argument.
-//content                        = null                                          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `source`.
+//content                        = null                                          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `source`, keep it commented.
   etag                           = filemd5(data.archive_file.webapp.output_path) # ✅ Optional argument.
   force_destroy                  = false                                         # ✅ Optional argument.
   kms_key_id                     = null                                          # ✅ Optional argument.
@@ -156,26 +156,24 @@ module "webapp_aws_lambda_layer_version" {
   description              = "Python Lib — FastAPI, SQLAlchemy" # ✅ Optional argument — recommended to keep.
   filename                 = local.layer_zip                    # ✅ Optional argument, 🤜💥🤛 conflicts with `s3_bucket`, `s3_key` and `s3_object_version`.
   license_info             = "Apache License 2.0"               # ✅ Optional argument — recommended to keep.
-//s3_bucket                = var.s3_bucket                      # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`.
-//s3_key                   = var.s3_key                         # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`.
-//s3_object_version        = var.s3_object_version              # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`.
+//s3_bucket                = var.s3_bucket                      # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`, keep it commented.
+//s3_key                   = var.s3_key                         # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`, keep it commented.
+//s3_object_version        = var.s3_object_version              # ✅ Optional argument, 🤜💥🤛 conflicts with `filename`, keep it commented.
   source_code_hash         = filebase64sha256(local.layer_zip)  # ✅ Optional argument — recommended to keep.
 
 }
 
 
-/*
+
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
   source                         = "./terraform/aws/lambda/function"
 
   depends_on                     = [
-    module.webapp_lambda_src_s3_bucket,
-    module.webapp_lambda_src_s3_bucket_object,
-    module.webapp_lambda_aws_iam_role_policy_attachment,
-    module.webapp_aws_lambda_layer_version,
+    module.webapp_lambda_aws_iam_role,
     module.webapp_db_aws_secretsmanager_secret,
+    module.webapp_lambda_src_s3_bucket
   ]
 
   function_name                  = "webapp-lambda-function"                     # 🔒 Required argument, ❗ Forces new resource.
@@ -286,13 +284,13 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//" # ✅ Optional argument — recommended to keep. 📝 "╱*╱*" 💡
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
 
 }
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Index - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET / 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_index" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -310,7 +308,7 @@ module "webapp_lambda_aws_apigatewayv2_route_index" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ PUT /song 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -328,7 +326,7 @@ module "webapp_lambda_aws_apigatewayv2_route_put_song" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /songs 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -346,7 +344,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Put Song Rating - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ PUT /song/rating 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -364,8 +362,8 @@ module "webapp_lambda_aws_apigatewayv2_route_put_song_rating" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Song Rating - Route.
-module "webapp_aws_apigatewayv2_route_get_song_rating" {
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /song/rating/{songId} 🛣️ Route.
+module "webapp_aws_apigatewayv2_route_get_song_rating_by_songId" {
 
   source        = "./terraform/aws/apigatewayv2/route"
 
@@ -382,7 +380,7 @@ module "webapp_aws_apigatewayv2_route_get_song_rating" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Search - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /songs/search 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_get_songs_search" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -400,7 +398,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_search" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function - Get Songs Average Difficulty - Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /songs/avg/difficulty 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -415,7 +413,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-*/
+
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
@@ -462,18 +460,22 @@ module "webapp_db_aws_security_group" {
 }
 
 
-/*
+
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
   source      = "./terraform/aws/rds/db_subnet_group"
 
-  name        = "webapp_db-aws-db-subnet-group"         # ✅ Optional argument, ❗ Forces new resource.
+  depends_on  = [
+    data.aws_subnets.available,
+  ]
+
+  name        = "webapp-db-aws-db-subnet-group"         # ✅ Optional argument, ❗ Forces new resource.
   name_prefix = null                                    # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `name`.
   description = "WebApp DB Subnet Group for PostgreSQL" # ✅ Optional argument — recommended to keep.
   subnet_ids  = data.aws_subnets.available.ids          # 🔒 Required argument
   tags = {                                              # ✅ Optional argument — recommended to keep.
-    "Name"     = "webapp_db-subnet-group"
+    "Name"     = "webapp-db-subnet-group"
     "AppName"  = "FastAPI WebApp"
   }
 
@@ -487,8 +489,9 @@ module "webapp_db_aws_rds_cluster" {
   source      = "./terraform/aws/rds/cluster"
 
   depends_on = [
-    module.webapp_db_aws_security_group,
+    data.aws_availability_zones.available,
     module.webapp_db_aws_db_subnet_group,
+    module.webapp_db_aws_security_group,
   ]
 
   allocated_storage                   = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
@@ -544,7 +547,7 @@ module "webapp_db_aws_rds_cluster" {
   storage_encrypted                   = true                                                      # ✅ Optional argument.
   storage_type                        = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
   tags                                = {                                                         # ✅ Optional argument — recommended to keep.
-    "Name"     = "webapp_db-aws-rds-cluster"
+    "Name"     = "webapp-db-aws-rds-cluster"
     "AppName"  = "FastAPI WebApp"
   }
   vpc_security_group_ids              = [module.webapp_db_aws_security_group.id]                  # ✅ Optional argument — 🚨 highly recommended to keep.
@@ -558,6 +561,7 @@ module "webapp_db_aws_rds_cluster_instance_0" {
   source = "./terraform/aws/rds/cluster_instance"
 
   depends_on = [
+    data.aws_availability_zones.available,
     module.webapp_db_aws_rds_cluster,
     module.webapp_db_aws_db_subnet_group,
   ]
@@ -607,7 +611,7 @@ module "webapp_db_aws_secretsmanager_secret" {
   description                    = "webapp_db Secrets Manager" # ✅ Optional argument — recommended to keep.
   force_overwrite_replica_secret = false                       # ✅ Optional argument — recommended to keep.
   kms_key_id                     = null                        # ✅ Optional argument.
-  name                           = "webapp-db-credentials-3"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
+  name                           = "webapp-db-credentials-4"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
 //name_prefix                    = "prefix-"                   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`, better to comment it.
   recovery_window_in_days        = 7                           # ✅ Optional argument — recommended to keep.
   tags                           = {                           # ✅ Optional argument — recommended to keep.
@@ -648,12 +652,17 @@ module "webapp_aws_secretsmanager_secret_version" {
   }) 
 
 }
-*/
+
+
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
 module "webapp_lambda_access_secretsmanager_vpce_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
+
+  depends_on    = [
+    data.aws_vpc.default,
+  ]
 
   name                   = "webapp-lambda-access-secretsmanager-vpce-sg" # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp Lambda Access SecretsManager VPCE SG" # ✅ Optional argument, ❗ Forces new resource.
@@ -662,8 +671,8 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
       from_port          = 443                                # 🔒 Required argument.
       to_port            = 443                                # 🔒 Required argument.
       protocol           = "tcp"                              # 🔒 Required argument.
-      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
-      description        = "PostgreSQL outbound traffic rule" # ✅ Optional argument — recommended to keep.
+      cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
+      description        = "WebApp Lambda => SecretsManager"  # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
@@ -675,7 +684,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
       from_port          = 0                                  # 🔒 Required argument.
       to_port            = 0                                  # 🔒 Required argument.
       protocol           = "all"                              # 🔒 Required argument.
-      cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
       description        = "All inbound traffic rule"         # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
@@ -686,7 +695,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                              # ✅ Optional argument.
   tags                   = {                                  # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp_db-sg"
+    "Name"               = "webapp-db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
@@ -694,12 +703,15 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
 }
 
 
-/*
+
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {
 
   depends_on = [
+    data.aws_region.current,
+    data.aws_vpc.default,
+    data.aws_subnets.available,
     module.webapp_lambda_access_secretsmanager_vpce_sg,
   ]
 
@@ -709,8 +721,8 @@ module "webapp_aws_vpc_endpoint" {
   vpc_id              = data.aws_vpc.default.id                                        # 🔒 Required argument.
   private_dns_enabled = true                                                           # ✅ Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
-  security_group_ids  = data.aws_security_groups.default.ids                           # ✅ Optional argument, but required for endpoints of type Interface.
-//security_group_ids  = module.webapp_lambda_access_secretsmanager_vpce_sg.id          # ✅ Optional argument, but required for endpoints of type Interface.
+//security_group_ids  = data.aws_security_groups.default.ids                           # ✅ Optional argument, but required for endpoints of type Interface.
+  security_group_ids  = module.webapp_lambda_access_secretsmanager_vpce_sg.id          # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp_secretsmanager"
     "AppName"         = "Python FastAPI Web App"
@@ -718,4 +730,3 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
-*/
