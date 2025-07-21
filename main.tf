@@ -658,11 +658,11 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
   description            = "WebApp Lambda Access SecretsManager VPCE SG" # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
-      from_port          = 0                                # 🔒 Required argument.
-      to_port            = 0                                # 🔒 Required argument.
-      protocol           = "tcp"                              # 🔒 Required argument.
+      from_port          = 0                                  # 🔒 Required argument.
+      to_port            = 0                                  # 🔒 Required argument.
+      protocol           = "all"                              # 🔒 Required argument.
       cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
-      description        = "WebApp Lambda to SecretsManager"  # ✅ Optional argument — recommended to keep.
+      description        = "All outbound traffic"             # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
@@ -671,11 +671,11 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
   ]
   ingress_rules          = [
     {
-      from_port          = 443                                  # 🔒 Required argument.
-      to_port            = 443                                  # 🔒 Required argument.
-      protocol           = "all"                              # 🔒 Required argument.
+      from_port          = 443                                # 🔒 Required argument.
+      to_port            = 443                                # 🔒 Required argument.
+      protocol           = "tcp"                              # 🔒 Required argument.
       cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
-      description        = "All inbound traffic rule"         # ✅ Optional argument — recommended to keep.
+      description        = "WebApp Lambda to SecretsManager"  # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
       security_groups    = null                               # ✅ Optional argument — recommended to keep.
