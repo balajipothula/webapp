@@ -144,7 +144,7 @@ module "webapp_lambda_src_s3_object" {
 }
 
 
-/*
+
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -200,7 +200,7 @@ module "webapp_aws_lambda_function" {
 
 }
 
-
+/*
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_lambda_aws_cloudwatch_log_group" {
 
