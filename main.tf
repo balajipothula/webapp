@@ -134,7 +134,7 @@ module "webapp_lambda_src_s3_object" {
 //server_side_encryption         = null                                          # ✅ Optional argument, but keep it commented.
   source_hash                    = null                                          # ✅ Optional argument.
 //source_path                    = data.archive_file.webapp.output_path          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
-  source_path                    = "${local.yyyymmdd}/${local.webapp_zip}"       # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
+  source_path                    = "/${local.yyyymmdd}/${local.webapp_zip}"      # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
   storage_class                  = "STANDARD"                                    # ✅ Optional argument.
   tags                           = {                                             # ✅ Optional argument — recommended to keep.
     "Name"            = "WebApp"
