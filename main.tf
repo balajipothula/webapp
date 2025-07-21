@@ -101,7 +101,7 @@ module "webapp_lambda_src_s3_bucket_policy" {
 }
 
 
-
+/*
 # Creation of AWS S3 Object for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_object" {
 
@@ -164,7 +164,7 @@ module "webapp_aws_lambda_layer_version" {
 }
 
 
-/*
+
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
@@ -199,18 +199,17 @@ module "webapp_aws_lambda_function" {
   timeout                        = 120                                          # ✅ Optional argument — recommended to keep.
 
 }
-*/
 
 
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
 module "webapp_lambda_aws_cloudwatch_log_group" {
 
   source            = "./terraform/aws/cloudwatch/log_group"
-/*
+
   depends_on        = [
     module.webapp_aws_lambda_function,
   ]
-*/
+
   name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # ✅ Optional argument — recommended to keep.
   retention_in_days = 1                                                                # ✅ Optional argument — recommended to keep.
   tags              = {                                                                # ✅ Optional argument — recommended to keep.
@@ -257,7 +256,7 @@ module "webapp_lambda_aws_apigatewayv2_integration" {
   source             = "./terraform/aws/apigatewayv2/integration"
 
   depends_on         = [
-    #module.webapp_aws_lambda_function,
+    module.webapp_aws_lambda_function,
     module.webapp_lambda_aws_apigatewayv2_api,
   ]
 
@@ -276,7 +275,7 @@ module "webapp_aws_lambda_permission" {
   source        = "./terraform/aws/lambda/permission"
 
   depends_on    = [
-    #module.webapp_aws_lambda_function,
+    module.webapp_aws_lambda_function,
     module.webapp_lambda_aws_apigatewayv2_api,
   ]
 
@@ -284,7 +283,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
 
 }
 
@@ -413,7 +412,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
