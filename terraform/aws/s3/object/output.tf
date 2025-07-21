@@ -55,3 +55,17 @@ output "version_id" {
   description = "Unique version ID value for the object, if bucket versioning is enabled."
   sensitive   = false
 }
+
+
+output "key" {
+  value       = aws_s3_object.generic.key
+  description = "Unique version ID value for the object, if bucket versioning is enabled."
+  sensitive   = false
+}
+
+
+output "source_path" {
+  value       = aws_s3_object.generic.source_path
+  description = "Unique version ID value for the object, if bucket versioning is enabled."
+  sensitive   = false
+}
