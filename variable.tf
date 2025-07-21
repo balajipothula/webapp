@@ -47,7 +47,7 @@ variable "ami_map" {
 
 variable "webapp_lambda_src_s3_bucket_name" {
   type        = string
-  default     = "webapp-aws-lambda-src-s3-bucket-18"
+  default     = "webapp-aws-lambda-src-s3-bucket-19"
   description = "WebApp AWS Lambda Source code S3 Bucket Name."
   sensitive   = false
 }
