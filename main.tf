@@ -112,7 +112,8 @@ module "webapp_lambda_src_s3_object" {
   ]
 
   bucket                         = module.webapp_lambda_src_s3_bucket.id         # 🔒 Required argument.
-  key                            = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
+//key                            = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
+  key                            = "${local.webapp_zip}"      # 🔒 Required argument.
   acl                            = "private"                                     # ✅ Optional argument.
   bucket_key_enabled             = false                                         # ✅ Optional argument.
   cache_control                  = null                                          # ✅ Optional argument.
@@ -133,7 +134,7 @@ module "webapp_lambda_src_s3_object" {
 //override_provider              = null                                          # ✅ Optional argument, but keep it commented.
 //server_side_encryption         = null                                          # ✅ Optional argument, but keep it commented.
   source_hash                    = null                                          # ✅ Optional argument.
-//source_path                    = data.archive_file.webapp.output_path          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
+  source_path                    = data.archive_file.webapp.output_path          # ✅ Optional argument, 🤜💥🤛 conflicts with `content_base64` and `content`
   storage_class                  = "STANDARD"                                    # ✅ Optional argument.
   tags                           = {                                             # ✅ Optional argument — recommended to keep.
     "Name"            = "WebApp"

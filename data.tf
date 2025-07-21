@@ -97,7 +97,6 @@ data "aws_ami" "default" {
 data "archive_file" "webapp" {
   type        = "zip"
   source_file = local.webapp_src
-//output_path = "${local.webapp_zip}"
   output_path = "./${local.webapp_zip}"
 }
 
