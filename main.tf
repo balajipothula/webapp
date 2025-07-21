@@ -112,8 +112,7 @@ module "webapp_lambda_src_s3_object" {
   ]
 
   bucket                         = module.webapp_lambda_src_s3_bucket.id         # 🔒 Required argument.
-//key                            = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
-  key                            = "${local.webapp_zip}"      # 🔒 Required argument.
+  key                            = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
   acl                            = "private"                                     # ✅ Optional argument.
   bucket_key_enabled             = false                                         # ✅ Optional argument.
   cache_control                  = null                                          # ✅ Optional argument.
