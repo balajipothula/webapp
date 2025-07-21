@@ -164,7 +164,7 @@ module "webapp_aws_lambda_layer_version" {
 }
 
 
-
+/*
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
@@ -199,7 +199,7 @@ module "webapp_aws_lambda_function" {
   timeout                        = 120                                          # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
