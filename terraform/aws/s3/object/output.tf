@@ -65,7 +65,7 @@ output "key" {
 
 
 output "source_path" {
-  value       = aws_s3_object.generic.source_path
+  value       = aws_s3_object.generic.source
   description = "Unique version ID value for the object, if bucket versioning is enabled."
   sensitive   = false
 }
