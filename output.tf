@@ -46,7 +46,7 @@ output "aws_security_groups_default_ids" {
   description = "IDs of the matches security groups."
   sensitive   = false
 }
-
+*/
 
 output "module__webapp_lambda_src_s3_object__key" {
   value       = module.webapp_lambda_src_s3_object.key
@@ -59,4 +59,3 @@ output "module__webapp_lambda_src_s3_object__source_path" {
   description = "WebApp Lambda Source S3 Object Source Path."
   sensitive   = false
 }
-*/
