@@ -136,7 +136,7 @@ engine       = getEngine(postgresql)
 metadata     = sqlalchemy.MetaData()
 metadata.create_all(engine)
 
-"""
+
 song = sqlalchemy.Table(
   "Song",
   metadata,
@@ -154,7 +154,7 @@ rating = sqlalchemy.Table(
   sqlalchemy.Column("id",   sqlalchemy.BigInteger),
   sqlalchemy.Column("rate", sqlalchemy.SmallInteger)
 )
-"""
+
 
 class Song(BaseModel):
   artist     : str
