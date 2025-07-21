@@ -101,7 +101,7 @@ module "webapp_lambda_src_s3_bucket_policy" {
 }
 
 
-/*
+
 # Creation of AWS S3 Object for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_object" {
 
@@ -191,7 +191,7 @@ module "webapp_aws_lambda_function" {
   reserved_concurrent_executions = -1                                           # ✅ Optional argument — recommended to keep.
   runtime                        = "python3.11"                                 # ✅ Optional argument — recommended to keep.
   s3_bucket                      = module.webapp_lambda_src_s3_bucket.id        # ✅ Optional argument — recommended to keep.
-  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"      # ✅ Optional argument, 🤜💥🤛 conflicts with `filename` and `image_uri`.
+  s3_key                         = "/${local.yyyymmdd}/${local.webapp_zip}"     # ✅ Optional argument, 🤜💥🤛 conflicts with `filename` and `image_uri`.
   tags                           = {                                            # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web Application"
@@ -283,7 +283,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
 
 }
 
@@ -412,7 +412,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-*/
+
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
