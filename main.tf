@@ -206,11 +206,11 @@ module "webapp_aws_lambda_function" {
 module "webapp_lambda_aws_cloudwatch_log_group" {
 
   source            = "./terraform/aws/cloudwatch/log_group"
-
+/*
   depends_on        = [
     module.webapp_aws_lambda_function,
   ]
-
+*/
   name              = "/aws/lambda/${module.webapp_aws_lambda_function.function_name}" # ✅ Optional argument — recommended to keep.
   retention_in_days = 1                                                                # ✅ Optional argument — recommended to keep.
   tags              = {                                                                # ✅ Optional argument — recommended to keep.
@@ -257,7 +257,7 @@ module "webapp_lambda_aws_apigatewayv2_integration" {
   source             = "./terraform/aws/apigatewayv2/integration"
 
   depends_on         = [
-    module.webapp_aws_lambda_function,
+    #module.webapp_aws_lambda_function,
     module.webapp_lambda_aws_apigatewayv2_api,
   ]
 
@@ -276,7 +276,7 @@ module "webapp_aws_lambda_permission" {
   source        = "./terraform/aws/lambda/permission"
 
   depends_on    = [
-    module.webapp_aws_lambda_function,
+    #module.webapp_aws_lambda_function,
     module.webapp_lambda_aws_apigatewayv2_api,
   ]
 
