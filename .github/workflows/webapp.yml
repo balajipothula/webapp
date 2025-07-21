@@ -73,28 +73,28 @@ jobs:
       #- name: Terraform plan destroying.
         #run: terraform apply -auto-approve -input=false -destroy
       # Deploy any changes in the changelog file that have not been deployed
-      #- name: Liquibase Update Action
-        #uses: liquibase-github-actions/update@v4.32.0
-        #with:
+      - name: Liquibase Update Action
+        uses: liquibase-github-actions/update@v4.32.0
+        with:
           # The root changelog.
-          #changelogFile: "./postgresql/webapp_db/public/master.xml"
+          changelogFile: "./postgresql/webapp_db/public/master.xml"
           # The JDBC database connection URL.
-          #url: ${{ secrets.WEBAPP_DB_MASTER_URL }} # jdbc:postgresql://<host>:5432/webapp_db
+          url: ${{ secrets.WEBAPP_DB_MASTER_URL }} # jdbc:postgresql://<host>:5432/webapp_db
           # The default schema name to use for the database connection.
-          #defaultSchemaName: "public"
+          defaultSchemaName: "public"
           # The JDBC driver class
-          #driver: "org.postgresql.Driver"
+          driver: "org.postgresql.Driver"
           # Password to use to connect to the database.
-          #password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
+          password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
           # Rollback all changesets if any fails.
-          #rollbackOnError: true
+          rollbackOnError: true
           # Type of update results summary to show.
           # Values can be "off", "summary", or "verbose".
-          #showSummary: "summary"
+          showSummary: "summary"
           # Summary output to report update summary results.
           # Values can be "log", "console", or "all".
-          #showSummaryOutput: "console"
+          showSummaryOutput: "console"
           # Username to use to connect to the database.
-          #username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
+          username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           # Additional classpath entries to use.
-          #classpath: "./postgresql/webapp_db/public"
+          classpath: "./postgresql/webapp_db/public"
