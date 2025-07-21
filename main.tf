@@ -68,7 +68,7 @@ module "webapp_lambda_aws_iam_role_policy_attachment" {
 }
 
 
-/*
+
 # Creation of AWS S3 Bucket for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_bucket" {
 
@@ -142,46 +142,7 @@ module "webapp_lambda_src_s3_object" {
   website_redirect               = null                                          # ✅ Optional argument.
 
 }
-*/
 
-
-# Creation of AWS S3 Bucket for WebApp Lambda Function Python Source.
-module "webapp_lambda_src_s3_bucket" {
-
-  source = "./terraform/aws/s3/bucket"
-
-  bucket = var.webapp_lambda_src_s3_bucket_name                                 # ✅ Optional argument, but keep it, ❗ Forces new resource.
-  acl    = "private"                                                            # ✅ Optional argument — recommended to keep.
-  policy = data.aws_iam_policy_document.webapp_lambda_src_s3_bucket_policy.json # ✅ Optional argument — recommended to keep.
-  tags   = {                                                                    # ✅ Optional argument — recommended to keep.
-    "Name"            = "WebApp"
-    "AppName"         = "Python FastAPI Web App"
-  }
-
-}
-
-
-
-# Creation of AWS S3 Bucket Object for WebApp Lambda Function Python Source.
-module "webapp_lambda_src_s3_bucket_object" {
-
-  source      = "./terraform/aws/s3/bucket_object"
-
-  depends_on  = [
-    module.webapp_lambda_src_s3_bucket,
-  ]
-
-  bucket      = module.webapp_lambda_src_s3_bucket.id         # 🔒 Required argument, ❗ modification creates new resource.
-  key         = "/${local.yyyymmdd}/${local.webapp_zip}"      # 🔒 Required argument.
-  acl         = "private"                                     # ✅ Optional argument — recommended to keep.
-  etag        = filemd5(data.archive_file.webapp.output_path) # ✅ Optional argument — recommended to keep.
-  source_code = data.archive_file.webapp.output_path          # ✅ Optional argument — recommended to keep.
-  tags        = {                                             # ✅ Optional argument — recommended to keep.
-    "Name"            = "WebApp"
-    "AppName"         = "Python FastAPI Web App"
-  }
-
-}
 
 
 
@@ -232,7 +193,7 @@ module "webapp_aws_lambda_function" {
   reserved_concurrent_executions = -1                                           # ✅ Optional argument — recommended to keep.
   runtime                        = "python3.11"                                 # ✅ Optional argument — recommended to keep.
   s3_bucket                      = module.webapp_lambda_src_s3_bucket.id        # ✅ Optional argument — recommended to keep.
-  s3_key                         = "/${local.yyyymmdd}/${local.webapp_zip}"     # ✅ Optional argument, 🤜💥🤛 conflicts with `filename` and `image_uri`.
+  s3_key                         = "${local.yyyymmdd}/${local.webapp_zip}"     # ✅ Optional argument, 🤜💥🤛 conflicts with `filename` and `image_uri`.
   tags                           = {                                            # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp"
     "AppName"         = "Python FastAPI Web Application"

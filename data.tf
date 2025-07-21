@@ -113,7 +113,7 @@ locals {
 
 
 
-# WebApp Lambda Python Source S3 Bucket IAM Policy Document. 
+# 📄 WebApp Lambda Python Source S3 Bucket IAM Policy Document. 
 data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
   statement {
@@ -135,7 +135,7 @@ data "aws_iam_policy_document" "webapp_lambda_src_s3_bucket_policy" {
 
 
 
-# 📄 IAM Trust Policy for WebApp Lambda to Assume the Role ⛑️.
+# ⛑️ IAM Trust Policy for WebApp Lambda to Assume the Role.
 data "aws_iam_policy_document" "webapp_lambda_iam_role" {
 
   statement {
@@ -154,7 +154,7 @@ data "aws_iam_policy_document" "webapp_lambda_iam_role" {
 
 
 
-# 📄 WebApp Lambda Monitoring IAM Policy 🔐.
+# 📄 WebApp Lambda CloudWatch Monitoring IAM Policy.
 data "aws_iam_policy_document" "webapp_lambda_monitoring_policy" {
   statement {
     sid = "WebAppLambdaMonitoringPolicy"
