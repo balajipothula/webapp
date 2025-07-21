@@ -144,7 +144,7 @@ module "webapp_lambda_src_s3_object" {
 }
 
 
-/*
+
 # Creation of AWS Lambda Layer Version for WebApp Lambda Function.
 module "webapp_aws_lambda_layer_version" {
 
@@ -164,7 +164,7 @@ module "webapp_aws_lambda_layer_version" {
 }
 
 
-
+/*
 # Creation of AWS Lambda Function for WebApp.
 module "webapp_aws_lambda_function" {
 
