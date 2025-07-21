@@ -79,7 +79,7 @@ jobs:
           # The root changelog.
           changelogFile: "./postgresql/webapp_db/public/master.xml"
           # The JDBC database connection URL.
-          url: ${{ secrets.WEBAPP_DB_MASTER_URL }} # jdbc:postgresql://<host>:<port>/<dbname>
+          url: ${{ secrets.WEBAPP_DB_MASTER_URL }} # jdbc:postgresql://<host>:5432/webapp_db
           # The default schema name to use for the database connection.
           defaultSchemaName: "public"
           # The JDBC driver class
