@@ -173,7 +173,8 @@ module "webapp_aws_lambda_function" {
   depends_on                     = [
     module.webapp_lambda_aws_iam_role,
     module.webapp_db_aws_secretsmanager_secret,
-    module.webapp_lambda_src_s3_bucket
+    module.webapp_lambda_src_s3_bucket,
+    module.webapp_lambda_src_s3_object,
   ]
 
   function_name                  = "webapp-lambda-function"                     # 🔒 Required argument, ❗ Forces new resource.
@@ -199,6 +200,7 @@ module "webapp_aws_lambda_function" {
   timeout                        = 120                                          # ✅ Optional argument — recommended to keep.
 
 }
+
 
 /*
 # Creation of AWS CloudWatch Log Group for WebApp Lambda Function.
