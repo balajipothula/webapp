@@ -607,7 +607,7 @@ module "webapp_db_aws_secretsmanager_secret" {
   description                    = "webapp_db Secrets Manager" # ✅ Optional argument — recommended to keep.
   force_overwrite_replica_secret = false                       # ✅ Optional argument — recommended to keep.
   kms_key_id                     = null                        # ✅ Optional argument.
-  name                           = "webapp-db-credentials-5"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
+  name                           = "webapp-db-credentials-6"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
 //name_prefix                    = "prefix-"                   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`, better to comment it.
   recovery_window_in_days        = 7                           # ✅ Optional argument — recommended to keep.
   tags                           = {                           # ✅ Optional argument — recommended to keep.
