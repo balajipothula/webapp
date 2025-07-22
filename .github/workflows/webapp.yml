@@ -70,11 +70,11 @@ jobs:
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
       - name: Terraform plan generation.
-        run: terraform plan -input=false -out=webapp.tfplan
+        run: terraform plan -input=false -out=webapp.tfplan -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}"
         #continue-on-error: true
       # Apply an execution plan for Terraform.
       - name: Terraform plan applying.
-        run: terraform apply -auto-approve -input=false webapp.tfplan -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}"
+        run: terraform apply -auto-approve -input=false webapp.tfplan
       # Destroy an execution plan for Terraform.
       #- name: Terraform plan destroying.
         #run: terraform apply -auto-approve -input=false -destroy
