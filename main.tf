@@ -710,7 +710,6 @@ module "webapp_aws_vpc_endpoint" {
   vpc_id              = data.aws_vpc.default.id                                        # 🔒 Required argument.
   private_dns_enabled = true                                                           # ✅ Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
-//security_group_ids  = data.aws_security_groups.default.ids                           # ✅ Optional argument, but required for endpoints of type Interface.
   security_group_ids  = [module.webapp_lambda_access_secretsmanager_vpce_sg.id]        # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp_secretsmanager"

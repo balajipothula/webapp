@@ -47,15 +47,3 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 */
-
-output "module__webapp_lambda_src_s3_object__key" {
-  value       = module.webapp_lambda_src_s3_object.key
-  description = "WebApp Lambda Source S3 Object Key."
-  sensitive   = false
-}
-
-output "module__webapp_lambda_src_s3_object__source_path" {
-  value       = module.webapp_lambda_src_s3_object.source_path
-  description = "WebApp Lambda Source S3 Object Source Path."
-  sensitive   = false
-}
