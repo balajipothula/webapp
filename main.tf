@@ -443,6 +443,17 @@ module "webapp_db_aws_security_group" {
       from_port          = 5432                               # 🔒 Required argument.
       to_port            = 5432                               # 🔒 Required argument.
       protocol           = "tcp"                              # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
+      description        = "Inbound traffic to PostgreSQL"    # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
+      security_groups    = null                               # ✅ Optional argument — recommended to keep.
+      self               = null                               # ✅ Optional argument — recommended to keep.
+    },
+    {
+      from_port          = 5432                               # 🔒 Required argument.
+      to_port            = 5432                               # 🔒 Required argument.
+      protocol           = "tcp"                              # 🔒 Required argument.
       cidr_blocks        = ["0.0.0.0/0"]                      # ✅ Optional argument — recommended to keep.
       description        = "Inbound traffic to PostgreSQL"    # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.

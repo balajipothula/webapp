@@ -76,3 +76,20 @@ variable "webapp_database_name" {
   description = "Database name for the PostgreSQL database."
   sensitive   = true
 }
+
+variable "github_hosted_runner_ip" {
+  type        = string
+  description = "The IPv4 Address of the current Github Actions Runner."
+  sensitive   = false
+}
+
+variable "github_hosted_runner_ip" {
+  type        = string
+  default     = "0.0.0.0/0"
+  description = "The IPv4 Address of the current Github Actions Runner."
+  validation {
+    condition     = var.github_hosted_runner_ip == "0.0.0.0/0" || can(regex("^\\d{1,3}(\\.\\d{1,3}){3}$", var.github_hosted_runner_ip))
+    error_message = "Error: github_hosted_runner_ip must be a valid IPv4 address."
+  }
+  sensitive   = false
+}
