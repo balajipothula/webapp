@@ -79,12 +79,6 @@ variable "webapp_database_name" {
 
 variable "github_hosted_runner_ip" {
   type        = string
-  description = "The IPv4 Address of the current Github Actions Runner."
-  sensitive   = false
-}
-
-variable "github_hosted_runner_ip" {
-  type        = string
   default     = "0.0.0.0/0"
   description = "The IPv4 Address of the current Github Actions Runner."
   validation {
