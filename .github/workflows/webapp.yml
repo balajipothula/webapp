@@ -73,11 +73,11 @@ jobs:
         run: terraform plan -input=false -out=webapp.tfplan -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}"
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      - name: Terraform plan applying.
-        run: terraform apply -auto-approve -input=false webapp.tfplan
+      #- name: Terraform plan applying.
+        #run: terraform apply -auto-approve -input=false webapp.tfplan
       # Destroy an execution plan for Terraform.
-      #- name: Terraform plan destroying.
-        #run: terraform apply -auto-approve -input=false -destroy
+      - name: Terraform plan destroying.
+        run: terraform apply -auto-approve -input=false -destroy
       # Deploy any changes in the changelog file that have not been deployed
       #- name: Liquibase Update Action
         #uses: liquibase-github-actions/update@v4.32.0
