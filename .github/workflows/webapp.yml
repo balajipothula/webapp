@@ -74,9 +74,7 @@ jobs:
         #continue-on-error: true
       # Apply an execution plan for Terraform.
       - name: Terraform plan applying.
-        run: |
-          terraform apply -auto-approve -input=false webapp.tfplan \
-            -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}"
+        run: terraform apply -auto-approve -input=false webapp.tfplan -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}"
       # Destroy an execution plan for Terraform.
       #- name: Terraform plan destroying.
         #run: terraform apply -auto-approve -input=false -destroy
