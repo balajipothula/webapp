@@ -521,7 +521,7 @@ module "webapp_db_aws_rds_cluster" {
   iam_roles                           = []                                                        # ✅ Optional argument.
   iops                                = null                                                      # ✅ Optional argument — 🧩 inter-related with `availability_zones`.
   kms_key_id                          = null                                                      # ✅ Optional argument — 🚨 `storage_encrypted` must be 'true'.
-  manage_master_user_password         = false                                                     # ✅ Optional argument — 🚨 `webapp_db_master_password` must be 'null'.
+//manage_master_user_password         = false                                                     # ✅ Optional argument — 🚨 `webapp_db_master_password` must be 'null'.
   master_password                     = var.webapp_db_master_password                             # 🔒 Required argument — 🚨 `manage_master_user_password` must be 'false'.
 //master_user_secret_kms_key_id       = null                                                      # ✅ Optional argument, comment it if `master_username` and `master_password` used.
   master_username                     = var.webapp_db_master_username                             # 🔒 Required argument.
