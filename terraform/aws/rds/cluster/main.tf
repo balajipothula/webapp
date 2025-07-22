@@ -87,9 +87,9 @@ resource "aws_rds_cluster" "generic" {
   iam_roles                           = var.iam_roles                                             # ✅ Optional argument.
   iops                                = var.iops                                                  # ✅ Optional argument — 🧩 inter-related with `availability_zones`.
   kms_key_id                          = var.kms_key_id                                            # ✅ Optional argument — 🚨 `storage_encrypted` must be 'true'.
-//manage_master_user_password         = var.manage_master_user_password                           # ✅ Optional argument — 🚨 `master_password` must be 'null'.
+  manage_master_user_password         = var.manage_master_user_password                           # ✅ Optional argument — 🚨 `master_password` must be 'null'.
   master_password                     = var.master_password                                       # 🔒 Required argument — 🚨 `manage_master_user_password` must be 'false'.
-  master_user_secret_kms_key_id       = var.master_user_secret_kms_key_id                         # ✅ Optional argument.
+//master_user_secret_kms_key_id       = var.master_user_secret_kms_key_id                         # ✅ Optional argument.
   master_username                     = var.master_username                                       # 🔒 Required argument.
   network_type                        = var.network_type                                          # ✅ Optional argument — recommended to keep.
   port                                = var.port                                                  # ✅ Optional argument — 🚨 highly recommended to keep.
