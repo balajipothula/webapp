@@ -423,52 +423,52 @@ module "webapp_db_aws_security_group" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp-db-aws-security-group"     # ✅ Optional argument, ❗ Forces new resource.
-  description            = "WebApp DB AWS Security Group"     # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-lambda-to-webapp-db-sg"       # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
-      from_port          = 0                                  # 🔒 Required argument.
-      to_port            = 0                                  # 🔒 Required argument.
-      protocol           = "all"                              # 🔒 Required argument.
-      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
-      description        = "Outbound traffic from PostgreSQL" # ✅ Optional argument — recommended to keep.
-      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
-      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
-      security_groups    = null                               # ✅ Optional argument — recommended to keep.
-      self               = null                               # ✅ Optional argument — recommended to keep.
+      from_port          = 0                                     # 🔒 Required argument.
+      to_port            = 0                                     # 🔒 Required argument.
+      protocol           = "all"                                 # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]     # ✅ Optional argument — recommended to keep.
+      description        = "Outbound traffic from PostgreSQL"    # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
+      security_groups    = null                                  # ✅ Optional argument — recommended to keep.
+      self               = null                                  # ✅ Optional argument — recommended to keep.
     },
   ]
   ingress_rules          = [
     {
-      from_port          = 5432                               # 🔒 Required argument.
-      to_port            = 5432                               # 🔒 Required argument.
-      protocol           = "tcp"                              # 🔒 Required argument.
-      cidr_blocks        = [data.aws_vpc.default.cidr_block]  # ✅ Optional argument — recommended to keep.
-      description        = "Inbound traffic to PostgreSQL"    # ✅ Optional argument — recommended to keep.
-      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
-      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
-      security_groups    = null                               # ✅ Optional argument — recommended to keep.
-      self               = null                               # ✅ Optional argument — recommended to keep.
+      from_port          = 5432                                  # 🔒 Required argument.
+      to_port            = 5432                                  # 🔒 Required argument.
+      protocol           = "tcp"                                 # 🔒 Required argument.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]     # ✅ Optional argument — recommended to keep.
+      description        = "Inbound traffic to PostgreSQL"       # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
+      security_groups    = null                                  # ✅ Optional argument — recommended to keep.
+      self               = null                                  # ✅ Optional argument — recommended to keep.
     },
     {
-      from_port          = 5432                               # 🔒 Required argument.
-      to_port            = 5432                               # 🔒 Required argument.
-      protocol           = "tcp"                              # 🔒 Required argument.
+      from_port          = 5432                                  # 🔒 Required argument.
+      to_port            = 5432                                  # 🔒 Required argument.
+      protocol           = "tcp"                                 # 🔒 Required argument.
       cidr_blocks        = ["${var.github_hosted_runner_ip}/32"] # ✅ Optional argument — recommended to keep.
-      description        = "Inbound traffic to PostgreSQL"    # ✅ Optional argument — recommended to keep.
-      ipv6_cidr_blocks   = null                               # ✅ Optional argument — recommended to keep.
-      prefix_list_ids    = null                               # ✅ Optional argument — recommended to keep.
-      security_groups    = null                               # ✅ Optional argument — recommended to keep.
-      self               = null                               # ✅ Optional argument — recommended to keep.
+      description        = "Inbound traffic to PostgreSQL"       # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
+      security_groups    = null                                  # ✅ Optional argument — recommended to keep.
+      self               = null                                  # ✅ Optional argument — recommended to keep.
     },
   ]
-  name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
-  revoke_rules_on_delete = false                              # ✅ Optional argument.
-  tags                   = {                                  # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp_db-sg"
+  name_prefix            = null                                  # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
+  revoke_rules_on_delete = false                                 # ✅ Optional argument.
+  tags                   = {                                     # ✅ Optional argument — recommended to keep.
+    "Name"               = "webapp-lambda-to-pg-webapp-db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
-  vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
+  vpc_id                 = data.aws_vpc.default.id               # ✅ Optional argument, ❗ Forces new resource.
 
 }
 
@@ -698,7 +698,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                              # ✅ Optional argument.
   tags                   = {                                  # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp-db-sg"
+    "Name"               = "webapp-lambda-secretsmanager-vpce-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
