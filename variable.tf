@@ -78,7 +78,8 @@ variable "webapp_database_name" {
 }
 
 variable "github_hosted_runner_ip" {
-  type        = string
+  type    = string
+  default = "1.1.1.1"
   description = "The IPv4 Address of the current Github Actions Runner."
   validation {
     condition     = can(regex("^\\d{1,3}(\\.\\d{1,3}){3}$", var.github_hosted_runner_ip))
