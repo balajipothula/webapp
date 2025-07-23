@@ -47,3 +47,9 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 */
+
+output "WEBAPP_DB_MASTER_URL" {
+  value       = module.webapp_db_aws_rds_cluster.endpoint
+  description = "DNS address of the RDS instance."
+  sensitive   = false
+}
