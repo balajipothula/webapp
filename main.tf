@@ -430,7 +430,7 @@ module "webapp_db_aws_security_group" {
       from_port          = 0                                     # 🔒 Required argument.
       to_port            = 0                                     # 🔒 Required argument.
       protocol           = "all"                                 # 🔒 Required argument.
-      cidr_blocks        = [data.aws_vpc.default.cidr_block]     # ✅ Optional argument — recommended to keep.
+      cidr_blocks        = ["0.0.0.0/0"]                         # ✅ Optional argument — recommended to keep.
       description        = "Outbound traffic from PostgreSQL"    # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
@@ -573,7 +573,7 @@ module "webapp_db_aws_rds_cluster_instance_0" {
     module.webapp_db_aws_db_subnet_group,
   ]
 
-  apply_immediately                     = true                                          # ✅ Optional argument.
+  apply_immediately                     = true                                           # ✅ Optional argument.
   auto_minor_version_upgrade            = true                                           # ✅ Optional argument.
   availability_zone                     = data.aws_availability_zones.available.names[0] # ✅ Optional argument, ❗ Forces new resource.
   ca_cert_identifier                    = null                                           # ✅ Optional argument.
@@ -618,7 +618,7 @@ module "webapp_db_aws_secretsmanager_secret" {
   description                    = "webapp_db Secrets Manager" # ✅ Optional argument — recommended to keep.
   force_overwrite_replica_secret = false                       # ✅ Optional argument — recommended to keep.
   kms_key_id                     = null                        # ✅ Optional argument.
-  name                           = "webapp-db-credentials-6"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
+  name                           = "webapp-db-credentials-7"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
 //name_prefix                    = "prefix-"                   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`, better to comment it.
   recovery_window_in_days        = 7                           # ✅ Optional argument — recommended to keep.
   tags                           = {                           # ✅ Optional argument — recommended to keep.
@@ -659,7 +659,7 @@ module "webapp_aws_secretsmanager_secret_version" {
   }) 
 
 }
-
+*/
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
@@ -674,7 +674,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
       from_port          = 0                                    # 🔒 Required argument.
       to_port            = 0                                    # 🔒 Required argument.
       protocol           = "all"                                # 🔒 Required argument.
-      cidr_blocks        = [data.aws_vpc.default.cidr_block]    # ✅ Optional argument — recommended to keep.
+      cidr_blocks        = ["0.0.0.0/0"]                        # ✅ Optional argument — recommended to keep.
       description        = "Outbound traffic from VPC Endpoint" # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                                 # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                                 # ✅ Optional argument — recommended to keep.
@@ -687,7 +687,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
       from_port          = 443                                  # 🔒 Required argument.
       to_port            = 443                                  # 🔒 Required argument.
       protocol           = "tcp"                                # 🔒 Required argument.
-      cidr_blocks        = ["0.0.0.0/0"]                        # ✅ Optional argument — recommended to keep.
+      cidr_blocks        = [data.aws_vpc.default.cidr_block]    # ✅ Optional argument — recommended to keep.
       description        = "Inbound traffic to VPC Endpoint"    # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                                 # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                                 # ✅ Optional argument — recommended to keep.
@@ -706,7 +706,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
 }
 
 
-
+/*
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
 module "webapp_aws_vpc_endpoint" {

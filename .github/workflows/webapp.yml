@@ -71,17 +71,20 @@ jobs:
       # Generates an execution plan for Terraform.
       - name: Terraform plan generation.
         run: |
-          terraform plan -input=false -out=webapp.tfplan \
-            -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"
+          terraform plan -input=false -out=webapp.tfplan                              \
+            -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"            \
+            -var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
+            -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
+            -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      #- name: Terraform plan applying.
-        #run: terraform apply -auto-approve -input=false webapp.tfplan
+      - name: Terraform plan applying.
+        run: terraform apply -auto-approve -input=false webapp.tfplan
       # Destroy an execution plan for Terraform.
-      - name: Terraform plan destroying.
-        run: |
-          terraform apply -auto-approve -input=false -destroy \
-            -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"
+      #- name: Terraform plan destroying.
+        #run: |
+          #terraform apply -auto-approve -input=false -destroy \
+            #-var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"
       # Deploy any changes in the changelog file that have not been deployed
       #- name: Liquibase Update Action
         #uses: liquibase-github-actions/update@v4.32.0
