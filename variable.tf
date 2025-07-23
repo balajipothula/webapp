@@ -82,8 +82,8 @@ variable "github_hosted_runner_ip" {
   #default = "10.10.10.10/32"
   description = "The IPv4 Address of the current Github Actions Runner."
   validation {
-    condition     = can(regex("^\\d{1,3}(\\.\\d{1,3}){3}/\\d{1,2}$", var.github_hosted_runner_ip))
-    error_message = "Error: github_hosted_runner_ip must be a valid IPv4 address."
+    condition = can(regex("^\\d{1,3}(\\.\\d{1,3}){3}/(3[0-2]|[12]?\\d)$", var.github_hosted_runner_ip))
+    error_message = "Error: github_hosted_runner_ip must be a valid IPv4 address with CIDR between /0 and /32."
   }
   sensitive   = false
 }
