@@ -74,7 +74,7 @@ variable "webapp_database_name" {
     error_message = "Error: webapp_database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
   }
   description = "Database name for the PostgreSQL database."
-  sensitive   = true
+  sensitive   = false
 }
 
 variable "github_hosted_runner_ip" {
