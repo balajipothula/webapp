@@ -48,12 +48,6 @@ output "aws_security_groups_default_ids" {
 }
 */
 
-output "webapp_db_aws_rds_cluster__endpoint" {
-  value       = module.webapp_db_aws_rds_cluster.endpoint
-  description = "DNS address of the RDS instance."
-  sensitive   = false
-}
-
 output "WEBAPP_DB_MASTER_URL" {
   value       = "jdbc:postgresql://${module.webapp_db_aws_rds_cluster.endpoint}:5432/${var.webapp_database_name}"
   description = "DNS address of the RDS instance."
