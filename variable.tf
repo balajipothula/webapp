@@ -79,11 +79,11 @@ variable "webapp_database_name" {
 
 variable "github_hosted_runner_ip" {
   type    = string
-  default = "1.1.1.1"
-  description = "The IPv4 Address of the current Github Actions Runner."
+  #default = "10.10.10.10/32"
+  description = "The IPv4 Address of the current Github Actions Runner."/*
   validation {
     condition     = can(regex("^\\d{1,3}(\\.\\d{1,3}){3}$", var.github_hosted_runner_ip))
     error_message = "Error: github_hosted_runner_ip must be a valid IPv4 address."
-  }
+  }*/
   sensitive   = false
 }
