@@ -310,7 +310,7 @@ module "webapp_lambda_aws_apigatewayv2_route_index" {
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ PUT /song 🛣️ Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ PUT /insert/song 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_put_song" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -321,14 +321,14 @@ module "webapp_lambda_aws_apigatewayv2_route_put_song" {
   ]
 
   api_id        = module.webapp_lambda_aws_apigatewayv2_api.id                           # 🔒 Required argument.
-  route_key     = "PUT /song"                                                            # 🔒 Required argument.
+  route_key     = "PUT /insert/song"                                                     # 🔒 Required argument.
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /songs 🛣️ Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /select/songs 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_get_songs" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -339,14 +339,14 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs" {
   ]
 
   api_id        = module.webapp_lambda_aws_apigatewayv2_api.id                           # 🔒 Required argument.
-  route_key     = "GET /songs"                                                           # 🔒 Required argument.
+  route_key     = "GET /select/songs"                                                    # 🔒 Required argument.
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ PUT /song/rating 🛣️ Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ PUT /insert/song/rating 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_put_song_rating" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -357,14 +357,14 @@ module "webapp_lambda_aws_apigatewayv2_route_put_song_rating" {
   ]
 
   api_id        = module.webapp_lambda_aws_apigatewayv2_api.id                           # 🔒 Required argument.
-  route_key     = "PUT /song/rating"                                                     # 🔒 Required argument.
+  route_key     = "PUT /insert/song/rating"                                              # 🔒 Required argument.
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /song/rating/{songId} 🛣️ Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /select/song/rating/{songId} 🛣️ Route.
 module "webapp_aws_apigatewayv2_route_get_song_rating_by_songId" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -375,14 +375,14 @@ module "webapp_aws_apigatewayv2_route_get_song_rating_by_songId" {
   ]
 
   api_id        = module.webapp_lambda_aws_apigatewayv2_api.id                           # 🔒 Required argument.
-  route_key     = "GET /song/rating/{songId}"                                            # 🔒 Required argument.
+  route_key     = "GET /select/song/rating/{songId}"                                     # 🔒 Required argument.
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /songs/search 🛣️ Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /select/songs/search 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_get_songs_search" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -393,14 +393,14 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_search" {
   ]
 
   api_id        = module.webapp_lambda_aws_apigatewayv2_api.id                           # 🔒 Required argument.
-  route_key     = "GET /songs/search"                                                    # 🔒 Required argument.
+  route_key     = "GET /select/songs/search"                                             # 🔒 Required argument.
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
 
 
 
-# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /songs/avg/difficulty 🛣️ Route.
+# Creation of AWS API Gateway V2 Route for WebApp Lambda Function 🛣️ GET /select/songs/avg/difficulty 🛣️ Route.
 module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
 
   source        = "./terraform/aws/apigatewayv2/route"
@@ -411,7 +411,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   ]
 
   api_id        = module.webapp_lambda_aws_apigatewayv2_api.id                           # 🔒 Required argument.
-  route_key     = "GET /songs/avg/difficulty"                                            # 🔒 Required argument.
+  route_key     = "GET /select/songs/avg/difficulty"                                     # 🔒 Required argument.
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
