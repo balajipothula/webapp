@@ -54,21 +54,21 @@ variable "webapp_lambda_src_s3_bucket_name" {
 
 variable "webapp_db_master_username" {
   type        = string
-  default     = "webapp_db_admin"
+  default     = "dummy_admin"
   description = "Username for the PostgreSQL master database user."
   sensitive   = true
 }
 
 variable "webapp_db_master_password" {
   type        = string
-  default     = "WebApp2025"
+  default     = "dummy_password"
   description = "Password for the PostgreSQL master database user."
   sensitive   = true
 }
 
 variable "webapp_database_name" {
   type        = string
-  default     = "webapp_db"
+  default     = "dummy_db"
   validation {
     condition     = var.webapp_database_name != null && 5 < length(var.webapp_database_name) && length(var.webapp_database_name) < 33
     error_message = "Error: webapp_database_name value must not null, lenght must be in between 6 to 32 and suffix must be _db."
