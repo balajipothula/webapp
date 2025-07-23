@@ -35,8 +35,6 @@ jobs:
       - name: Get Runner Public IP Address
         uses: candidob/get-runner-ip@v1.0.0
         id: ip
-      - name: The IPv4 Address of the current Github Actions Runner
-        run: echo ${{ steps.ip.outputs.ipv4 }}
       # Preparing and pushing documetation into README.md
       #- name: Prepare Terraform Doc and Push to README.md
         #uses: terraform-docs/gh-actions@main
