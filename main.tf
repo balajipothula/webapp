@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 
-/*
+
 # Creation of WebApp Lambda Function AWS IAM Role.
 module "webapp_lambda_aws_iam_role" {
 
@@ -286,7 +286,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//**" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
 
 }
 
@@ -415,7 +415,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-*/
+
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
@@ -463,7 +463,6 @@ module "webapp_lambda_to_webapp_db_sg" {
 
 
 
-# terraform destroy -target=module.github_hosted_runner_to_webapp_db_sg.aws_security_group.generic
 # Creation of AWS Security Group for GitHub Hosted Runner to access WebApp Database .
 module "github_hosted_runner_to_webapp_db_sg" {
 
@@ -508,7 +507,7 @@ module "github_hosted_runner_to_webapp_db_sg" {
 }
 
 
-/*
+
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -595,6 +594,7 @@ module "webapp_db_aws_rds_cluster" {
   }
   vpc_security_group_ids              = [                                                         # ✅ Optional argument — 🚨 highly recommended to keep.
     module.webapp_lambda_to_webapp_db_sg.id,
+    module.github_hosted_runner_to_webapp_db_sg,    
   ]
 
 }
@@ -622,7 +622,7 @@ module "webapp_db_aws_rds_cluster_instance_0" {
   engine_version                        = "15.3"                                         # ✅ Optional argument — recommended to keep.
   engine                                = module.webapp_db_aws_rds_cluster.engine        # 🔒 Required argument, ❗ Forces new resource.
   identifier_prefix                     = null                                           # ✅ Optional argument, ❗ Forces new resource — 🤜💥🤛 Conflicts with `identifier`.
-  identifier                            = "webapp-db-aws-rds-cluster-instance-0"           # ✅ Optional argument, ❗ Forces new resource.
+  identifier                            = "webapp-db-aws-rds-cluster-instance-0"         # ✅ Optional argument, ❗ Forces new resource.
   instance_class                        = "db.serverless"                                # 🔒 Required argument.
   monitoring_interval                   = 0                                              # ✅ Optional argument.
   monitoring_role_arn                   = null                                           # ✅ Optional argument.
@@ -700,7 +700,7 @@ module "webapp_aws_secretsmanager_secret_version" {
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
-module "webapp_lambda_access_secretsmanager_vpce_sg" {
+module "webapp_lambda_to_secretsmanager_vpce_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
@@ -749,7 +749,7 @@ module "webapp_lambda_access_secretsmanager_vpce_sg" {
 module "webapp_aws_vpc_endpoint" {
 
   depends_on = [
-    module.webapp_lambda_access_secretsmanager_vpce_sg,
+    module.webapp_lambda_to_secretsmanager_vpce_sg,
   ]
 
   source              = "./terraform/aws/vpc/endpoint"
@@ -758,7 +758,7 @@ module "webapp_aws_vpc_endpoint" {
   vpc_id              = data.aws_vpc.default.id                                        # 🔒 Required argument.
   private_dns_enabled = true                                                           # ✅ Optional argument, but applicable for endpoints of type Interface.
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
-  security_group_ids  = [module.webapp_lambda_access_secretsmanager_vpce_sg.id]        # ✅ Optional argument, but required for endpoints of type Interface.
+  security_group_ids  = [module.webapp_lambda_to_secretsmanager_vpce_sg.id]            # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
     "Name"            = "webapp_secretsmanager"
     "AppName"         = "Python FastAPI Web App"
@@ -766,4 +766,3 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
-*/
