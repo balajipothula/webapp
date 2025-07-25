@@ -735,7 +735,7 @@ module "webapp_lambda_to_secretsmanager_vpce_sg" {
   name_prefix            = null                               # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                              # ✅ Optional argument.
   tags                   = {                                  # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp-lambda-secretsmanager-vpce-sg"
+    "Name"               = "webapp-lambda-to-secretsmanager-vpce-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id            # ✅ Optional argument, ❗ Forces new resource.
