@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 
-
+/*
 # Creation of WebApp Lambda Function AWS IAM Role.
 module "webapp_lambda_aws_iam_role" {
 
@@ -286,7 +286,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//**" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
 
 }
 
@@ -415,11 +415,11 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
-module "webapp_db_aws_security_group" {
+module "webapp_lambda_to_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
@@ -450,12 +450,47 @@ module "webapp_db_aws_security_group" {
       security_groups    = null                                  # ✅ Optional argument — recommended to keep.
       self               = null                                  # ✅ Optional argument — recommended to keep.
     },
+  ]
+  name_prefix            = null                                  # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
+  revoke_rules_on_delete = false                                 # ✅ Optional argument.
+  tags                   = {                                     # ✅ Optional argument — recommended to keep.
+    "Name"               = "webapp-lambda-to-webapp-db-sg"
+    "AppName"            = "Python FastAPI Web App"
+  }
+  vpc_id                 = data.aws_vpc.default.id               # ✅ Optional argument, ❗ Forces new resource.
+
+}
+
+
+
+# terraform destroy -target=module.github_hosted_runner_to_webapp_db_sg.aws_security_group.generic
+# Creation of AWS Security Group for GitHub Hosted Runner to access WebApp Database .
+module "github_hosted_runner_to_webapp_db_sg" {
+
+  source                 = "./terraform/aws/vpc/security_group"
+
+  name                   = "github-hosted-runner-to-webapp-db-sg"# ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
+  egress_rules           = [
+    {
+      from_port          = 0                                     # 🔒 Required argument.
+      to_port            = 0                                     # 🔒 Required argument.
+      protocol           = "all"                                 # 🔒 Required argument.
+      cidr_blocks        = ["0.0.0.0/0"]                         # ✅ Optional argument — recommended to keep.
+      description        = "Outbound traffic from PostgreSQL"    # ✅ Optional argument — recommended to keep.
+      ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
+      prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
+      security_groups    = null                                  # ✅ Optional argument — recommended to keep.
+      self               = null                                  # ✅ Optional argument — recommended to keep.
+    },
+  ]
+  ingress_rules          = [
     {
       from_port          = 5432                                  # 🔒 Required argument.
       to_port            = 5432                                  # 🔒 Required argument.
       protocol           = "tcp"                                 # 🔒 Required argument.
       cidr_blocks        = ["${var.github_hosted_runner_ip}"]    # ✅ Optional argument — recommended to keep.
-      description        = "Inbound traffic to PostgreSQL"       # ✅ Optional argument — recommended to keep.
+      description        = "GitHub Hosted Runner to PostgreSQL"  # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
       security_groups    = null                                  # ✅ Optional argument — recommended to keep.
@@ -465,7 +500,7 @@ module "webapp_db_aws_security_group" {
   name_prefix            = null                                  # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                                 # ✅ Optional argument.
   tags                   = {                                     # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp-lambda-to-pg-webapp-db-sg"
+    "Name"               = "github-runner-to-pg-webapp-db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id               # ✅ Optional argument, ❗ Forces new resource.
@@ -473,7 +508,7 @@ module "webapp_db_aws_security_group" {
 }
 
 
-
+/*
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -499,7 +534,7 @@ module "webapp_db_aws_rds_cluster" {
 
   depends_on = [
     module.webapp_db_aws_db_subnet_group,
-    module.webapp_db_aws_security_group,
+    module.webapp_lambda_to_webapp_db_sg,
   ]
 
   allocated_storage                   = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
@@ -558,7 +593,9 @@ module "webapp_db_aws_rds_cluster" {
     "Name"     = "webapp-db-aws-rds-cluster"
     "AppName"  = "FastAPI WebApp"
   }
-  vpc_security_group_ids              = [module.webapp_db_aws_security_group.id]                  # ✅ Optional argument — 🚨 highly recommended to keep.
+  vpc_security_group_ids              = [                                                         # ✅ Optional argument — 🚨 highly recommended to keep.
+    module.webapp_lambda_to_webapp_db_sg.id,
+  ]
 
 }
 
@@ -618,7 +655,7 @@ module "webapp_db_aws_secretsmanager_secret" {
   description                    = "webapp_db Secrets Manager" # ✅ Optional argument — recommended to keep.
   force_overwrite_replica_secret = false                       # ✅ Optional argument — recommended to keep.
   kms_key_id                     = null                        # ✅ Optional argument.
-  name                           = "webapp-db-credentials-7"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
+  name                           = "webapp-db-credentials-8"   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name_prefix`.
 //name_prefix                    = "prefix-"                   # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`, better to comment it.
   recovery_window_in_days        = 7                           # ✅ Optional argument — recommended to keep.
   tags                           = {                           # ✅ Optional argument — recommended to keep.
@@ -729,3 +766,4 @@ module "webapp_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
+*/
