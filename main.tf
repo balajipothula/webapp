@@ -423,7 +423,7 @@ module "webapp_lambda_to_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp-lambda-to-webapp-db-sg"       # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-lambda-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
@@ -454,7 +454,7 @@ module "webapp_lambda_to_webapp_db_sg" {
   name_prefix            = null                                  # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                                 # ✅ Optional argument.
   tags                   = {                                     # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp-lambda-to-webapp-db-sg"
+    "Name"               = "webapp-lambda-to-pg-webapp-db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id               # ✅ Optional argument, ❗ Forces new resource.
@@ -468,7 +468,7 @@ module "github_hosted_runner_to_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "github-hosted-runner-to-webapp-db-sg"# ✅ Optional argument, ❗ Forces new resource.
+  name                   = "github-runner-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
