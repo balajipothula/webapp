@@ -423,7 +423,7 @@ module "webapp_lambda_to_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp-lambda-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-lambda-to-webapp-db-sg"       # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
@@ -454,7 +454,7 @@ module "webapp_lambda_to_webapp_db_sg" {
   name_prefix            = null                                  # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                                 # ✅ Optional argument.
   tags                   = {                                     # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp-lambda-to-pg-webapp-db-sg"
+    "Name"               = "webapp-lambda-to-webapp-db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id               # ✅ Optional argument, ❗ Forces new resource.
@@ -746,7 +746,7 @@ module "webapp_lambda_to_secretsmanager_vpce_sg" {
 
 # Creation of AWS VPC Endpoint for WebApp Lambda Function
 # to access AWS Secrets Manager service.
-module "webapp_aws_vpc_endpoint" {
+module "webapp_lambda_to_webapp_db_aws_vpc_endpoint" {
 
   depends_on = [
     module.webapp_lambda_to_secretsmanager_vpce_sg,
@@ -760,7 +760,7 @@ module "webapp_aws_vpc_endpoint" {
   subnet_ids          = data.aws_subnets.available.ids                                 # ✅ Optional argument, but applicable for endpoints of type GatewayLoadBalancer and Interface.
   security_group_ids  = [module.webapp_lambda_to_secretsmanager_vpce_sg.id]            # ✅ Optional argument, but required for endpoints of type Interface.
   tags                = {                                                              # ✅ Optional argument — recommended to keep.
-    "Name"            = "webapp_secretsmanager"
+    "Name"            = "webapp-lambda-to-webapp-db-aws-vpc-endpoint"
     "AppName"         = "Python FastAPI Web App"
   }
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
