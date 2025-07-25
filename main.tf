@@ -464,11 +464,11 @@ module "webapp_lambda_to_webapp_db_sg" {
 
 
 # Creation of AWS Security Group for GitHub Hosted Runner to access WebApp Database .
-module "github_runner_to_pg_webapp_db_sg" {
+module "github_hosted_runner_to_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "github-runner-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "github-hosted-runner-to-webapp-db-sg"# ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
