@@ -113,7 +113,7 @@ jobs:
           username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           # Additional classpath entries to use.
           classpath: "./postgresql/webapp_db/public"
-      #- name: Terraform plan generation for `github_hosted_runner_to_webapp_db_sg` module.
-        #run: terraform plan -input=false -out=webapp.tfplan -var="github_hosted_runner_ip=127.0.0.1/32"
-      #- name: Terraform plan apply for `github_hosted_runner_to_webapp_db_sg` module.
-        #run: terraform apply -auto-approve -input=false -target=module.github_hosted_runner_to_webapp_db_sg.aws_security_group.generic
+      - name: Terraform plan generation for `github_hosted_runner_to_webapp_db_sg` module.
+        run: terraform plan -input=false -out=webapp.tfplan -var="github_hosted_runner_ip=127.0.0.1/32"
+      - name: Terraform plan apply for `github_hosted_runner_to_webapp_db_sg` module.
+        run: terraform apply -auto-approve -input=false -target=module.github_hosted_runner_to_webapp_db_sg.aws_security_group.generic
