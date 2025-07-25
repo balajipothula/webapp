@@ -594,7 +594,7 @@ module "webapp_db_aws_rds_cluster" {
   }
   vpc_security_group_ids              = [                                                         # ✅ Optional argument — 🚨 highly recommended to keep.
     module.webapp_lambda_to_webapp_db_sg.id,
-    module.github_hosted_runner_to_webapp_db_sg,    
+    module.github_hosted_runner_to_webapp_db_sg.id,    
   ]
 
 }
