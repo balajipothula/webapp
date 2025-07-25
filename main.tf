@@ -464,7 +464,7 @@ module "webapp_lambda_to_webapp_db_sg" {
 
 
 # Creation of AWS Security Group for GitHub Hosted Runner to access WebApp Database .
-module "github_hosted_runner_to_webapp_db_sg" {
+module "github_runner_to_pg_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
@@ -594,7 +594,7 @@ module "webapp_db_aws_rds_cluster" {
   }
   vpc_security_group_ids              = [                                                         # ✅ Optional argument — 🚨 highly recommended to keep.
     module.webapp_lambda_to_webapp_db_sg.id,
-    module.github_hosted_runner_to_webapp_db_sg.id,    
+    module.github_runner_to_pg_webapp_db_sg.id,    
   ]
 
 }
@@ -704,8 +704,8 @@ module "webapp_lambda_to_secretsmanager_vpce_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp-lambda-access-secretsmanager-vpce-sg" # ✅ Optional argument, ❗ Forces new resource.
-  description            = "WebApp Lambda Access SecretsManager VPCE SG" # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-lambda-to-secretsmanager-vpce-sg" # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp Lambda to SecretsManager VPCE SG" # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
       from_port          = 0                                    # 🔒 Required argument.
