@@ -86,6 +86,7 @@ jobs:
             #-var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
             #-var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
             #-var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
+
       # Deploy any changes in the changelog file that have not been deployed
       - name: Liquibase Update Action
         uses: liquibase-github-actions/update@v4.32.0
@@ -112,9 +113,7 @@ jobs:
           username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           # Additional classpath entries to use.
           classpath: "./postgresql/webapp_db/public"
-      - name: Terraform plan generation.
-        run: |
-          terraform plan -input=false -out=webapp.tfplan \
-            -var="github_hosted_runner_ip=127.0.0.1/32"
-      - name: Terraform plan apply `github_hosted_runner_to_webapp_db_sg` module.
+      - name: Terraform plan generation for `github_hosted_runner_to_webapp_db_sg` module.
+        run: terraform plan -input=false -out=webapp.tfplan -var="github_hosted_runner_ip=127.0.0.1/32"
+      - name: Terraform plan apply for `github_hosted_runner_to_webapp_db_sg` module.
         run: terraform apply -auto-approve -input=false -target=module.github_hosted_runner_to_webapp_db_sg.aws_security_group.generic
