@@ -70,7 +70,7 @@ jobs:
       - name: Terraform plan generation.
         run: |
           terraform plan -input=false -out=webapp.tfplan                              \
-            -var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"            \
+            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"                   \
             -var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
             -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
@@ -82,7 +82,7 @@ jobs:
       #- name: Terraform plan destroying.
         #run: |
           #terraform apply -auto-approve -input=false -destroy                         \
-            #-var="github_hosted_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"            \
+            #-var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"                   \
             #-var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
             #-var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
             #-var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
@@ -113,7 +113,7 @@ jobs:
           #username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           # Additional classpath entries to use.
           #classpath: "./postgresql/webapp_db/public"
-      #- name: Terraform plan generation for `github_hosted_runner_to_webapp_db_sg` module.
-        #run: terraform plan -input=false -out=webapp.tfplan -var="github_hosted_runner_ip=127.0.0.1/32"
-      #- name: Terraform plan apply for `github_hosted_runner_to_webapp_db_sg` module.
-        #run: terraform apply -auto-approve -input=false -target=module.github_hosted_runner_to_webapp_db_sg.aws_security_group.generic
+      #- name: Terraform plan generation for `github_runner_to_pg_webapp_db_sg` module.
+        #run: terraform plan -input=false -out=webapp.tfplan -var="github_runner_ip=127.0.0.1/32"
+      #- name: Terraform plan apply for `github_hosted_runner_to_pg_webapp_db_sg` module.
+        #run: terraform apply -auto-approve -input=false -target=module.github_runner_to_pg_webapp_db_sg.aws_security_group.generic
