@@ -809,6 +809,10 @@ module "webapp_aws_ecrpublic_repository_policy" {
 
   source = "./terraform/aws/ecrpublic/repository_policy"
 
+  providers = {
+    aws = aws.ecrpublic_repository
+  }
+
   depends_on = [
     module.webapp_aws_ecrpublic_repository,
   ]
