@@ -454,7 +454,7 @@ module "webapp_lambda_to_pg_webapp_db_sg" {
   name_prefix            = null                                  # ✅ Optional argument — 🤜💥🤛 Conflicts with `name`.
   revoke_rules_on_delete = false                                 # ✅ Optional argument.
   tags                   = {                                     # ✅ Optional argument — recommended to keep.
-    "Name"               = "webapp-lambda-to-webapp-db-sg"
+    "Name"               = "webapp-lambda-to-pg-webapp-db-sg"
     "AppName"            = "Python FastAPI Web App"
   }
   vpc_id                 = data.aws_vpc.default.id               # ✅ Optional argument, ❗ Forces new resource.
