@@ -29,8 +29,11 @@ jobs:
         working-directory: .
     steps:
       # Checkout the repository to the GitHub Actions runner.
-      - name: Git Checkout
+      - name: 📥 Git Checkout
         uses: actions/checkout@v3
+        with:
+          repository: '${{ github.repository }}'
+          token: '${{ github.token }}'
       # Gets the public IPv4 and IPv6 addreses of the current runner using latest Node
       - name: Get Runner Public IP Address
         uses: candidob/get-runner-ip@v1.0.0
