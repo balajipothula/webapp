@@ -54,3 +54,33 @@ output "webapp_aws_ecrpublic_repository__repository_uri" {
   description = "The URI of the repository."
   sensitive   = false
 }
+
+output "aws_ecrpublic_authorization_token__info__authorization_token" {
+  value       = data.aws_ecrpublic_authorization_token.info.authorization_token
+  description = "Temporary IAM authentication credentials to access the ECR repository encoded in base64 in the form of user_name:password."
+  sensitive   = false
+}
+
+output "aws_ecrpublic_authorization_token__info__expires_at" {
+  value       = data.aws_ecrpublic_authorization_token.info.expires_at
+  description = "Time in UTC RFC3339 format when the authorization token expires."
+  sensitive   = false
+}
+
+output "aws_ecrpublic_authorization_token__info__id" {
+  value       = data.aws_ecrpublic_authorization_token.info.id
+  description = "Region of the authorization token."
+  sensitive   = false
+}
+
+output "aws_ecrpublic_authorization_token__info__password" {
+  value       = data.aws_ecrpublic_authorization_token.info.password
+  description = "Password decoded from the authorization token."
+  sensitive   = false
+}
+
+output "aws_ecrpublic_authorization_token__info__user_name" {
+  value       = data.aws_ecrpublic_authorization_token.info.user_name
+  description = "User name decoded from the authorization token."
+  sensitive   = false
+}
