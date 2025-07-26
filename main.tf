@@ -19,6 +19,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
+
+provider "docker" {
+  username    = "balajipothula"           # 🔒 Docker Hub username for authentication.
+  password    = "my-password"             # 🔒 Docker Hub password or token for authentication.
+  email       = "balan.pothula@gmail.com" # ✅ Docker Hub email.
+  host        = "hub.docker.com"          # ✅ Docker Hub API Host.
+//cert_path   = "/path/to/certs"          # ✅ Docker Hub issued Certificates path for TLS connections.
+  tls_verify  = true                      # ✅ Docker Hub enable TLS verification.
+}
+
 # Creation of WebApp Lambda Function AWS IAM Role.
 module "webapp_lambda_aws_iam_role" {
 

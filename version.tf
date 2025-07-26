@@ -39,6 +39,11 @@ backend "s3" {
       version = "~> 5.0"
     }
 
+    docker = {
+      source  = "docker/docker"
+      version = "~> 0.2"
+    }
+
   }
 
   required_version = ">= 1.0.5"
