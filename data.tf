@@ -242,7 +242,7 @@ data "aws_iam_policy_document" "webapp_aws_ecrpublic_repository_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = [data.aws_caller_identity.current.arn]
+      identifiers = ["${data.aws_caller_identity.current.arn}"]
     }
 
     actions = [
