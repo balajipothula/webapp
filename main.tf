@@ -68,7 +68,7 @@ module "webapp_lambda_aws_iam_role_policy_attachment" {
 }
 
 
-
+/*
 # Creation of AWS S3 Bucket for WebApp Lambda Function Python Source.
 module "webapp_lambda_src_s3_bucket" {
 
@@ -286,7 +286,7 @@ module "webapp_aws_lambda_permission" {
   function_name = module.webapp_aws_lambda_function.function_name                  # 🔒 Required argument, ❗ Forces new resource.
   principal     = "apigateway.amazonaws.com"                                       # 🔒 Required argument.
   statement_id  = "AllowExecutionFromAPIGateway"                                   # ✅ Optional argument — recommended to keep.
-  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}/*/*" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
+  source_arn    = "${module.webapp_lambda_aws_apigatewayv2_api.execution_arn}//**" # 🐞 Optional argument — recommended to keep. 📝 "╱*╱*"
 
 }
 
@@ -415,16 +415,16 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
-module "webapp_lambda_to_webapp_db_sg" {
+module "webapp_lambda_to_pg_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "webapp-lambda-to-webapp-db-sg"       # ✅ Optional argument, ❗ Forces new resource.
-  description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
+  name                   = "webapp-lambda-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
+  description            = "WebApp Lambda to PG WebApp DB SG"    # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
       from_port          = 0                                     # 🔒 Required argument.
@@ -444,7 +444,7 @@ module "webapp_lambda_to_webapp_db_sg" {
       to_port            = 5432                                  # 🔒 Required argument.
       protocol           = "tcp"                                 # 🔒 Required argument.
       cidr_blocks        = [data.aws_vpc.default.cidr_block]     # ✅ Optional argument — recommended to keep.
-      description        = "Inbound traffic to PostgreSQL"       # ✅ Optional argument — recommended to keep.
+      description        = "WebApp Lambda to PG WebApp DB"       # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
       security_groups    = null                                  # ✅ Optional argument — recommended to keep.
@@ -464,11 +464,11 @@ module "webapp_lambda_to_webapp_db_sg" {
 
 
 # Creation of AWS Security Group for GitHub Hosted Runner to access WebApp Database .
-module "github_hosted_runner_to_webapp_db_sg" {
+module "github_runner_to_pg_webapp_db_sg" {
 
   source                 = "./terraform/aws/vpc/security_group"
 
-  name                   = "github-hosted-runner-to-webapp-db-sg"# ✅ Optional argument, ❗ Forces new resource.
+  name                   = "github-runner-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
   description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
@@ -488,8 +488,8 @@ module "github_hosted_runner_to_webapp_db_sg" {
       from_port          = 5432                                  # 🔒 Required argument.
       to_port            = 5432                                  # 🔒 Required argument.
       protocol           = "tcp"                                 # 🔒 Required argument.
-      cidr_blocks        = ["${var.github_hosted_runner_ip}"]    # ✅ Optional argument — recommended to keep.
-      description        = "GitHub Hosted Runner to PostgreSQL"  # ✅ Optional argument — recommended to keep.
+      cidr_blocks        = ["${var.github_runner_ip}"]           # ✅ Optional argument — recommended to keep.
+      description        = "GitHub Runner to Postgres WebApp DB" # ✅ Optional argument — recommended to keep.
       ipv6_cidr_blocks   = null                                  # ✅ Optional argument — recommended to keep.
       prefix_list_ids    = null                                  # ✅ Optional argument — recommended to keep.
       security_groups    = null                                  # ✅ Optional argument — recommended to keep.
@@ -507,7 +507,7 @@ module "github_hosted_runner_to_webapp_db_sg" {
 }
 
 
-
+/*
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
@@ -533,7 +533,7 @@ module "webapp_db_aws_rds_cluster" {
 
   depends_on = [
     module.webapp_db_aws_db_subnet_group,
-    module.webapp_lambda_to_webapp_db_sg,
+    module.webapp_lambda_to_pg_webapp_db_sg,
   ]
 
   allocated_storage                   = null                                                      # ✅ Optional argument — 🔒 Required for Multi-AZ DB cluster.
@@ -593,8 +593,8 @@ module "webapp_db_aws_rds_cluster" {
     "AppName"  = "FastAPI WebApp"
   }
   vpc_security_group_ids              = [                                                         # ✅ Optional argument — 🚨 highly recommended to keep.
-    module.webapp_lambda_to_webapp_db_sg.id,
-    module.github_hosted_runner_to_webapp_db_sg.id,    
+    module.webapp_lambda_to_pg_webapp_db_sg.id,
+    module.github_runner_to_pg_webapp_db_sg.id,    
   ]
 
 }
@@ -766,3 +766,4 @@ module "webapp_lambda_to_webapp_db_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
+*/
