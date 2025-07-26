@@ -76,16 +76,11 @@ jobs:
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      - name: Terraform plan applying.
-        run: terraform apply -auto-approve -input=false webapp.tfplan
+      #- name: Terraform plan applying.
+        #run: terraform apply -auto-approve -input=false webapp.tfplan
       # Destroy an execution plan for Terraform.
-      #- name: Terraform plan destroying.
-        #run: |
-          #terraform apply -auto-approve -input=false -destroy                         \
-            #-var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"                   \
-            #-var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
-            #-var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
-            #-var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
+      - name: Terraform plan destroying.
+        run: terraform apply -auto-approve -input=false -destroy
 
       # Deploy any changes in the changelog file that have not been deployed
       #- name: Liquibase Update Action
@@ -113,7 +108,7 @@ jobs:
           #username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           # Additional classpath entries to use.
           #classpath: "./postgresql/webapp_db/public"
-      - name: Terraform plan generation for `github_runner_to_pg_webapp_db_sg` module.
-        run: terraform plan -input=false -out=webapp.tfplan
-      - name: Terraform plan apply for `github_hosted_runner_to_pg_webapp_db_sg` module.
-        run: terraform apply -auto-approve -input=false -target=module.github_runner_to_pg_webapp_db_sg.aws_security_group.generic
+      #- name: Terraform plan generation for `github_runner_to_pg_webapp_db_sg` module.
+        #run: terraform plan -input=false -out=webapp.tfplan
+      #- name: Terraform plan apply for `github_runner_to_pg_webapp_db_sg` module.
+        #run: terraform apply -auto-approve -input=false -target=module.github_runner_to_pg_webapp_db_sg.aws_security_group.generic
