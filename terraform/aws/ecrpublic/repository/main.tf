@@ -16,6 +16,7 @@ resource "aws_ecrpublic_repository" "generic" {
       operating_systems = catalog_data.value.operating_systems # ✅ Optional argument, but keep it.
       usage_text        = catalog_data.value.usage_text        # ✅ Optional argument, but keep it.
     }
-  }  tags = var.tags                                           # ✅ Optional argument, but keep it.
+  }  
+  tags = var.tags                                              # ✅ Optional argument, but keep it.
 
 }
