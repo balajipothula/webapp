@@ -19,7 +19,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-
 provider "docker" {
   username    = "balajipothula"           # 🔒 Docker Hub username for authentication.
   password    = "my-password"             # 🔒 Docker Hub password or token for authentication.
