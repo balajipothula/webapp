@@ -14,6 +14,11 @@ provider "aws" {
 
 }
 
+provider "aws" {
+  alias  = "ecrpublic_repository"
+  region = "us-east-1"
+}
+
 
 
 # Creation of WebApp Lambda Function AWS IAM Role.
@@ -773,7 +778,7 @@ module "webapp_lambda_to_webapp_db_aws_vpc_endpoint" {
 module "webapp_aws_ecrpublic_repository" {
 
   providers = {
-    aws = aws.ecr_public
+    aws = aws.ecrpublic_repository
   }
 
   source = "./terraform/aws/ecrpublic/repository"
