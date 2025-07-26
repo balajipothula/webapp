@@ -64,7 +64,7 @@ output "aws_ecrpublic_authorization_token__info__authorization_token" {
 output "aws_ecrpublic_authorization_token__info__expires_at" {
   value       = data.aws_ecrpublic_authorization_token.info.expires_at
   description = "Time in UTC RFC3339 format when the authorization token expires."
-  sensitive   = false
+  sensitive   = true
 }
 
 output "aws_ecrpublic_authorization_token__info__id" {
