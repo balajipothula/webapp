@@ -19,11 +19,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "aws_ecrpublic_authorization_token" "info" {
-  provider = aws.ecrpublic_repository
-}
-
-
 # Creation of WebApp Lambda Function AWS IAM Role.
 module "webapp_lambda_aws_iam_role" {
 

@@ -92,6 +92,11 @@ data "aws_ami" "default" {
 }
 */
 
+data "aws_ecrpublic_authorization_token" "info" {
+  provider = aws.ecrpublic_repository
+}
+
+
 
 # Archive Lambda Function source code.
 data "archive_file" "webapp" {
