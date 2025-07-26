@@ -767,3 +767,25 @@ module "webapp_lambda_to_webapp_db_aws_vpc_endpoint" {
 
 }
 */
+
+
+# Creation of AWS ECR Public Repository for Docker Images which is consumed by WebApp.
+module "webapp_aws_ecrpublic_repository" {
+
+  source = "./terraform/aws/ecrpublic/repository"
+
+  repository_name     = var.docker_public_repository_name        # 🔒 Required argument
+  catalog_data        = {                                        # ✅ Optional argument, but keep it.
+    about_text        = "WebApp Docker Image Repo"               # ✅ Optional argument, but keep it.
+    architectures     = ["x86", "x86-64"]                        # ✅ Optional argument, but keep it.
+    description       = "WebApp ECR Repo"                        # ✅ Optional argument, but keep it.
+    logo_image_blob   = filebase64("./image/BALA-INFO-TECH.PNG") # ✅ Optional argument, but keep it.
+    operating_systems = ["Linux"]                                # ✅ Optional argument, but keep it.
+    usage_text        = "ECR to pull WebApp Docker images."      # ✅ Optional argument, but keep it.
+  }
+  tags                = {                                        # ✅ Optional argument — recommended to keep.
+    AppName           = "WebAppFastAPI"
+    Division          = "Platform"
+  }
+
+}

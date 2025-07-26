@@ -47,3 +47,10 @@ output "aws_security_groups_default_ids" {
   sensitive   = false
 }
 */
+
+
+output "webapp_aws_ecrpublic_repository__repository_uri" {
+  value       = module.webapp_aws_ecrpublic_repository.repository_uri
+  description = "The URI of the repository."
+  sensitive   = false
+}
