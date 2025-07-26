@@ -76,8 +76,8 @@ jobs:
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      #- name: Terraform plan applying.
-        #run: terraform apply -auto-approve -input=false webapp.tfplan
+      - name: Terraform plan applying.
+        run: terraform apply -auto-approve -input=false webapp.tfplan
       # Destroy an execution plan for Terraform.
       #- name: Terraform plan destroying.
         #run: |
