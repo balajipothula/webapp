@@ -58,13 +58,13 @@ output "webapp_aws_ecrpublic_repository__repository_uri" {
 output "aws_ecrpublic_authorization_token__info__authorization_token" {
   value       = data.aws_ecrpublic_authorization_token.info.authorization_token
   description = "Temporary IAM authentication credentials to access the ECR repository encoded in base64 in the form of user_name:password."
-  sensitive   = false
+  sensitive   = true
 }
 
 output "aws_ecrpublic_authorization_token__info__expires_at" {
   value       = data.aws_ecrpublic_authorization_token.info.expires_at
   description = "Time in UTC RFC3339 format when the authorization token expires."
-  sensitive   = true
+  sensitive   = false
 }
 
 output "aws_ecrpublic_authorization_token__info__id" {
