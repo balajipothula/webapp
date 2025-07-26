@@ -788,7 +788,7 @@ module "webapp_aws_ecrpublic_repository" {
     about_text        = "WebApp Docker Image Repo"               # ✅ Optional argument, but keep it.
     architectures     = ["x86", "x86-64"]                        # ✅ Optional argument, but keep it.
     description       = "WebApp ECR Repo"                        # ✅ Optional argument, but keep it.
-    logo_image_blob   = filebase64("./image/BALA-INFO-TECH.PNG") # ✅ Optional argument, but keep it.
+    logo_image_blob   = filebase64("./image/bala-info-tech.png") # ✅ Optional argument, but keep it.
     operating_systems = ["Linux"]                                # ✅ Optional argument, but keep it.
     usage_text        = "ECR to pull WebApp Docker images."      # ✅ Optional argument, but keep it.
   }
