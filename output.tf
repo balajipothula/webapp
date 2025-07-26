@@ -76,7 +76,7 @@ output "aws_ecrpublic_authorization_token__info__id" {
 output "aws_ecrpublic_authorization_token__info__password" {
   value       = data.aws_ecrpublic_authorization_token.info.password
   description = "Password decoded from the authorization token."
-  sensitive   = false
+  sensitive   = true
 }
 
 output "aws_ecrpublic_authorization_token__info__user_name" {
