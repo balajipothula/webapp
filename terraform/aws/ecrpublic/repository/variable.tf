@@ -7,7 +7,7 @@ variable "repository_name" {
   default     = "ecrpublic-repo-generic"
   description = "Name of the repository."
   validation {
-    condition     = var.repository_name != null && 0 < length(var.repository_name) && length(var.repository_name) <= 256
+    condition     = var.repository_name != null && 0 < length(var.repository_name) && length(var.repository_name) < 257
     error_message = "Error: repository_name must be between 1 and 256 characters."
   }
   sensitive = false

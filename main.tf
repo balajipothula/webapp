@@ -19,6 +19,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "aws_ecrpublic_authorization_token" "info" {
+  provider = aws.ecrpublic_repository
+}
 
 
 # Creation of WebApp Lambda Function AWS IAM Role.
@@ -796,5 +799,46 @@ module "webapp_aws_ecrpublic_repository" {
     AppName           = "WebAppFastAPI"
     Division          = "Platform"
   }
+
+}
+
+# Creation of AWS ECR Public Repository for Docker Images consumed by WebApp.
+module "webapp_aws_ecrpublic_repository" {
+
+  source = "./terraform/aws/ecrpublic/repository"
+
+  providers = {
+    aws = aws.ecrpublic_repository
+  }
+
+  repository_name     = "webapp-aws-ecrpublic-repository"        # 🔒 Required argument
+  catalog_data        = {                                        # ✅ Optional argument, but keep it.
+    about_text        = "WebApp Docker Image Repo"               # ✅ Optional argument, but keep it.
+    architectures     = ["x86", "x86-64"]                        # ✅ Optional argument, but keep it.
+    description       = "WebApp ECR Repo"                        # ✅ Optional argument, but keep it.
+    logo_image_blob   = filebase64("./image/bala-info-tech.png") # ✅ Optional argument, but keep it.
+    operating_systems = ["Linux"]                                # ✅ Optional argument, but keep it.
+    usage_text        = "ECR to pull WebApp Docker images."      # ✅ Optional argument, but keep it.
+  }
+  tags                = {                                        # ✅ Optional argument — recommended to keep.
+    AppName           = "WebAppFastAPI"
+    Division          = "Platform"
+  }
+
+}
+
+
+
+# Creation of AWS ECR Public Repository Policy for Docker Images consumed by WebApp.
+module "webapp_aws_ecrpublic_repository_policy" {
+
+  source = "./terraform/aws/ecrpublic/repository_policy"
+
+  depends_on = [
+    module.webapp_aws_ecrpublic_repository,
+  ]
+
+  repository_name = module.webapp_aws_ecrpublic_repository.id                                # 🔒 Required argument
+  policy          = data.aws_iam_policy_document.webapp_aws_ecrpublic_repository_policy.json # 🔒 Required argument
 
 }

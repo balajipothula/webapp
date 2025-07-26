@@ -156,6 +156,7 @@ data "aws_iam_policy_document" "webapp_lambda_iam_role" {
 
 # 📄 WebApp Lambda CloudWatch Monitoring IAM Policy.
 data "aws_iam_policy_document" "webapp_lambda_monitoring_policy" {
+
   statement {
     sid = "WebAppLambdaMonitoringPolicy"
     effect = "Allow"
@@ -222,4 +223,44 @@ data "aws_iam_policy_document" "webapp_lambda_monitoring_policy" {
 
     resources = ["arn:aws:logs:*:*:log-group:/aws/lambda/*"]
   }
+}
+
+
+
+# 📄 WebApp AWS ECR Public Repository IAM Policy
+data "aws_iam_policy_document" "webapp_aws_ecrpublic_repository_policy" {
+
+  statement {
+
+    sid    = "WebAppECRPublicRepositoryPolicy"
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = [data.aws_caller_identity.current.arn]
+    }
+
+    actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:BatchDeleteImage",
+      "ecr:BatchGetImage",
+      "ecr:CompleteLayerUpload",
+      "ecr:DeleteRepository",
+      "ecr:DeleteRepositoryPolicy",
+      "ecr:DescribeImageTags",
+      "ecr:DescribeImages",
+      "ecr:DescribeRepositories",
+      "ecr:GetAuthorizationToken",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetRepositoryCatalogData",
+      "ecr:GetRepositoryPolicy",
+      "ecr:InitiateLayerUpload",
+      "ecr:ListImages",
+      "ecr:PutImage",
+      "ecr:SetRepositoryPolicy",
+      "ecr:UploadLayerPart"
+    ]
+
+  }
+
 }
