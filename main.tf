@@ -777,11 +777,11 @@ module "webapp_lambda_to_webapp_db_aws_vpc_endpoint" {
 # Creation of AWS ECR Public Repository for Docker Images which is consumed by WebApp.
 module "webapp_aws_ecrpublic_repository" {
 
+  source = "./terraform/aws/ecrpublic/repository"
+
   providers = {
     aws = aws.ecrpublic_repository
   }
-
-  source = "./terraform/aws/ecrpublic/repository"
 
   repository_name     = "webapp-aws-ecrpublic-repository"        # 🔒 Required argument
   catalog_data        = {                                        # ✅ Optional argument, but keep it.

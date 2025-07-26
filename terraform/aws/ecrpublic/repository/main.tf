@@ -3,7 +3,17 @@
 # Attribute name : repository_name
 # Argument       : var.repository_name
 
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+    }
+  }
+}
+
 resource "aws_ecrpublic_repository" "generic" {
+
+  provider = aws
 
   repository_name = var.repository_name                        # 🔒 Required argument
   dynamic "catalog_data" {                                     # ✅ Optional argument, but keep it.
