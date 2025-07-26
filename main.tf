@@ -774,7 +774,7 @@ module "webapp_aws_ecrpublic_repository" {
 
   source = "./terraform/aws/ecrpublic/repository"
 
-  repository_name     = var.docker_public_repository_name        # 🔒 Required argument
+  repository_name     = "webapp-aws-ecrpublic-repository"        # 🔒 Required argument
   catalog_data        = {                                        # ✅ Optional argument, but keep it.
     about_text        = "WebApp Docker Image Repo"               # ✅ Optional argument, but keep it.
     architectures     = ["x86", "x86-64"]                        # ✅ Optional argument, but keep it.
