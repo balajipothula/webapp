@@ -778,7 +778,7 @@ module "webapp_lambda_to_webapp_db_aws_vpc_endpoint" {
   vpc_endpoint_type   = "Interface"                                                    # ✅ Optional argument — recommended to keep.
 
 }
-*/
+
 
 
 # Creation of AWS ECR Public Repository for Docker Images which is consumed by WebApp.
@@ -825,3 +825,4 @@ module "webapp_aws_ecrpublic_repository_policy" {
   policy          = data.aws_iam_policy_document.webapp_aws_ecrpublic_repository_policy.json # 🔒 Required argument
 
 }
+*/

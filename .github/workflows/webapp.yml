@@ -28,12 +28,28 @@ jobs:
         # Also, by keeping '.' setting current terraform files running directory.
         working-directory: .
     steps:
-      # Checkout the repository to the GitHub Actions runner.
+      # Checkout a Git repository at a particular version.
       - name: 📥 Git Checkout
         uses: actions/checkout@v3
         with:
+          # Repository name with owner.
           repository: '${{ github.repository }}'
+          # PAT (Personal Access Token) used to fetch the repository.
           token: '${{ github.token }}'
+          # Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching.
+          clean: true
+          # Do a sparse checkout on given patterns.
+          sparse-checkout: null
+          # Specifies whether to use cone-mode when doing a sparse checkout.
+          sparse-checkout-cone-mode: true
+          # Number of commits to fetch.
+          fetch-depth: 1
+          # Whether to fetch tags, even if fetch-depth > 0.
+          fetch-tags: false
+          # Whether to download Git-LFS files
+          lfs: false
+          # Add repository path as safe.
+          set-safe-directory: true
       # Gets the public IPv4 and IPv6 addreses of the current runner using latest Node
       - name: Get Runner Public IP Address
         uses: candidob/get-runner-ip@v1.0.0
@@ -115,3 +131,19 @@ jobs:
         #run: terraform plan -input=false -out=webapp.tfplan
       #- name: Terraform plan apply for `github_runner_to_pg_webapp_db_sg` module.
         #run: terraform apply -auto-approve -input=false -target=module.github_runner_to_pg_webapp_db_sg.aws_security_group.generic
+
+      # GitHub Action to login against a Docker registry.
+      - name: 🐳 Docker Login 🔐
+        uses: docker/login-action@v3
+        with:
+          # Server address of Docker registry.
+          registry: 'hub.docker.com'
+          # Username used to log against the Docker registry.
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          # Password or PAT (Personal Access Token) used to log against the Docker registry.
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          # Specifies whether the given registry is ECR.
+          # Valid values: `auto`, `true` or `false`
+          ecr: auto
+          # Log out from the Docker registry at the end of a job.
+          logout: true
