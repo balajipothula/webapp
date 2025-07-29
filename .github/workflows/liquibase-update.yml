@@ -1,0 +1,150 @@
+# Deploy any changes in the changelog file that have not been deployed.
+name: '🛢 Liquibase Update Action 𝄜'
+on:
+  workflow_call:
+    inputs:
+      changelogFile:
+        type: string
+        description: 'The root changelog.'
+        required: true
+      defaultSchemaName:
+        type: string
+        description: 'The default schema name to use for the database connection.'
+        required: false
+      driver:
+        type: string
+        description: 'The JDBC driver class.'
+        required: false
+      password:
+        type: string
+        description: 'Password to use to connect to the database.'
+        required: false
+      rollbackOnError:
+        type: boolean
+        description: 'If set to true and any changeset in a deployment fails.'
+        required: false
+      showSummary:
+        type: string
+        default: 'summary'
+        description: 'Type of update results summary to show.  Values can be "off", "summary", or "verbose".'
+        required: false
+      showSummaryOutput:
+        type: string
+        default: 'console'
+        description: 'Summary output to report update summary results. Values can be "log", "console", or "all".'
+        required: false
+      url:
+        type: string
+        description: 'The JDBC database connection URL.'
+        required: true
+      username:
+        type: string
+        description: 'Username to use to connect to the database.'
+        required: false
+      classpath:
+        type: string
+        description: 'Additional classpath entries to use.'
+        required: false
+      allowDuplicatedChangesetIdentifiers:
+        type: boolean
+        description: 'Allows duplicated changeset identifiers without failing Liquibase execution.'
+        required: false
+      databaseChangelogLockTableName:
+        type: string
+        description: 'Name of table to use for tracking concurrent Liquibase usage.'
+        required: false
+      databaseChangelogTableName:
+        type: string
+        description: 'Name of table to use for tracking change history.'
+        required: false
+      ddlLockTimeout:
+        type: number
+        description: 'The DDL_LOCK_TIMEOUT parameter indicates the number of seconds a DDL command should wait for the locks to become available before throwing the resource busy error message. This applies only to Oracle databases.'
+        required: false
+      fileEncoding:
+        type: string
+        description: 'Encoding to use when reading files. Valid values include: UTF-8, UTF-16, UTF-16BE, UTF-16LE, US-ASCII, or OS to use the system configured encoding.'
+        required: false
+      generatedChangesetIdsContainsDescription:
+        type: boolean
+        description: 'Should Liquibase include the change description in the id when generating changesets?'
+        required: false
+      liquibaseCatalogName:
+        type: string
+        description: 'Catalog to use for Liquibase objects.'
+        required: false
+      liquibaseSchemaName:
+        type: string
+        description: 'Schema to use for Liquibase objects.'
+        required: false
+      liquibaseTablespaceName:
+        type: string
+        description: 'Tablespace to use for Liquibase objects.'
+        required: false
+      showBanner:
+        type: boolean
+        default: true
+        description: 'If true, show a Liquibase banner on startup.'
+        required: false
+      sqlLogLevel:
+        type: string
+        default: summary
+        description: 'Level to log SQL statements to, Valid values: off, summary, debug, trace.'
+        required: false
+      sqlShowSqlWarnings:
+        type: boolean
+        default: true
+        description: 'Show SQLWarning messages.'
+        required: false
+      strict:
+        type: boolean
+        default: false
+        description: 'If true, Liquibase enforces certain best practices and proactively looks for common errors.'
+        required: false
+      validateXmlChangelogFiles:
+        type: boolean
+        default: true
+        description: 'Will perform XSD validation of XML changelog files. When many XML changelog files are included, this validation may impact Liquibase performance.'
+        required: false
+
+jobs:
+  liquibase:
+    name: 🛢 Liquibase Update Action 𝄜
+    runs-on: ubuntu-22.04
+    steps:
+      # Checkout a Git repository at a particular version.
+      - name: 🐙 Git Checkout 📥
+        uses: actions/checkout@v3
+        with:
+          # Repository name with owner.
+          repository: '${{ github.repository }}'
+          # PAT (Personal Access Token) used to fetch the repository.
+          token: '${{ github.token }}'
+          # Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching.
+          clean: true
+          # Do a sparse checkout on given patterns.
+          sparse-checkout: null
+          # Specifies whether to use cone-mode when doing a sparse checkout.
+          sparse-checkout-cone-mode: true
+          # Number of commits to fetch.
+          fetch-depth: 1
+          # Whether to fetch tags, even if fetch-depth > 0.
+          fetch-tags: false
+          # Whether to download Git-LFS files
+          lfs: false
+          # Add repository path as safe.
+          set-safe-directory: true
+
+      - name: 🛢 Liquibase Update Action 𝄜 on WebApp Database
+        uses: liquibase-github-actions/update@v4.32.0
+        with:
+          changelogFile: "./postgresql/webapp_db/public/master.xml"
+          url: "jdbc:postgresql://${{ secrets.WEBAPP_DB_MASTER_URL }}:5432/${{ secrets.WEBAPP_DB_NAME }}"
+          defaultSchemaName: "public"
+          driver: "org.postgresql.Driver"
+          password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
+          rollbackOnError: true
+          showSummary: "summary"
+          showSummaryOutput: "console"
+          username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
+          classpath: "./postgresql/webapp_db/public"

@@ -1,0 +1,63 @@
+name: 🛠️ Terraform Infrastructure Deployment
+on:
+  workflow_call:
+    inputs:
+      webapp_db_name:
+        required: true
+        type: string
+      webapp_db_master_username:
+        required: true
+        type: string
+      webapp_db_master_password:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+
+jobs:
+  terraform:
+    name: 🛠️ Running Terraform
+    runs-on: ubuntu-22.04
+    environment: dev
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    steps:
+      - name: 💙 Git Checkout
+        uses: actions/checkout@v3
+
+      - name: 🌐 Get Runner Public IP 📡
+        uses: candidob/get-runner-ip@v1.0.0
+        id: ip
+
+      - name: 🛠️ Setup Terraform 📀
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.0
+
+      - name: 🛠️ Terraform Init 🔄
+        run: terraform init -input=false -reconfigure
+
+      - name: 🛠️ Format 🧹
+        run: terraform fmt
+
+      - name: 🛠️ Format Check 🔍
+        run: terraform fmt -check
+
+      - name: 🛠️ Validate ✅
+        run: terraform validate -no-color
+
+      - name: 🛠️ Plan 📄
+        run: |
+          terraform plan -input=false -out=webapp.tfplan \
+            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32" \
+            -var="webapp_database_name=${{ inputs.webapp_db_name }}" \
+            -var="webapp_db_master_username=${{ inputs.webapp_db_master_username }}" \
+            -var="webapp_db_master_password=${{ inputs.webapp_db_master_password }}"
+
+      - name: 🛠️ Apply 🚧
+        run: terraform apply -auto-approve -input=false webapp.tfplan

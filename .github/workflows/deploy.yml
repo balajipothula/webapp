@@ -1,0 +1,18 @@
+name: 🚀 WebApp Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        default: 'dev'
+        description: 'Please select deployment environment'
+        options:
+          - dev
+          - qa
+          - prod
+        required: true
+
+jobs:
+  docker:
+    uses: ./.github/workflows/build-docker.yml

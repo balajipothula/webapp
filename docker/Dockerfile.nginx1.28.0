@@ -1,4 +1,4 @@
-FROM alpine:3.22.1 AS NGINX1.28.0
+FROM alpine:3.22.1 AS nginx1.28.0
 
 LABEL \
   # Authors or maintainers of the image.
