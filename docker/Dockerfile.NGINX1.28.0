@@ -20,7 +20,7 @@ RUN \
     nginx-mod-stream-geoip \
     lua5.1-maxminddb \
     lua5.1-socket \
-    sqlite-libs 
+    sqlite-libs \
     redis && \
     ln /usr/lib/libsqlite3.so.0.* /usr/lib/libsqlite3.so && \
   # Remove Debian based packages.
