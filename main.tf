@@ -428,7 +428,7 @@ module "webapp_lambda_aws_apigatewayv2_route_get_songs_avg_difficulty" {
   target        = "integrations/${module.webapp_lambda_aws_apigatewayv2_integration.id}" # ✅ Optional argument — recommended to keep.
 
 }
-
+*/
 
 
 # Creation of AWS Security Group for WebApp Database - Amazon Aurora Serverless V2 - PostgreSQL Database.
@@ -520,7 +520,7 @@ module "github_runner_to_pg_webapp_db_sg" {
 }
 
 
-
+/*
 # Creation of AWS DB Subnet Group for WebApp backend PostgreSQL Database.
 module "webapp_db_aws_db_subnet_group" {
 
