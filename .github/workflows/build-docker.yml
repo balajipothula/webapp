@@ -1,16 +1,6 @@
 name: 🐳 Docker Build and Push
 on:
   workflow_call:
-    secrets:
-      DOCKERHUB_TOKEN:
-        required: false
-    inputs:
-      image_tag:
-        required: false
-        type: string
-      dockerfile_path:
-        required: false
-        type: string
 
 jobs:
   docker:
