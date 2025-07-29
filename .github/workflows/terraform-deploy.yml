@@ -1,4 +1,4 @@
-name: 🛠️ Terraform Infrastructure Deployment
+name: 🏗️ Terraform Infra Provision
 on:
   workflow_call:
     inputs:
