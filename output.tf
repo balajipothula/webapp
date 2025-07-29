@@ -46,7 +46,6 @@ output "aws_security_groups_default_ids" {
   description = "IDs of the matches security groups."
   sensitive   = false
 }
-*/
 
 
 output "webapp_aws_ecrpublic_repository__repository_uri" {
@@ -84,3 +83,4 @@ output "aws_ecrpublic_authorization_token__info__user_name" {
   description = "User name decoded from the authorization token."
   sensitive   = false
 }
+*/
