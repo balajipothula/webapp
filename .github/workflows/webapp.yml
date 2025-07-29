@@ -29,7 +29,7 @@ jobs:
         working-directory: .
     steps:
       # Checkout a Git repository at a particular version.
-      - name: 📥 Git Checkout
+      - name: 🐙 Git Checkout 📥
         uses: actions/checkout@v3
         with:
           # Repository name with owner.
@@ -51,7 +51,7 @@ jobs:
           # Add repository path as safe.
           set-safe-directory: true
       # Gets the public IPv4 and IPv6 addreses of the current runner using latest Node
-      - name: Get Runner Public IP Address
+      - name: 🌐 Get Runner Public IP Address
         uses: candidob/get-runner-ip@v1.0.0
         id: ip
       # Preparing and pushing documetation into README.md
@@ -63,7 +63,7 @@ jobs:
           #output-method: inject
           #git-push: "true"
       # Installing the specified version of Terraform CLI on Runner.
-      - name: Terraform setup
+      - name: 🛠️ Terraform setup 📐
         uses: hashicorp/setup-terraform@v2
         with:
           #cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
@@ -71,22 +71,22 @@ jobs:
           #terraform_wrapper: false
       # Initialize a new or existing Terraform working directory by creating initial files,
       # loading any remote state, downloading modules, etc.
-      - name: Terraform initialization.
+      - name: 🛠️ Terraform initialization 🔁
         run: terraform init -input=false -reconfigure
         #shell: bash
         env:
           TF_WORKSPACE: default
       # Format Terraform configuration files adhere in to a canonical format.
-      - name: Terraform files formating.
+      - name: 🛠️ Terraform files formating.
         run: terraform fmt
       # Check that all Terraform configuration files adhere to a canonical format.
-      - name: Terraform file format checking.
+      - name: 🛠️ Terraform file format checking.
         run: terraform fmt -check
       # Validate all Terraform configuration files.
-      - name: Terraform files validating.
+      - name: 🛠️ Terraform files validating.
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
-      - name: Terraform plan generation.
+      - name: 🛠️ Terraform plan generation.
         run: |
           terraform plan -input=false -out=webapp.tfplan                              \
             -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"                   \
@@ -95,7 +95,7 @@ jobs:
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         #continue-on-error: true
       # Apply an execution plan for Terraform.
-      - name: Terraform plan applying.
+      - name: 🛠️ Terraform plan applying.
         run: terraform apply -auto-approve -input=false webapp.tfplan
       # Destroy an execution plan for Terraform.
       #- name: Terraform plan destroying.
@@ -174,20 +174,20 @@ jobs:
           # Cleanup temp files and remove builder at the end of a job.
           cleanup: true
       # Build and push Docker images with Buildx.
-      #- name: 🐳 Build ⚙️ and push ⬆️ Docker images
-        #uses: docker/build-push-action@v6
-        #with:
+      - name: 🐳 Build ⚙️ and push ⬆️ Docker images
+        uses: docker/build-push-action@v6
+        with:
           # Path to the Dockerfile.
-          #file: './Dockerfile'
+          file: './Dockerfile'
           # List of metadata for an image.
-          #labels: |
-            #org.opencontainers.image.title=pgAdmin
+          labels: |
+            org.opencontainers.image.vendor=BlitzSystemsPvtLtd.
           # Load is a shorthand for --output=type=docker
-          #load: false
+          load: false
           # List of target platforms for build.
           # Valid values: linux/amd64, linux/arm64
-          #platforms: linux/amd64
+          platforms: linux/amd64
           # Push is a shorthand for --output=type=registry
-          #push: true
+          push: true
           # List of tags.
-          #tags: balajipothula/nginx:1.28.0
+          tags: balajipothula/nginx:1.28.0
