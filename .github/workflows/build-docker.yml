@@ -1,6 +1,10 @@
 name: 🐳 Docker Build and Push
 on:
   workflow_call:
+    secrets:
+      DOCKERHUB_TOKEN:
+        description: 'Password or PAT (Personal Access Token) used to log against the Docker registry.'
+        required: true
 
 jobs:
   docker:
