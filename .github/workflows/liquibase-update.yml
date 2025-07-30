@@ -1,5 +1,6 @@
 # Deploy any changes in the changelog file that have not been deployed.
 name: '🛢 Liquibase Update Action'
+
 on:
   workflow_call:
     secrets:
@@ -9,72 +10,237 @@ on:
       WEBAPP_DB_MASTER_PASSWORD:
         description: 'WebApp Database Master Password.'
         required: true
+
     inputs:
+      allowDuplicatedChangesetIdentifiers:
+        type: boolean
+        default: false
+        description: 'Allows duplicated changeset identifiers without failing Liquibase execution.'
+        required: false
+      alwaysDropInsteadOfReplace:
+        type: boolean
+        default: false
+        description: 'If true, drop and recreate a view instead of replacing it.'
+        required: false
+      alwaysOverrideStoredLogicSchema:
+        type: boolean
+        default: false
+        description: 'When generating SQL for createProcedure, should the procedure schema be forced to the default schema if no schemaName attribute is set?'
+        required: false
+      analyticsEnabled:
+        type: boolean
+        default: false
+        description: 'Enable or disable sending product usage data and analytics to Liquibase.'
+        required: false
+      analyticsLogLevel:
+        type: string
+        default: "INFO"
+        description: 'Controls the detail level of analytics logs displayed to the user. Available options are: "SEVERE", "WARNING", "INFO", "FINE", "OFF"'
+        required: false
+      autoReorg:
+        type: boolean
+        default: true
+        description: 'Should Liquibase automatically include REORG TABLE commands when needed?'
+        required: false
       changelogFile:
         type: string
         description: 'The root changelog.'
         required: true
-      defaultSchemaName:
-        type: string
-        description: 'The default schema name to use for the database connection.'
+      changelogLockPollRate:
+        type: number
+        default: 10
+        description: 'Number of seconds wait between checks to the changelog lock when it is locked'
         required: false
-      driver:
-        type: string
-        description: 'The JDBC driver class.'
-        required: false
-      password:
-        type: string
-        description: 'Password to use to connect to the database.'
-        required: false
-      rollbackOnError:
-        type: boolean
-        description: 'If set to true and any changeset in a deployment fails.'
-        required: false
-      showSummary:
-        type: string
-        default: 'summary'
-        description: 'Type of update results summary to show.  Values can be "off", "summary", or "verbose".'
-        required: false
-      showSummaryOutput:
-        type: string
-        default: 'console'
-        description: 'Summary output to report update summary results. Values can be "log", "console", or "all".'
-        required: false
-      url:
-        type: string
-        description: 'The JDBC database connection URL.'
-        required: true
-      username:
-        type: string
-        description: 'Username to use to connect to the database.'
+      changelogLockWaitTimeInMinutes:
+        type: number
+        default: 5
+        description: 'Number of minutes to wait for the changelog lock to be available before giving up'
         required: false
       classpath:
         type: string
         description: 'Additional classpath entries to use.'
         required: false
-      allowDuplicatedChangesetIdentifiers:
+      convertDataTypes:
         type: boolean
-        description: 'Allows duplicated changeset identifiers without failing Liquibase execution.'
+        default: true
+        description: 'Should Liquibase convert to/from STANDARD data types. Applies to both snapshot and update commands.'
         required: false
+      customLogDataFile:
+        type: string
+        description: '[PRO]Relative or fully qualified path to a yaml file containing key:value data to inject or exclude data from JSON structured logs.'
+        required: false
+      customLogDataFrequency:
+        type: string
+        description: '[PRO]The frequency that the custom log data will be entered into the logs. Available options are: "ONCE", "REPEATED"'
       databaseChangelogLockTableName:
         type: string
+        default: 'DATABASECHANGELOGLOCK'
         description: 'Name of table to use for tracking concurrent Liquibase usage.'
         required: false
       databaseChangelogTableName:
         type: string
+        default: 'DATABASECHANGELOG'
         description: 'Name of table to use for tracking change history.'
+        required: false
+      databaseClass:
+        type: string
+        description: 'Class to use for Database implementation. Liquibase automatically determines the correct class based on your database connection.'
+        required: false
+      dbclhistoryCaptureExtensions:
+        type: boolean
+        default: true
+        description: 'If true, extensions are captured in the history table'
+        required: false
+      dbclhistoryCaptureSql:
+        type: boolean
+        default: true
+        description: 'If true, executed SQL is captured in the history table'
+        required: false
+      dbclhistoryEnabled:
+        type: boolean
+        default: false
+        description: '[PRO]This property enables Liquibase Pro users to store a record of all database changing liquibase operations in a new table DATABASECHANGELOGHISTORY. This table includes records of rollback, dropalls, and repeated runOnChange type activity, which is not available in the standard DATABASECHANGELOG table.'
+        required: false
+      dbclhistorySeverity:
+        type: number
+        default: 1
+        description: 'The exit code to use if an exception is encountered while recording history events. Available options are: INFO (0), MINOR (1), MAJOR (2), CRITICAL (3), and BLOCKER (4)'
+        required: false
+      dbclhistoryTableName:
+        type: string
+        description: 'Allows users to specify a custom name for the Liquibase DATABASECHANGELOGHISTORY table.'
         required: false
       ddlLockTimeout:
         type: number
         description: 'The DDL_LOCK_TIMEOUT parameter indicates the number of seconds a DDL command should wait for the locks to become available before throwing the resource busy error message. This applies only to Oracle databases.'
         required: false
+      defaultSchemaName:
+        type: string
+        description: 'The default schema name to use for the database connection.'
+        required: false
+      defaultsFile:
+        type: string
+        default: "liquibase.properties"
+        description: 'File with default Liquibase properties'
+        required: false
+      diffColumnOrder:
+        type: boolean
+        default: true
+        description: 'Should Liquibase compare column order in diff operation?'
+        required: false
+      driver:
+        type: string
+        description: 'The JDBC driver class'
+        required: false
+      driverPropertiesFile:
+        type: string
+        description: 'The JDBC driver properties file'
+        required: false
+      duplicateFileMode:
+        type: string
+        default: "ERROR"
+        description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are SILENT (do not log and choose one at random), DEBUG, INFO, WARN (log at the given level and choose one at random), or ERROR (fail current operation).'
+        required: false
+      errorOnCircularIncludeAll:
+        type: boolean
+        default: true
+        description: 'Throw an error if Liquibase detects that an includeAll will cause a circular reference (and thus a changelog parse error).'
+        required: false
       fileEncoding:
         type: string
+        default: "UTF-8"
         description: 'Encoding to use when reading files. Valid values include: UTF-8, UTF-16, UTF-16BE, UTF-16LE, US-ASCII, or OS to use the system configured encoding.'
+        required: false
+      flowVerboseToString:
+        type: boolean
+        default: false
+        description: 'If true, display a more verbose output for the FlowFile toString representation'
+        required: false
+      generateChangesetCreatedValues:
+        type: boolean
+        default: false
+        description: 'Should Liquibase include a "created" attribute in diff/generateChangelog changesets with the current datetime'
         required: false
       generatedChangesetIdsContainsDescription:
         type: boolean
+        default: false
         description: 'Should Liquibase include the change description in the id when generating changesets?'
+        required: false
+      headless:
+        type: boolean
+        default: false
+        description: 'Force Liquibase to think it has no access to a keyboard'
+        required: false
+      includeCatalogInSpecification:
+        type: boolean
+        default: false
+        description: 'Should Liquibase include the catalog name when determining equality?'
+        required: false
+      includeRelationsForComputedColumns:
+        type: boolean
+        default: false
+        description: 'If true, the parent relationship for computed columns is preserved in snapshot-dependent commands: snapshot and diff. Only applicable to Microsoft SQL Server and Oracle.'
+        required: false
+      includeSchemaNameForDefault:
+        type: boolean
+        default: false
+        description: 'If true, the schema name is included for the default schema when loading a snapshot'
+        required: false
+      includeSystemClasspath:
+        type: boolean
+        default: true
+        description: 'Include the system classpath when resolving classes at runtime'
+        required: false
+      integrationName:
+        type: string
+        description: 'The name of the integration used to invoke Liquibase, for example, cli, or JavaAPI. It is not required to specify this value. This is primarily used by wrappers around Liquibase (like Gradle), so that analytics can be differentiated for those integrations.'
+        required: false
+      jclCreateLogFile:
+        type: boolean
+        default: false
+        description: 'If true, then write to a JCL log file.'
+        required: false
+      jclLogFilePath:
+        type: string
+        description: 'Path to write JCL log output.'
+        required: false
+      jclMinimumErrorReturnCode:
+        type: number
+        default: 1
+        description: 'Minimum return code that is recognized as an error.'
+        required: false
+      jclOverwriteLogFile:
+        type: boolean
+        default: false
+        description: 'If true, overwrite any existing JCL log file.'
+        required: false
+      licenseUtilityEnabled:
+        type: boolean
+        default: false
+        description: 'Enable or disable sending license usage data.'
+        required: false
+      licenseUtilityLogLevel:
+        type: string
+        default: "INFO"
+        description: 'Controls log verbosity for license usage utility. Accepted values: "SEVERE", "WARNING", "INFO", "FINE", "OFF".'
+        required: false
+      licenseUtilityTimeout:
+        type: number
+        default: 5000
+        description: 'Maximum wait time in milliseconds for license usage HTTP request to complete.'
+        required: false
+      licenseUtilityTrackingId:
+        type: string
+        description: 'Custom tracking identifier (e.g., team name, pipeline ID) for license usage. Defaults to host and user if unspecified.'
+        required: false
+      licenseUtilityUrl:
+        type: string
+        default: "https://hub.liquibase.com"
+        description: 'URL endpoint to send license usage data.'
+        required: false
+      licenseKey:
+        type: string
+        description: 'Liquibase Pro or Labs license key for unlocking premium features.'
         required: false
       liquibaseCatalogName:
         type: string
@@ -88,32 +254,59 @@ on:
         type: string
         description: 'Tablespace to use for Liquibase objects.'
         required: false
+      password:
+        type: string
+        description: 'Password to use to connect to the database.'
+        required: false
+      rollbackOnError:
+        type: boolean
+        default: false
+        description: 'If true, roll back changes if any changeset fails during deployment.'
+        required: false
       showBanner:
         type: boolean
         default: true
-        description: 'If true, show a Liquibase banner on startup.'
+        description: 'If true, show the Liquibase banner on startup.'
+        required: false
+      showSummary:
+        type: string
+        default: "summary"
+        description: 'Type of update results summary to show. Valid values: "off", "summary", "verbose".'
+        required: false
+      showSummaryOutput:
+        type: string
+        default: "console"
+        description: 'Where to output update summary results. Valid values: "log", "console", "all".'
         required: false
       sqlLogLevel:
         type: string
-        default: summary
-        description: 'Level to log SQL statements to, Valid values: off, summary, debug, trace.'
+        default: "summary"
+        description: 'Level to log SQL statements. Valid values: "off", "summary", "debug", "trace".'
         required: false
       sqlShowSqlWarnings:
         type: boolean
         default: true
-        description: 'Show SQLWarning messages.'
+        description: 'If true, show SQL warning messages during execution.'
         required: false
       strict:
         type: boolean
         default: false
-        description: 'If true, Liquibase enforces certain best practices and proactively looks for common errors.'
+        description: 'If true, enforce Liquibase best practices and detect common errors proactively.'
+        required: false
+      url:
+        type: string
+        description: 'The JDBC database connection URL.'
+        required: true
+      username:
+        type: string
+        description: 'Username to use to connect to the database.'
         required: false
       validateXmlChangelogFiles:
         type: boolean
         default: true
-        description: 'Will perform XSD validation of XML changelog files. When many XML changelog files are included, this validation may impact Liquibase performance.'
+        description: 'If true, perform XSD validation on XML changelog files. May impact performance when many files are included.'
         required: false
-
+        
 jobs:
   liquibase:
     name: 🛢 Liquibase Update Action 𝄜
@@ -152,5 +345,3 @@ jobs:
           defaultSchemaName: "public"
           username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
-          showSummary: "summary"
-          showSummaryOutput: "console"
