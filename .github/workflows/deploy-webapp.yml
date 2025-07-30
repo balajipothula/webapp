@@ -23,6 +23,13 @@ on:
         description: 'Run Docker Build and Push?'
 
 jobs:
+  terraform:
+    if: ${{ inputs.run_terraform == true }}
+    uses: ./.github/workflows/terraform-deploy.yml
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   docker:
     uses: ./.github/workflows/build-docker.yml
     secrets:
