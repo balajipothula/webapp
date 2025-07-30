@@ -254,14 +254,200 @@ on:
         type: string
         description: 'Tablespace to use for Liquibase objects.'
         required: false
+      logChannels:
+        type: string
+        default: "liquibase"
+        description: 'Controls which log channels have their level set by the liquibase.logLevel setting. Comma separate multiple values. To set the level of all channels, use "all". Example: liquibase,org.mariadb.jdbc'
+        required: false
+      logFile:
+        type: string
+        description: 'Users can use .gz file extension to enable log files compression.'
+        required: false
+      logFormat:
+        type: string
+        default: "TEXT"
+        description: 'Sets the format of log output to console or log files. Open Source users default to unstructured "TEXT" logs. Pro users may use "JSON" or "JSON_PRETTY" for structured logging.'
+        required: false
+      logLevel:
+        type: string
+        default: "FINE"
+        description: 'Controls which logs are sent to stderr and any log file. CLI defaults to SEVERE when a log file is set. Valid levels: OFF, SEVERE, WARNING, INFO, FINE.'
+        required: false
+      mirrorConsoleMessagesToLog:
+        type: boolean
+        default: true
+        description: 'If true, console messages are mirrored to logs as [liquibase.ui] for more complete log analysis.'
+        required: false
+      mirrorOutputToConsole:
+        type: boolean
+        default: false
+        description: '[PRO] If true, console output is mirrored to both the output file and the console. Has no effect if output file is not set.'
+        required: false
+      missingPropertyMode:
+        type: string
+        description: 'How to handle property expressions without values. Options: "preserve", "empty", "error".'
+        required: false
+      monitorPerformance:
+        type: boolean
+        default: false
+        description: 'Enables performance tracking. Set to "false" to disable. If "true", writes to liquibase-TIMESTAMP.jfr. Any other value is used as the output file name.'
+        required: false
+      mysqlEnableDbclPrimaryKey:
+        type: boolean
+        default: false
+        description: '[PRO] Enables composite primary key for new DBCL tables. Disabled by default.'
+        required: false
+      nativeExecutor:
+        type: string
+        description: 'Name of a custom executor to use.'
+        required: false
+      onMissingIncludeChangelog:
+        type: string
+        default: "FAIL"
+        description: 'If set to WARN, Liquibase logs a warning instead of throwing an error for missing include changelogs.'
+        required: false
+      onMissingSqlFile:
+        type: string
+        description: 'If set to WARN, Liquibase logs a warning instead of failing when a referenced SQL file is missing.'
+        required: false
+      outputFile:
+        type: string
+        description: 'Path to the file where Liquibase will write output.'
+        required: false
+      outputFileEncoding:
+        type: string
+        default: "UTF-8"
+        description: 'Encoding to use when writing output files.'
+        required: false
+      outputLineSeparator:
+        type: string
+        default: "\n"
+        description: 'Line separator to use in generated output files.'
+        required: false
       password:
         type: string
         description: 'Password to use to connect to the database.'
+        required: false
+      preserveClasspathPrefixInNormalizedPaths:
+        type: boolean
+        default: false
+        description: 'If true, preserves the "classpath:" prefix in normalized paths to support hierarchical resource resolution.'
+        required: false
+      preserveSchemaCase:
+        type: boolean
+        description: 'If true, Liquibase treats schema and catalog names as case-sensitive.'
+        required: false
+      proForceOnPartialChanges:
+        type: boolean
+        description: 'If true, forces rollback execution when partial changes are detected. Defaults to false.'
+        required: false
+      proGlobalEndDelimiter:
+        type: string
+        default: ";"
+        description: '[PRO] Default end delimiter for all change sets.'
+        required: false
+      proGlobalEndDelimiterPrioritized:
+        type: boolean
+        default: false
+        description: '[PRO] If true, the global end delimiter overrides other settings.'
+        required: false
+      proGlobalStripComments:
+        type: boolean
+        default: true
+        description: '[PRO] Default setting to strip comments in all change sets.'
+        required: false
+      proGlobalStripCommentsPrioritized:
+        type: boolean
+        default: false
+        description: '[PRO] If true, the global strip comments setting overrides other configurations.'
+        required: false
+      proLicenseKey:
+        type: string
+        description: 'DEPRECATED: License key for Liquibase Pro. Use liquibase.pro.licenseKey=<yourKey> or CLI parameter.'
+        required: false
+      proMarkUnusedNotDrop:
+        type: boolean
+        description: 'If true, diffChangeLog will mark unused columns instead of dropping them.'
+        required: false
+      proSqlInline:
+        type: boolean
+        description: 'If true, generates SQL-based changeSets inline instead of using external files.'
+        required: false
+      proSynonymsDropPublic:
+        type: boolean
+        description: 'If false, public synonyms are not dropped in diffChangeLog or dropAll.'
+        required: false
+      proStrict:
+        type: boolean
+        default: false
+        description: '[PRO] If true, Liquibase fails if referenced Pro files (flow, native executor, rollback, etc.) are missing or empty.'
+        required: false
+      promptForNonLocalDatabase:
+        type: boolean
+        description: 'If true, Liquibase prompts confirmation when operating on non-local databases.'
+        required: false
+      propertyProviderClass:
+        type: string
+        description: 'Fully qualified class name implementing a custom Properties provider.'
+        required: false
+      reportsEnabled:
+        type: boolean
+        description: '[PRO] Enable or disable Liquibase reporting.'
+        required: false
+      reportsFormat:
+        type: string
+        description: '[PRO] Format of reports. Currently supported: "html".'
+        required: false
+      reportsName:
+        type: string
+        description: '[PRO] The report name to use for generated reports.'
+        required: false
+      reportsOpen:
+        type: boolean
+        description: '[PRO] If true, automatically opens the generated report in the default browser.'
+        required: false
+      reportsPath:
+        type: string
+        description: '[PRO] Directory path where reports should be generated.'
+        required: false
+      reportsQuiet:
+        type: boolean
+        description: '[PRO] Reduces logging output when generating reports.'
+        required: false
+      reportsSuppressException:
+        type: boolean
+        description: '[PRO] Suppresses exceptions from being shown in operation reports.'
+        required: false
+      reportsSuppressSql:
+        type: boolean
+        description: '[PRO] Suppresses SQL content in operation reports.'
         required: false
       rollbackOnError:
         type: boolean
         default: false
         description: 'If true, roll back changes if any changeset fails during deployment.'
+        required: false
+      scriptPythonExecutablePath:
+        type: string
+        description: 'Path to the Python executable used for running Liquibase script commands.'
+        required: false
+      searchPath:
+        type: string
+        description: 'Comma-separated list of locations to search for changelogs and other Liquibase files.'
+        required: false
+      secureParsing:
+        type: boolean
+        description: 'If true, disables insecure features in file parsers, such as remote XML entity loading.'
+        required: false
+      shouldRun:
+        type: boolean
+        default: true
+        description: 'If false, Liquibase commands will not execute.'
+        required: false
+      shouldSnapshotData:
+        type: boolean
+        default: false
+        description: 'If true, Liquibase will include data in snapshots.'
         required: false
       showBanner:
         type: boolean
@@ -280,18 +466,38 @@ on:
         required: false
       sqlLogLevel:
         type: string
-        default: "summary"
-        description: 'Level to log SQL statements. Valid values: "off", "summary", "debug", "trace".'
+        default: "FINE"
+        description: 'Level to log SQL statements. Valid values: "SEVERE", "WARNING", "INFO", "FINE", "OFF".'
         required: false
       sqlShowSqlWarnings:
         type: boolean
         default: true
         description: 'If true, show SQL warning messages during execution.'
         required: false
+      supportsMethodValidationLevel:
+        type: string
+        default: "WARN"
+        description: 'Controls the level of validation performed on the supports method of Change classes. Options are "OFF", "WARN", "FAIL".'
+        required: false
+      suppressLiquibaseSql:
+        type: boolean
+        default: false
+        description: 'When set to true, this global property prevents DBCL and DBCLH sql from being present in console and logs during *-sql commands, such as update-sql, rollback-sql, etc.'
+        required: false
       strict:
         type: boolean
         default: false
         description: 'If true, enforce Liquibase best practices and detect common errors proactively.'
+        required: false
+      trimLoadDataFileHeader:
+        type: boolean
+        default: false
+        description: 'If true column headers will be trimmed in case they were specified with spaces in the file.'
+        required: false
+      uiService:
+        type: string
+        default: "CONSOLE"
+        description: 'Changes the default UI Service Logger used by Liquibase. Options are "CONSOLE" or "LOGGER".'
         required: false
       url:
         type: string
