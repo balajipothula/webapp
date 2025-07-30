@@ -13,14 +13,17 @@ on:
         type: boolean
         default: false
         description: 'Run Terraform Infra Provision?'
+        required: true
       run_liquibase:
         type: boolean
         default: false
         description: 'Run Liquibase Update Action?'
+        required: true
       run_docker:
         type: boolean
         default: false
         description: 'Run Docker Build and Push?'
+        required: true
 
 jobs:
   docker:
