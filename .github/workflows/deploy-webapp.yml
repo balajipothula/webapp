@@ -12,15 +12,15 @@ on:
       run_terraform:
         type: boolean
         default: false
-        description: 'Run Terraform Infra Provision?'
+        description: 'Run Terraform Infra Provision'
       run_liquibase:
         type: boolean
         default: false
-        description: 'Run Liquibase Update Action?'
+        description: 'Run Liquibase Update Action'
       run_docker:
         type: boolean
         default: false
-        description: 'Run Docker Build and Push?'
+        description: 'Run Docker Build and Push'
 
 jobs:
   terraform:
