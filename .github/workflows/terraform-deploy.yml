@@ -1,21 +1,23 @@
 name: 🏗️ Terraform Infra Provision
 on:
   workflow_call:
-    secrets:
+    inputs:
       WEBAPP_DB_NAME:
+        type: string
         description: 'WebApp Database Name.'
+        required: true
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        description: 'AWS Access Key ID.'
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        description: 'AWS Secret Access Key.'
         required: true
       WEBAPP_DB_MASTER_USERNAME:
         description: 'WebApp Database Master Username.'
         required: true
       WEBAPP_DB_MASTER_PASSWORD:
         description: 'WebApp Database Master Password.'
-        required: true
-      AWS_ACCESS_KEY_ID:
-        description: 'AWS Access Key ID.'
-        required: true
-      AWS_SECRET_ACCESS_KEY:
-        description: 'AWS Secret Access Key.'
         required: true
 
 env:
@@ -89,9 +91,9 @@ jobs:
       # Generates an execution plan for Terraform.
       - name: 🛠️ Terraform plan generation 📄
         run: |
-          terraform plan -input=false -out=webapp.tfplan                              \
-            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"                   \
-            -var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
+          terraform plan -input=false -out=webapp.tfplan \
+            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32" \
+            -var="webapp_database_name=${{ vars.WEBAPP_DB_NAME }}" \
             -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         continue-on-error: false

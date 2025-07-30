@@ -3,12 +3,6 @@ name: '🛢 Liquibase Update Action'
 on:
   workflow_call:
     secrets:
-      WEBAPP_DB_MASTER_URL:
-        description: 'WebApp Database Master URL.'
-        required: true
-      WEBAPP_DB_NAME:
-        description: 'WebApp Database Name.'
-        required: true
       WEBAPP_DB_MASTER_USERNAME:
         description: 'WebApp Database Master Username.'
         required: true
@@ -154,7 +148,7 @@ jobs:
           changelogFile: "./postgresql/webapp_db/public/master.xml"
           classpath: "./postgresql/webapp_db/public"
           driver: "org.postgresql.Driver"
-          url: "jdbc:postgresql://${{ secrets.WEBAPP_DB_MASTER_URL }}:5432/${{ secrets.WEBAPP_DB_NAME }}"
+          url: "jdbc:postgresql://${{ vars.WEBAPP_DB_MASTER_URL }}:5432/${{ vars.WEBAPP_DB_NAME }}"
           defaultSchemaName: "public"
           username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
