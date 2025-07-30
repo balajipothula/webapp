@@ -30,9 +30,11 @@ jobs:
       WEBAPP_DB_NAME: ${{ secrets.WEBAPP_DB_NAME }}
       WEBAPP_DB_MASTER_USERNAME: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
       WEBAPP_DB_MASTER_PASSWORD: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   docker:
-    if: ${{ inputs.run_terraform == true }}
+    if: ${{ inputs.run_terraform == false }}
     uses: ./.github/workflows/build-docker.yml
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

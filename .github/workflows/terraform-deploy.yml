@@ -11,6 +11,12 @@ on:
       WEBAPP_DB_MASTER_PASSWORD:
         description: 'WebApp Database Master Password.'
         required: true
+      AWS_ACCESS_KEY_ID:
+        description: 'AWS Access Key ID.'
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        description: 'AWS Secret Access Key.'
+        required: true
 
 env:
   # Setting verbosity of Terraform logs.
