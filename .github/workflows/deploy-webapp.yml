@@ -7,14 +7,25 @@ on:
         type: choice
         default: 'dev'
         description: 'Please select deployment environment'
-        options:
-          - dev
-          - qa
-          - prod
+        options: [dev, qa, prod]
         required: true
+      run_terraform:
+        type: boolean
+        default: true
+        description: 'Run Terraform Infra Provision?'
+      run_liquibase:
+        type: boolean
+        default: true
+        description: 'Run Liquibase Update Action?'
+      run_docker:
+        type: boolean
+        default: true
+        description: 'Run Docker Build and Push?'
 
 jobs:
   docker:
+    if: ${{ inputs.run_docker == false }}
     uses: ./.github/workflows/build-docker.yml
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+

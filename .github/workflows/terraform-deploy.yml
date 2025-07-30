@@ -1,63 +1,91 @@
 name: 🏗️ Terraform Infra Provision
 on:
   workflow_call:
-    inputs:
-      webapp_db_name:
-        required: true
-        type: string
-      webapp_db_master_username:
-        required: true
-        type: string
-      webapp_db_master_password:
-        required: true
-        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
+        description: 'AWS Access Key ID.'
         required: true
       AWS_SECRET_ACCESS_KEY:
+        description: 'AWS Secret Access Key.'
         required: true
+
+env:
+  # Setting verbosity of Terraform logs.
+  TF_LOG: ERROR
+  # Setting AWS Access Key Id and Secret Access Key.
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   terraform:
     name: 🛠️ Running Terraform
+    # GitHub Actions runner is ubuntu-22.04.
     runs-on: ubuntu-22.04
+    # Environment is Development.
     environment: dev
     defaults:
       run:
+        # Using bash shell.
         shell: bash
+        # Setting working directory.
+        # Also, by keeping '.' setting current terraform files running directory.
         working-directory: .
     steps:
-      - name: 💙 Git Checkout
+      # Checkout a Git repository at a particular version.
+      - name: 🐙 Git Checkout 📥
         uses: actions/checkout@v3
-
-      - name: 🌐 Get Runner Public IP 📡
+        with:
+          # Repository name with owner.
+          repository: '${{ github.repository }}'
+          # PAT (Personal Access Token) used to fetch the repository.
+          token: '${{ github.token }}'
+          # Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching.
+          clean: true
+          # Do a sparse checkout on given patterns.
+          sparse-checkout: null
+          # Specifies whether to use cone-mode when doing a sparse checkout.
+          sparse-checkout-cone-mode: true
+          # Number of commits to fetch.
+          fetch-depth: 1
+          # Whether to fetch tags, even if fetch-depth > 0.
+          fetch-tags: false
+          # Whether to download Git-LFS files
+          lfs: false
+          # Add repository path as safe.
+          set-safe-directory: true
+      # Gets the public IPv4 and IPv6 addreses of the current runner using latest Node
+      - name: 🌐 Get Runner Public IP Address 📡
         uses: candidob/get-runner-ip@v1.0.0
         id: ip
-
-      - name: 🛠️ Setup Terraform 📀
+      # Installing the specified version of Terraform CLI on Runner.
+      - name: 🛠️ Terraform setup 📐
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.4.0
-
-      - name: 🛠️ Terraform Init 🔄
+      # Initialize a new or existing Terraform working directory by creating initial files,
+      # loading any remote state, downloading modules, etc.
+      - name: 🛠️ Terraform initialization 🔁
         run: terraform init -input=false -reconfigure
-
-      - name: 🛠️ Format 🧹
+        env:
+          TF_WORKSPACE: default
+      # Format Terraform configuration files adhere in to a canonical format.
+      - name: 🛠️ Terraform files formating 🧹
         run: terraform fmt
-
-      - name: 🛠️ Format Check 🔍
+      # Check that all Terraform configuration files adhere to a canonical format.
+      - name: 🛠️ Terraform file format checking 🔍
         run: terraform fmt -check
-
-      - name: 🛠️ Validate ✅
+      # Validate all Terraform configuration files.
+      - name: 🛠️ Terraform files validating ✅
         run: terraform validate -no-color
-
-      - name: 🛠️ Plan 📄
+      # Generates an execution plan for Terraform.
+      - name: 🛠️ Terraform plan generation 📄
         run: |
-          terraform plan -input=false -out=webapp.tfplan \
-            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32" \
-            -var="webapp_database_name=${{ inputs.webapp_db_name }}" \
-            -var="webapp_db_master_username=${{ inputs.webapp_db_master_username }}" \
-            -var="webapp_db_master_password=${{ inputs.webapp_db_master_password }}"
-
-      - name: 🛠️ Apply 🚧
+          terraform plan -input=false -out=webapp.tfplan                              \
+            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32"                   \
+            -var="webapp_database_name=${{ secrets.WEBAPP_DB_NAME }}"                 \
+            -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
+            -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
+        continue-on-error: false
+      # Apply an execution plan for Terraform.
+      - name: 🛠️ Terraform plan applying 🚧
         run: terraform apply -auto-approve -input=false webapp.tfplan
