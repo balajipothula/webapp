@@ -24,7 +24,7 @@ on:
 
 jobs:
   terraform:
-    if: ${{ inputs.run_terraform == false }}
+    if: ${{ inputs.run_terraform == true }}
     uses: ./.github/workflows/terraform-deploy.yml
     secrets:
       WEBAPP_DB_NAME: ${{ secrets.WEBAPP_DB_NAME }}
