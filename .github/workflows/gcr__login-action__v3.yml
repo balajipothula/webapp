@@ -4,7 +4,7 @@ description: 'GitHub Action to login against a GitHub Container Registry'
 on:
   workflow_call:
     secrets:
-      GITHUB_TOKEN:
+      TOKEN_GITHUB:
         description: 'Password or PAT (Personal Access Token) used to log against the GitHub.'
         required: true
     inputs:
@@ -47,6 +47,6 @@ jobs:
         with:
           registry: ${{ inputs.registry }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.TOKEN_GITHUB }}
           ecr: ${{ inputs.ecr }}
           logout: ${{ inputs.logout }}
