@@ -1,5 +1,5 @@
 name: '🦊 GitLab Login'
-description: 'GitLab Action to login against a GitLab'
+description: 'GitHub Action to login against a GitLab'
 
 on:
   workflow_call:
