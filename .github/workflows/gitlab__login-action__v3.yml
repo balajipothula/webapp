@@ -33,7 +33,7 @@ on:
         required: false
 
 jobs:
-  job-gcr-login-action:
+  job-gitlab-login-action:
     name: Job - GitLab Login
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
