@@ -25,7 +25,10 @@ on:
         type: boolean
         default: false
         description: 'Run GCR Login Action'
-
+      gitlab_login_action_v3:
+        type: boolean
+        default: false
+        description: 'Run GitLab Login Action'
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -47,7 +50,7 @@ jobs:
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   job-gcr-login-action:
-    name: Job - GitHub Container Registry Login
+    name: Job - GCR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.gcr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/gcr__login-action__v3.yml
@@ -55,4 +58,12 @@ jobs:
       username: ${{ github.actor }}
     secrets:
       TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-
+  job-gitlab-login-action:
+    name: Job - GitLab Login
+    needs: job_docker_setup-buildx-action_v3
+    if: ${{ inputs.gitlab_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/gitlab__login-action__v3.yml
+    with:
+      username: ${{ vars.GITLAB_USERNAME }}
+    secrets:
+      GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}

@@ -1,25 +1,25 @@
-name: '🐙 GitHub Container Registry Login'
-description: 'GitHub Action to login against a GitHub Container Registry'
+name: '🦊 GitLab Login'
+description: 'GitLab Action to login against a GitLab'
 
 on:
   workflow_call:
     secrets:
-      TOKEN_GITHUB:
-        description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
+      GITLAB_PASSWORD:
+        description: 'Password or PAT (Personal Access Token) used to log against the GitLab'
         required: true
     inputs:
       registry:
         type: string
-        default: 'ghcr.io'
-        description: 'Server address of GitHub Container Registry. If not set then will default to Docker Hub'
+        default: 'registry.gitlab.com'
+        description: 'Server address of GitLab Registry. If not set then will default to Docker Hub'
         required: false
       username:
         type: string
-        description: 'Username used to log against the GitHub'
+        description: 'Username used to log against the GitLab'
         required: false
       password:
         type: string
-        description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
+        description: 'Password or PAT (Personal Access Token) used to log against the GitLab'
         required: false
       ecr:
         type: string
@@ -29,12 +29,12 @@ on:
       logout:
         type: boolean
         default: true
-        description: 'Log out from the GitHub Container Registry at the end of a job'
+        description: 'Log out from the GitLab at the end of a job'
         required: false
 
 jobs:
   job-gcr-login-action:
-    name: Job - GitHub Container Registry Login
+    name: Job - GitLab Login
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:
@@ -42,11 +42,11 @@ jobs:
         shell: bash
         working-directory: .
     steps:
-      - name: Step - GitHub Container Registry Login
+      - name: Step - GitLab Login
         uses: docker/login-action@v3
         with:
           registry: ${{ inputs.registry }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ vars.GITLAB_USERNAME }}
+          password: ${{ secrets.GITLAB_PASSWORD }}
           ecr: ${{ inputs.ecr }}
           logout: ${{ inputs.logout }}
