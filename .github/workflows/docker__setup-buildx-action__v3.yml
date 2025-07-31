@@ -58,6 +58,7 @@ on:
         description: 'Name of the builder. If not specified, one will be generated or if it already exists, it will be used instead of creating a new one.'
         required: false
       platforms:
+        type: string
         description: 'Fixed platforms for current node. If not empty, values take priority over the detected ones'
         required: false
       use:
@@ -69,7 +70,6 @@ on:
         type: string
         description: 'Buildx version. (eg. v0.3.0)'
         required: false
-
     outputs:
       driver:
         value: ${{ jobs.job-setup-buildx-action.outputs.driver }}
@@ -93,7 +93,12 @@ jobs:
         id: step-setup-buildx-action
         uses: docker/setup-buildx-action@v3
         with:
-          version: ${{ inputs.version }}
+          cache-binary: ${{ inputs.cache-binary }}
+          cleanup: ${{ inputs.cleanup }}
+          driver: ${{ inputs.driver }}
+          install: ${{ inputs.install }}
+          keep-state: ${{ inputs.keep-state }}
+          use: ${{ inputs.use }}
     outputs:
       driver: ${{ steps.step-setup-buildx-action.outputs.driver }}
       name: ${{ steps.step-setup-buildx-action.outputs.name }}
