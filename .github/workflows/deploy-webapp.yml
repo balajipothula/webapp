@@ -9,22 +9,35 @@ on:
         description: 'Please select deployment environment'
         options: [dev, qa, prod]
         required: true
-      setup_qemu_action_v3:
+      docker_setup_qemu_action_v3:
         type: boolean
         default: false
         description: 'Run Docker Setup QEMU'
-      setup_buildx_action_v3:
+      docker_setup_buildx_action_v3:
         type: boolean
         default: false
         description: 'Run Docker Setup Buildx'
+      docker_login_action_v3:
+        type: boolean
+        default: false
+        description: 'Run Docker Login Action'
 
 jobs: 
-  job-setup-qemu-action:
+  job_docker_setup-qemu-action_v3:
     name: Job - Docker Setup QEMU
-    if: ${{ inputs.setup_qemu_action_v3 == true }}
+    if: ${{ inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/docker__setup-qemu-action__v3.yml
-  job-setup-buildx-action:
+  job_docker_setup-buildx-action_v3:
     name: Job - Docker Setup Buildx
-    if: ${{ inputs.setup_buildx_action_v3 == true && inputs.setup_qemu_action_v3 == true }}
-    needs: job-setup-qemu-action
+    needs: job_docker_setup-qemu-action_v3
+    if: ${{ inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/docker__setup-buildx-action__v3.yml
+  job-docker-login-action:
+    name: Job - Docker Login
+    needs: job_docker_setup-buildx-action_v3
+    if: ${{ inputs.docker_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/docker__login-action__v3.yml
+    with:
+      username: ${{ vars.DOCKERHUB_USERNAME }}
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

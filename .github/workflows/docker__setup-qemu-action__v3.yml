@@ -27,16 +27,11 @@ on:
 jobs:
   job-setup-qemu-action:
     name: Job - Docker Setup QEMU
-    # GitHub Actions runner is ubuntu-22.04.
     runs-on: ubuntu-22.04
-    # Environment is Development.
     environment: dev
     defaults:
       run:
-        # Using bash shell.
         shell: bash
-        # Setting working directory.
-        # Also, by keeping '.' setting current terraform files running directory.
         working-directory: .
     steps:
       - name: Step - Docker Setup QEMU

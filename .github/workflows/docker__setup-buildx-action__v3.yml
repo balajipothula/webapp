@@ -87,7 +87,12 @@ on:
 jobs:
   job-setup-buildx-action:
     name: Job - Docker Setup Buildx
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    environment: dev
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
     steps:
       - name: Step - Docker Setup Buildx
         id: step-setup-buildx-action

@@ -48,7 +48,12 @@ on:
 jobs:
   job-setup-docker-action:
     name: Job - Setup Docker Action
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    environment: dev
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
     steps:
       - name: Step - Setup Docker Action
         id: step-setup-docker-action
