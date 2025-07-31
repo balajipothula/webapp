@@ -32,7 +32,7 @@ jobs:
     name: 🛠️ Running Terraform
     # GitHub Actions runner is ubuntu-22.04.
     runs-on: ubuntu-22.04
-    environment: dev
+    environment: ${{ github.ref }}
     defaults:
       run:
         shell: bash

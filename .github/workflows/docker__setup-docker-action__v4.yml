@@ -49,7 +49,7 @@ jobs:
   job-setup-docker-action:
     name: Job - Setup Docker Action
     runs-on: ubuntu-22.04
-    environment: dev
+    environment: ${{ github.ref }}
     defaults:
       run:
         shell: bash
