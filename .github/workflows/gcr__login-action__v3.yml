@@ -1,4 +1,4 @@
-name: '🐙 GitHub Container Registry Login'
+name: '🐙 GCR Login'
 description: 'GitHub Action to login against a GitHub Container Registry'
 
 on:
