@@ -12,7 +12,7 @@ on:
       setup_qemu_action_v3:
         type: boolean
         default: false
-        description: 'Run Setup QEMU Action v3'
+        description: 'Run Docker Setup QEMU'
 
 jobs: 
   setup-qemu:
