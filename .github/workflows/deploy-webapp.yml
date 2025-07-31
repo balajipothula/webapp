@@ -9,24 +9,12 @@ on:
         description: 'Please select deployment environment'
         options: [dev, qa, prod]
         required: true
-      run_terraform:
-        type: boolean
-        default: false
-        description: 'Run Terraform Infra Provision'
-      run_liquibase:
-        type: boolean
-        default: false
-        description: 'Run Liquibase Update Action'
-      run_docker:
-        type: boolean
-        default: false
-        description: 'Run Docker Build and Push'
       setup_qemu_action_v3:
         type: boolean
         default: false
-        description: 'Run Setup QEMU Action v4'
+        description: 'Run Setup QEMU Action v3'
 
 jobs: 
   job-setup-docker-action:
     if: ${{ inputs.setup_qemu_action_v3 == true }}
-    uses: ./.github/workflows/docker/setup-docker-action@v4.yml
+    uses: ./.github/workflows/docker/setup-qemu-action@v3.yml
