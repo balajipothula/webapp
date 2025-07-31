@@ -54,5 +54,5 @@ jobs:
     with:
       username: ${{ github.actor }}
     secrets:
-      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+      TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
 

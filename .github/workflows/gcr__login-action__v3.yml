@@ -47,6 +47,6 @@ jobs:
         with:
           registry: ${{ inputs.registry }}
           username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN_GITHUB }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           ecr: ${{ inputs.ecr }}
           logout: ${{ inputs.logout }}
