@@ -1,5 +1,5 @@
-name: 🐳 Docker Setup Docker
-description: Set up Docker for use in GitHub Actions by downloading and installing a version of Docker CE
+name: '🐳 Docker Setup Docker'
+description: 'Set up Docker for use in GitHub Actions by downloading and installing a version of Docker CE'
 
 on:
   workflow_call:
