@@ -27,7 +27,6 @@ on:
 jobs:
   job-setup-qemu-action:
     name: Job - Docker Setup QEMU
-    runs-on: ubuntu-latest
     steps:
       - name: Step - Docker Setup QEMU
         id: step-setup-qemu-action
