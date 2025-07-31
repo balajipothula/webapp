@@ -15,9 +15,7 @@ on:
         description: 'Run Docker Setup QEMU'
 
 jobs: 
-  setup-qemu:
+  job-setup-qemu-action:
     name: Job - Docker Setup QEMU
     if: ${{ inputs.setup_qemu_action_v3 == true }}
-    uses: ./.github/workflows/docker_setup-qemu-action-v3.yml
-    with:
-      cache-image: true
+    uses: ./.github/workflows/docker__setup-qemu-action__v3.yml
