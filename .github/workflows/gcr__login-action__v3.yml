@@ -5,7 +5,7 @@ on:
   workflow_call:
     secrets:
       TOKEN_GITHUB:
-        description: 'Password or PAT (Personal Access Token) used to log against the GitHub.'
+        description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
         required: true
     inputs:
       registry:
@@ -19,7 +19,7 @@ on:
         required: false
       password:
         type: string
-        description: 'Password or personal access token used to log against the GitHub Container Registry'
+        description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
         required: false
       ecr:
         type: string
