@@ -21,13 +21,12 @@ on:
         type: boolean
         default: false
         description: 'Run Docker Build and Push'
-      run_setup_docker_action_v4:
+      setup_qemu_action_v3:
         type: boolean
         default: false
-        description: 'Run Setup Docker Action v4'
+        description: 'Run Setup QEMU Action v4'
 
 jobs: 
   job-setup-docker-action:
-    if: ${{ inputs.run_setup_docker_action_v4 == true }}
+    if: ${{ inputs.setup_qemu_action_v3 == true }}
     uses: ./.github/workflows/docker/setup-docker-action@v4.yml
-
