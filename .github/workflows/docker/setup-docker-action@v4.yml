@@ -6,12 +6,12 @@ on:
     inputs:
       channel:
         type: string
-        default: "stable"
-        description: 'Docker CE channel (allowed: "stable", "edge", or "test")'
+        default: 'stable'
+        description: 'Docker CE channel (allowed: `stable`, `edge`, or `test`)'
         required: false
       context:
         type: string
-        default: "setup-docker-action"
+        default: 'setup-docker-action'
         description: 'Docker context name'
         required: false
       daemon-config:
@@ -34,16 +34,16 @@ on:
         required: false
       version:
         type: string
-        default: "latest"
+        default: 'latest'
         description: 'Docker CE version (e.g., v24.0.9)'
         required: false
     outputs:
       sock:
-        description: 'Docker socket path'
         value: ${{ jobs.job-setup-docker-action.outputs.sock }}
+        description: 'Docker socket path'
       tcp:
-        description: 'Docker TCP address if tcp-port is set'
         value: ${{ jobs.job-setup-docker-action.outputs.tcp }}
+        description: 'Docker TCP address if tcp-port is set'
 
 jobs:
   job-setup-docker-action:

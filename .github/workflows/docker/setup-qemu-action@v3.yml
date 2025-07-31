@@ -21,11 +21,11 @@ on:
         required: false
     outputs:
       platforms:
-        description: 'Available platforms (comma separated)'
         value: ${{ jobs.job-setup-qemu-action.outputs.platforms }}
+        description: 'Available platforms (comma separated)'
 
 jobs:
-  job-job-setup-qemu-action:
+  job-setup-qemu-action:
     name: Job - Docker Setup QEMU
     runs-on: ubuntu-latest
     steps:
@@ -37,4 +37,4 @@ jobs:
           image: ${{ inputs.image }}
           platforms: ${{ inputs.platforms }}
     outputs:
-      sock: ${{ steps.step-setup-docker-action.outputs.sock }}
+      platforms: ${{ steps.step-setup-docker-action.outputs.platforms }}
