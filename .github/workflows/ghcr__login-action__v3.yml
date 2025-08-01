@@ -36,7 +36,7 @@ on:
 
 jobs:
   job-ghcr-login-action:
-    name: Job - GHCR Login
+    name: 🧩 GHCR Login
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:

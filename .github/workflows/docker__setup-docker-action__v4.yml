@@ -47,7 +47,7 @@ on:
 
 jobs:
   job-setup-docker-action:
-    name: Job - Setup Docker Action
+    name: 🧩 Setup Docker Action
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:

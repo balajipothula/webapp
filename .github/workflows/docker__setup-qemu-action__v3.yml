@@ -26,7 +26,7 @@ on:
 
 jobs:
   job-setup-qemu-action:
-    name: Job - Docker Setup QEMU
+    name: 🧩 Docker Setup QEMU
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:

@@ -41,7 +41,7 @@ on:
 
 jobs:
   job-aws-public-ecr-login-action:
-    name: Job - AWS Public ECR Login
+    name: 🧩 AWS Public ECR Login
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:

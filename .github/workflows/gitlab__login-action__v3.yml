@@ -36,7 +36,7 @@ on:
 
 jobs:
   job-gitlab-login-action:
-    name: Job - GitLab Login
+    name: 🧩 GitLab Login
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:

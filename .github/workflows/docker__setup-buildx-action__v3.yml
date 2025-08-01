@@ -86,7 +86,7 @@ on:
 
 jobs:
   job-setup-buildx-action:
-    name: Job - Docker Setup Buildx
+    name: 🧩 Docker Setup Buildx
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:
