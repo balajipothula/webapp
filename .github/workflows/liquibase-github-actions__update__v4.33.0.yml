@@ -1,5 +1,5 @@
 # Deploy any changes in the changelog file that have not been deployed.
-name: '🛢 Liquibase Update Action ᵛ⁴⋅³³⋅⁰'
+name: '🛢 Liquibase Update Action ᵛ⁴·³³·⁰'
 
 on:
   workflow_call:
