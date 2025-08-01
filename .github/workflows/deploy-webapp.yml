@@ -33,6 +33,10 @@ on:
         type: boolean
         default: false
         description: '☁️ AWS Public ECR Login'
+      aws_ecr_login_action_v3:
+        type: boolean
+        default: false
+        description: '☁️ AWS ECR Login'
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -77,8 +81,17 @@ jobs:
     if: ${{ inputs.aws_public_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/aws-public-ecr__login-action__v3.yml
     with:
-      AWS_ECR_REGION: 'eu-central-1'
-      registry: ''
+      AWS_PUBLIC_ECR_REGION: 'us-east-1'
+      username: ${{ vars.AWS_ACCESS_KEY_ID }}
+    secrets:
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  job-aws-ecr-login-action:
+    name: Job - AWS ECR Login
+    needs: job_docker_setup-buildx-action_v3
+    if: ${{ inputs.aws_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/aws-ecr__login-action__v3.yml
+    with:
+      registry: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_ECR_REGION }}.amazonaws.com
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
