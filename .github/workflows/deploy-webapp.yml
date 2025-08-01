@@ -3,6 +3,11 @@ name: 🚀 WebApp Deployment
 on:
   workflow_dispatch:
     inputs:
+      AWS_PUBLIC_ECR_REGION:
+        type: string
+        default: 'us-east-1'
+        description: 'AWS Public Elastic Container Registry Region'
+        required: true
       environment:
         type: choice
         default: 'dev'
@@ -12,27 +17,27 @@ on:
       docker_setup_qemu_action_v3:
         type: boolean
         default: false
-        description: 'Run Docker Setup QEMU'
+        description: '🐳 Docker Setup QEMU'
       docker_setup_buildx_action_v3:
         type: boolean
         default: false
-        description: 'Run Docker Setup Buildx'
+        description: '🐳 Docker Setup Buildx'
       docker_login_action_v3:
         type: boolean
         default: false
-        description: 'Run Docker Login'
+        description: '🐳 Docker Login'
       ghcr_login_action_v3:
         type: boolean
         default: false
-        description: 'Run GHCR Login'
+        description: '🐙 GHCR Login'
       gitlab_login_action_v3:
         type: boolean
         default: false
-        description: 'Run GitLab Login'
+        description: '🦊 GitLab Login'
       aws_public_ecr_login_action_v3:
         type: boolean
         default: false
-        description: 'Run AWS Public ECR Login'
+        description: '☁️ AWS Public ECR Login'
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -77,6 +82,7 @@ jobs:
     if: ${{ inputs.aws_public_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/aws-public-ecr__login-action__v3.yml
     with:
+      AWS_PUBLIC_ECR_REGION: ${{ inputs.AWS_PUBLIC_ECR_REGION }}
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -8,6 +8,11 @@ on:
         description: 'Password or PAT (Personal Access Token) used to log against the AWS'
         required: true
     inputs:
+      AWS_PUBLIC_ECR_REGION:
+        type: string
+        default: 'us-east-1'
+        description: 'AWS Public Elastic Container Registry Region'
+        required: true
       registry:
         type: string
         default: 'public.ecr.aws'
@@ -44,6 +49,8 @@ jobs:
     steps:
       - name: Step - AWS Public ECR Login
         uses: docker/login-action@v3
+        env:
+          AWS_REGION: ${{ inputs.AWS_PUBLIC_ECR_REGION }}
         with:
           registry: ${{ inputs.registry }}
           username: ${{ vars.AWS_ACCESS_KEY_ID }}
