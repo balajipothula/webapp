@@ -36,7 +36,7 @@ on:
 
 jobs:
   job-aws-public-ecr-login-action:
-    name: Job - AWS Public ECR Login
+    name: Job - AWS ECR Login
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:
@@ -44,7 +44,7 @@ jobs:
         shell: bash
         working-directory: .
     steps:
-      - name: Step - AWS Public ECR Login
+      - name: Step - AWS ECR Login
         uses: docker/login-action@v3
         with:
           registry: ${{ inputs.registry }}
