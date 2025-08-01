@@ -1,0 +1,125 @@
+name: '🐳 Docker Metadata Action ᵛ⁵'
+description: 'GitHub Action to extract metadata (tags, labels) for Docker'
+
+on:
+  workflow_call:
+    inputs:
+      context:
+        type: string
+        default: 'workflow'
+        description: 'Where to get context data. Allowed options are "workflow" (default) or "git".'
+        required: true
+      images:
+        type: string
+        default: null
+        description: 'List of Docker images to use as base name for tags'
+        required: false
+      tags:
+        type: string
+        default: null
+        description: 'List of tags as key-value pair attributes'
+        required: false
+      flavor:
+        type: string
+        default: null
+        description: 'Flavors to apply'
+        required: false
+      labels:
+        type: string
+        default: null
+        description: 'List of custom labels'
+        required: false
+      annotations:
+        type: string
+        default: ''
+        description: 'List of custom annotations'
+        required: false
+      sep-tags:
+        type: string
+        default: '\n'
+        description: 'Separator to use for tags output'
+        required: false
+      sep-labels:
+        type: string
+        default: '\n'
+        description: 'Separator to use for labels output'
+        required: false
+      sep-annotations:
+        type: string
+        default: '\n'
+        description: 'Separator to use for annotations output'
+        required: false
+      bake-target:
+        type: string
+        default: 'docker-metadata-action'
+        description: 'Bake target name'
+        required: false
+      github-token:
+        type: string
+        default: '${{ github.token }}'
+        description: 'GitHub token for repo context'
+        required: true
+
+    outputs:
+      version:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.version }}
+        description: 'Generated Docker image version'
+      tags:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.tags }}
+        description: 'Generated Docker tags'
+      labels:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.labels }}
+        description: 'Generated Docker labels'
+      annotations:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.annotations }}
+        description: 'Generated annotations'
+      json:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.json }}
+        description: 'JSON output of tags and labels'
+      bake-file:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.bake-file }}
+        description: 'Bake definition file with tags and labels'
+      bake-file-tags:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.bake-file-tags }}
+        description: 'Bake file (tags only)'
+      bake-file-labels:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.bake-file-labels }}
+        description: 'Bake file (labels only)'
+      bake-file-annotations:
+        value: ${{ jobs.job_docker_metadata-action_v5.outputs.bake-file-annotations }}
+        description: 'Bake file (annotations only)'
+
+jobs:
+  job_docker_metadata-action_v5:
+    name: 🐳 Docker Metadata ᵛ⁵
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    steps:
+      - name: Step - Docker Metadata
+        id: step_docker_metadata-action_v5
+        uses: docker/metadata-action@v5
+        with:
+          context: ${{ inputs.context }}
+          images: ${{ inputs.images }}
+          tags: ${{ inputs.tags }}
+          flavor: ${{ inputs.flavor }}
+          labels: ${{ inputs.labels }}
+          annotations: ${{ inputs.annotations }}
+          sep-tags: ${{ inputs.sep-tags }}
+          sep-labels: ${{ inputs.sep-labels }}
+          sep-annotations: ${{ inputs.sep-annotations }}
+          bake-target: ${{ inputs.bake-target }}
+          github-token: ${{ inputs.github-token }}
+    outputs:
+      version: ${{ steps.step_docker_metadata-action_v5.outputs.version }}
+      tags: ${{ steps.step_docker_metadata-action_v5.outputs.tags }}
+      labels: ${{ steps.step_docker_metadata-action_v5.outputs.labels }}
+      annotations: ${{ steps.step_docker_metadata-action_v5.outputs.annotations }}
+      json: ${{ steps.step_docker_metadata-action_v5.outputs.json }}
+      bake-file: ${{ steps.step_docker_metadata-action_v5.outputs.bake-file }}
+      bake-file-tags: ${{ steps.step_docker_metadata-action_v5.outputs.bake-file-tags }}
+      bake-file-labels: ${{ steps.step_docker_metadata-action_v5.outputs.bake-file-labels }}
+      bake-file-annotations: ${{ steps.step_docker_metadata-action_v5.outputs.bake-file-annotations }}
