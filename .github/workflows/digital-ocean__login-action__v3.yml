@@ -1,0 +1,54 @@
+name: '💧 DigitalOcean Login ᵛ³'
+description: 'GitHub Action to login against a DigitalOcean'
+
+on:
+  workflow_call:
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN:
+        description: 'Password or PAT (Personal Access Token) used to log against the DigitalOcean'
+        required: true
+    inputs:
+      registry:
+        type: string
+        default: 'registry.digitalocean.com'
+        description: 'Server address of DigitalOcean, If not set then will default to Docker Hub'
+        required: false
+      username:
+        type: string
+        default: null
+        description: 'Username used to log against the DigitalOcean'
+        required: false
+      password:
+        type: string
+        default: null
+        description: 'Password or PAT (Personal Access Token) used to log against the DigitalOcean'
+        required: false
+      ecr:
+        type: string
+        default: 'auto'
+        description: 'Specifies whether the given registry is ECR (auto, true or false)'
+        required: false
+      logout:
+        type: boolean
+        default: true
+        description: 'Log out from the DigitalOcean at the end of a job'
+        required: false
+
+jobs:
+  job-quay-io-login-action:
+    name: 🧩 DigitalOcean Login ᵛ³
+    runs-on: ubuntu-22.04
+    environment: ${{ github.ref }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    steps:
+      - name: Step - DigitalOcean Login ᵛ³
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ inputs.registry }}
+          username: ${{ vars.DIGITALOCEAN_USERNAME }}
+          password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          ecr: ${{ inputs.ecr }}
+          logout: ${{ inputs.logout }}

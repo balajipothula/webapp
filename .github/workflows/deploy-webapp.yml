@@ -41,6 +41,10 @@ on:
         type: boolean
         default: false
         description: '⚓ Quay.io Login ᵛ³'
+      digital-ocean_login_action_v3:
+        type: boolean
+        default: false
+        description: '💧 DigitalOcean Login ᵛ³'
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -108,3 +112,12 @@ jobs:
       username: ${{ vars.QUAY_USERNAME }}
     secrets:
       QUAY_ROBOT_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
+  job_digital-ocean_login-action_v3:
+    name: 🖱️ DigitalOcean Login
+    needs: job_docker_setup-buildx-action_v3
+    if: ${{ inputs.digital-ocean_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/digital-ocean__login-action__v3.yml
+    with:
+      username: ${{ vars.DIGITALOCEAN_USERNAME }}
+    secrets:
+      DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
