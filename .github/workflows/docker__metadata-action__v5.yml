@@ -91,7 +91,7 @@ on:
 
 jobs:
   job_docker_metadata-action_v5:
-    name: 🐳 Docker Metadata ᵛ⁵
+    name: 🧩 Docker Metadata ᵛ⁵
     runs-on: ubuntu-22.04
     defaults:
       run:
