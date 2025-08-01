@@ -21,14 +21,18 @@ on:
         type: boolean
         default: false
         description: 'Run Docker Login Action'
-      gcr_login_action_v3:
+      ghcr_login_action_v3:
         type: boolean
         default: false
-        description: 'Run GCR Login Action'
+        description: 'Run GHCR Login Action'
       gitlab_login_action_v3:
         type: boolean
         default: false
         description: 'Run GitLab Login Action'
+      acr_login_action_v3:
+        type: boolean
+        default: false
+        description: 'Run ACR Login Action'
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -49,11 +53,11 @@ jobs:
       username: ${{ vars.DOCKERHUB_USERNAME }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  job-gcr-login-action:
-    name: Job - GCR Login
+  job-ghcr-login-action:
+    name: Job - GHCR Login
     needs: job_docker_setup-buildx-action_v3
-    if: ${{ inputs.gcr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
-    uses: ./.github/workflows/gcr__login-action__v3.yml
+    if: ${{ inputs.ghcr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/ghcr__login-action__v3.yml
     with:
       username: ${{ github.actor }}
     secrets:
