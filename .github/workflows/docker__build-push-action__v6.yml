@@ -185,6 +185,12 @@ jobs:
   job_docker_build-push-action_v6:
     name: 🧩 Docker Build & Push ᵛ⁶
     runs-on: ubuntu-22.04
+    env:
+      DOCKER_BUILD_CHECKS_ANNOTATIONS: true
+      DOCKER_BUILD_SUMMARY: true
+      DOCKER_BUILD_RECORD_UPLOAD: true
+      DOCKER_BUILD_RECORD_RETENTION_DAYS: 0
+      DOCKER_BUILD_EXPORT_LEGACY: false
     defaults:
       run:
         shell: bash
