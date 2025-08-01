@@ -12,31 +12,36 @@ on:
       docker_setup_qemu_action_v3:
         type: boolean
         default: false
-        description: '🐳 Docker Setup QEMU'
+        description: '🐳 Docker Setup QEMU ᵛ³'
       docker_setup_buildx_action_v3:
         type: boolean
         default: false
-        description: '🐳 Docker Setup Buildx'
+        description: '🐳 Docker Setup Buildx ᵛ³'
       docker_login_action_v3:
         type: boolean
         default: false
-        description: '🐳 Docker Login'
+        description: '🐳 Docker Login ᵛ³'
       ghcr_login_action_v3:
         type: boolean
         default: false
-        description: '🐙 GHCR Login'
+        description: '🐙 GHCR Login ᵛ³'
       gitlab_login_action_v3:
         type: boolean
         default: false
-        description: '🦊 GitLab Login'
+        description: '🦊 GitLab Login ᵛ³'
       aws_public_ecr_login_action_v3:
         type: boolean
         default: false
-        description: '☁️ AWS Public ECR Login'
+        description: '☁️ AWS Public ECR Login ᵛ³'
       aws_ecr_login_action_v3:
         type: boolean
         default: false
-        description: '☁️ AWS ECR Login'
+        description: '☁️ AWS ECR Login ᵛ³'
+      quay_io_login_action_v3:
+        type: boolean
+        default: false
+        description: '⚓ Quay.io Login ᵛ³'
+
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -48,7 +53,7 @@ jobs:
     needs: job_docker_setup-qemu-action_v3
     if: ${{ inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/docker__setup-buildx-action__v3.yml
-  job-docker-login-action:
+  job_docker_login-action:
     name: Job - Docker Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.docker_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -57,7 +62,7 @@ jobs:
       username: ${{ vars.DOCKERHUB_USERNAME }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  job-ghcr-login-action:
+  job_ghcr_login-action:
     name: Job - GHCR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.ghcr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -66,7 +71,7 @@ jobs:
       username: ${{ github.actor }}
     secrets:
       TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-  job-gitlab-login-action:
+  job_gitlab_login-action:
     name: Job - GitLab Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.gitlab_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -75,7 +80,7 @@ jobs:
       username: ${{ vars.GITLAB_USERNAME }}
     secrets:
       GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
-  job-aws-public-ecr-login-action:
+  job_aws-public-ecr_login-action:
     name: Job - AWS Public ECR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.aws_public_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -85,7 +90,7 @@ jobs:
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  job-aws-ecr-login-action:
+  job_aws-ecr_login-action:
     name: Job - AWS ECR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.aws_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -95,3 +100,12 @@ jobs:
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  job_quay-io_login-action:
+    name: Job - AWS ECR Login
+    needs: job_docker_setup-buildx-action_v3
+    if: ${{ inputs.quay_io_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/quay-io__login-action__v3.yml
+    with:
+      username: ${{ vars.QUAY_USERNAME }}
+    secrets:
+      QUAY_ROBOT_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}

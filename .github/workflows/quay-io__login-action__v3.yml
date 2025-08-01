@@ -1,27 +1,27 @@
-name: '🐳 Docker Login ᵛ³'
-description: 'GitHub Action to login against a Docker registry'
+name: '⚓ Quay.io Login ᵛ³'
+description: 'GitHub Action to login against a Quay.io'
 
 on:
   workflow_call:
     secrets:
-      DOCKERHUB_TOKEN:
-        description: 'Password or PAT (Personal Access Token) used to log against the Docker registry.'
+      QUAY_ROBOT_TOKEN:
+        description: 'Password or Quay.io Robot Token used to log against the Quay.io'
         required: true
     inputs:
       registry:
         type: string
-        default: 'docker.io'
-        description: 'Server address of Docker registry. If not set then will default to Docker Hub'
+        default: 'quay.io'
+        description: 'Server address of Quay.io, If not set then will default to Docker Hub'
         required: false
       username:
         type: string
         default: null
-        description: 'Username used to log against the Docker registry'
+        description: 'Username used to log against the Quay.io'
         required: false
       password:
         type: string
         default: null
-        description: 'Password or personal access token used to log against the Docker registry'
+        description: 'Password or Quay.io Robot Token used to log against the Quay.io'
         required: false
       ecr:
         type: string
@@ -31,12 +31,12 @@ on:
       logout:
         type: boolean
         default: true
-        description: 'Log out from the Docker registry at the end of a job'
+        description: 'Log out from the Quay.io at the end of a job'
         required: false
 
 jobs:
-  job-docker-login-action:
-    name: Job - Docker Login
+  job-quay-io-login-action:
+    name: Job - Quay.io Login ᵛ³
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:
@@ -44,11 +44,11 @@ jobs:
         shell: bash
         working-directory: .
     steps:
-      - name: Step - Docker Login
+      - name: Step - Quay.io Login ᵛ³
         uses: docker/login-action@v3
         with:
           registry: ${{ inputs.registry }}
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ vars.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_ROBOT_TOKEN }}
           ecr: ${{ inputs.ecr }}
           logout: ${{ inputs.logout }}
