@@ -20,19 +20,19 @@ on:
       docker_login_action_v3:
         type: boolean
         default: false
-        description: 'Run Docker Login Action'
+        description: 'Run Docker Login'
       ghcr_login_action_v3:
         type: boolean
         default: false
-        description: 'Run GHCR Login Action'
+        description: 'Run GHCR Login'
       gitlab_login_action_v3:
         type: boolean
         default: false
-        description: 'Run GitLab Login Action'
-      acr_login_action_v3:
+        description: 'Run GitLab Login'
+      aws_public_ecr_login_action_v3:
         type: boolean
         default: false
-        description: 'Run ACR Login Action'
+        description: 'Run AWS Public ECR Login'
 
 jobs: 
   job_docker_setup-qemu-action_v3:
@@ -71,3 +71,12 @@ jobs:
       username: ${{ vars.GITLAB_USERNAME }}
     secrets:
       GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
+  job-aws-public-ecr-login-action:
+    name: Job - AWS Public ECR Login
+    needs: job_docker_setup-buildx-action_v3
+    if: ${{ inputs.aws_public_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
+    uses: ./.github/workflows/aws-public-ecr__login-action__v3.yml
+    with:
+      username: ${{ vars.AWS_ACCESS_KEY_ID }}
+    secrets:
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
