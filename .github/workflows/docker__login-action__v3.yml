@@ -15,10 +15,12 @@ on:
         required: false
       username:
         type: string
+        default: null
         description: 'Username used to log against the Docker registry'
         required: false
       password:
         type: string
+        default: null
         description: 'Password or personal access token used to log against the Docker registry'
         required: false
       ecr:
