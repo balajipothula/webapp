@@ -3,11 +3,6 @@ name: 🚀 WebApp Deployment
 on:
   workflow_dispatch:
     inputs:
-      AWS_PUBLIC_ECR_REGION:
-        type: string
-        default: 'us-east-1'
-        description: 'AWS Public Elastic Container Registry Region'
-        required: true
       environment:
         type: choice
         default: 'dev'
@@ -82,7 +77,7 @@ jobs:
     if: ${{ inputs.aws_public_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/aws-public-ecr__login-action__v3.yml
     with:
-      AWS_PUBLIC_ECR_REGION: ${{ inputs.AWS_PUBLIC_ECR_REGION }}
+      AWS_PUBLIC_ECR_REGION: 'us-east-1'
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
