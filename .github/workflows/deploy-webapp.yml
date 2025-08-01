@@ -42,7 +42,6 @@ on:
         default: false
         description: '⚓ Quay.io Login ᵛ³'
 
-
 jobs: 
   job_docker_setup-qemu-action_v3:
     name: Job - Docker Setup QEMU
@@ -53,7 +52,7 @@ jobs:
     needs: job_docker_setup-qemu-action_v3
     if: ${{ inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/docker__setup-buildx-action__v3.yml
-  job_docker_login-action:
+  job_docker_login-action_v3:
     name: Job - Docker Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.docker_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -62,7 +61,7 @@ jobs:
       username: ${{ vars.DOCKERHUB_USERNAME }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-  job_ghcr_login-action:
+  job_ghcr_login-action_v3:
     name: Job - GHCR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.ghcr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -71,7 +70,7 @@ jobs:
       username: ${{ github.actor }}
     secrets:
       TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
-  job_gitlab_login-action:
+  job_gitlab_login-action_v3:
     name: Job - GitLab Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.gitlab_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -80,7 +79,7 @@ jobs:
       username: ${{ vars.GITLAB_USERNAME }}
     secrets:
       GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
-  job_aws-public-ecr_login-action:
+  job_aws-public-ecr_login-action_v3:
     name: Job - AWS Public ECR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.aws_public_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -90,7 +89,7 @@ jobs:
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  job_aws-ecr_login-action:
+  job_aws-ecr_login-action_v3:
     name: Job - AWS ECR Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.aws_ecr_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
@@ -100,8 +99,8 @@ jobs:
       username: ${{ vars.AWS_ACCESS_KEY_ID }}
     secrets:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  job_quay-io_login-action:
-    name: Job - AWS ECR Login
+  job_quay-io_login-action_v3:
+    name: Job - Quay.io Login
     needs: job_docker_setup-buildx-action_v3
     if: ${{ inputs.quay_io_login_action_v3 && inputs.docker_setup_buildx_action_v3 && inputs.docker_setup_qemu_action_v3 }}
     uses: ./.github/workflows/quay-io__login-action__v3.yml
