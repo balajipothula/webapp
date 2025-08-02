@@ -95,7 +95,7 @@ on:
 
 jobs:
   job_docker_setup-buildx-action_v3:
-    name: 🧩 Docker Setup Buildx
+    name: 🧩 Docker Setup Buildx ᵛ³
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:
