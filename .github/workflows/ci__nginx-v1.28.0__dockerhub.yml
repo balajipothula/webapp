@@ -1,4 +1,4 @@
-name: '🤖 CI • NGINX v1.28.0 ⬆ Docker Hub'
+name: '🤖 CI • NGINX v1.28.0 ⬆ DockerHub'
 description: '🤖 CI action to build and push the NGINX v1.28.0 Docker image to Docker Hub.'
 
 on:
