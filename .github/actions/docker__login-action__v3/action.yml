@@ -2,8 +2,10 @@ name: Docker Login Action
 description: Logs in to DockerHub
 inputs:
   username:
+    type: string
     required: true
   password:
+    type: string
     required: true
 runs:
   using: "composite"
@@ -11,6 +13,5 @@ runs:
     - name: Docker Login
       uses: docker/login-action@v3
       with:
-        username: ${{ vars.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+        username: ${{ inputs.username }}     # ✅ Correct
+        password: ${{ inputs.password }}     # ✅ Correct
