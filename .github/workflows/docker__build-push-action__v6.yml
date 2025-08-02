@@ -186,15 +186,7 @@ on:
         description: 'Build result metadata'
 
 jobs:
-  job_docker_login-action_v3:
-    name: 🧩 Docker Login ᵛ³
-    uses: ./.github/workflows/docker__login-action__v3.yml
-    secrets:
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    with:
-      username: ${{ vars.DOCKERHUB_USERNAME }}
   job_docker_build-push-action_v6:
-    needs: [job_docker_login-action_v3]
     name: 🧩 Docker Build & Push ᵛ⁶
     runs-on: ubuntu-22.04
     env:
@@ -213,6 +205,11 @@ jobs:
         with:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
+      - name: Step - Docker Login ᵛ³
+        uses: ./.github/actions/docker__login-action__v3.yml
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6
