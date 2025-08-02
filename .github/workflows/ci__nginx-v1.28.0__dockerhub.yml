@@ -18,10 +18,6 @@ on:
         type: boolean
         default: false
         description: '🐳 Docker Setup Buildx ᵛ³'
-      docker_login-action_v3:
-        type: boolean
-        default: false
-        description: '🐳 Docker Login ᵛ³'
       docker_build-push-action_v6:
         type: boolean
         default: false
