@@ -3,6 +3,10 @@ description: 'Build and push Docker images with Buildx'
 
 on:
   workflow_call:
+    secrets:
+      DOCKERHUB_TOKEN:
+        description: 'Password or PAT (Personal Access Token) used to log against the Docker registry.'
+        required: true
     inputs:
       add-hosts:
         type: string
