@@ -1,4 +1,5 @@
-name: 🚀 WebApp Deployment
+name: '🚀 WebApp Deployment'
+description: 'Deploying Python FastAPI WebApplication'
 
 on:
   workflow_dispatch:
