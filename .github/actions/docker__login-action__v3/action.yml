@@ -1,54 +1,16 @@
-name: '🐳 Docker Login ᵛ³'
-description: 'GitHub Action to login against a Docker registry'
+name: Docker Login Action
+description: Logs in to DockerHub
+inputs:
+  username:
+    required: true
+  password:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Docker Login
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-on:
-  workflow_call:
-    secrets:
-      DOCKERHUB_TOKEN:
-        description: 'Password or PAT (Personal Access Token) used to log against the Docker registry.'
-        required: true
-    inputs:
-      registry:
-        type: string
-        default: 'docker.io'
-        description: 'Server address of Docker registry. If not set then will default to Docker Hub'
-        required: false
-      username:
-        type: string
-        default: null
-        description: 'Username used to log against the Docker registry'
-        required: false
-      password:
-        type: string
-        default: null
-        description: 'Password or personal access token used to log against the Docker registry'
-        required: false
-      ecr:
-        type: string
-        default: 'auto'
-        description: 'Specifies whether the given registry is ECR (auto, true or false)'
-        required: false
-      logout:
-        type: boolean
-        default: true
-        description: 'Log out from the Docker registry at the end of a job'
-        required: false
-
-jobs:
-  job-docker-login-action:
-    name: 🧩 Docker Login
-    runs-on: ubuntu-22.04
-    environment: ${{ github.ref }}
-    defaults:
-      run:
-        shell: bash
-        working-directory: .
-    steps:
-      - name: Step - Docker Login
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ inputs.registry }}
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          ecr: ${{ inputs.ecr }}
-          logout: ${{ inputs.logout }}
