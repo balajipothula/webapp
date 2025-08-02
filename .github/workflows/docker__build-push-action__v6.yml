@@ -27,42 +27,42 @@ on:
       build-args:
         type: string
         default: null
-        description: 'Build-time variables'
+        description: 'List of build-time variables'
         required: false
       build-contexts:
         type: string
         default: null
-        description: 'Additional build contexts (e.g., name=path)'
+        description: 'List of additional build contexts (e.g., name=path)'
         required: false
       builder:
         type: string
         default: null
-        description: 'Builder instance name'
+        description: 'Builder instance'
         required: false
       cache-from:
         type: string
         default: null
-        description: 'External cache sources (e.g., user/app:cache)'
+        description: 'List of external cache sources for buildx (e.g., user/app:cache, type=local,src=path/to/dir)'
         required: false
       cache-to:
         type: string
         default: null
-        description: 'Cache export destinations (e.g., type=local,dest=path)'
+        description: 'List of cache export destinations for buildx (e.g., user/app:cache, type=local,dest=path/to/dir)'
         required: false
       call:
         type: string
         default: null
-        description: 'Method for evaluating build (e.g., check)'
+        description: 'Set method for evaluating build (e.g., check)'
         required: false
       cgroup-parent:
         type: string
         default: null
-        description: 'Optional parent cgroup for container used in build'
+        description: 'Optional parent cgroup for the container used in the build'
         required: false
       context:
         type: string
         default: null
-        description: 'Path or URL to build context'
+        description: 'Build`s context is the set of files located in the specified PATH or URL'
         required: false
       file:
         type: string
@@ -72,92 +72,92 @@ on:
       labels:
         type: string
         default: null
-        description: 'Image metadata labels'
+        description: 'List of metadata for an image'
         required: false
       load:
         type: boolean
         default: false
-        description: 'Set to true to load image into Docker Engine after build'
+        description: 'Load is a shorthand for --output=type=docker'
         required: false
       network:
         type: string
         default: null
-        description: 'Networking mode for `RUN` instructions'
+        description: 'Set the networking mode for the RUN instructions during build'
         required: false
       no-cache:
         type: boolean
         default: false
-        description: 'Disable build cache'
+        description: 'Do not use cache when building the image'
         required: false
       no-cache-filters:
         type: string
         default: null
-        description: 'Stages to exclude from cache'
+        description: 'Do not cache specified stages'
         required: false
       outputs:
         type: string
         default: null
-        description: 'List of output destinations (e.g., type=local,dest=path)'
+        description: 'List of output destinations (format: type=local,dest=path)'
         required: false
       platforms:
         type: string
         default: null
-        description: 'Target platforms for multi-arch builds'
+        description: 'List of target platforms for build'
         required: false
       provenance:
         type: string
         default: null
-        description: 'Enable provenance attestation (e.g., true or type=provenance)'
+        description: 'Generate provenance attestation for the build (shorthand for --attest=type=provenance)'
         required: false
       pull:
         type: boolean
         default: false
-        description: 'Always pull referenced base images'
+        description: 'Always attempt to pull all referenced images'
         required: false
       push:
         type: boolean
         default: false
-        description: 'Push image to registry'
+        description: 'Push is a shorthand for --output=type=registry'
         required: false
       sbom:
         type: string
         default: null
-        description: 'Enable SBOM attestation (e.g., true or type=sbom)'
+        description: 'Generate SBOM attestation for the build (shorthand for --attest=type=sbom)'
         required: false
       secrets:
         type: string
         default: null
-        description: 'Secrets to expose to the build (e.g., key=value)'
+        description: 'List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)'
         required: false
       secret-envs:
         type: string
         default: null
-        description: 'Secret environment variables (e.g., key=envname)'
+        description: 'List of secret env vars to expose to the build (e.g., key=envname, MY_SECRET=MY_ENV_VAR)'
         required: false
       secret-files:
         type: string
         default: null
-        description: 'Secret files (e.g., key=filename)'
+        description: 'List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)'
         required: false
       shm-size:
         type: string
         default: null
-        description: 'Shared memory size (e.g., 2g)'
+        description: 'Size of /dev/shm (e.g., 2g)'
         required: false
       ssh:
         type: string
         default: null
-        description: 'SSH agent sockets or keys to expose'
+        description: 'List of SSH agent socket or keys to expose to the build'
         required: false
       tags:
         type: string
         default: null
-        description: 'List of image tags'
+        description: 'List of tags'
         required: false
       target:
         type: string
         default: null
-        description: 'Target build stage'
+        description: 'Sets the target stage to build'
         required: false
       ulimit:
         type: string
@@ -167,7 +167,7 @@ on:
       github-token:
         type: string
         default: '${{ github.token }}'
-        description: 'GitHub Token for authentication'
+        description: 'GitHub Token used to authenticate against a repository for Git context'
         required: false
 
     outputs:
@@ -200,24 +200,24 @@ jobs:
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6
         with:
-          add-hosts: ${{ inputs['add-hosts'] }}
+          add-hosts: ${{ inputs.add-hosts }}
           allow: ${{ inputs.allow }}
           annotations: ${{ inputs.annotations }}
           attests: ${{ inputs.attests }}
-          build-args: ${{ inputs['build-args'] }}
-          build-contexts: ${{ inputs['build-contexts'] }}
+          build-args: ${{ inputs.build-args }}
+          build-contexts: ${{ inputs.build-contexts }}
           builder: ${{ inputs.builder }}
-          cache-from: ${{ inputs['cache-from'] }}
-          cache-to: ${{ inputs['cache-to'] }}
+          cache-from: ${{ inputs.cache-from }}
+          cache-to: ${{ inputs.cache-to }}
           call: ${{ inputs.call }}
-          cgroup-parent: ${{ inputs['cgroup-parent'] }}
+          cgroup-parent: ${{ inputs.cgroup-parent }}
           context: ${{ inputs.context }}
           file: ${{ inputs.file }}
           labels: ${{ inputs.labels }}
           load: ${{ inputs.load }}
           network: ${{ inputs.network }}
-          no-cache: ${{ inputs['no-cache'] }}
-          no-cache-filters: ${{ inputs['no-cache-filters'] }}
+          no-cache: ${{ inputs.no-cache }}
+          no-cache-filters: ${{ inputs.no-cache-filters }}
           outputs: ${{ inputs.outputs }}
           platforms: ${{ inputs.platforms }}
           provenance: ${{ inputs.provenance }}
@@ -225,14 +225,14 @@ jobs:
           push: ${{ inputs.push }}
           sbom: ${{ inputs.sbom }}
           secrets: ${{ inputs.secrets }}
-          secret-envs: ${{ inputs['secret-envs'] }}
-          secret-files: ${{ inputs['secret-files'] }}
-          shm-size: ${{ inputs['shm-size'] }}
+          secret-envs: ${{ inputs.secret-envs }}
+          secret-files: ${{ inputs.secret-files }}
+          shm-size: ${{ inputs.shm-size }}
           ssh: ${{ inputs.ssh }}
           tags: ${{ inputs.tags }}
           target: ${{ inputs.target }}
           ulimit: ${{ inputs.ulimit }}
-          github-token: ${{ inputs['github-token'] }}
+          github-token: ${{ inputs.github-token }}
     outputs:
       imageid: ${{ steps.step_docker_build-push-action_v6.outputs.imageid }}
       digest: ${{ steps.step_docker_build-push-action_v6.outputs.digest }}
