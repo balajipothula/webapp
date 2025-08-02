@@ -1,0 +1,69 @@
+name: '🐳 Docker NGINX Image Push'
+description: '🤖 CI action to push NGINX v1.28.0 Docker image'
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        default: 'dev'
+        description: 'Please select deployment environment'
+        options: [dev, qa, prod]
+        required: true
+      docker_setup-qemu-action_v3:
+        type: boolean
+        default: false
+        description: '🐳 Docker Setup QEMU ᵛ³'
+      docker_setup-buildx-action_v3:
+        type: boolean
+        default: false
+        description: '🐳 Docker Setup Buildx ᵛ³'
+      docker_login-action_v3:
+        type: boolean
+        default: false
+        description: '🐳 Docker Login ᵛ³'
+      docker_build-push-action_v6:
+        type: boolean
+        default: false
+        description: '🐳 Docker Build & Push ᵛ⁶'
+
+jobs:
+  job_get_utc-time-now:
+    name: 🕒 Get UTC Time Now
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Step - Get UTC Time Now
+        id: step_get_utc-time-now
+        run: echo "utc-time-now=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_OUTPUT"
+    outputs:
+      utc-time-now: ${{ steps.step_get_utc-time-now.outputs.utc-time-now }}
+  job_docker_setup-qemu-action_v3:
+    name: 🖱️ Docker Setup QEMU
+    if: ${{ inputs.docker_setup-qemu-action_v3 }}
+    uses: ./.github/workflows/docker__setup-qemu-action__v3.yml
+  job_docker_setup-buildx-action_v3:
+    name: 🖱️ Docker Setup Buildx
+    needs: [job_docker_setup-qemu-action_v3]
+    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 }}
+    uses: ./.github/workflows/docker__setup-buildx-action__v3.yml
+  job_docker_login-action_v3:
+    name: 🖱️ Docker Login
+    needs: [job_docker_setup-qemu-action_v3, job_docker_setup-buildx-action_v3]
+    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.docker_login-action_v3}}
+    uses: ./.github/workflows/docker__login-action__v3.yml
+    with:
+      username: ${{ vars.DOCKERHUB_USERNAME }}
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  job_docker_build-push-action_v6:
+    name: 🖱️ DigitalOcean Login
+    needs: [job_get_utc-time-now, job_docker_setup-qemu-action_v3, job_docker_setup-buildx-action_v3, job_docker_login-action_v3]
+    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.docker_login-action_v3 && inputs.docker_build-push-action_v6 }}
+    uses: ./.github/workflows/docker__build-push-action__v6.yml
+    with:
+      file: './docker/Dockerfile.nginx1.28.0'
+      labels: |
+        org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
+      platforms: linux/amd64
+      push: true
+      tags: balajipothula/nginx:1.28.0
