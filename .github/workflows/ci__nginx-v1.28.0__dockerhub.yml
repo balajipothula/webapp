@@ -64,6 +64,7 @@ jobs:
       file: './docker/Dockerfile.nginx1.28.0'
       labels: |
         org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
+      load: false
       platforms: linux/amd64
       push: true
       tags: balajipothula/nginx:1.28.0
