@@ -196,7 +196,7 @@ jobs:
         shell: bash
         working-directory: .
     steps:
-      - name: Step - Git Checkout ᵛ³
+      - name: Step - Checkout ᵛ³
         uses: actions/checkout@v3
         with:
           repository: '${{ github.repository }}'
