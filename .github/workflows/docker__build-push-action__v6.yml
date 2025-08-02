@@ -205,6 +205,11 @@ jobs:
         with:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
+      - name: Step - Docker Login ᵛ³
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6
