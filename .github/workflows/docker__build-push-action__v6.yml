@@ -196,6 +196,11 @@ jobs:
         shell: bash
         working-directory: .
     steps:
+      - name: Step - Git Checkout ᵛ³
+        uses: actions/checkout@v3
+        with:
+          repository: '${{ github.repository }}'
+          token: '${{ github.token }}'
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6
