@@ -1,17 +1,41 @@
-name: Docker Login Action
-description: Logs in to DockerHub
+name: '🐳 Docker Login ᵛ³'
+description: 'GitHub Action to login against a Docker registry'
+
 inputs:
+  registry:
+    type: string
+    default: 'docker.io'
+    description: 'Server address of Docker registry. If not set then will default to Docker Hub'
+    required: false
   username:
     type: string
-    required: true
+    default: null
+    description: 'Username used to log against the Docker registry'
+    required: false
   password:
     type: string
-    required: true
+    default: null
+    description: 'Password or personal access token used to log against the Docker registry'
+    required: false
+  ecr:
+    type: string
+    default: 'auto'
+    description: 'Specifies whether the given registry is ECR (auto, true or false)'
+    required: false
+  logout:
+    type: boolean
+    default: true
+    description: 'Log out from the Docker registry at the end of a job'
+    required: false
+
 runs:
   using: "composite"
   steps:
-    - name: Docker Login
+    - name: 🧩 Docker Login
       uses: docker/login-action@v3
       with:
-        username: ${{ inputs.username }}     # ✅ Correct
-        password: ${{ inputs.password }}     # ✅ Correct
+        registry: ${{ inputs.registry }}
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+        ecr: ${{ inputs.ecr }}
+        logout: ${{ inputs.logout }}
