@@ -27,13 +27,11 @@ inputs:
     default: true
     description: 'Log out from the Quay.io at the end of a job'
     required: false
-
 runs:
   using: "composite"
   steps:
     - name: 🧩 Quay.io Login ᵛ³
       uses: docker/login-action@v3
-      with:
       with:
         registry: ${{ inputs.registry }}
         username: ${{ inputs.username }}

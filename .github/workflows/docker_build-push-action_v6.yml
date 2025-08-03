@@ -14,12 +14,12 @@ on:
       docker_login-action_v3:
         type: boolean
         default: false
-        description: 'Enable DockerHub login'
+        description: '🐳 Docker Login ᵛ³'
         required: false
       ghcr_login-action_v3:
         type: boolean
         default: false
-        description: 'Enable GHCR login'
+        description: '🐙 GHCR Login ᵛ³'
         required: false
       add-hosts:
         type: string
@@ -186,7 +186,6 @@ on:
         default: '${{ github.token }}'
         description: 'GitHub Token used to authenticate against a repository for Git context'
         required: false
-
     outputs:
       imageid:
         value: ${{ jobs.job_docker_build-push-action_v6.outputs.imageid }}

@@ -27,7 +27,6 @@ inputs:
     default: true
     description: 'Log out from the Docker registry at the end of a job'
     required: false
-
 runs:
   using: "composite"
   steps:
