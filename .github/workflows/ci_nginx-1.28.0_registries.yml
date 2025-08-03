@@ -14,16 +14,8 @@ on:
         type: choice
         default: ghcr
         description: 'Select registry to push image'
-        options: [dockerhub, ghcr, gitlab, quay, aws-ecr, aws-public-ecr]
+        options: ['Docker Hub', 'GitHub Container Registry']
         required: true
-      docker_login-action_v3:
-        type: boolean
-        default: false
-        description: '🐳 Docker Login ᵛ³'
-      ghcr_login-action_v3:
-        type: boolean
-        default: false
-        description: '🐙 GHCR Login ᵛ³'     
       docker_build-push-action_v6:
         type: boolean
         default: false
@@ -59,7 +51,7 @@ jobs:
       platforms: linux/amd64
       push: true
       tags: |
-        ${{ (inputs.registry == 'dockerhub' && 'balajipothula/nginx:1.28.0') || (inputs.registry == 'ghcr' && 'ghcr.io/balajipothula/nginx:1.28.0') }}
+        ${{ (inputs.registry == 'Docker Hub' && 'balajipothula/nginx:1.28.0') || (inputs.registry == 'GitHub Container Registry' && 'ghcr.io/balajipothula/nginx:1.28.0') }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       GHCR_PAT: ${{ secrets.GHCR_PAT }}
