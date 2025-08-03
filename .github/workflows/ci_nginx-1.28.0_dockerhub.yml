@@ -18,10 +18,18 @@ on:
         type: boolean
         default: false
         description: '🐳 Docker Setup Buildx ᵛ³'
+      docker_login-action_v3:
+        type: boolean
+        default: false
+        description: '🐳 Docker Login ᵛ³'
       docker_build-push-action_v6:
         type: boolean
         default: false
         description: '🐳 Docker Build & Push ᵛ⁶'
+      ghcr_login-action_v3:
+        type: boolean
+        default: false
+        description: '🐙 GHCR Login ᵛ³'     
       ghcr_build-push-action_v6:
         type: boolean
         default: false
@@ -52,26 +60,8 @@ jobs:
     if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.docker_build-push-action_v6 }}
     uses: ./.github/workflows/docker_build-push-action_v6.yml
     with:
-      login_dockerhub: true
-      login_ghcr: false
-      file: './docker/Dockerfile.nginx1.28.0'
-      labels: |
-        org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
-      load: false
-      platforms: linux/amd64
-      push: true
-      tags: balajipothula/nginx:1.28.0
-    secrets:
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
-  job_ghcr_build-push-action_v6:
-    name: 🖱️ GHCR Build & Push ᵛ⁶
-    needs: [job_get_utc-time-now, job_docker_setup-qemu-action_v3, job_docker_setup-buildx-action_v3]
-    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.ghcr_build-push-action_v6 }}
-    uses: ./.github/workflows/docker_build-push-action_v6.yml
-    with:
-      login_dockerhub: true
-      login_ghcr: false
+      docker_login-action_v3: ${{ inputs.docker_login-action_v3 }}
+      ghcr_login-action_v3: ${{ inputs.ghcr_login-action_v3 }}
       file: './docker/Dockerfile.nginx1.28.0'
       labels: |
         org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'

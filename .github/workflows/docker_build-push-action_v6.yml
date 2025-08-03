@@ -11,12 +11,12 @@ on:
         description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
         required: true    
     inputs:
-      login_dockerhub:
+      docker_login-action_v3:
         type: boolean
         default: false
         description: 'Enable DockerHub login'
         required: false
-      login_ghcr:
+      ghcr_login-action_v3:
         type: boolean
         default: false
         description: 'Enable GHCR login'
@@ -219,13 +219,13 @@ jobs:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - Docker Login ᵛ³
-        if: inputs.login_dockerhub == true
+        if: inputs.docker_login-action_v3 == true
         uses: ./.github/actions/docker_login-action_v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Step - GHCR Login ᵛ³
-        if: inputs.login_ghcr == true
+        if: inputs.ghcr_login-action_v3 == true
         uses: ./.github/actions/ghcr_login-action_v3
         with:
           username: ${{ github.actor }}
