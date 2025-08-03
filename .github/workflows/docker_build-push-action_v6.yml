@@ -7,7 +7,20 @@ on:
       DOCKERHUB_TOKEN:
         description: 'Password or PAT (Personal Access Token) used to log against the Docker registry.'
         required: true    
+      TOKEN_GITHUB:
+        description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
+        required: true    
     inputs:
+      login_dockerhub:
+        type: boolean
+        default: false
+        description: 'Enable DockerHub login'
+        required: false
+      login_ghcr:
+        type: boolean
+        default: false
+        description: 'Enable GHCR login'
+        required: false
       add-hosts:
         type: string
         default: null
@@ -206,10 +219,17 @@ jobs:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - Docker Login ᵛ³
+        if: inputs.login_dockerhub == true
         uses: ./.github/actions/docker_login-action_v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Step - GHCR Login ᵛ³
+        if: inputs.login_ghcr == true
+        uses: ./.github/actions/ghcr_login-action_v3
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN_GITHUB }}
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6

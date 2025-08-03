@@ -1,5 +1,5 @@
-name: '🤖 CI • nginx-1.28.0 ⇧ GHCR'
-description: '🤖 CI action to build and push the NGINX v1.28.0 Docker image to GitHub Container Registry (GHCR).'
+name: '🤖 CI • nginx-1.28.0 ⇧ DockerHub'
+description: '🤖 CI action to build and push the NGINX v1.28.0 Docker image to Docker Hub.'
 
 on:
   workflow_dispatch:
@@ -22,6 +22,10 @@ on:
         type: boolean
         default: false
         description: '🐳 Docker Build & Push ᵛ⁶'
+      ghcr_build-push-action_v6:
+        type: boolean
+        default: false
+        description: '🐙 GHCR Build & Push ᵛ⁶'
 
 jobs:
   job_get_utc-time-now:
@@ -48,6 +52,8 @@ jobs:
     if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.docker_build-push-action_v6 }}
     uses: ./.github/workflows/docker_build-push-action_v6.yml
     with:
+      login_dockerhub: true
+      login_ghcr: false
       file: './docker/Dockerfile.nginx1.28.0'
       labels: |
         org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
@@ -57,3 +63,22 @@ jobs:
       tags: balajipothula/nginx:1.28.0
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+  job_ghcr_build-push-action_v6:
+    name: 🖱️ GHCR Build & Push ᵛ⁶
+    needs: [job_get_utc-time-now, job_docker_setup-qemu-action_v3, job_docker_setup-buildx-action_v3]
+    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.ghcr_build-push-action_v6 }}
+    uses: ./.github/workflows/docker_build-push-action_v6.yml
+    with:
+      login_dockerhub: true
+      login_ghcr: false
+      file: './docker/Dockerfile.nginx1.28.0'
+      labels: |
+        org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
+      load: false
+      platforms: linux/amd64
+      push: true
+      tags: balajipothula/nginx:1.28.0
+    secrets:
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
