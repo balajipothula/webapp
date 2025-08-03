@@ -53,7 +53,7 @@ jobs:
       load: false
       platforms: linux/amd64
       push: true
-      tags: balajipothula/nginx:1.28.0
+      tags: ghcr.io/balajipothula/nginx:1.28.0
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       GHCR_PAT: ${{ secrets.GHCR_PAT }}
