@@ -206,7 +206,7 @@ jobs:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - Docker Login ᵛ³
-        uses: ./.github/actions/docker__login-action__v3
+        uses: ./.github/actions/docker_login-action_v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
