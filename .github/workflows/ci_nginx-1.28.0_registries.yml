@@ -35,17 +35,14 @@ jobs:
       utc-time-now: ${{ steps.step_get_utc-time-now.outputs.utc-time-now }}
   job_docker_setup-qemu-action_v3:
     name: 🖱️ Docker Setup QEMU ᵛ³
-    if: ${{ inputs.docker_setup-qemu-action_v3 }}
     uses: ./.github/workflows/docker_setup-qemu-action_v3.yml
   job_docker_setup-buildx-action_v3:
     name: 🖱️ Docker Setup Buildx ᵛ³
     needs: [job_docker_setup-qemu-action_v3]
-    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 }}
     uses: ./.github/workflows/docker_setup-buildx-action_v3.yml
   job_docker_build-push-action_v6:
     name: 🖱️ Docker Build & Push ᵛ⁶
     needs: [job_get_utc-time-now, job_docker_setup-qemu-action_v3, job_docker_setup-buildx-action_v3]
-    if: ${{ inputs.docker_setup-qemu-action_v3 && inputs.docker_setup-buildx-action_v3 && inputs.docker_build-push-action_v6 }}
     uses: ./.github/workflows/docker_build-push-action_v6.yml
     with:
       docker_login-action_v3: ${{ inputs.docker_login-action_v3 }}
