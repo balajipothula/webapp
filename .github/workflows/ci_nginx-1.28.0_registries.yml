@@ -10,30 +10,18 @@ on:
         description: 'Please select deployment environment'
         options: [dev, qa, prod]
         required: true
-      docker_setup-qemu-action_v3:
-        type: boolean
-        default: false
-        description: '🐳 Docker Setup QEMU ᵛ³'
-      docker_setup-buildx-action_v3:
-        type: boolean
-        default: false
-        description: '🐳 Docker Setup Buildx ᵛ³'
       docker_login-action_v3:
         type: boolean
         default: false
         description: '🐳 Docker Login ᵛ³'
-      docker_build-push-action_v6:
-        type: boolean
-        default: false
-        description: '🐳 Docker Build & Push ᵛ⁶'
       ghcr_login-action_v3:
         type: boolean
         default: false
         description: '🐙 GHCR Login ᵛ³'     
-      ghcr_build-push-action_v6:
+      docker_build-push-action_v6:
         type: boolean
         default: false
-        description: '🐙 GHCR Build & Push ᵛ⁶'
+        description: '🐳 Docker Build & Push ᵛ⁶'
 
 jobs:
   job_get_utc-time-now:
