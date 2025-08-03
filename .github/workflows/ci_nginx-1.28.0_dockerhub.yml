@@ -1,5 +1,5 @@
-name: '🤖 CI • nginx-1.28.0 ⇧ DockerHub'
-description: '🤖 CI action to build and push the NGINX v1.28.0 Docker image to Docker Hub.'
+name: '🤖 CI • nginx-1.28.0 ⇧ Registries'
+description: '🤖 CI action to build and push the NGINX v1.28.0 Docker image to multiple registries.'
 
 on:
   workflow_dispatch:
