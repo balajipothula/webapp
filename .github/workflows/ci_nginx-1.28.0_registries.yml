@@ -8,20 +8,39 @@ on:
         type: choice
         default: 'dev'
         description: 'Select deployment environment'
-        options: [dev, qa, prod]
+        options: ['dev', 'qa', 'prod']
+        required: true
+      dockerfile:
+        type: string
+        default: 'Dockerfile.nginx1.28.0'
+        description: 'Enter Dockerfile name'
         required: true
       registry:
         type: choice
-        default: ghcr
+        default: 'GitHub Container Registry'
         description: 'Select registry to push image'
         options: ['Docker Hub', 'GitHub Container Registry']
+        required: true
+      namespace:
+        type: string
+        default: balajipothula
+        description: 'Enter namespace'
+        required: true
+      repository:
+        type: string
+        default: nginx
+        description: 'Enter repository'
+        required: true
+      tag:
+        type: string
+        default: 1.28.0
+        description: 'Enter tag'
         required: true
       docker_build-push-action_v6:
         type: boolean
         default: false
         description: '🐳 Docker Build & Push ᵛ⁶'
         required: true
-
 jobs:
   job_get_utc-time-now:
     name: 🕒 Get UTC Time Now
@@ -45,14 +64,14 @@ jobs:
     uses: ./.github/workflows/docker_build-push-action_v6.yml
     with:
       registry: ${{ inputs.registry }}
-      file: './docker/Dockerfile.nginx1.28.0'
+      file: './docker/${{ inputs.dockerfile }}'
       labels: |
         org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
       load: false
       platforms: linux/amd64
       push: true
       tags: |
-        ${{ (inputs.registry == 'Docker Hub' && 'balajipothula/nginx:1.28.0') || (inputs.registry == 'GitHub Container Registry' && 'ghcr.io/balajipothula/nginx:1.28.0') }}
+        ${{ (inputs.registry == 'Docker Hub' && format('{0}/{1}:{2}', inputs.namespace, inputs.repository, inputs.tag)) || (inputs.registry == 'GitHub Container Registry' && format('ghcr.io/{0}/{1}:{2}', inputs.namespace, inputs.repository, inputs.tag)) }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       GHCR_PAT: ${{ secrets.GHCR_PAT }}
