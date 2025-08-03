@@ -200,6 +200,10 @@ jobs:
   job_docker_build-push-action_v6:
     name: 🧩 Docker Build & Push ᵛ⁶
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
     env:
       DOCKER_BUILD_CHECKS_ANNOTATIONS: true
       DOCKER_BUILD_SUMMARY: false
