@@ -11,15 +11,10 @@ on:
         description: 'Password or PAT (Personal Access Token) used to log against the GitHub Container Registry'
         required: true    
     inputs:
-      docker_login-action_v3:
-        type: boolean
-        default: false
-        description: '🐳 Docker Login ᵛ³'
-        required: false
-      ghcr_login-action_v3:
-        type: boolean
-        default: false
-        description: '🐙 GHCR Login ᵛ³'
+      registry:
+        type: string
+        default: null
+        description: "Image Registry"
         required: false
       add-hosts:
         type: string
@@ -221,17 +216,17 @@ jobs:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - Docker Login ᵛ³
-        if: ${{ inputs.docker_login-action_v3 }}
+        if: ${{ inputs.registry == 'dockerhub' }}
         uses: ./.github/actions/docker_login-action_v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Step - GHCR Login ᵛ³
-        if: ${{ inputs.ghcr_login-action_v3 }}
+        if: ${{ inputs.registry == 'ghcr' }}
         uses: ./.github/actions/ghcr_login-action_v3
         with:
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_PAT }}
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6

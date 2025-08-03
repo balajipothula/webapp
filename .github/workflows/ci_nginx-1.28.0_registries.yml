@@ -10,6 +10,12 @@ on:
         description: 'Please select deployment environment'
         options: [dev, qa, prod]
         required: true
+      registry:
+        type: choice
+        default: ghcr
+        description: 'Select registry to push image'
+        options: [dockerhub, ghcr, gitlab, quay, aws-ecr, aws-public-ecr]
+        required: true
       docker_login-action_v3:
         type: boolean
         default: false
@@ -45,15 +51,15 @@ jobs:
     needs: [job_get_utc-time-now, job_docker_setup-qemu-action_v3, job_docker_setup-buildx-action_v3]
     uses: ./.github/workflows/docker_build-push-action_v6.yml
     with:
-      docker_login-action_v3: ${{ inputs.docker_login-action_v3 }}
-      ghcr_login-action_v3: ${{ inputs.ghcr_login-action_v3 }}
+      registry: ${{ inputs.registry }}
       file: './docker/Dockerfile.nginx1.28.0'
       labels: |
         org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
       load: false
       platforms: linux/amd64
       push: true
-      tags: ghcr.io/balajipothula/nginx:1.28.0
+      tags: |
+        ${{ (inputs.registry == 'dockerhub' && 'balajipothula/nginx:1.28.0') || (inputs.registry == 'ghcr' && 'ghcr.io/balajipothula/nginx:1.28.0') }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       GHCR_PAT: ${{ secrets.GHCR_PAT }}
