@@ -196,7 +196,6 @@ on:
       metadata:
         value: ${{ jobs.job_docker_build-push-action_v6.outputs.metadata }}
         description: 'Build result metadata'
-
 jobs:
   job_docker_build-push-action_v6:
     name: 🧩 Docker Build & Push ᵛ⁶
@@ -218,17 +217,17 @@ jobs:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - Docker Login ᵛ³
-        if: inputs.docker_login-action_v3 == true
+        if: ${{ inputs.docker_login-action_v3 }}
         uses: ./.github/actions/docker_login-action_v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Step - GHCR Login ᵛ³
-        if: inputs.ghcr_login-action_v3 == true
+        if: ${{ inputs.ghcr_login-action_v3 }}
         uses: ./.github/actions/ghcr_login-action_v3
         with:
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6
