@@ -7,7 +7,7 @@ on:
       environment:
         type: choice
         default: 'dev'
-        description: 'Please select deployment environment'
+        description: 'Select deployment environment'
         options: [dev, qa, prod]
         required: true
       registry:
@@ -20,6 +20,7 @@ on:
         type: boolean
         default: false
         description: '🐳 Docker Build & Push ᵛ⁶'
+        required: true
 
 jobs:
   job_get_utc-time-now:
