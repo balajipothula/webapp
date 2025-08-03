@@ -56,4 +56,4 @@ jobs:
       tags: balajipothula/nginx:1.28.0
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}

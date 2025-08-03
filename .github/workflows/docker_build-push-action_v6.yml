@@ -5,10 +5,10 @@ on:
   workflow_call:
     secrets:
       DOCKERHUB_TOKEN:
-        description: 'Password or PAT (Personal Access Token) used to log against the Docker registry.'
+        description: 'Password or PAT (Personal Access Token) used to log against the Docker registry'
         required: true    
-      TOKEN_GITHUB:
-        description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
+      GHCR_PAT:
+        description: 'Password or PAT (Personal Access Token) used to log against the GitHub Container Registry'
         required: true    
     inputs:
       docker_login-action_v3:
@@ -229,7 +229,7 @@ jobs:
         uses: ./.github/actions/ghcr_login-action_v3
         with:
           username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN_GITHUB }}
+          password: ${{ secrets.GHCR_PAT }}
       - name: Step - Docker Build & Push ᵛ⁶
         id: step_docker_build-push-action_v6
         uses: docker/build-push-action@v6

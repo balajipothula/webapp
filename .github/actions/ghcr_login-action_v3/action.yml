@@ -15,7 +15,7 @@ inputs:
   password:
     type: string
     default: null
-    description: 'Password or PAT (Personal Access Token) used to log against the GitHub'
+    description: 'Password or PAT (Personal Access Token) used to log against the GitHub Container Registry'
     required: false
   ecr:
     type: string
