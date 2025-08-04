@@ -41,7 +41,7 @@ jobs:
         uses: ./.github/actions/candidob_get-runner-ip_v1-0-0
       # Installing the specified version of Terraform CLI on Runner.
       - name: Step - Terraform setup 📐
-        uses: hashicorp/setup-terraform@v2
+        uses: ./.github/actions/hashicorp_setup-terraform_v2
         with:
           terraform_version: 1.4.0
       # Initialize a new or existing Terraform working directory by creating initial files,
