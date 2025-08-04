@@ -1,4 +1,4 @@
-name: 'HashiCorp - Setup Terraform'
+name: '🏗️ HashiCorp - Setup Terraform'
 description: 'Sets up Terraform CLI in your GitHub Actions workflow.'
 
 on:
