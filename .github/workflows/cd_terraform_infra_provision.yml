@@ -27,7 +27,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: .
+        #working-directory: .
     steps:
       # Checkout a Git repository at a particular version.
       - name: Step - Checkout ᵛ³
@@ -37,7 +37,7 @@ jobs:
           token: '${{ github.token }}'
       # Gets the public IPv4 and IPv6 addreses of the current runner.
       - name: Step - Get Runner Public IP Address ᵛ¹·⁰·⁰
-        id: candidob_get-runner-ip_v1-0-0
+        id: step_candidob_get-runner-ip_v1-0-0
         uses: ./.github/actions/candidob_get-runner-ip_v1-0-0
       # Installing the specified version of Terraform CLI on Runner.
       - name: Step - Terraform setup 📐
@@ -63,7 +63,7 @@ jobs:
       - name: Step - Terraform plan generation 📄
         run: |
           terraform plan -input=false -out=webapp.tfplan \
-            -var="github_runner_ip=${{ steps.candidob_get-runner-ip_v1-0-0.outputs.ipv4 }}/32" \
+            -var="github_runner_ip=${{ steps.step_candidob_get-runner-ip_v1-0-0.outputs.ipv4 }}/32" \
             -var="webapp_database_name=${{ vars.WEBAPP_DB_NAME }}" \
             -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"

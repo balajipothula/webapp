@@ -13,5 +13,5 @@ runs:
   using: "composite"
   steps:
     - name: 🧩 Get Runner Public IP Address ᵛ¹·⁰·⁰
-      id: candidob_get-runner-ip_v1-0-0
+      id: step_candidob_get-runner-ip_v1-0-0
       uses: candidob/get-runner-ip@v1.0.0
