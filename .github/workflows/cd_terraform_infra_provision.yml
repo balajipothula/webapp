@@ -10,21 +10,64 @@ on:
         description: 'Select deployment environment'
         options: ['dev', 'qa', 'prod']
         required: true
-      terraform_version:
-        type: string
-        default: '1.4.0'
-        description: 'Terraform CLI version.'
-        required: true
+
+env:
+  # Setting verbosity of Terraform logs.
+  TF_LOG: ERROR
+  # Setting AWS Access Key Id and Secret Access Key.
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
-  job_hashicorp_setup-terraform_v2:
-    name: 🖱️ Setup Terraform ᵛ²
-    uses: ./.github/workflows/hashicorp_setup-terraform_v2.yml
-    with:
-      cli_config_credentials_hostname: null
-      terraform_version: ${{ inputs.terraform_version }}
-      WEBAPP_DB_NAME: ${{ vars.WEBAPP_DB_NAME }}
-    secrets:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      WEBAPP_DB_MASTER_USERNAME: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
-      WEBAPP_DB_MASTER_PASSWORD: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
+  terraform_infra_provision:
+    name: Terraform Infra Provision
+    # GitHub Actions runner is ubuntu-22.04.
+    runs-on: ubuntu-22.04
+    environment: ${{ github.ref }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+    steps:
+      # Checkout a Git repository at a particular version.
+      - name: Step - Checkout ᵛ³
+        uses: actions/checkout@v3
+        with:
+          repository: '${{ github.repository }}'
+          token: '${{ github.token }}'
+      # Gets the public IPv4 and IPv6 addreses of the current runner.
+      - name: Step - Get Runner Public IP Address ᵛ¹·⁰·⁰
+        id: candidob_get-runner-ip_v1-0-0
+        uses: ./.github/actions/candidob_get-runner-ip_v1-0-0
+      # Installing the specified version of Terraform CLI on Runner.
+      - name: Step - Terraform setup 📐
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.4.0
+      # Initialize a new or existing Terraform working directory by creating initial files,
+      # loading any remote state, downloading modules, etc.
+      - name: Step - Terraform initialization 🔁
+        run: terraform init -input=false -reconfigure
+        env:
+          TF_WORKSPACE: default
+      # Format Terraform configuration files adhere in to a canonical format.
+      - name: Step - Terraform files formating 🧹
+        run: terraform fmt
+      # Check that all Terraform configuration files adhere to a canonical format.
+      - name: Step - Terraform files format checking 🔍
+        run: terraform fmt -check
+      # Validate all Terraform configuration files.
+      - name: Step - Terraform files validating ✅
+        run: terraform validate -no-color
+      # Generates an execution plan for Terraform.
+      - name: Step - Terraform plan generation 📄
+        run: |
+          terraform plan -input=false -out=webapp.tfplan \
+            -var="github_runner_ip=${{ steps.candidob_get-runner-ip_v1-0-0.outputs.ipv4 }}/32" \
+            -var="webapp_database_name=${{ vars.WEBAPP_DB_NAME }}" \
+            -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
+            -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
+        continue-on-error: false
+      # Apply an execution plan for Terraform.
+      - name: Step - Terraform plan applying 🚧
+        run: terraform apply -auto-approve -input=false webapp.tfplan
