@@ -482,7 +482,7 @@ module "github_runner_to_pg_webapp_db_sg" {
   source                 = "./terraform/aws/vpc/security_group"
 
   name                   = "github-runner-to-pg-webapp-db-sg"    # ✅ Optional argument, ❗ Forces new resource.
-  description            = "WebApp DB AWS Security Group"        # ✅ Optional argument, ❗ Forces new resource.
+  description            = "GitHub Runner to PG WebApp DB SG"    # ✅ Optional argument, ❗ Forces new resource.
   egress_rules           = [
     {
       from_port          = 0                                     # 🔒 Required argument.
