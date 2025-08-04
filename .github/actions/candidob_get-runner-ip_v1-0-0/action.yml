@@ -13,10 +13,5 @@ runs:
   using: "composite"
   steps:
     - name: 🧩 Get Runner Public IP Address ᵛ¹·⁰·⁰
-      id: step_candidob_get-runner-ip_v1-0-0
+      id: candidob_get-runner-ip_v1-0-0
       uses: candidob/get-runner-ip@v1.0.0
-    - name: 🧩 Runner Public IPv4 and IPv6
-      shell: bash
-      run: |
-        echo "ipv4=${{ steps.step_candidob_get-runner-ip_v1-0-0.ipv4 }}" >> "$GITHUB_OUTPUT"
-        echo "ipv6=${{ steps.step_candidob_get-runner-ip_v1-0-0.ipv6 }}" >> "$GITHUB_OUTPUT"
