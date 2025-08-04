@@ -1,0 +1,30 @@
+name: '🏗️ CD • Terraform • Infra Provision'
+description: 'Continuous delivery action to provision AWS infrastructure using Terraform v1.4.0.'
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        default: 'dev'
+        description: 'Select deployment environment'
+        options: ['dev', 'qa', 'prod']
+        required: true
+      terraform_version:
+        type: string
+        default: '1.4.0'
+        description: 'Terraform CLI version or constraint (e.g. `<1.13.0`).'
+        required: true
+jobs:
+  job_hashicorp_setup-terraform_v2:
+    name: 🖱️ Setup Terraform ᵛ²
+    uses: ./.github/workflows/hashicorp_setup-terraform_v2.yml
+    with:
+      cli_config_credentials_hostname: null
+      terraform_version: ${{ inputs.terraform_version }}
+      WEBAPP_DB_NAME: ${{ vars.WEBAPP_DB_NAME }}
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      WEBAPP_DB_MASTER_USERNAME: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
+      WEBAPP_DB_MASTER_PASSWORD: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}

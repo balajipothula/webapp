@@ -1,11 +1,8 @@
-name: 🏗️ Terraform Infra Provision
+name: 'HashiCorp - Setup Terraform'
+description: 'Sets up Terraform CLI in your GitHub Actions workflow.'
+
 on:
   workflow_call:
-    inputs:
-      WEBAPP_DB_NAME:
-        type: string
-        description: 'WebApp Database Name.'
-        required: true
     secrets:
       AWS_ACCESS_KEY_ID:
         description: 'AWS Access Key ID.'
@@ -19,80 +16,55 @@ on:
       WEBAPP_DB_MASTER_PASSWORD:
         description: 'WebApp Database Master Password.'
         required: true
-
-env:
-  # Setting verbosity of Terraform logs.
-  TF_LOG: ERROR
-  # Setting AWS Access Key Id and Secret Access Key.
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+    inputs:
+      WEBAPP_DB_NAME:
+        type: string
+        description: 'WebApp Database Name.'
+      cli_config_credentials_hostname:
+        type: string
+        default: 'app.terraform.io'
+        description: 'Terraform Cloud/Enterprise hostname for CLI credentials.'
+        required: false
+      cli_config_credentials_token:
+        type: string
+        default: null
+        description: 'API token for authenticating with Terraform Cloud/Enterprise.'
+        required: false
+      terraform_version:
+        type: string
+        default: 'latest'
+        description: 'Terraform CLI version or constraint (e.g. `<1.13.0`). `latest` installs the newest version.'
+        required: false
+      terraform_wrapper:
+        type: boolean
+        default: true
+        description: 'Install a wrapper to expose Terraform`s STDOUT, STDERR, and exit code as outputs.'
+        required: false
 jobs:
-  terraform:
-    name: 🛠️ Running Terraform
-    # GitHub Actions runner is ubuntu-22.04.
+  job_hashicorp_setup-terraform_v2:
+    name: 🧩 HashiCorp - Setup Terraform ᵛ²
     runs-on: ubuntu-22.04
-    environment: ${{ github.ref }}
+    env:
+      # Setting verbosity of Terraform logs.
+      TF_LOG: ERROR
+      # Setting AWS Access Key Id and Secret Access Key.
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     defaults:
       run:
         shell: bash
         working-directory: .
     steps:
-      # Checkout a Git repository at a particular version.
-      - name: 🐙 Git Checkout 📥
+      - name: Step - Checkout ᵛ³
         uses: actions/checkout@v3
         with:
-          # Repository name with owner.
           repository: '${{ github.repository }}'
-          # PAT (Personal Access Token) used to fetch the repository.
           token: '${{ github.token }}'
-          # Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching.
-          clean: true
-          # Do a sparse checkout on given patterns.
-          sparse-checkout: null
-          # Specifies whether to use cone-mode when doing a sparse checkout.
-          sparse-checkout-cone-mode: true
-          # Number of commits to fetch.
-          fetch-depth: 1
-          # Whether to fetch tags, even if fetch-depth > 0.
-          fetch-tags: false
-          # Whether to download Git-LFS files
-          lfs: false
-          # Add repository path as safe.
-          set-safe-directory: true
-      # Gets the public IPv4 and IPv6 addreses of the current runner using latest Node
-      - name: 🌐 Get Runner Public IP Address 📡
-        uses: candidob/get-runner-ip@v1.0.0
-        id: ip
-      # Installing the specified version of Terraform CLI on Runner.
-      - name: 🛠️ Terraform setup 📐
+      - name: Step - Setup Terraform ᵛ²
+        id: step_hashicorp_setup-terraform_v2
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.4.0
-      # Initialize a new or existing Terraform working directory by creating initial files,
-      # loading any remote state, downloading modules, etc.
-      - name: 🛠️ Terraform initialization 🔁
-        run: terraform init -input=false -reconfigure
-        env:
-          TF_WORKSPACE: default
-      # Format Terraform configuration files adhere in to a canonical format.
-      - name: 🛠️ Terraform files formating 🧹
-        run: terraform fmt
-      # Check that all Terraform configuration files adhere to a canonical format.
-      - name: 🛠️ Terraform file format checking 🔍
-        run: terraform fmt -check
-      # Validate all Terraform configuration files.
-      - name: 🛠️ Terraform files validating ✅
-        run: terraform validate -no-color
-      # Generates an execution plan for Terraform.
-      - name: 🛠️ Terraform plan generation 📄
-        run: |
-          terraform plan -input=false -out=webapp.tfplan \
-            -var="github_runner_ip=${{ steps.ip.outputs.ipv4 }}/32" \
-            -var="webapp_database_name=${{ vars.WEBAPP_DB_NAME }}" \
-            -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
-            -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
-        continue-on-error: false
-      # Apply an execution plan for Terraform.
-      - name: 🛠️ Terraform plan applying 🚧
-        run: terraform apply -auto-approve -input=false webapp.tfplan
+          cli_config_credentials_hostname: ${{ inputs.cli_config_credentials_hostname }}
+          cli_config_credentials_token: ${{ inputs.cli_config_credentials_token }}
+          terraform_version: ${{ inputs.terraform_version }}
+          terraform_wrapper: ${{ inputs.terraform_wrapper }}
