@@ -20,14 +20,13 @@ env:
 
 jobs:
   terraform_infra_provision:
-    name: Terraform Infra Provision
+    name: 🏗️ Terraform Infra Provision
     # GitHub Actions runner is ubuntu-22.04.
     runs-on: ubuntu-22.04
     environment: ${{ github.ref }}
     defaults:
       run:
         shell: bash
-        #working-directory: .
     steps:
       # Checkout a Git repository at a particular version.
       - name: Step - Checkout ᵛ³
@@ -40,9 +39,10 @@ jobs:
         id: step_candidob_get-runner-ip_v1-0-0
         uses: ./.github/actions/candidob_get-runner-ip_v1-0-0
       # Installing the specified version of Terraform CLI on Runner.
-      - name: Step - Terraform setup 📐
+      - name: Step - Terraform v1.4.0 setup ᵛ²
         uses: ./.github/actions/hashicorp_setup-terraform_v2
         with:
+          cli_config_credentials_hostname: null
           terraform_version: 1.4.0
       # Initialize a new or existing Terraform working directory by creating initial files,
       # loading any remote state, downloading modules, etc.
