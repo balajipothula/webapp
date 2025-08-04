@@ -1,5 +1,5 @@
 name: '🐙 Checkout ᵛ³'
-description: 'Checkout a Git repository at a particular version'
+description: 'Checkout a Git repository at a particular version.'
 
 inputs:
   repository:
