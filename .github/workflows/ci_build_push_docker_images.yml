@@ -1,5 +1,5 @@
 name: '🤖 CI • Build • Push • Docker Images'
-description: '🤖 CI action to build and push Docker images to selected registries.'  
+description: 'Continuous integration action to build and push Docker images to selected registries.'  
 
 on:
   workflow_dispatch:
@@ -12,29 +12,19 @@ on:
         required: true
       dockerfile:
         type: string
-        default: 'Dockerfile.nginx1.28.0'
+        default: 'Dockerfile'
         description: 'Enter Dockerfile name'
         required: true
       registry:
         type: choice
-        default: 'GitHub Container Registry'
+        default: 'Docker Hub'
         description: 'Select registry to push image'
         options: ['Docker Hub', 'GitHub Container Registry']
         required: true
-      namespace:
+      namespace_repository_tag:
         type: string
-        default: balajipothula
-        description: 'Enter namespace'
-        required: true
-      repository:
-        type: string
-        default: nginx
-        description: 'Enter repository'
-        required: true
-      tag:
-        type: string
-        default: 1.28.0
-        description: 'Enter tag'
+        default: 'balajipothula/nginx:1.28.0'
+        description: 'Enter "Namespace/Repository:Tag"'
         required: true
       docker_build-push-action_v6:
         type: boolean
@@ -71,7 +61,7 @@ jobs:
       platforms: linux/amd64
       push: true
       tags: |
-        ${{ (inputs.registry == 'Docker Hub' && format('{0}/{1}:{2}', inputs.namespace, inputs.repository, inputs.tag)) || (inputs.registry == 'GitHub Container Registry' && format('ghcr.io/{0}/{1}:{2}', inputs.namespace, inputs.repository, inputs.tag)) }}
+        ${{ (inputs.registry == 'Docker Hub' && format('{0}', inputs.namespace_repository_tag)) || (inputs.registry == 'GitHub Container Registry' && format('ghcr.io/{0}', inputs.namespace_repository_tag)) }}
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       GHCR_PAT: ${{ secrets.GHCR_PAT }}
