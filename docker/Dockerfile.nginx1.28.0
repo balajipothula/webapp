@@ -8,9 +8,9 @@ LABEL \
   # Title or name for the image.
   org.opencontainers.image.title="nginx:1.28.0" \
   # Version of the packaged software.
-  org.opencontainers.image.version="1.28.0"
+  org.opencontainers.image.version="1.28.0" \
   # Description or summary of the image.
-  org.opencontainers.image.description="NGINX 1.28.0 - Reverse Proxy Server"
+  org.opencontainers.image.description="NGINX 1.28.0 - Reverse Proxy Server" \
   # Name of the distributing entity, organization or individual.
   org.opencontainers.image.vendor="Blitz Systems Pvt. Ltd. <https://blitzsystems.in>"
 
