@@ -30,7 +30,7 @@ jobs:
     steps:
       # Checkout a Git repository at a particular version.
       - name: Step - Checkout ᵛ³
-        uses: ./.github/actions/checkout_v3
+        uses: actions/checkout@v3
       # Gets the public IPv4 and IPv6 addreses of the current runner.
       - name: Step - Get Runner Public IP Address ᵛ¹·⁰·⁰
         id: step_candidob_get-runner-ip_v1-0-0
