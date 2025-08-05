@@ -76,5 +76,29 @@ jobs:
             -var="webapp_db_master_username=${{ vars.WEBAPP_DB_MASTER_USERNAME }}" \
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         continue-on-error: false
-      - name: Step - Terraform plan destroying.
-        run: terraform apply -auto-approve -input=false -destroy
+      # Apply an execution plan for Terraform.
+      - name: Step - Terraform plan applying 🚧
+        run: terraform apply -auto-approve -input=false webapp.tfplan
+      # Deploy any changes in the changelog file that have not been deployed
+      - name: Step - Liquibase Update Action 🛢
+        if: ${{ inputs.apply-database-changes }}
+        uses: ./.github/actions/liquibase-github-actions_update_v4.33.0
+        with:
+          changelogFile: "./postgresql/webapp_db/public/master.xml"
+          url: "jdbc:postgresql://${{ vars.WEBAPP_DB_MASTER_URL }}:5432/${{ vars.WEBAPP_DB_NAME }}"
+          defaultSchemaName: "public"
+          driver: "org.postgresql.Driver"
+          password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
+          rollbackOnError: true
+          showSummary: "summary"
+          showSummaryOutput: "console"
+          username: ${{ vars.WEBAPP_DB_MASTER_USERNAME }}
+          classpath: "./postgresql/webapp_db/public"
+        continue-on-error: true
+      # Generates an execution plan for a `github_runner_to_pg_webapp_db_sg` module only.
+      - name: Step - Terraform plan generation for specific module 📦
+        run: terraform plan -input=false -out=webapp.tfplan
+        continue-on-error: false
+      # Apply an execution plan for Terraform.
+      - name: Step - Terraform plan apply for for specific module 🚧
+        run: terraform apply -auto-approve -input=false -target=module.github_runner_to_pg_webapp_db_sg.aws_security_group.generic
