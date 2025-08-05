@@ -73,7 +73,7 @@ jobs:
           terraform plan -input=false -out=webapp.tfplan \
             -var="github_runner_ip=${{ steps.step_candidob_get-runner-ip_v1-0-0.outputs.ipv4 }}/32" \
             -var="webapp_database_name=${{ vars.WEBAPP_DB_NAME }}" \
-            -var="webapp_db_master_username=${{ secrets.WEBAPP_DB_MASTER_USERNAME }}" \
+            -var="webapp_db_master_username=${{ vars.WEBAPP_DB_MASTER_USERNAME }}" \
             -var="webapp_db_master_password=${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}"
         continue-on-error: false
       # Apply an execution plan for Terraform.
@@ -85,14 +85,14 @@ jobs:
         uses: ./.github/actions/liquibase-github-actions_update_v4.33.0
         with:
           changelogFile: "./postgresql/webapp_db/public/master.xml"
-          url: "jdbc:postgresql://${{ secrets.WEBAPP_DB_MASTER_URL }}:5432/${{ secrets.WEBAPP_DB_NAME }}"
+          url: "jdbc:postgresql://${{ vars.WEBAPP_DB_MASTER_URL }}:5432/${{ vars.WEBAPP_DB_NAME }}"
           defaultSchemaName: "public"
           driver: "org.postgresql.Driver"
           password: ${{ secrets.WEBAPP_DB_MASTER_PASSWORD }}
           rollbackOnError: true
           showSummary: "summary"
           showSummaryOutput: "console"
-          username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
+          username: ${{ vars.WEBAPP_DB_MASTER_USERNAME }}
           classpath: "./postgresql/webapp_db/public"
         continue-on-error: true
       # Generates an execution plan for a `github_runner_to_pg_webapp_db_sg` module only.
