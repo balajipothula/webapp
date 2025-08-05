@@ -10,10 +10,15 @@ on:
         description: 'Select deployment environment'
         options: ['dev', 'qa', 'prod']
         required: true
+      launch-aws-resources:
+        type: boolean
+        default: false
+        description: 'Launch AWS resources'
+        required: true
       apply-database-changes:
         type: boolean
         default: false
-        description: 'Apply Database changes?'
+        description: 'Apply Database changes'
         required: true
 
 env:
@@ -63,6 +68,7 @@ jobs:
         run: terraform validate -no-color
       # Generates an execution plan for Terraform.
       - name: Step - Terraform plan generation 📄
+        if: ${{ inputs.launch-aws-resources }}
         run: |
           terraform plan -input=false -out=webapp.tfplan \
             -var="github_runner_ip=${{ steps.step_candidob_get-runner-ip_v1-0-0.outputs.ipv4 }}/32" \
