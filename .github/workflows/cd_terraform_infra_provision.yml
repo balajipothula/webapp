@@ -94,6 +94,7 @@ jobs:
           showSummaryOutput: "console"
           username: ${{ secrets.WEBAPP_DB_MASTER_USERNAME }}
           classpath: "./postgresql/webapp_db/public"
+        continue-on-error: true
       # Generates an execution plan for a `github_runner_to_pg_webapp_db_sg` module only.
       - name: Step - Terraform plan generation for specific module 📦
         run: terraform plan -input=false -out=webapp.tfplan
