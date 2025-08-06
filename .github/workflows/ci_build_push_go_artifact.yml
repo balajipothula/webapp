@@ -1,0 +1,46 @@
+name: '🤖 CI • Build • Push • GO Artifact'
+description: 'Continuous integration action to build and push GO web application binary artifact.'  
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        default: 'dev'
+        description: 'Select deployment environment'
+        options: ['dev', 'qa', 'prod']
+        required: true
+      go_filename:
+        type: string
+        default: 'main.go'
+        description: 'Enter GO filename'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux, windows, darwin]
+        goarch: [amd64]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Build binary
+        run: GO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
+
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
