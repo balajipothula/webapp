@@ -3,6 +3,8 @@ FROM alpine:3.22.1 AS nginx1.28.0
 LABEL \
   # Authors or maintainers of the image.
   org.opencontainers.image.authors="Balaji Pothula <balan.pothula@gmail.com>" \
+  # URL to get source code for building the image.
+  org.opencontainers.image.source = "https://github.com/balajipothula/webapp" \
   # Image reference of the image.
   org.opencontainers.image.base.name="alpine:3.22.1" \
   # Title or name for the image.
