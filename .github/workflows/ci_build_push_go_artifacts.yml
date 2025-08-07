@@ -32,7 +32,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: go
+        working-directory: go/
     steps:
       - name: Step - Init Go Modules
         run: |
