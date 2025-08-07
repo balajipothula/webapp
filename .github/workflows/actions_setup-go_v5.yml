@@ -1,0 +1,77 @@
+name: '🐹 Setup Go Environment ᵛ⁵'
+description: 'Setup a Go environment and add it to the PATH'
+
+on:
+  workflow_call:
+    inputs:
+      go-version:
+        type: string
+        default: null
+        description: 'The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.'
+        required: false
+      go-version-file:
+        type: string
+        default: null
+        description: 'Path to the go.mod or go.work file.'
+        required: false
+      check-latest:
+        type: boolean
+        default: false
+        description: 'Set this option to true if you want the action to always check for the latest available version that satisfies the version spec'
+        required: false
+      token:
+        type: string
+        default: "${{ github.server_url == 'https://github.com' && github.token || '' }}"
+        description: 'Used to pull Go distributions from go-versions. Since there''s a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.'
+        required: false
+      cache:
+        type: boolean
+        default: true
+        description: 'Used to specify whether caching is needed. Set to true, if you`d like to enable caching.'
+        required: false
+      cache-dependency-path:
+        type: string
+        default: null
+        description: 'Used to specify the path to a dependency file - go.sum'
+        required: false
+      architecture:
+        type: string
+        default: null
+        description: 'Target architecture for Go to use. Examples: x86, x64. Will use system architecture by default.'
+        required: false
+    outputs:
+      go-version:
+        value: ${{ jobs.job_actions_setup-go_v5.outputs.go-version }}
+        description: 'The installed Go version. Useful when given a version range as input.'
+      cache-hit:
+        value: ${{ jobs.job_actions_setup-go_v5.outputs.cache-hit }}
+        description: 'A boolean value to indicate if a cache was hit'
+
+jobs:
+  job_actions_setup-go_v5:
+    name: 🧩 Setup Go Environment ᵛ⁵
+    runs-on: ubuntu-22.04
+    environment: ${{ github.ref }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Step - Checkout ᵛ³
+        uses: actions/checkout@v3
+        with:
+          repository: '${{ github.repository }}'
+          token: '${{ github.token }}'
+      - name: Step - Setup Go Environment ᵛ⁵
+        id: step_actions_setup-go_v5
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ inputs.go-version }}
+          go-version-file: ${{ inputs.go-version-file }}
+          check-latest: ${{ inputs.check-latest }}
+          token: ${{ inputs.token }}
+          cache: ${{ inputs.cache }}
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+          architecture: ${{ inputs.architecture }}
+    outputs:
+      go-version: ${{ steps.step_actions_setup-go_v5.outputs.go-version }}
+      cache-hit: ${{ steps.step_actions_setup-go_v5.outputs.cache-hit }}
