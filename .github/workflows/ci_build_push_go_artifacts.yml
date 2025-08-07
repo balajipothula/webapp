@@ -27,14 +27,17 @@ jobs:
       go-version: '1.21.0'
       cache-dependency-path: go/go.sum
   job_init_go_module:
-    name: Init Go Module
+    name: Job - Init Go Module
+    needs: [job_actions_setup-go_v5]
     runs-on: ubuntu-22.04
     defaults:
       run:
         shell: bash
-        working-directory: go/
     steps:
+      - name: Step - Checkout
+        uses: actions/checkout@v4
       - name: Step - Init Go Modules
+        working-directory: go
         run: |
           if [ ! -f "go.mod" ]; then
             GO_MOD_PATH="github.com/${{ github.repository }}/go"
