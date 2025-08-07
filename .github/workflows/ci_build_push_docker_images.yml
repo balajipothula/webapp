@@ -57,6 +57,7 @@ jobs:
       file: './docker/${{ inputs.dockerfile }}'
       labels: |
         org.opencontainers.image.created='${{ needs.job_get_utc-time-now.outputs.utc-time-now }}'
+        org.opencontainers.image.source='github.com/${{ github.repository }}'
       load: false
       platforms: linux/amd64
       push: true
