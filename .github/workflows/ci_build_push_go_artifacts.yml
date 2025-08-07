@@ -30,6 +30,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.21.0'
+          cache: true
+          cache-dependency-path: go/go.sum
       - name: Initialize Go Module 📦
         working-directory: ./go
         run: |
