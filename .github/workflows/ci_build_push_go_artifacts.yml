@@ -25,7 +25,6 @@ jobs:
     uses: ./.github/workflows/actions_setup-go_v5.yml
     with:
       go-version: '1.21.0'
-      cache-dependency-path: go/go.sum
   job_init_go_module:
     name: Job - Init Go Module
     needs: [job_actions_setup-go_v5]
