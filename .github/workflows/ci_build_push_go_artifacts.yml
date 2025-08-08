@@ -48,8 +48,10 @@ jobs:
         working-directory: go
         run: |
           if [ ! -f "go.mod" ]; then
-            GO_MOD_PATH="github.com/${{ github.repository }}/go"
-            go mod init "$GO_MOD_PATH"
+            go mod init github.com/${{ github.repository }}/go
           fi
           go get github.com/gofiber/fiber/v2
           go mod tidy
+      - name: Step - Build Go Artifact 🧱
+        working-directory: go
+        run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tmp/main main.go
