@@ -46,7 +46,7 @@ jobs:
       - name: Step - Build Go Artifact 🧱
         working-directory: go
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tmp/main main.go
-      - name: Step - Upload a Build Artifact ᵛ⁴
+      - name: Step - Upload Go Artifact ᵛ⁴
         uses: ./.github/actions/upload-artifact_v4
         with:
           name: 'main'
