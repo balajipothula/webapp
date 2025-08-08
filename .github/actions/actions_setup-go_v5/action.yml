@@ -20,7 +20,7 @@ inputs:
       required: false
     token:
       type: string
-      default: '${{ github.token }}'
+      default: null
       description: 'Used to pull Go distributions from go-versions. Since there`s a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.'
       required: false
     cache:

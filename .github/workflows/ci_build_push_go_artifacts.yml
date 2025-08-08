@@ -42,6 +42,7 @@ jobs:
         uses: ./.github/actions/actions_setup-go_v5
         with:
           go-version: '1.21.0'
+          token: '${{ github.token }}'
           cache-dependency-path: go
       - name: Step - Init Go Modules
         working-directory: go
