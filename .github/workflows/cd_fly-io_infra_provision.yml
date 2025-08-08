@@ -1,0 +1,41 @@
+name: '🚀 CD • Fly.io • Infra Provision'
+description: 'Continuous delivery action to provision Fly.io infrastructure using flyctl'
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        default: 'dev'
+        description: 'Select deployment environment'
+        options: ['dev', 'qa', 'prod']
+        required: true
+      launch-aws-resources:
+        type: boolean
+        default: false
+        description: 'Launch AWS resources'
+        required: true
+
+jobs:
+  fly-io_infra_provision:
+    name: 🪂 Fly.io Infra Provision
+    runs-on: ubuntu-22.04
+    environment: ${{ github.ref }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Step - Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: '${{ github.repository }}'
+          token: '${{ github.token }}'
+      - name: Step - flyctl Setup ᵛ⁰·³·¹⁶⁷
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.3.167
+      - name: Step - Deploy app to Fly.io
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          flyctl version

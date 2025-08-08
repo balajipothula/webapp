@@ -1,4 +1,4 @@
-name: '🚀 CD • Terraform • Infra Provision'
+name: '🚀 CD • AWS • Infra Provision'
 description: 'Continuous delivery action to provision AWS infrastructure using Terraform v1.4.0.'
 
 on:
