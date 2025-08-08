@@ -20,21 +20,29 @@ permissions:
   contents: write
 
 jobs:
-  job_actions_setup-go_v5:
-    name: 🖱️ Setup Go Environment ᵛ⁵
-    uses: ./.github/workflows/actions_setup-go_v5.yml
-    with:
-      go-version: '1.21.0'
-  job_init_go_module:
-    name: Job - Init Go Module
-    needs: [job_actions_setup-go_v5]
+  job_get_utc-time-now:
+    name: 🕒 Get UTC Time Now
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-        shell: bash
+    steps:
+      - name: Step - Get UTC Time Now
+        id: step_get_utc-time-now
+        run: echo "utc-time-now=$(date -u +'%Y%m%dT%H%M%SZ')" >> "$GITHUB_OUTPUT"
+    outputs:
+      utc-time-now: ${{ steps.step_get_utc-time-now.outputs.utc-time-now }}
+  job_actions_setup-go_v5:
+    name: 🐹 Setup Go Environment ᵛ⁵
+    runs-on: ubuntu-22.04
     steps:
       - name: Step - Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+        with:
+          repository: '${{ github.repository }}'
+          token: '${{ github.token }}'
+      - name: Step - Setup Go Environment ᵛ⁵
+        uses: ./.github/actions/actions_setup-go_v5
+        with:
+          go-version: '1.21.0'
+          cache-dependency-path: go
       - name: Step - Init Go Modules
         working-directory: go
         run: |
