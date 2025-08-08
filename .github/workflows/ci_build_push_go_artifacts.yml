@@ -30,7 +30,7 @@ jobs:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - Setup Go Environment ᵛ⁵
-        uses: ./.github/actions/actions_setup-go_v5
+        uses: ./.github/actions/setup-go_v5
         with:
           go-version: '1.21.0'
           token: '${{ github.token }}'
@@ -46,15 +46,13 @@ jobs:
       - name: Step - Build Go Artifact 🧱
         working-directory: go
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /tmp/main main.go
-  job_actions_upload-artifact_v4:
-    name: 🖱️ Upload a Build Artifact ᵛ⁴
-    needs: [job_actions_setup-go_v5]
-    uses: ./.github/workflows/actions_upload-artifact_v4.yml
-    with:
-      name: 'main'
-      path: '/tmp/main'
-      if-no-files-found: 'error'
-      retention-days: 1
-      compression-level: 0
-      overwrite: true
-      include-hidden-files: false
+      - name: Step - Upload a Build Artifact ᵛ⁴
+        uses: ./.github/actions/upload-artifact_v4
+        with:
+          name: 'main'
+          path: '/tmp/main'
+          if-no-files-found: 'error'
+          retention-days: 1
+          compression-level: 0
+          overwrite: true
+          include-hidden-files: false
