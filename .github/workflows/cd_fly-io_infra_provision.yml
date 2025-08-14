@@ -42,6 +42,6 @@ jobs:
           version: 0.3.167
       - name: Step - Create Fly.io App
         run: |
-          if ! flyctl apps list --json | jq -e '.[] | select(.Name==\"$APP\")' >/dev/null; then
+          if ! flyctl apps list --json | jq -e '.[] | select(.Name=="'"$APP"'")' >/dev/null; then
             flyctl apps create --name='$APP' --network='$NETWORK' --org='$ORG' --yes
           fi
