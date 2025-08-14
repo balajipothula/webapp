@@ -42,25 +42,11 @@ jobs:
           version: 0.3.167
       - name: Step - Create Fly.io App
         run: |
-          if ! flyctl apps list --org="$ORG" --json | jq -e --arg name "$APP" '.[] | select((.Name|tostring|ascii_downcase) == ($name|ascii_downcase))' >/dev/null; then
+          if [ "$(flyctl apps list --org="$ORG" --json | jq --arg app "$APP" '[.[] | select(.Name == $app)] | length')" -eq 0 ]; then
             flyctl apps create --name="$APP" --network="$NETWORK" --org="$ORG" --yes
           fi
-
       - name: Step - Create Fly.io Volume
         run: |
-          COUNT=$(flyctl volumes list --app="$APP" --json | jq --arg name "$VOLUME" --arg region "$REGION" '[.[] | select((.name // "" | ascii_downcase) == ($name | ascii_downcase) and (.region // "" | ascii_downcase) == ($region | ascii_downcase))] | length')
-          if [ "$COUNT" -eq 0 ]; then
-            flyctl volumes create "$VOLUME" \
-              --app="$APP" \
-              --count=1 \
-              --no-encryption \
-              --region="$REGION" \
-              --require-unique-zone=false \
-              --size=1 \
-              --snapshot-retention=1 \
-              --vm-cpu-kind="shared" \
-              --vm-cpus=1 \
-              --vm-memory="256mb" \
-              --vm-size="shared-cpu-1x" \
-              --yes
+          if [ "$(flyctl volumes list --app="$APP" --json | jq 'length')" -eq 0 ]; then
+            flyctl volumes create "$VOLUME" --app="$APP" --count=1 --no-encryption --region="$REGION" --require-unique-zone=false --size=1 --snapshot-retention=1 --vm-cpu-kind="shared" --vm-cpus=1 --vm-memory="256mb" --vm-size="shared-cpu-1x" --yes
           fi
