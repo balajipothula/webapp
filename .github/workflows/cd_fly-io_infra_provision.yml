@@ -47,6 +47,6 @@ jobs:
           fi
       - name: Step - Create Fly.io Volume
         run: |
-          if ! flyctl volumes list --app="$APP" --json | jq -e '.[] | select(.Name=="'"$VOLUME"'") | select(.Region=="'"$REGION"'")' >/dev/null; then
+          if ! flyctl volumes list --app="$APP" --json | jq -e --arg name "$VOLUME" --arg region "$REGION" '.[] | select((.Name|ascii_downcase) == ($name|ascii_downcase)) |  select((.Region|ascii_downcase) == ($region|ascii_downcase))' >/dev/null; then
             flyctl volumes create "$VOLUME" --app="$APP" --count=1 --no-encryption --region="$REGION" --require-unique-zone=false --size=1 --snapshot-retention=1 --vm-cpu-kind='shared' --vm-cpus=1 --vm-memory='256mb' --vm-size='shared-cpu-1x' --yes
           fi
