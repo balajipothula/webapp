@@ -53,3 +53,6 @@ jobs:
           fi
       - name: Step - Validate Fly.io TOML
         run: flyctl config validate --app="$APP" --config='./fly.io/fly.toml' --strict --debug --verbose
+      - name: Step - Deploy Fly.io App
+        run: |
+          flyctl deploy ./fly.io/fly.toml --app='go-fiber-app' --builder-pool='auto' --buildpacks-volume='go_fiber_volume:/gofiber:rw' --deploy-retries='auto' --depot='auto' --depot-scope='org' --dns-checks=true --ha=false --lease-timeout='13s' --regions='fra' --release-command-timeout='5m0s' --smoke-checks=true --vm-cpu-kind='shared' --vm-cpus=1 --wg=true --yes
