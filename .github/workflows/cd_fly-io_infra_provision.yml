@@ -43,10 +43,10 @@ jobs:
       - name: Step - Create Fly.io App
         run: |
           if ! flyctl apps list --org="$ORG" --json | jq -e '.[] | select(.Name=="'"$APP"'")' >/dev/null; then
-            flyctl apps create --name='$APP' --network='$NETWORK' --org='$ORG' --yes
+            flyctl apps create --name="$APP" --network="$NETWORK" --org="$ORG" --yes
           fi
       - name: Step - Create Fly.io Volume
         run: |
-          if ! flyctl volumes list --app="$APP" --json | jq -e --arg name "$VOLUME" --arg region "$REGION" '.[] | select((.Name|tostring|ascii_downcase)==($name|ascii_downcase)) | select((.Region|tostring|ascii_downcase)==($region|ascii_downcase))' >/dev/null; then
-            flyctl volumes create "$VOLUME" --app="$APP" --count=1 --no-encryption --region="$REGION" --require-unique-zone=false --size=1 --snapshot-retention=1 --vm-cpu-kind='shared' --vm-cpus=1 --vm-memory='256mb' --vm-size='shared-cpu-1x' --yes
+          if ! flyctl volumes list --app="$APP" --json | jq -e --arg name "$VOLUME" --arg region "$REGION" '.[] | select(.ID and (.Name|tostring|ascii_downcase)==($name|ascii_downcase) and (.Region//""|tostring|ascii_downcase)==($region|ascii_downcase))' >/dev/null; then
+            flyctl volumes create "$VOLUME" --app="$APP" --count=1 --no-encryption --region="$REGION" --require-unique-zone=false --size=1 --snapshot-retention=1 --vm-cpu-kind="shared" --vm-cpus=1 --vm-memory="256mb" --vm-size="shared-cpu-1x" --yes
           fi
