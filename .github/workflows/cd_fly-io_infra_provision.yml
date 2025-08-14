@@ -42,7 +42,7 @@ jobs:
           version: 0.3.167
       - name: Step - Create Fly.io App
         run: |
-          if [ "$(flyctl apps list --org="$ORG" --json | jq --arg app "$APP" '[.[] | select((.name | ascii_downcase) == ($app | ascii_downcase))] | length')" -eq 0 ]; then
+          if [ "$(flyctl apps list --org="$ORG" --json | jq --arg app "$APP" '[.[] | select((.name // "" | ascii_downcase) == ($app | ascii_downcase))] | length')" -eq 0 ]; then
             flyctl apps create --name="$APP" --network="$NETWORK" --org="$ORG" --yes
           fi
       - name: Step - Create Fly.io Volume
