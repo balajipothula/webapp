@@ -51,3 +51,5 @@ jobs:
           if [ "$(flyctl volumes list --app="$APP" --json | jq length)" -eq 0 ]; then
             flyctl volumes create "$VOLUME" --app="$APP" --count=1 --no-encryption --region="$REGION" --require-unique-zone=false --size=1 --snapshot-retention=1 --vm-cpu-kind="shared" --vm-cpus=1 --vm-memory="256mb" --vm-size="shared-cpu-1x" --yes
           fi
+      - name: Step - Validate Fly.io TOML
+        run: flyctl config validate --app="$APP" --config='./fly.io/fly.toml' --strict --debug --verbose
