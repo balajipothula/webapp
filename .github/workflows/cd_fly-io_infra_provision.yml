@@ -45,3 +45,8 @@ jobs:
           if ! flyctl apps list --json | jq -e '.[] | select(.Name=="'"$APP"'")' >/dev/null; then
             flyctl apps create --name='$APP' --network='$NETWORK' --org='$ORG' --yes
           fi
+      - name: Step - Create Fly.io Volume
+        run: |
+          if ! flyctl volumes list --app="$APP" --json | jq -e '.[] | select(.Name=="'"$VOLUME"'")' >/dev/null; then
+            flyctl volumes create go_fiber_volume --app='go-fiber-app' --count=1 --no-encryption --region='fra' --require-unique-zone=true --size=1 --snapshot-retention=60 --vm-cpu-kind='shared' --vm-cpus=1 --vm-memory='256mb' --vm-size='shared-cpu-1x' --yes
+          fi
