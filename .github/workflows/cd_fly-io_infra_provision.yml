@@ -119,6 +119,8 @@ jobs:
         run: echo "main=main-$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_OUTPUT
       - name: Step - Build Go Artifact 🧱
         working-directory: go
+        env:
+          MAIN: ${{ steps.append-utc-now.outputs.main }}
         run: |
           echo "Building artifact: $MAIN"
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o /tmp/$MAIN ${{ inputs.go_filename }}
