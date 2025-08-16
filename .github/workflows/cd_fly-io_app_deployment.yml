@@ -1,5 +1,5 @@
-name: '🚀 CD • Fly.io • Infra Provision'
-description: 'Continuous delivery action to provision Fly.io infrastructure using flyctl'
+name: '🚀 CD • Fly.io • App Deployment'
+description: 'Continuous delivery action to provision Fly.io infrastructure and app deployment using flyctl'
 
 on:
   workflow_dispatch:
