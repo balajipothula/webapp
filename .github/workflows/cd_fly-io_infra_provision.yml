@@ -29,30 +29,35 @@ on:
 permissions:
   contents: write
 
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_VERSION: 0.3.167
+  APP: 'go-fiber-app'
+  ORG: 'personal'
+  REGION: 'fra'
+
 jobs:
   job_fly-app-create:
     name: 🪂 Fly App Creation
     runs-on: ubuntu-22.04
     env:
-      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      APP: 'go-fiber-app'
       VM_NAME: 'go-fiber-vm'
-      ORG: 'personal'
       VOLUME: 'go_fiber_vol'
-      REGION: 'fra'
     defaults:
       run:
         shell: bash
     steps:
       - name: Step - Checkout
+        if: ${{ inputs.fly-app-create }}
         uses: actions/checkout@v3
         with:
           repository: '${{ github.repository }}'
           token: '${{ github.token }}'
       - name: Step - flyctl Setup ᵛ⁰·³·¹⁶⁷
+        if: ${{ inputs.fly-app-create }}
         uses: superfly/flyctl-actions/setup-flyctl@master
         with:
-          version: 0.3.167
+          version: ${{ env.FLY_VERSION }}
       - name: Step - Create Fly.io App
         if: ${{ inputs.fly-app-create }}
         run: |
@@ -84,6 +89,8 @@ jobs:
   job_build_and_push_go_artifact:
     name: 🐹 Build & Push Go Artifact
     runs-on: ubuntu-22.04
+    outputs:
+      main: ${{ steps.append-utc-now.outputs.main }}
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       APP: 'go-fiber-app'
@@ -108,7 +115,8 @@ jobs:
           go get github.com/gofiber/fiber/v2
           go mod tidy
       - name: Append UTC Now to Artifact 🕘
-        run: echo "MAIN=main-$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+        id: append-utc-now
+        run: echo "main=main-$(date -u +%Y%m%d%H%M%S)" >> $GITHUB_OUTPUT
       - name: Step - Build Go Artifact 🧱
         working-directory: go
         run: |
@@ -120,6 +128,8 @@ jobs:
         run: upx --best --lzma /tmp/$MAIN
       - name: Step - Upload Go Artifact ᵛ⁴
         uses: ./.github/actions/upload-artifact_v4
+        env:
+          MAIN: ${{ steps.append-utc-now.outputs.main }}
         with:
           name: ${{ env.MAIN }}
           path: /tmp/${{ env.MAIN }}
@@ -128,7 +138,15 @@ jobs:
           compression-level: 0
           overwrite: true
           include-hidden-files: false
+      - name: Step - flyctl Setup ᵛ⁰·³·¹⁶⁷
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: ${{ env.FLY_VERSION }}
       - name: Step - Push Go Artifact ⬆️
+        env:
+          MAIN: ${{ steps.append-utc-now.outputs.main }} 
         run: flyctl ssh sftp shell --app="$APP" <<< "put /tmp/$MAIN /gofiber/$MAIN"
-      - name: Step - chmod +x Go Artifact 
+      - name: Step - Make Go Artifact Executable
+        env:
+          MAIN: ${{ steps.append-utc-now.outputs.main }}
         run: flyctl ssh console --app="$APP" --command "chmod +x /gofiber/$MAIN"
