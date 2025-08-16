@@ -121,8 +121,8 @@ jobs:
       - name: Step - Upload Go Artifact ᵛ⁴
         uses: ./.github/actions/upload-artifact_v4
         with:
-          name: $MAIN
-          path: /tmp/$MAIN
+          name: ${{ env.MAIN }}
+          path: /tmp/${{ env.MAIN }}
           if-no-files-found: 'error'
           retention-days: 1
           compression-level: 0
