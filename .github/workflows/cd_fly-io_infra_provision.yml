@@ -125,6 +125,8 @@ jobs:
       - name: Step - Install Ultimate Packer for eXecutables
         run: sudo apt --yes update && sudo apt --yes install upx
       - name: Compress Go Artifact with UPX
+        env:
+          MAIN: ${{ steps.append-utc-now.outputs.main }} 
         run: upx --best --lzma /tmp/$MAIN
       - name: Step - Upload Go Artifact ᵛ⁴
         uses: ./.github/actions/upload-artifact_v4
@@ -144,7 +146,7 @@ jobs:
           version: ${{ env.FLY_VERSION }}
       - name: Step - Push Go Artifact ⬆️
         env:
-          MAIN: ${{ steps.append-utc-now.outputs.main }} 
+          MAIN: ${{ steps.append-utc-now.outputs.main }}
         run: flyctl ssh sftp shell --app="$APP" <<< "put /tmp/$MAIN /gofiber/$MAIN"
       - name: Step - Make Go Artifact Executable
         env:
