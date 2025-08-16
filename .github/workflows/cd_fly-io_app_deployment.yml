@@ -180,4 +180,4 @@ jobs:
         if: ${{ inputs.fly-app-update }}
         env:
           IMAGE: docker.io/balajipothula/go:1.21.0
-        run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --yes
+        run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --yes --json > /tmp/$VM_ID.json &
