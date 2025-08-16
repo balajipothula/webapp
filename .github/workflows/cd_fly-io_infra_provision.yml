@@ -13,7 +13,7 @@ on:
       fly-app-create: 
         type: boolean
         default: false
-        description: 'Fly App Create'
+        description: '❗ Check this only for initial Fly.io app creation.'
         required: true
       go_filename:
         type: string
