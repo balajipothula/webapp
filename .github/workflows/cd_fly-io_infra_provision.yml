@@ -54,12 +54,14 @@ jobs:
         with:
           version: 0.3.167
       - name: Step - Create Fly.io App
+        if: ${{ inputs.fly-app-create }}
         run: |
           COUNT=$(flyctl apps list --org="$ORG" --json | jq -r --arg app "$APP" '[.[] | select((.Name // .name // "" | ascii_downcase) == ($app | ascii_downcase))] | length')
           if [ "$COUNT" -eq 0 ]; then
             flyctl apps create --name="$APP" --org="$ORG" --yes
           fi
       - name: Step - Create Fly.io Volume
+        if: ${{ inputs.fly-app-create }}
         run: |
           if [ "$(flyctl volumes list --app="$APP" --json | jq length)" -eq 0 ]; then
             VOLUME_ID=$(flyctl volumes create $VOLUME --app="$APP" --count=1 --no-encryption --region="$REGION" --require-unique-zone=true --size=1 --snapshot-retention=1 --vm-size='shared-cpu-1x' --yes --json | jq -r '.id')
@@ -68,11 +70,13 @@ jobs:
           fi
           echo "VOLUME_ID=$VOLUME_ID" >> $GITHUB_ENV
       - name: Step - Launch Fly.io Machine
+        if: ${{ inputs.fly-app-create }}
         env:
           IMAGE: docker.io/balajipothula/utility:3.22.1
         run: |
           flyctl machine run $IMAGE --app="$APP" --name="$VM_NAME" --org="$ORG" --region="$REGION" --use-zstd --vm-size='shared-cpu-1x' --volume="$VOLUME_ID:/gofiber:rw" --wg=true
       - name: Step - Allocate IPv4 to Fly.io Machine
+        if: ${{ inputs.fly-app-create }}
         env:
           IMAGE: docker.io/balajipothula/utility:3.22.1
         run: |
@@ -109,7 +113,7 @@ jobs:
         working-directory: go
         run: |
           echo "Building artifact: $MAIN"
-          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o /tmp/$MAIN main.go
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o /tmp/$MAIN ${{ inputs.go_filename }}
       - name: Step - Install Ultimate Packer for eXecutables
         run: sudo apt --yes update && sudo apt --yes install upx
       - name: Compress Go Artifact with UPX
