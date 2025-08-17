@@ -13,17 +13,17 @@ on:
       fly-app-create: 
         type: boolean
         default: false
-        description: '🚨 Only for initial Fly.io app creation.'
+        description: 'Create Fly.io App'
         required: true
       go_filename:
         type: string
         default: 'main.go'
-        description: 'Enter Go filename'
+        description: 'Enter Go filename:'
         required: true
       fly-app-update: 
         type: boolean
         default: false
-        description: 'Fly App Update'
+        description: 'Deploy Fly.io App'
         required: true
 
 permissions:
