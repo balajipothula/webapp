@@ -143,6 +143,7 @@ jobs:
         run:
           HOSTNAME=$(flyctl status --app="$APP" --json | jq -r '.Hostname')
           HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://$HOSTNAME)
+          sleep 60
           flyctl ssh sftp shell --app="$APP" <<< "put /tmp/$MAIN /gofiber/$MAIN"
       - name: Step - Make Go Artifact Executable
         env:
