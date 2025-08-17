@@ -170,6 +170,6 @@ jobs:
         run: echo "VM_ID=$(flyctl machine list --app="$APP" --quiet)" >> $GITHUB_ENV
       - name: Step - Fly.io App Update
         env:
-          IMAGE: docker.io/balajipothula/go:1.21.0
+          IMAGE: docker.io/balajipothula/go:1.21
           MAIN: ${{ needs.job_build_and_push_go_artifact.outputs.main }}
         run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --port='443:3000/tcp:http:tls' --yes
