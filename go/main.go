@@ -11,7 +11,7 @@ func main() {
 	})
 
 	webapp.Get("/", func(context *fiber.Ctx) error {
-		return context.SendString("Feathery Fast APIs with 🐹 GO Fiber")
+		return context.SendString("🪶 Feathery Fast APIs with 🐹 GO Fiber on 🪂 Fly.io")
 	})
 
 	webapp.Listen(":3000")

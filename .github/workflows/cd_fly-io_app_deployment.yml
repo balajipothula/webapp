@@ -83,6 +83,7 @@ jobs:
           fi
   job_build_and_push_go_artifact:
     name: 🐹 Build & Push Go Artifact
+    needs: [job_fly-app-create]
     runs-on: ubuntu-22.04
     outputs:
       main: ${{ steps.append-utc-now.outputs.main }}
@@ -171,4 +172,4 @@ jobs:
         env:
           IMAGE: docker.io/balajipothula/go:1.21.0
           MAIN: ${{ needs.job_build_and_push_go_artifact.outputs.main }}
-        run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --yes
+        run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --port='443:3000/tcp:http:tls' --yes
