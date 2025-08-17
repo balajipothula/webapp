@@ -170,4 +170,5 @@ jobs:
       - name: Step - Fly.io App Update
         env:
           IMAGE: docker.io/balajipothula/go:1.21.0
-        run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --yes --json > /tmp/$VM_ID.json &
+          MAIN: ${{ needs.job_build_and_push_go_artifact.outputs.main }}
+        run: flyctl machine update $VM_ID --app="$APP" --autostart --autostop='stop' --config='./fly.io/go-fiber-app.toml' --detach --entrypoint="/gofiber/$MAIN" --image="$IMAGE" --yes --json > /tmp/$APP.json &
