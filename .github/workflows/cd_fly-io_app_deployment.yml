@@ -32,9 +32,9 @@ permissions:
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
   FLY_VERSION: 0.3.167
-  APP: 'go-fiber-app'
-  ORG: 'personal'
-  REGION: 'fra'
+  APP: go-fiber-app
+  ORG: personal
+  REGION: fra
 
 jobs:
   job_fly-app-create:
