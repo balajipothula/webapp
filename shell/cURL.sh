@@ -4,6 +4,22 @@
 # Date        : Wednesday, 23 July 2025,
 # Description : cURL commands.
 
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent" \
+  -H 'Content-Type: application/json' \
+  -H 'X-goog-api-key: GEMINI_API_KEY' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works in a few words"
+          }
+        ]
+      }
+    ]
+  }'
+
 curl --location 'https://vvjxyyap33.execute-api.eu-central-1.amazonaws.com/'
 
 curl --location --request PUT 'https://vvjxyyap33.execute-api.eu-central-1.amazonaws.com/insert/song' \
